@@ -1,0 +1,66 @@
+import { createContext, useReducer, Dispatch, ReactNode } from "react";
+import { OnboardingAction } from "@/types";
+interface ContextState {
+  getStarted: {
+    businessName: string;
+    contactPerson: string;
+    businessEmail: string;
+    email: string;
+    businessAddress: string;
+    phoneNumber: string;
+    businessPhoneNumber: string;
+    industry: string;
+    address?: string;
+  };
+}
+export const initialValues = {
+  getStarted: {
+    businessName: "jhgfd",
+    contactPerson: "",
+    businessEmail: "",
+    email: "",
+    businessAddress: "",
+    phoneNumber: "",
+    businessPhoneNumber: "",
+    industry: "",
+    address: "",
+  },
+};
+interface OnboardContextType {
+  state: ContextState;
+  dispatch: Dispatch<ActionType>;
+}
+
+interface ActionType {
+  type: OnboardingAction;
+  payload: any;
+}
+export const OnboardContext = createContext<OnboardContextType>({
+  state: initialValues,
+} as OnboardContextType);
+
+export const onboardReducer = (state: ContextState, action: ActionType) => {
+  switch (action.type) {
+    case OnboardingAction.SET_GET_STARTED:
+      return {
+        ...state,
+        getStarted: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const OnboardContextProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const [state, dispatch] = useReducer(onboardReducer, initialValues);
+
+  return (
+    <OnboardContext.Provider value={{ state, dispatch }}>
+      {children}
+    </OnboardContext.Provider>
+  );
+};

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, FC, useState } from "react";
 import cn from "classnames";
 
 type HTMLInputTypeAttribute =
@@ -31,18 +31,24 @@ type Props = {
   type?: HTMLInputTypeAttribute;
   className?: string;
   placeholder?: string;
-  value?: "";
-  handleChange?: VoidFunction;
+  value?: string;
+  handleChange?: ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   name?: string;
+  error?: boolean;
+  caption?: string;
 };
 const Input: FC<Props> = ({
   label = "",
-  name = "",
+  name,
   placeholder = "",
   className = "",
   required = false,
   type = "text",
+  value,
+  handleChange,
+  error = false,
+  caption = "",
 }) => {
   const [iType, setIType] = useState<HTMLInputTypeAttribute>(type);
   const togglePassword = () => {
@@ -58,10 +64,16 @@ const Input: FC<Props> = ({
       )}
       <div className="relative">
         <input
+          name={name}
           placeholder={placeholder}
           type={iType}
+          value={value}
+          onChange={handleChange}
           className={cn(
-            "p-5 border border-gray-300 rounded-[0.75rem] bg-white w-full  outline-gray-300"
+            "p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  ",
+            {
+              "border-rose-600": error,
+            }
           )}
           required={required}
         />
@@ -71,6 +83,15 @@ const Input: FC<Props> = ({
             className="h-[20px] absolute right-5 top-5 cursor-pointer"
             onClick={togglePassword}
           />
+        )}
+        {error && (
+          <p
+            className={cn("mt-1 text-end text-[14px]", {
+              "text-red-500": error,
+            })}
+          >
+            {caption}
+          </p>
         )}
       </div>
     </div>

@@ -1,7 +1,29 @@
 import { LoginContainer } from "@/layout";
 import { Input, Button, OTPInput } from "@/components";
-
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { formikCaption, passwordRegex, formikError } from "@/utils";
 const ResetPassword = () => {
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: Yup.object({
+      password: Yup.string()
+        .matches(
+          passwordRegex,
+          "Password must contain at least a letter, a number and six characters"
+        )
+        .required("Password must be entered"),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password")], "Password must match")
+        .required("Confirm password must match"),
+    }),
+    onSubmit: () => {
+      alert("kjhag");
+    },
+  });
   return (
     <LoginContainer>
       <div className="w-100">
@@ -15,14 +37,32 @@ const ResetPassword = () => {
           </p>
         </div>
         <div className="mb-2 w-100">
-          <Input label="New Password" type="password" className="my-8" />
+          <Input
+            label="New Password"
+            type="password"
+            className="my-8"
+            value={formik.values.password}
+            handleChange={formik.handleChange}
+            caption={formikCaption("password", formik)}
+            error={formikError("password", formik)}
+            name="password"
+          />
           <Input
             label=" Confirm New Password"
             type="password"
             className="my-8"
+            value={formik.values.confirmPassword}
+            handleChange={formik.handleChange}
+            caption={formikCaption("confirmPassword", formik)}
+            error={formikError("confirmPassword", formik)}
+            name="confirmPassword"
           />
 
-          <Button title="Submit" className="w-[50px]" />
+          <Button
+            title="Submit"
+            className="w-[50px]"
+            handleClick={formik.handleSubmit}
+          />
         </div>
       </div>
     </LoginContainer>
