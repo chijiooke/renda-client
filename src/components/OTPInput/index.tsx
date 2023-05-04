@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import OtpInput from "react-otp-input";
-
 const OTPInput = () => {
   const [otp, setOtp] = useState("");
   const onChange = (val: string) => {

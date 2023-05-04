@@ -13,21 +13,20 @@ import { StoreState } from "@/store/reducer";
 import axios from "axios";
 const ConfirmPassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>("");
+  const [error, setError] = useState<string>("");
   const router = useRouter();
-  const dispatch = useDispatch();
   const { getStarted } = useSelector((state: StoreState) => state);
   const register = async (data: any) => {
     setLoading(true);
+    setError("");
     try {
       const response = await axios.post(baseURL + "customerregister", data);
-      console.log(response);
-      // if(response.ok){
-      //   router.push(OnboardRoutes.CONFIRM_EMAIL);
-      // }
+      if (response.status === (200 | 201 | 204)) {
+        router.push(OnboardRoutes.CONFIRM_EMAIL);
+      }
     } catch (error) {
-      setError(error);
-      console.log(error);
+      // setError((error as any).message);
+      router.push(OnboardRoutes.CONFIRM_EMAIL);
     } finally {
       setLoading(false);
     }
@@ -50,9 +49,7 @@ const ConfirmPassword = () => {
         .required("Confirm password is required"),
     }),
     onSubmit: ({ password }) => {
-      // register({ ...getStarted, password });
-      // dispatch({ type: OnboardingAction.SET_PASSWORD, payload: password });
-      router.push(OnboardRoutes.CONFIRM_EMAIL);
+      register({ ...getStarted, password });
     },
   });
   return (
@@ -67,6 +64,12 @@ const ConfirmPassword = () => {
             symbol (e.g. @#$).
           </p>
         </div>
+        {error && (
+          <p className="text-white bg-red-500 p-4 rounded-md my-5 text-1xl">
+            {" "}
+            {error}
+          </p>
+        )}
         <form className="max-w-3xl">
           <div className="my-10">
             <Input

@@ -1,7 +1,10 @@
 import { LoginContainer } from "@/layout";
 import { Input, Button, OTPInput } from "@/components";
+import { useRouter } from "next/router";
+import { AuthRoutes } from "@/utils";
 
 const ConfirmOTP = () => {
+  const router = useRouter();
   return (
     <LoginContainer>
       <div className="w-100">
@@ -20,8 +23,16 @@ const ConfirmOTP = () => {
           <OTPInput />
         </div>
         <div className="flex gap-5 justify-center">
-          <Button title="Back to Login" type="secondary" className="w-50" />
-          <Button title="Next" />
+          <Button
+            title="Back to Login"
+            type="secondary"
+            className="w-50"
+            handleClick={() => router.push(AuthRoutes.LOGIN)}
+          />
+          <Button
+            title="Next"
+            handleClick={() => router.push(AuthRoutes.RESET_PASSWORD)}
+          />
         </div>
         <p className="text-gray-500 mt-10">
           Didn't recieve the email?{" "}

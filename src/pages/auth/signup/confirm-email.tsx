@@ -1,7 +1,11 @@
 import { OnboardLayout } from "@/layout";
 import { Input, Button } from "@/components";
+import { useRouter } from "next/router";
+import { AuthRoutes } from "@/utils";
 
 const ConfirmEmail = () => {
+  const router = useRouter();
+
   return (
     <OnboardLayout>
       <div className="max-w-4xl mt-20">
@@ -18,8 +22,11 @@ const ConfirmEmail = () => {
             </p>
           </div>
           <div className="flex gap-4 pt-15">
-            <Button title="Resend Email" type="secondary" />
-            <Button title="Verify Email" />
+            <Button
+              title="Back to Login"
+              className="max-w-1xl"
+              handleClick={() => router.push(AuthRoutes.LOGIN)}
+            />
           </div>
         </div>
       </div>

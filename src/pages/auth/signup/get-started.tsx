@@ -18,13 +18,13 @@ const GetStarted = () => {
   const next = (value: {
     businessName: string;
     contactPerson: string;
-    businessEmail: string;
-    email: string;
-    businessAddress: string;
-    phoneNumber: string;
+    businessEmailAddress: string;
+    contactEmailAddress: string;
+    officeAddress: string;
+    contactPhoneNumber: string;
     businessPhoneNumber: string;
-    industry: string;
-    address?: string | undefined;
+    businessIndustry: string;
+    businessAddress?: string | undefined;
   }) => {
     dispatch({
       type: OnboardingAction.SET_GET_STARTED,
@@ -37,23 +37,23 @@ const GetStarted = () => {
     validationSchema: Yup.object({
       businessName: Yup.string().required("Business name is required"),
       contactPerson: Yup.string().required("Contact person is required"),
-      businessEmail: Yup.string()
+      businessEmailAddress: Yup.string()
         .email("Invalid email format")
         .required("Business email required"),
-      email: Yup.string()
+      contactEmailAddress: Yup.string()
         .email("Invalid email format")
         .required("Email required"),
       businessAddress: Yup.string()
         .min(8, "Business address must have at least 8 characters")
         .required("Address is required"),
-      phoneNumber: Yup.string()
+      contactPhoneNumber: Yup.string()
         .matches(phoneRegExp, "Phone number not valid")
         .required("Phone number is required"),
       businessPhoneNumber: Yup.string()
         .matches(phoneRegExp, "Business phone number valid")
         .required("Business phone number valid"),
-      industry: Yup.string().required("Industry required"),
-      address: Yup.string()
+      businessIndustry: Yup.string().required("Industry required"),
+      officeAddress: Yup.string()
         .min(8, "Address must have at least 8 characters")
         .required("Address is required"),
     }),
@@ -98,21 +98,21 @@ const GetStarted = () => {
               label="Business Email Address"
               className="w-100 mr-5"
               type="email"
-              value={formik.values.businessEmail}
+              value={formik.values.businessEmailAddress}
               handleChange={formik.handleChange}
-              name="businessEmail"
-              caption={formikCaption("businessEmail", formik)}
-              error={formikError("businessEmail", formik)}
+              name="businessEmailAddress"
+              caption={formikCaption("businessEmailAddress", formik)}
+              error={formikError("businessEmailAddress", formik)}
             />
             <Input
               label="Email Address"
               className="w-100 "
               type="email"
-              value={formik.values.email}
+              value={formik.values.contactEmailAddress}
               handleChange={formik.handleChange}
-              name="email"
-              caption={formikCaption("email", formik)}
-              error={formikError("email", formik)}
+              name="contactEmailAddress"
+              caption={formikCaption("contactEmailAddress", formik)}
+              error={formikError("contactEmailAddress", formik)}
             />
           </div>
           <div className="flex w-full my-8">
@@ -130,11 +130,11 @@ const GetStarted = () => {
               label=" Phone Number"
               className="w-100 "
               type="tel"
-              value={formik.values.phoneNumber}
+              value={formik.values.contactPhoneNumber}
               handleChange={formik.handleChange}
-              name="phoneNumber"
-              caption={formikCaption("phoneNumber", formik)}
-              error={formikError("phoneNumber", formik)}
+              name="contactPhoneNumber"
+              caption={formikCaption("contactPhoneNumber", formik)}
+              error={formikError("contactPhoneNumber", formik)}
             />
           </div>
           <div className="flex w-full my-8">
@@ -152,11 +152,11 @@ const GetStarted = () => {
               label="Business Industry"
               className="w-100 "
               type="tel"
-              value={formik.values.industry}
+              value={formik.values.businessIndustry}
               handleChange={formik.handleChange}
-              name="industry"
-              caption={formikCaption("industry", formik)}
-              error={formikError("industry", formik)}
+              name="businessIndustry"
+              caption={formikCaption("businessIndustry", formik)}
+              error={formikError("businessIndustry", formik)}
             />
           </div>
           <div className="flex w-full my-8">
@@ -164,11 +164,11 @@ const GetStarted = () => {
               label="Office Address (If different from the business address)"
               className="w-100 "
               type="tel"
-              value={formik.values.address}
+              value={formik.values.officeAddress}
               handleChange={formik.handleChange}
-              name="address"
-              caption={formikCaption("address", formik)}
-              error={formikError("address", formik)}
+              name="officeAddress"
+              caption={formikCaption("officeAddress", formik)}
+              error={formikError("officeAddress", formik)}
             />
           </div>
           <div className="flex justify-between gap-6 mt-15">

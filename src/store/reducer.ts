@@ -3,30 +3,28 @@ export interface StoreState {
   getStarted: {
     businessName: string;
     contactPerson: string;
-    businessEmail: string;
-    email: string;
-    businessAddress: string;
-    phoneNumber: string;
+    businessEmailAddress: string;
+    contactEmailAddress: string;
+    officeAddress: string;
+    contactPhoneNumber: string;
     businessPhoneNumber: string;
-    industry: string;
-    address?: string;
+    businessIndustry: string;
+    businessAddress?: string;
   };
-  password: string;
   authenticated: boolean;
 }
 export const initialValues: StoreState = {
   getStarted: {
     businessName: "",
     contactPerson: "",
-    businessEmail: "",
-    email: "",
+    businessEmailAddress: "",
+    contactEmailAddress: "",
     businessAddress: "",
-    phoneNumber: "",
+    contactPhoneNumber: "",
     businessPhoneNumber: "",
-    industry: "",
-    address: "",
+    businessIndustry: "",
+    officeAddress: "",
   },
-  password: "",
   authenticated: false,
 };
 interface ActionType {
@@ -43,11 +41,6 @@ const reducer = (
       return {
         ...state,
         getStarted: action.payload,
-      };
-    case OnboardingAction.SET_PASSWORD:
-      return {
-        ...state,
-        password: action.payload,
       };
     default:
       return state;

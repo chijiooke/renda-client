@@ -1,6 +1,9 @@
 import { LoginContainer } from "@/layout";
 import { Button, Input } from "@/components";
+import { useRouter } from "next/router";
+import { AuthRoutes } from "@/utils";
 const ForgotPassword = () => {
+  const router = useRouter();
   return (
     <LoginContainer>
       <div className="w-100">
@@ -18,7 +21,10 @@ const ForgotPassword = () => {
           <Input type="email" placeholder="Enter email" className="my-5" />
           <div className="flex justify-center gap-5 mt-10">
             <Button title="Back to Login" type="secondary" />
-            <Button title="Reset Password" />
+            <Button
+              title="Reset Password"
+              handleClick={() => router.push(AuthRoutes.RESET_OTP)}
+            />
           </div>
         </div>
       </div>
