@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input, Button } from "../../../components/index";
 import { OnboardLayout } from "../../../layout/index";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { formikCaption, formikError, phoneRegExp } from "@/utils";
-import { useOnboardContext } from "@/hooks";
 import { OnboardingAction } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreState } from "@/store/reducer";
+import { OnboardRoutes } from "@/utils";
 
 const GetStarted = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const { state, dispatch } = useOnboardContext();
-
-  const next = () => {
-    router.push("/auth/signup/kyc-upload");
+  const { getStarted } = useSelector((state: StoreState) => state);
+  const dispatch = useDispatch();
+  const next = (value: {
+    businessName: string;
+    contactPerson: string;
+    businessEmail: string;
+    email: string;
+    businessAddress: string;
+    phoneNumber: string;
+    businessPhoneNumber: string;
+    industry: string;
+    address?: string | undefined;
+  }) => {
+    dispatch({
+      type: OnboardingAction.SET_GET_STARTED,
+      payload: value,
+    });
+    router.push(OnboardRoutes.KYC_UPLOAD);
   };
   const formik = useFormik({
-    initialValues: state.getStarted,
+    initialValues: getStarted,
     validationSchema: Yup.object({
       businessName: Yup.string().required("Business name is required"),
       contactPerson: Yup.string().required("Contact person is required"),
@@ -41,11 +58,7 @@ const GetStarted = () => {
         .required("Address is required"),
     }),
     onSubmit: (value) => {
-      // dispatch({
-      //   type: OnboardingAction.SET_GET_STARTED,
-      //   payload: value,
-      // });
-      next();
+      next(value);
     },
   });
 
@@ -159,8 +172,16 @@ const GetStarted = () => {
             />
           </div>
           <div className="flex justify-between gap-6 mt-15">
-            <Button title="Back" type="secondary" />
-            <Button title="Next" handleClick={formik.handleSubmit} />
+            <Button
+              title="Back"
+              type="secondary"
+              handleClick={() => router.back()}
+            />
+            <Button
+              title="Next"
+              handleClick={formik.handleSubmit}
+              loading={loading}
+            />
           </div>
         </div>
       </div>

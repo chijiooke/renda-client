@@ -23,6 +23,12 @@ const ConfirmOTP = () => {
           <Button title="Back to Login" type="secondary" className="w-50" />
           <Button title="Next" />
         </div>
+        <p className="text-gray-500 mt-10">
+          Didn't recieve the email?{" "}
+          <span className="font-bold text-primary">
+            <a role="button">Click to Resend</a>
+          </span>
+        </p>
       </div>
     </LoginContainer>
   );

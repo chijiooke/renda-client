@@ -1,6 +1,6 @@
 import { createContext, useReducer, Dispatch, ReactNode } from "react";
 import { OnboardingAction } from "@/types";
-interface ContextState {
+export interface ContextState {
   getStarted: {
     businessName: string;
     contactPerson: string;
@@ -37,7 +37,8 @@ interface ActionType {
 }
 export const OnboardContext = createContext<OnboardContextType>({
   state: initialValues,
-} as OnboardContextType);
+  dispatch: {} as Dispatch<ActionType>,
+});
 
 export const onboardReducer = (state: ContextState, action: ActionType) => {
   switch (action.type) {

@@ -1,2 +1,1 @@
-import { OnboardContext, OnboardContextProvider } from "./onboardingContext";
-export { OnboardContext, OnboardContextProvider };
+export { OnboardContext, OnboardContextProvider } from "./onboardingContext";

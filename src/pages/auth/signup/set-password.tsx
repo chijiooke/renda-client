@@ -1,9 +1,38 @@
+import { useState } from "react";
 import { OnboardLayout } from "@/layout";
 import { Input, Button } from "@/components";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { formikCaption, passwordRegex, formikError } from "@/utils";
+import { OnboardingAction } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { OnboardRoutes, baseURL } from "@/utils";
+import { registerCustomer } from "@/request/onboarding";
+import { StoreState } from "@/store/reducer";
+import axios from "axios";
 const ConfirmPassword = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>("");
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { getStarted } = useSelector((state: StoreState) => state);
+  const register = async (data: any) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(baseURL + "customerregister", data);
+      console.log(response);
+      // if(response.ok){
+      //   router.push(OnboardRoutes.CONFIRM_EMAIL);
+      // }
+    } catch (error) {
+      setError(error);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -15,13 +44,15 @@ const ConfirmPassword = () => {
           passwordRegex,
           "Password must contain at least an uppercase letter, a number, a symbol and at least six characters"
         )
-        .required("Password must be entered"),
+        .required("Password is required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password")], "Password must match")
-        .required("Confirm password must match"),
+        .required("Confirm password is required"),
     }),
-    onSubmit: () => {
-      alert("kjhag");
+    onSubmit: ({ password }) => {
+      // register({ ...getStarted, password });
+      // dispatch({ type: OnboardingAction.SET_PASSWORD, payload: password });
+      router.push(OnboardRoutes.CONFIRM_EMAIL);
     },
   });
   return (
@@ -59,7 +90,11 @@ const ConfirmPassword = () => {
               name="confirmPassword"
             />
             <div className="flex max-w-md">
-              <Button title="Submit" handleClick={formik.handleSubmit} />
+              <Button
+                title="Submit"
+                handleClick={formik.handleSubmit}
+                loading={loading}
+              />
             </div>
           </div>
         </form>

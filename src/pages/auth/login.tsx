@@ -1,11 +1,16 @@
+import { useState } from "react";
 import { LoginContainer } from "@/layout";
 import { Button, Input } from "@/components";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { formikCaption, passwordRegex, formikError } from "@/utils";
+import { OnboardRoutes, AuthRoutes } from "@/utils";
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       emailOrPhone: "",
@@ -23,7 +28,7 @@ const LoginPage = () => {
         .required("Password must be entered"),
     }),
     onSubmit: () => {
-      alert("lkjh");
+      router.push(AuthRoutes.LOGIN_OTP);
     },
   });
   return (
@@ -54,21 +59,22 @@ const LoginPage = () => {
             caption={formikCaption("password", formik)}
             error={formikError("password", formik)}
           />
-          <a
-            role="button"
+          <Link
+            href={AuthRoutes.FORGOT_PASSWORD}
             className="flex flex-row-reverse text-gray-100 text-[16px]"
           >
             Forgot Password?
-          </a>
+          </Link>
           <Button
             title="Sing In"
             className="mt-6"
             handleClick={formik.handleSubmit}
+            loading={loading}
           />
           <p className="text-center mt-8 text-[16px]">
             Don't have an account?{" "}
             <Link
-              href="/auth/signup/get-started"
+              href={OnboardRoutes.GET_STARTED}
               className="text-primary font-bold"
             >
               Sign Up

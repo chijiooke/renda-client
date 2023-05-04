@@ -1,4 +1,4 @@
 import { LoginContainer } from "./LoginSignUp";
 import { OnboardLayout } from "./OnboardLayout";
-
-export { LoginContainer, OnboardLayout };
+import { DashBoardLayout } from "./DashboardLayout";
+export { LoginContainer, OnboardLayout, DashBoardLayout };

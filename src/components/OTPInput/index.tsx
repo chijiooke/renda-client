@@ -3,14 +3,27 @@ import OtpInput from "react-otp-input";
 
 const OTPInput = () => {
   const [otp, setOtp] = useState("");
+  const onChange = (val: string) => {
+    if (Number(val)) {
+      setOtp(val);
+    }
+  };
   return (
     <OtpInput
       value={otp}
-      onChange={setOtp}
-      numInputs={4}
+      onChange={onChange}
+      numInputs={5}
       renderSeparator={""}
       renderInput={(props) => <input {...props} />}
-      inputStyle="p-10 w-[25px] h-[25px] border-primary mx-3 text-black text-center font-xl flex place-content-center"
+      inputStyle={{
+        width: "6rem",
+        height: "6rem",
+        margin: "20px 0rem",
+        marginRight: "1.2rem",
+        fontSize: "2rem",
+        borderRadius: 4,
+        border: "2px solid #1b547f",
+      }}
     />
   );
 };

@@ -1,12 +1,26 @@
 import { OnboardLayout } from "@/layout";
 import { Button, Input, FileInput } from "@/components";
 import { useRouter } from "next/router";
-
+import { OnboardRoutes } from "@/utils";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { formikCaption, formikError } from "@/utils";
 const KycUpload = () => {
   const router = useRouter();
   const next = () => {
-    router.push("/auth/signup/confirm-password");
+    router.push(OnboardRoutes.SET_PASSWORD);
   };
+  const formik = useFormik({
+    initialValues: { number: "" },
+    validationSchema: Yup.object({
+      number: Yup.number()
+        .min(6, "CAC number should six digits above")
+        .required("CAC number required"),
+    }),
+    onSubmit: () => {
+      next();
+    },
+  });
   return (
     <OnboardLayout>
       <div>
@@ -22,6 +36,11 @@ const KycUpload = () => {
             label="Company Registration Number"
             type="number"
             className="max-w-2xl mt-8"
+            value={formik.values.number}
+            handleChange={formik.handleChange}
+            caption={formikCaption("number", formik)}
+            error={formikError("number", formik)}
+            name="number"
           />
           <FileInput
             title="Company Registration Certificate"
@@ -32,7 +51,7 @@ const KycUpload = () => {
         </div>
         <div className="flex justify-center gap-10 mt-10">
           <Button title="Skip" type="secondary" />
-          <Button title="Next" handleClick={next} />
+          <Button title="Next" handleClick={formik.handleSubmit} />
         </div>
       </div>
     </OnboardLayout>

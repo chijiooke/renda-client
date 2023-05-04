@@ -10,7 +10,8 @@ const LoginContainer: FC<Props> = ({ children }) => {
         <div className="col-md-5 p-0 d-none d-md-flex position-relative vh-20 h-50 m-5 rounded overflow-hidden">
           <img
             src="/assets/images/first_background.png"
-            className="d-block w-100 object-fit-cover"
+            className="d-block w-[50%] object-fit-cover"
+            style={{ height: "95vh" }}
             alt="..."
           />
         </div>
@@ -25,7 +26,10 @@ const LoginContainer: FC<Props> = ({ children }) => {
 
             <div className="container h-full ">
               <div className="row">
-                <div className="col-lg-10 col-xl-7 mx-auto my-auto mt-20 ">
+                <div
+                  className="col-lg-10 col-xl-7 mx-auto my-auto mt-20 "
+                  style={{ height: "90vh", paddingTop: "16rem" }}
+                >
                   {children}
                 </div>
               </div>
