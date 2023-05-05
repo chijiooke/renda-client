@@ -17,20 +17,33 @@ const LoginPage = () => {
   const login = async (data: any) => {
     setLoading(true);
     setError("");
-    try {
-      const response: AxiosResponse = await axios.post(
-        baseURL + "CustomerLogin",
-        data
-      );
-      if (response.status === (200 | 201 | 204)) {
-        router.push(AuthRoutes.LOGIN_OTP);
-      }
-    } catch (error) {
-      //   setError((error as any).message);
+    setTimeout(() => {
+      setError((error as any).message);
+      //   if (data.value !== "bola@renda.co") {
+      // setError("Email does not exit");
+      // setLoading(false);
+      // return;
+      //   }
+      //   if (data.password !== "Renda10£" || data.password !== "Bolanle10£") {
+      //     setError("Password does not exit");
+      //     setLoading(false);
+      //     return;
+      //   }
       router.push(AuthRoutes.LOGIN_OTP);
-    } finally {
       setLoading(false);
-    }
+    }, 2000);
+
+    // try {
+    //   const response: AxiosResponse = await axios.post(
+    //     baseURL + "CustomerLogin",
+    //     data
+    //   );
+    //   if (response.status === (200 | 201 | 204)) {
+    //     router.push(AuthRoutes.LOGIN_OTP);
+    //   }
+    // } catch (error) {
+    // } finally {
+    // }
   };
   const formik = useFormik({
     initialValues: {

@@ -49,9 +49,9 @@ const DashBoardLayout: FC<Props> = ({ children }) => {
   const router = useRouter();
   const { authenticated } = useSelector((state: StoreState) => state);
   useEffect(() => {
-    if (!authenticated) {
-      router.push(AuthRoutes.LOGIN);
-    }
+    // if (!authenticated) {
+    //   router.push(AuthRoutes.LOGIN);
+    // }
   }, [authenticated]);
   return (
     <div className="d-flex flex-column flex-root" id="kt_app_root">
@@ -60,7 +60,7 @@ const DashBoardLayout: FC<Props> = ({ children }) => {
         id="kt_create_account_stepper"
       >
         <div className="d-flex flex-column flex-lg-row-auto w-lg-200px w-xl-300px">
-          <div className="d-flex flex-column h-full top-0 bottom-0 w-lg-200px w-xl-300px scroll-y bgi-size-cover bgi-position-center bg-white shadow">
+          <div className="d-flex flex-column h-full top-0 bottom-0 w-lg-200px w-xl-300px scroll-y  bg-white shadow pt-7">
             <img
               alt="Logo"
               src="/assets/images/Renda-logo-with-tagline.svg"
@@ -71,10 +71,12 @@ const DashBoardLayout: FC<Props> = ({ children }) => {
                 <Link
                   href={nav.title}
                   key={i}
-                  className="flex text-center text-black bg-white hover:bg-primary list-none  my-2 p-5 justify-around border-1 text-[18px]"
+                  className="flex font-semibold text-center pl-11 gap-5  text-black bg-white hover:bg-primary list-none  my-2 p-5  border-1 text-[18px]"
                 >
-                  <p>kajj</p>
-                  {nav.title}
+                  <p className="">kajj</p>
+                  <span className="text-green-200 hover:text-blue-300">
+                    {nav.title}
+                  </span>
                 </Link>
               ))}
             </nav>

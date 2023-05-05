@@ -50,7 +50,11 @@ const KycUpload = () => {
           <FileInput title="Directors ID" className="mt-8" multiple={true} />
         </div>
         <div className="flex justify-center gap-10 mt-10">
-          <Button title="Skip" type="secondary" />
+          <Button
+            title="Skip"
+            type="secondary"
+            handleClick={() => router.push(OnboardRoutes.SET_PASSWORD)}
+          />
           <Button title="Next" handleClick={formik.handleSubmit} />
         </div>
       </div>

@@ -2,8 +2,29 @@ import { LoginContainer } from "@/layout";
 import { Button, Input } from "@/components";
 import { useRouter } from "next/router";
 import { AuthRoutes } from "@/utils";
+import { useFormik } from "formik";
+import { formikCaption, formikError } from "@/utils";
+import * as Yup from "yup";
+
 const ForgotPassword = () => {
   const router = useRouter();
+
+  const next = () => {
+    setTimeout(() => {
+      router.push(AuthRoutes.RESET_OTP);
+    }, 2000);
+  };
+  const formik = useFormik({
+    initialValues: { email: "" },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid email format")
+        .required(" email required"),
+    }),
+    onSubmit: () => {
+      next();
+    },
+  });
   return (
     <LoginContainer>
       <div className="w-100">
@@ -18,13 +39,19 @@ const ForgotPassword = () => {
           </p>
         </div>
         <div>
-          <Input type="email" placeholder="Enter email" className="my-5" />
+          <Input
+            type="email"
+            placeholder="Enter email"
+            className="my-5"
+            value={formik.values.email}
+            handleChange={formik.handleChange}
+            name="email"
+            caption={formikCaption("email", formik)}
+            error={formikError("email", formik)}
+          />
           <div className="flex justify-center gap-5 mt-10">
             <Button title="Back to Login" type="secondary" />
-            <Button
-              title="Reset Password"
-              handleClick={() => router.push(AuthRoutes.RESET_OTP)}
-            />
+            <Button title="Reset Password" handleClick={formik.handleSubmit} />
           </div>
         </div>
       </div>

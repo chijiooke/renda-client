@@ -7,6 +7,14 @@ import * as Yup from "yup";
 import { formikCaption, passwordRegex, formikError, AuthRoutes } from "@/utils";
 const ResetPassword = () => {
   const [done, setDone] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const submit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setDone(true);
+    }, 2000);
+  };
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -24,7 +32,7 @@ const ResetPassword = () => {
         .required("Confirm password must match"),
     }),
     onSubmit: () => {
-      setDone(true);
+      submit();
     },
   });
   return (
@@ -67,6 +75,7 @@ const ResetPassword = () => {
               title="Submit"
               className="w-[50px]"
               handleClick={formik.handleSubmit}
+              loading={loading}
             />
           </div>
         </div>
