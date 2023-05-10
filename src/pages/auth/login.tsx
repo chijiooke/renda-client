@@ -107,7 +107,7 @@ const LoginPage = () => {
             Forgot Password?
           </Link>
           <Button
-            title="Sing In"
+            title="Sign In"
             className="mt-6"
             handleClick={formik.handleSubmit}
             loading={loading}

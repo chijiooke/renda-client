@@ -25,18 +25,18 @@ const LoginOtp = () => {
           </p>
         )}
 
-        <div>
+        <div className="pb-10">
           <h1 className="text-black font-bold text-[40px]">Enter OTP</h1>
-          <p className="text-gray-500 ">
+          <p className="text-gray-200  text-[18px]">
             {" "}
             Please enter the 5-digit code sent to your email
           </p>
         </div>
-        <div className="my-10">
+        <div className="my-15">
           <OTPInput />
           <Button
             title="Proceed to Dashboard"
-            className="mt-10"
+            className="mt-20"
             loading={loading}
             handleClick={back}
           />

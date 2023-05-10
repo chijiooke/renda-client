@@ -1,4 +1,4 @@
-import { LoginContainer } from "@/layout";
+import { LoginContainer, OnboardLayout } from "@/layout";
 import { Input, Button, OTPInput } from "@/components";
 import { useRouter } from "next/router";
 import { AuthRoutes } from "@/utils";
@@ -6,10 +6,10 @@ import { AuthRoutes } from "@/utils";
 const ConfirmOTP = () => {
   const router = useRouter();
   return (
-    <LoginContainer>
+    <OnboardLayout steps={false}>
       <div className="w-100">
         <div className="my-10">
-          <h1 className="text-black mb-10 text-[30px]">
+          <h1 className="text-black mb-10 text-[30px] font-extrabold">
             Check your email for your <br />
             Password reset code
           </h1>
@@ -22,7 +22,7 @@ const ConfirmOTP = () => {
         <div className="mb-10">
           <OTPInput />
         </div>
-        <div className="flex gap-5 justify-center">
+        <div className="flex gap-5 justify-center max-w-2xl">
           <Button
             title="Back to Login"
             type="secondary"
@@ -34,14 +34,14 @@ const ConfirmOTP = () => {
             handleClick={() => router.push(AuthRoutes.RESET_PASSWORD)}
           />
         </div>
-        <p className="text-gray-500 mt-10">
+        <p className="text-gray-200 mt-15 text-[16px]">
           Didn't recieve the email?{" "}
           <span className="font-bold text-primary">
             <a role="button">Click to Resend</a>
           </span>
         </p>
       </div>
-    </LoginContainer>
+    </OnboardLayout>
   );
 };
 

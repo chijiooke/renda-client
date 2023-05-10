@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button } from "../../../components/index";
+import { Input, Button, Select } from "../../../components/index";
 import { OnboardLayout } from "../../../layout/index";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
@@ -9,6 +9,32 @@ import { OnboardingAction } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "@/store/reducer";
 import { OnboardRoutes } from "@/utils";
+
+const industries = [
+  "Agriculture and farming",
+  "Automotive industry",
+  "Banking and financial services",
+  "Biotechnology and pharmaceuticals",
+  "Chemicals",
+  "Construction and engineering",
+  "Consumer goods and services",
+  "Education and training",
+  "Energy and utilities",
+  "Entertainment and media",
+  "Food and beverage",
+  "Healthcare and medical services",
+  "Hospitality and tourism",
+  "Information technology and services",
+  "Insurance",
+  "Manufacturing",
+  "Mining and metals",
+  "Non-profit and social services",
+  "Real estate",
+  "Retail and e-commerce",
+  "Telecommunications",
+  "Transportation and logistics",
+  "Wholesale and distribution.",
+];
 
 const GetStarted = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -148,7 +174,7 @@ const GetStarted = () => {
               caption={formikCaption("businessPhoneNumber", formik)}
               error={formikError("businessPhoneNumber", formik)}
             />
-            <Input
+            {/* <Input
               label="Business Industry"
               className="w-100 "
               type="tel"
@@ -157,6 +183,11 @@ const GetStarted = () => {
               name="businessIndustry"
               caption={formikCaption("businessIndustry", formik)}
               error={formikError("businessIndustry", formik)}
+            /> */}
+            <Select
+              label="Business Industry"
+              options={industries}
+              placeholder="select your business "
             />
           </div>
           <div className="flex w-full my-8">

@@ -25,8 +25,8 @@ const ConfirmPassword = () => {
         router.push(OnboardRoutes.CONFIRM_EMAIL);
       }
     } catch (error) {
-      // setError((error as any).message);
-      router.push(OnboardRoutes.CONFIRM_EMAIL);
+      setError((error as any).message);
+      //router.push(OnboardRoutes.CONFIRM_EMAIL);
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ const ConfirmPassword = () => {
       password: Yup.string()
         .matches(
           passwordRegex,
-          "Password must contain at least an uppercase letter, a number, a symbol and at least six characters"
+          "Password must contain at least an uppercase letter, a number, a symbol and at least 8 characters"
         )
         .required("Password is required"),
       confirmPassword: Yup.string()

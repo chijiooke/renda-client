@@ -9,6 +9,7 @@ type Props = {
   type?: "primary" | "secondary";
   loading?: boolean;
   disabled?: boolean;
+  size?: "sm" | "md" | "lg";
 };
 const Button: FC<Props> = ({
   title = "",
@@ -16,17 +17,23 @@ const Button: FC<Props> = ({
   type = "primary",
   className = "",
   handleClick,
+  size = "md",
+  disabled = false,
 }) => {
   return (
     <button
       className={cn(
-        "w-100 p-5 rounded-[0.75rem] text-white border-primary cursor-pointer",
-        className,
+        "w-100 rounded-[0.75rem] text-white border-primary cursor-pointer border-2",
         {
+          "p-5": size == "md",
+          "p-2": size === "sm",
           "bg-primary ": type == "primary",
-        }
+          "bg-[#8DA9BF]": disabled,
+        },
+        className
       )}
       onClick={handleClick}
+      disabled={disabled}
     >
       <div className="flex justify-center">
         <p

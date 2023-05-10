@@ -27,12 +27,12 @@ const OrderCard: FC<Props> = ({
       {type == "primary" && (
         <div
           className={cn(
-            "p-3 flex gap-10 rounded border-2  border-gray-300 w-full",
+            "grid w-full grid-cols-2 gap-10 rounded border-2  border-gray-300 p-3",
             className
           )}
         >
           <p className="pr-10 font-extrabold text-3xl">{val}</p>
-          <p className="text-end capitalize text-[14px] text-[#5F6980]">
+          <p className="text-start capitalize text-[14px] text-[#5F6980] ">
             {" "}
             {title}
           </p>

@@ -7,13 +7,18 @@ const LoginContainer: FC<Props> = ({ children }) => {
   return (
     <div className="container-fluid bg-white">
       <div className="row no-gutter">
-        <div className="col-md-5 p-0 d-none d-md-flex position-relative vh-20 h-50 m-5 rounded overflow-hidden">
+        <div className="col-md-5 p-0 d-none d-md-flex position-relative vh-20 h-50 m-5 rounded overflow-hidden relative  bg-[url('/assets/images/first_background.png')] backdrop-brightness-50 h-screen">
           <img
             src="/assets/images/first_background.png"
-            className="d-block w-[50%] object-fit-cover"
+            className="d-block w-[60%] object-fit-cover scale-110 "
             style={{ height: "95vh" }}
             alt="..."
           />
+          <div className="absolute backdrop-brightness-50  flex flex-col w-full h-full  mix-blend-overlay">
+            <p className="text-white text-[25px] justify-end ">
+              Discover the power of seamless order fulfillment{" "}
+            </p>
+          </div>
         </div>
 
         <div className="col-md-6 bg-white ">
