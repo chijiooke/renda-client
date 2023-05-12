@@ -48747,7 +48747,7 @@ label.rating-label:hover ~ .rating-label > .svg-icon {
   --bs-stepper-icon-border-radius: 9px;
   --bs-stepper-icon-check-size: 1rem;
   --bs-stepper-icon-bg-color: var(--bs-primary-light);
-  --bs-stepper-icon-bg-color-current: #00b3ff;
+  --bs-stepper-icon-bg-color-current: rgba(255, 255, 255, 0.5);
   --bs-stepper-icon-bg-color-completed: var(--bs-primary-light);
   --bs-stepper-icon-border: 0;
   --bs-stepper-icon-border-current: 0;
@@ -48820,7 +48820,7 @@ label.rating-label:hover ~ .rating-label > .svg-icon {
 }
 .stepper.stepper-pills .stepper-item.current .stepper-icon {
   transition: color 0.2s ease;
-  background-color: var(--bs-stepper-icon-bg-color-current);
+  background-color: rgba(255, 255, 255, 0.5);
   border: var(--bs-stepper-icon-border-current);
 }
 .stepper.stepper-pills .stepper-item.current .stepper-icon .stepper-check {

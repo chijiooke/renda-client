@@ -15,18 +15,32 @@ const ConfirmPassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const router = useRouter();
-  const { getStarted } = useSelector((state: StoreState) => state);
+  console.log(router.pathname);
+  const { getStarted, Kyc, companyRegistrationNumber } = useSelector(
+    (state: StoreState) => state
+  );
+  const dispatch = useDispatch();
   const register = async (data: any) => {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.post(baseURL + "customerregister", data);
-      if (response.status === (200 | 201 | 204)) {
-        router.push(OnboardRoutes.CONFIRM_EMAIL);
+      const { data: result } = await axios.post(
+        baseURL + "CreateIdentity",
+        data
+      );
+
+      if (result.success) {
+        const { data: response } = await axios.post(
+          baseURL +
+            `UploadKyc?CompanyRegistrationNumber=${companyRegistrationNumber}&userid=${result.data.userId}`,
+          Kyc
+        );
+        if (response.success) {
+          router.push(OnboardRoutes.CONFIRM_EMAIL);
+        }
       }
     } catch (error) {
-      setError((error as any).message);
-      //router.push(OnboardRoutes.CONFIRM_EMAIL);
+      setError((error as any).response.data.errorMessage);
     } finally {
       setLoading(false);
     }
@@ -53,10 +67,12 @@ const ConfirmPassword = () => {
     },
   });
   return (
-    <OnboardLayout>
+    <OnboardLayout current>
       <div className="max-w-5xl">
         <div>
-          <h1 className="text-[35px] text-primary">Create a password</h1>
+          <h1 className="text-[35px] text-primary font-extrabold my-5">
+            Create A Password
+          </h1>
           <p className=" text-[13px] md:text-[16px] text-gray-200">
             {" "}
             Password should be at least 8 characters. To create a password, use
@@ -70,7 +86,7 @@ const ConfirmPassword = () => {
             {error}
           </p>
         )}
-        <form className="max-w-3xl">
+        <form className="max-w-2xl">
           <div className="my-10">
             <Input
               label="Create Password"

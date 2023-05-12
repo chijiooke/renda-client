@@ -1,3 +1,4 @@
 export { formikCaption, formikError } from "./formik";
 export { passwordRegex, phoneRegExp, baseURL } from "./constant";
-export { AuthRoutes, OnboardRoutes } from "./routes";
+export { AuthRoutes, OnboardRoutes, DashBoardRoutes } from "./routes";
+export { obscureEmail } from "./obscureEmail";

@@ -8,8 +8,8 @@ const ConfirmOTP = () => {
   return (
     <OnboardLayout steps={false}>
       <div className="w-100">
-        <div className="my-10">
-          <h1 className="text-black mb-10 text-[30px] font-extrabold">
+        <div className="">
+          <h1 className="text-primary mb-10 text-[35px] font-extrabold">
             Check your email for your <br />
             Password reset code
           </h1>

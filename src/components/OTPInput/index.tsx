@@ -1,10 +1,14 @@
 import { FC, useState } from "react";
 import OtpInput from "react-otp-input";
-const OTPInput = () => {
+type Props = {
+  handleChange?: any;
+};
+const OTPInput: FC<Props> = ({ handleChange }) => {
   const [otp, setOtp] = useState("");
   const onChange = (val: string) => {
     if (Number(val)) {
       setOtp(val);
+      handleChange(val);
     }
   };
   return (

@@ -27,9 +27,9 @@ const ForgotPassword = () => {
   });
   return (
     <OnboardLayout steps={false}>
-      <div className="w-100 mt-20">
+      <div className="w-100 mb-20">
         <div>
-          <h1 className="font-bolder text-[35px] text-black font-extrabold my-5">
+          <h1 className="font-bolder text-[35px] text-primary font-extrabold my-5">
             Oops! Forgotten Password?
           </h1>
           <p className="text-gray-600 text-2xl my-5">
@@ -54,6 +54,7 @@ const ForgotPassword = () => {
               title="Back to Login"
               type="secondary"
               className="w-[30%]"
+              handleClick={() => router.push(AuthRoutes.LOGIN)}
             />
             <Button title="Next" handleClick={formik.handleSubmit} />
           </div>

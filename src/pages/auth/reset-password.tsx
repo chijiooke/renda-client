@@ -38,9 +38,9 @@ const ResetPassword = () => {
   return (
     <OnboardLayout steps={false}>
       {!done && (
-        <div className=" mt-15 max-w-2xl">
-          <div>
-            <h1 className="text-black mb-3 text-[25px] font-bold">
+        <div className=" max-w-2xl">
+          <div className="flex flex-col gap-4 ">
+            <h1 className="text-black mb-3 text-[35px] font-bold text-primary">
               Enter New Password
             </h1>
             <p className="text-gray-500 mt-3 text-2xl">
@@ -70,13 +70,14 @@ const ResetPassword = () => {
               error={formikError("confirmPassword", formik)}
               name="confirmPassword"
             />
-
-            <Button
-              title="Submit"
-              className="w-[50px]"
-              handleClick={formik.handleSubmit}
-              loading={loading}
-            />
+            <div className="max-w-sm my-5">
+              <Button
+                title="Submit"
+                className=""
+                handleClick={formik.handleSubmit}
+                loading={loading}
+              />
+            </div>
           </div>
         </div>
       )}

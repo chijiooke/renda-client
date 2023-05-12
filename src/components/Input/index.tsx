@@ -58,7 +58,7 @@ const Input: FC<Props> = ({
   return (
     <div className={cn("flex flex-col", className)}>
       {label && (
-        <label htmlFor={name} className="text-lg mb-1 ">
+        <label htmlFor={name} className="text-lg mb-3 font-bold">
           {label}
         </label>
       )}

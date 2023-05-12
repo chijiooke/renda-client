@@ -1,12 +1,18 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect, SetStateAction } from "react";
 import cn from "classnames";
 
 type Props = {
   title: string;
   className?: string;
   multiple?: boolean;
+  handleChange?: SetStateAction<any>;
 };
-const FileInput: FC<Props> = ({ title = "", className, multiple = true }) => {
+const FileInput: FC<Props> = ({
+  title = "",
+  className,
+  multiple = true,
+  handleChange,
+}) => {
   const [files, setFiles] = useState<File[]>([]);
   const onFilesSelected = (e: { target: HTMLInputElement }) => {
     const target = e.target as HTMLInputElement;
@@ -22,11 +28,14 @@ const FileInput: FC<Props> = ({ title = "", className, multiple = true }) => {
     filesArr.splice(index, 1);
     setFiles(filesArr);
   };
+  useEffect(() => {
+    handleChange(files);
+  }, [files]);
   return (
     <>
       {files && files.length === 0 && (
         <div className={cn("flex flex-col my-4 ", className)}>
-          <label className="text-[16px] pb-1">{title}</label>
+          <label className="text-[16px] pb-2">{title}</label>
           <div className="relative">
             <div className="bg-white  flex justify-center flex-col text-center cursor-pointer border-dotted border-2 border-[text-primary] outline-none p-8">
               <img src="/assets/images/upload.svg" className="h-[20px]" />
@@ -47,8 +56,8 @@ const FileInput: FC<Props> = ({ title = "", className, multiple = true }) => {
       )}
       {files && files.length > 0 && (
         <div className="my-5 flex flex-col ">
-          <label className="text-[16px] pb-1">{title}</label>
-          <div className="bg-white rounded w-100 flex border-primary p-8">
+          <label className="text-[16px] pb-1 fon-bold">{title}</label>
+          <div className="bg-white rounded w-100 flex border-primary  border-3 p-8">
             <img src="/assets/images/file.svg" className="h-[30px] mr-3" />
             <div className="w-100">
               {files.map((file, index) => (

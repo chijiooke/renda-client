@@ -46,9 +46,9 @@ const DashBoardLayout: FC<Props> = ({ children }) => {
   const router = useRouter();
   const { authenticated } = useSelector((state: StoreState) => state);
   useEffect(() => {
-    // if (!authenticated) {
-    //   router.push(AuthRoutes.LOGIN);
-    // }
+    if (!authenticated) {
+      router.push(AuthRoutes.LOGIN);
+    }
   }, [authenticated]);
   return (
     <div className="d-flex flex-column flex-root" id="kt_app_root">
@@ -63,7 +63,7 @@ const DashBoardLayout: FC<Props> = ({ children }) => {
               src="/assets/images/Renda-logo-with-tagline.svg"
               className="h-70px"
             />
-            <nav className="flex flex-col mt-10">
+            <nav className="flex flex-col mt-20">
               <ul>
                 {" "}
                 {routes.map(({ title, icon: Icon, route }, i) => (

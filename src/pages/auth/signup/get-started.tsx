@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Input, Button, Select } from "../../../components/index";
-import { OnboardLayout } from "../../../layout/index";
+import React, { useEffect, useState } from "react";
+import { Input, Button, Select, PhoneNumberInput } from "@/components";
+import { OnboardLayout } from "@/layout";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -37,17 +37,25 @@ const industries = [
 ];
 
 const GetStarted = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
   const { getStarted } = useSelector((state: StoreState) => state);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [phoneNumber, setPhoneNumber] = useState(getStarted.phoneNumber);
+  const [businessPhoneNumber, setBusinessPhoneNumber] = useState(
+    getStarted.businessPhoneNumber
+  );
+  const [businessIndustry, setBusinessIndustry] = useState(
+    getStarted.businessIndustry
+  );
+  const router = useRouter();
+
   const dispatch = useDispatch();
   const next = (value: {
     businessName: string;
     contactPerson: string;
     businessEmailAddress: string;
-    contactEmailAddress: string;
+    emailAddress: string;
     officeAddress: string;
-    contactPhoneNumber: string;
+    phoneNumber: string;
     businessPhoneNumber: string;
     businessIndustry: string;
     businessAddress?: string | undefined;
@@ -66,25 +74,24 @@ const GetStarted = () => {
       businessEmailAddress: Yup.string()
         .email("Invalid email format")
         .required("Business email required"),
-      contactEmailAddress: Yup.string()
+      emailAddress: Yup.string()
         .email("Invalid email format")
         .required("Email required"),
       businessAddress: Yup.string()
         .min(8, "Business address must have at least 8 characters")
         .required("Address is required"),
-      contactPhoneNumber: Yup.string()
-        .matches(phoneRegExp, "Phone number not valid")
-        .required("Phone number is required"),
-      businessPhoneNumber: Yup.string()
-        .matches(phoneRegExp, "Business phone number valid")
-        .required("Business phone number valid"),
-      businessIndustry: Yup.string().required("Industry required"),
+      phoneNumber: Yup.string().matches(phoneRegExp, "Phone number not valid"),
+      businessPhoneNumber: Yup.string().matches(
+        phoneRegExp,
+        "Business phone number valid"
+      ),
+      businessIndustry: Yup.string(),
       officeAddress: Yup.string()
         .min(8, "Address must have at least 8 characters")
         .required("Address is required"),
     }),
     onSubmit: (value) => {
-      next(value);
+      next({ ...value, phoneNumber, businessPhoneNumber, businessIndustry });
     },
   });
 
@@ -92,17 +99,19 @@ const GetStarted = () => {
     <OnboardLayout>
       <div className="flex flex-col">
         <div>
-          <h1 className="text-[35px] text-primary">Get Started</h1>
+          <h1 className="text-[35px] text-primary font-bold my-5">
+            Get Started
+          </h1>
           <p className="text-[13px] md:text-[16px] text-gray-200">
             {" "}
             Ready to create your profile? Tell us more about your Business.
           </p>
         </div>
         <div>
-          <div className="flex w-full my-8">
+          <div className="flex w-full my-8 gap-5">
             <Input
               label="Business Name"
-              className="w-100 mr-5"
+              className="w-100 "
               value={formik.values.businessName}
               handleChange={formik.handleChange}
               name="businessName"
@@ -119,10 +128,10 @@ const GetStarted = () => {
               error={formikError("contactPerson", formik)}
             />
           </div>
-          <div className="flex w-full my-8">
+          <div className="flex w-full my-8 gap-5">
             <Input
               label="Business Email Address"
-              className="w-100 mr-5"
+              className="w-100 "
               type="email"
               value={formik.values.businessEmailAddress}
               handleChange={formik.handleChange}
@@ -134,17 +143,17 @@ const GetStarted = () => {
               label="Email Address"
               className="w-100 "
               type="email"
-              value={formik.values.contactEmailAddress}
+              value={formik.values.emailAddress}
               handleChange={formik.handleChange}
-              name="contactEmailAddress"
-              caption={formikCaption("contactEmailAddress", formik)}
-              error={formikError("contactEmailAddress", formik)}
+              name="emailAddress"
+              caption={formikCaption("emailAddress", formik)}
+              error={formikError("emailAddress", formik)}
             />
           </div>
-          <div className="flex w-full my-8">
+          <div className="flex w-full my-8 items-center gap-5">
             <Input
               label="Business Address"
-              className="w-100 mr-5"
+              className="w-100"
               type="tel"
               value={formik.values.businessAddress}
               handleChange={formik.handleChange}
@@ -152,19 +161,24 @@ const GetStarted = () => {
               caption={formikCaption("businessAddress", formik)}
               error={formikError("businessAddress", formik)}
             />
-            <Input
+            {/* <Input
               label=" Phone Number"
               className="w-100 "
               type="tel"
-              value={formik.values.contactPhoneNumber}
+              value={formik.values.phoneNumber}
               handleChange={formik.handleChange}
-              name="contactPhoneNumber"
-              caption={formikCaption("contactPhoneNumber", formik)}
-              error={formikError("contactPhoneNumber", formik)}
+              name="phoneNumber"
+              caption={formikCaption("phoneNumber", formik)}
+              error={formikError("phoneNumber", formik)}
+            /> */}
+            <PhoneNumberInput
+              label="Phone Number"
+              handleChange={setPhoneNumber}
+              value={phoneNumber}
             />
           </div>
-          <div className="flex w-full my-8">
-            <Input
+          <div className="flex w-full my-8 items-center gap-5">
+            {/* <Input
               label="Business Phone Number"
               className="w-100 mr-5"
               type="tel"
@@ -173,6 +187,11 @@ const GetStarted = () => {
               name="businessPhoneNumber"
               caption={formikCaption("businessPhoneNumber", formik)}
               error={formikError("businessPhoneNumber", formik)}
+            /> */}
+            <PhoneNumberInput
+              label="Business Phone Number"
+              handleChange={setBusinessPhoneNumber}
+              value={businessPhoneNumber}
             />
             {/* <Input
               label="Business Industry"
@@ -188,6 +207,11 @@ const GetStarted = () => {
               label="Business Industry"
               options={industries}
               placeholder="select your business "
+              value={businessIndustry}
+              name="businessIndustry"
+              caption={formikCaption("businessIndustry", formik)}
+              error={formikError("businessIndustry", formik)}
+              handleChange={(e) => setBusinessIndustry(e.target.value)}
             />
           </div>
           <div className="flex w-full my-8">

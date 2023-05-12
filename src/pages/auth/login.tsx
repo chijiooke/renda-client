@@ -8,42 +8,38 @@ import { formikCaption, passwordRegex, formikError } from "@/utils";
 import { OnboardRoutes, AuthRoutes, baseURL } from "@/utils";
 import { useRouter } from "next/router";
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useDispatch } from "react-redux";
+import { OnboardingAction } from "@/types";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const login = async (data: any) => {
     setLoading(true);
     setError("");
-    setTimeout(() => {
-      setError((error as any).message);
-      //   if (data.value !== "bola@renda.co") {
-      // setError("Email does not exit");
-      // setLoading(false);
-      // return;
-      //   }
-      //   if (data.password !== "Renda10£" || data.password !== "Bolanle10£") {
-      //     setError("Password does not exit");
-      //     setLoading(false);
-      //     return;
-      //   }
-      router.push(AuthRoutes.LOGIN_OTP);
-      setLoading(false);
-    }, 2000);
 
-    // try {
-    //   const response: AxiosResponse = await axios.post(
-    //     baseURL + "CustomerLogin",
-    //     data
-    //   );
-    //   if (response.status === (200 | 201 | 204)) {
-    //     router.push(AuthRoutes.LOGIN_OTP);
-    //   }
-    // } catch (error) {
-    // } finally {
-    // }
+    try {
+      const { data: response }: AxiosResponse = await axios.post(
+        baseURL + "Authorization",
+        data
+      );
+      if (response.success) {
+        dispatch({
+          type: OnboardingAction.SET_LOGIN_DETAILS,
+          payload: data,
+        });
+        router.push(AuthRoutes.LOGIN_OTP);
+      }
+    } catch (error) {
+      setError(
+        (error as any).response.data.errorMessage ||
+          (error as any).response.data.data
+      );
+    } finally {
+      setLoading(false);
+    }
   };
   const formik = useFormik({
     initialValues: {
@@ -51,9 +47,7 @@ const LoginPage = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      emailOrPhone: Yup.string()
-        .email("Invalid email format")
-        .required("Email/Phone required"),
+      emailOrPhone: Yup.string().required("Email/Phone required"),
       password: Yup.string()
         .matches(
           passwordRegex,

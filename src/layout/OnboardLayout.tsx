@@ -2,35 +2,48 @@ import { FC, ReactNode } from "react";
 import { OnboardContextProvider } from "@/context";
 import { OnboardRoutes } from "@/utils";
 import { useRouter } from "next/router";
+import cn from "classnames";
 
 type Props = {
   children: ReactNode;
   steps?: boolean;
+  current?: boolean;
 };
-const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
+const OnboardLayout: FC<Props> = ({
+  children,
+  steps = true,
+  current = false,
+}) => {
   const router = useRouter();
+  console.log(router.pathname);
   return (
     <OnboardContextProvider>
-      <div className="d-flex flex-column flex-root" id="kt_app_root">
+      <div
+        className="d-flex flex-column flex-root h-screen"
+        id="kt_app_root"
+        style={{ backgroundColor: "#f0fbff", height: "100vh" }}
+      >
         <div
-          className="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep"
+          className="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep "
           id="kt_create_account_stepper"
         >
           <div className="d-flex flex-column flex-lg-row-auto w-lg-300px w-xl-400px">
             <div className="d-flex flex-column position-lg-fixed top-0 bottom-0 w-lg-300px w-xl-450px scroll-y bgi-size-cover bgi-position-center rounded m-5 bg-primary">
               <div className="d-flex flex-center py-lg-20 mt-lg-20"></div>
               {steps && (
-                <div className="d-flex flex-row-fluid justify-content-center  ">
+                <div className="d-flex flex-row-fluid justify-content-center my-auto mt-40 pt-20  ">
                   <div className="stepper-nav">
                     <div
-                      className="stepper-item my-5"
+                      className={cn("stepper-item my-5", {
+                        current: router.pathname === OnboardRoutes.GET_STARTED,
+                      })}
                       data-kt-stepper-element="nav"
                     >
                       <div
                         className="stepper-wrapper cursor-pointer"
                         onClick={() => router.push(OnboardRoutes.GET_STARTED)}
                       >
-                        <div className="stepper-icon bg-[#8ca9bf]rounded-3 ">
+                        <div className="stepper-icon current-stepper rounded-3 ">
                           <span className="stepper-number">1</span>
                         </div>
 
@@ -45,7 +58,9 @@ const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
                     </div>
 
                     <div
-                      className="stepper-item my-7"
+                      className={cn("stepper-item  my-5", {
+                        current: router.pathname === OnboardRoutes.KYC_UPLOAD,
+                      })}
                       data-kt-stepper-element="nav"
                     >
                       <div
@@ -67,7 +82,9 @@ const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
                     </div>
 
                     <div
-                      className="stepper-item my-7"
+                      className={cn("stepper-item   my-5", {
+                        current: router.pathname === OnboardRoutes.SET_PASSWORD,
+                      })}
                       data-kt-stepper-element="nav"
                     >
                       <div
@@ -91,7 +108,10 @@ const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
                     </div>
 
                     <div
-                      className="stepper-item my-7"
+                      className={cn("stepper-item  my-5", {
+                        current:
+                          router.pathname === OnboardRoutes.CONFIRM_EMAIL,
+                      })}
                       data-kt-stepper-element="nav"
                     >
                       <div
