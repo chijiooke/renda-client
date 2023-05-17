@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import cn from "classnames";
 import { useRouter } from "next/router";
+import { AuthRoutes } from "@/utils";
 type Props = {
   children: React.ReactNode;
 };
@@ -27,7 +28,11 @@ const LoginContainer: FC<Props> = ({ children }) => {
           <div className="left d-flex align-items-center py-4 ">
             <div className="d-flex justify-content-between mb-5 position-absolute top-0 end-0">
               <div className="d-flex flex-row-reverse p-5 mt-15">
-                <img src="/assets/images/Renda-logo-with-tagline.svg" />
+                <img
+                  src="/assets/images/Renda-logo-with-tagline.svg"
+                  onClick={() => router.push(AuthRoutes.LOGIN)}
+                  className="cursor-pointer"
+                />
               </div>
             </div>
 

@@ -18,52 +18,59 @@ interface DateType {
 }
 const data: DateType[] = [
   {
-    value: 750,
+    value: 0,
     title: "Total Inventory Count",
     type: "primary",
     className: "",
   },
   {
-    value: 200,
+    value: 0,
     title: "Total Orders Delivered",
     type: "primary",
     className: "",
   },
   {
-    value: 322000,
+    value: 0,
     title: "Value of Orders Processed",
-    type: "secondary",
+    type: "primary",
     className: "",
     number: false,
   },
   {
-    value: 662000,
+    value: 0,
     title: "Total Inventory  Value",
     type: "primary",
     className: "border-[#043E7D] bg-[#DAF6FF] ",
     number: false,
   },
   {
-    value: 662000,
+    value: 0,
     title: "Value of Orders Delivered",
     type: "primary",
     className: "",
     number: false,
   },
   {
-    value: 100,
+    value: 0,
     title: "Total  Orders Processed",
     type: "primary",
     className: "bg-[#EBFFF8] border-[#008753]",
   },
   {
-    value: 600,
+    value: 0,
     title: "Total Orders Returned",
     type: "primary",
     className: "",
   },
   {
-    value: 85,
+    value: 0,
+    title: "Fulfillment Rate",
+    type: "primary",
+    className: "bg-[#FFF6EB] border-[#FF9100]",
+    percentage: true,
+  },
+  {
+    value: 0,
     title: "Fulfillment Rate",
     type: "primary",
     className: "bg-[#FFF6EB] border-[#FF9100]",
@@ -75,7 +82,7 @@ export default function Home() {
     <DashBoardLayout>
       <section>
         <div>
-          <h1 className="text-[32px] font-bold">Welcome Promise</h1>
+          <h1 className="text-[32px] font-bold">Welcome Pelumi</h1>
           <p className="capitalize text-gray-100 text-[14px] mt-1">
             Where do you want to start today
           </p>
@@ -92,9 +99,15 @@ export default function Home() {
               number={v.number}
             />
           ))}
+        </div>
+        <div className="grid grid-cols-5 gap-8 my-5">
+          <div className="col-span-2">
+            <PieChartCard title="Storage" />
+          </div>
 
-          <PieChartCard title="Storage" />
-          <AreaChartCard title="Month on Month Order Growth" />
+          <div className="col-span-3">
+            <AreaChartCard title="Month on Month Order Growth" />
+          </div>
         </div>
         <OrderTable />
       </section>

@@ -1,8 +1,16 @@
+import { FC } from "react";
 import { ImageWindowIcon } from "@/icons";
 import { Button } from "../Button";
-const StorageCard = () => {
+
+type Props = {
+  handleClick?: () => void;
+};
+const StorageCard: FC<Props> = ({ handleClick }) => {
   return (
-    <div className="p-5 border-gray-300 border-2 rounded">
+    <div
+      className="p-5 border-gray-300 border-2 rounded cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="relative ">
         <img
           src="/assets/images/storage-0.png"

@@ -6,14 +6,16 @@ type Props = {
   className?: string;
   multiple?: boolean;
   handleChange?: SetStateAction<any>;
+  value: File[];
 };
 const FileInput: FC<Props> = ({
   title = "",
   className,
   multiple = true,
   handleChange,
+  value,
 }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<File[]>(value);
   const onFilesSelected = (e: { target: HTMLInputElement }) => {
     const target = e.target as HTMLInputElement;
     const files = target.files as FileList;

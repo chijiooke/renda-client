@@ -17,4 +17,5 @@ export const OnboardRoutes = {
 
 export const DashBoardRoutes = {
   DASHBOARD: "/",
+  STORAGE: "/storage",
 };

@@ -64,12 +64,12 @@ type Props = {
 };
 const AreaChartCard: FC<Props> = ({ title }) => {
   return (
-    <div className=" p-4 gap-10 rounded border-2  border-gray-300 items-center  w-full col-span-2">
+    <div className=" p-4 gap-10 rounded border-2  border-gray-300 items-center  w-full ">
       <p className="font-extrabold text-[14px]">{title}</p>
       <div>
         <AreaChart
-          width={850}
-          height={300}
+          width={750}
+          height={315}
           data={data}
           margin={{
             top: 10,

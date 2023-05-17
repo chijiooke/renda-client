@@ -5,3 +5,7 @@ export { OrderManagementIcon } from "./orderManagent";
 export { NotificationIcon } from "./notification";
 export { RedDot } from "./reddot";
 export { ImageWindowIcon } from "./imageWindow";
+export { DeliveryIcon } from "./delivery";
+export { ReturnsIcon } from "./returns";
+export { CheckIcon } from "./check";
+export { LeftArrowIcon } from "./leftArrow";

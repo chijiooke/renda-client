@@ -31,31 +31,58 @@ const LoginOtp = () => {
     }
   };
   const verifyOtp = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const { data: response } = await axios.post(
-        baseURL + "api/v1/ValidateOtp",
-        {
-          action: "Login",
-          otpCode: otp,
-        }
-      );
-      if (response.success) {
-        dispatch({
-          type: OnboardingAction.SET_AUTHENTICATED,
-          payload: true,
-        });
-        router.push(DashBoardRoutes.DASHBOARD);
-      }
-    } catch (error) {
-      setError(
-        (error as any).response.data.errorMessage ||
-          (error as any).response.data.data
-      );
-    } finally {
-      setLoading(false);
-    }
+    // setLoading(true);
+    // setError("");
+    // try {
+    //   const { data: response } = await axios.post(baseURL + "ValidateOtp", {
+    //     action: "string",
+    //     otpCode: otp,
+    //   });
+    //   if (response.success) {
+    //     dispatch({
+    //       type: OnboardingAction.SET_AUTHENTICATED,
+    //       payload: true,
+    //     });
+    //     router.push(DashBoardRoutes.DASHBOARD);
+    //   }
+    // } catch (error) {
+    //   dispatch({
+    //     type: OnboardingAction.SET_AUTHENTICATED,
+    //     payload: true,
+    //   });
+    //   router.push(DashBoardRoutes.DASHBOARD);
+    //   setError(
+    //     (error as any).response.data.errorMessage ||
+    //       (error as any).response.data.data
+    //   );
+    // } finally {
+    //   setLoading(false);
+    // }
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append(
+      "Cookie",
+      ".AspNetCore.Session=CfDJ8D3rXNLfxtZIm4bW5Fpa2EmSfkat%2BrjmLuo7RN3yPIMtZI02WGBGJW7Omt0xi1DcRTw4lyXS0yxF4XSKdrwWxwIp2nQoG8p0zFqXPBA10KA4gdrZukBZVQbj0tz8rRJ6MLgYPoluFpVdDnSMZnn91xOJLBEFJQ81JxpoEnmJMtmL"
+    );
+    var raw = JSON.stringify({
+      action: "string",
+      otpCode: otp,
+    });
+
+    var requestOptions: any = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(
+      "http://tradeplaorg-001-site5.gtempurl.com/ValidateOtp",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
   };
   return (
     <LoginContainer>

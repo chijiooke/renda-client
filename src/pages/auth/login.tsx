@@ -21,17 +21,19 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const { data: response }: AxiosResponse = await axios.post(
+      const response: AxiosResponse = await axios.post(
         baseURL + "Authorization",
         data
       );
-      if (response.success) {
-        dispatch({
-          type: OnboardingAction.SET_LOGIN_DETAILS,
-          payload: data,
-        });
-        router.push(AuthRoutes.LOGIN_OTP);
-      }
+      console.log(response.headers["set-cookie"]);
+      // const loh = response.headers.get("Set-Cookie");
+      // if (response.success) {
+      // dispatch({
+      //   type: OnboardingAction.SET_LOGIN_DETAILS,
+      //   payload: data,
+      // });
+      // router.push(AuthRoutes.LOGIN_OTP);
+      // }
     } catch (error) {
       setError(
         (error as any).response.data.errorMessage ||

@@ -23,6 +23,12 @@ export interface StoreState {
     value: string;
     password: string;
   };
+  onboardSteps: {
+    getStarted: "done" | "not-done";
+    kycUpload: "done" | "not-done";
+    createPassword: "done" | "not-done";
+    confirmEmail: "done" | "not-done";
+  };
 }
 export const initialValues: StoreState = {
   getStarted: {
@@ -36,7 +42,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: false,
+  authenticated: true,
   companyRegistrationNumber: "",
   Kyc: new FormData(),
   fileList: {
@@ -47,6 +53,12 @@ export const initialValues: StoreState = {
   loginDetails: {
     value: "",
     password: "",
+  },
+  onboardSteps: {
+    getStarted: "not-done",
+    kycUpload: "not-done",
+    createPassword: "not-done",
+    confirmEmail: "not-done",
   },
 };
 interface ActionType {

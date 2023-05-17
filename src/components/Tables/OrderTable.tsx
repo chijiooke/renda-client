@@ -3,12 +3,13 @@ const OrderTable = () => {
     <table className="table-auto w-full">
       <thead className="bg-[#E7F4FF] rounded">
         <tr className="rounded">
-          <th className="p-4">Song</th>
-          <th>Artist</th>
-          <th>Year</th>
-          <th>Song</th>
-          <th>Artist</th>
-          <th>Year</th>
+          <th className="p-4">Order Id</th>
+          <th>Number of Items</th>
+          <th>Date created</th>
+          <th>Delivery Location</th>
+          <th>Pickup location</th>
+          <th>Mode of payment</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>

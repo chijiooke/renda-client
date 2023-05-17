@@ -67,7 +67,7 @@ const ConfirmPassword = () => {
     },
   });
   return (
-    <OnboardLayout current>
+    <OnboardLayout>
       <div className="max-w-5xl">
         <div>
           <h1 className="text-[35px] text-primary font-extrabold my-5">

@@ -1,19 +1,14 @@
 import { FC, ReactNode } from "react";
 import { OnboardContextProvider } from "@/context";
-import { OnboardRoutes } from "@/utils";
+import { AuthRoutes, OnboardRoutes } from "@/utils";
 import { useRouter } from "next/router";
 import cn from "classnames";
 
 type Props = {
   children: ReactNode;
   steps?: boolean;
-  current?: boolean;
 };
-const OnboardLayout: FC<Props> = ({
-  children,
-  steps = true,
-  current = false,
-}) => {
+const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
   const router = useRouter();
   console.log(router.pathname);
   return (
@@ -142,7 +137,8 @@ const OnboardLayout: FC<Props> = ({
               <img
                 alt="Logo"
                 src="/assets/images/Renda-logo-with-tagline.svg"
-                className="h-70px"
+                className="h-70px cursor-pointer"
+                onClick={() => router.push(AuthRoutes.LOGIN)}
               />
             </div>
 

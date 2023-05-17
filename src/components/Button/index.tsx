@@ -26,9 +26,10 @@ const Button: FC<Props> = ({
         "w-100 rounded-[0.75rem] text-white border-primary cursor-pointer border-2",
         {
           "p-5": size == "md",
-          "p-2": size === "sm",
+          "p-3": size === "sm",
           "bg-primary ": type == "primary",
           "bg-[#8DA9BF]": disabled,
+          "rounded-md": size == "sm",
         },
         className
       )}
@@ -37,9 +38,10 @@ const Button: FC<Props> = ({
     >
       <div className="flex justify-center">
         <p
-          className={cn("font-bold sm:text-[17px]", {
+          className={cn("font-bold ", {
             "text-white  ": type === "primary",
             "text-primary": type === "secondary",
+            "text-[15px]": size === "sm",
           })}
         >
           {title}

@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { OnboardingAction } from "@/types";
 
 const KycUpload = () => {
-  const { fileList } = useSelector((state: StoreState) => state);
+  const { fileList, companyRegistrationNumber } = useSelector(
+    (state: StoreState) => state
+  );
   const [registrationCertificate, setRegistrationCertificate] = useState<
     File[]
   >(fileList.registrationCertificate);
@@ -40,16 +42,15 @@ const KycUpload = () => {
       type: OnboardingAction.SET_COMPANY_NUMBER,
       payload: formik.values.number,
     });
-    router.push(OnboardRoutes.SET_PASSWORD);
-  };
-  useEffect(() => {
     dispatch({
       type: OnboardingAction.UPDATE_FILE_LIST,
       payload: { registrationCertificate, proofOfAddress, directorsIds },
     });
-  }, [registrationCertificate, proofOfAddress, directorsIds]);
+    router.push(OnboardRoutes.SET_PASSWORD);
+  };
+
   const formik = useFormik({
-    initialValues: { number: "" },
+    initialValues: { number: companyRegistrationNumber },
     validationSchema: Yup.object({
       number: Yup.number()
         .min(6, "CAC number should six digits above")
@@ -93,17 +94,20 @@ const KycUpload = () => {
             title="Company Registration Certificate"
             className="mt-8"
             handleChange={setRegistrationCertificate}
+            value={registrationCertificate}
           />
           <FileInput
             title="Proof of Address (Utility bill - Electricity/LAWMA, etc)"
             className="mt-8"
             handleChange={setProofOfAddress}
+            value={proofOfAddress}
           />
           <FileInput
             title="Directors ID"
             className="mt-8"
             multiple={true}
             handleChange={setDirectorsIds}
+            value={directorsIds}
           />
         </div>
         <div className=" gap-10 mt-10 max-w-md">

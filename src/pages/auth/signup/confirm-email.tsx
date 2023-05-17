@@ -1,7 +1,7 @@
 import { OnboardLayout } from "@/layout";
 import { Input, Button } from "@/components";
 import { useRouter } from "next/router";
-import { AuthRoutes, OnboardRoutes, baseURL, obscureEmail } from "@/utils";
+import { AuthRoutes, OnboardRoutes, baseURL } from "@/utils";
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,15 +42,11 @@ const ConfirmEmail = () => {
           )}
           <div className="pt-10">
             <h1 className="text-[35px] text-primary font-extrabold my-5">
-              Confirm your Email Address
+              Verify Your Account
             </h1>
             <p className="text-gray-200 text-[13px] md:text-[18px] leading-10">
-              An email has been sent to{" "}
-              <span className="font-bold">
-                {obscureEmail(getStarted.businessEmailAddress)}
-              </span>{" "}
-              with a link to verify your account. If you have not received the
-              email after a few minutes, please check your spam folder.
+              Click the ‘Verify email’ button below to get a verification link
+              sent to your registered email address.
             </p>
           </div>
           <div className="flex gap-4 pt-15 max-w-2xl mb-15">

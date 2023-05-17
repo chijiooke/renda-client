@@ -161,16 +161,7 @@ const GetStarted = () => {
               caption={formikCaption("businessAddress", formik)}
               error={formikError("businessAddress", formik)}
             />
-            {/* <Input
-              label=" Phone Number"
-              className="w-100 "
-              type="tel"
-              value={formik.values.phoneNumber}
-              handleChange={formik.handleChange}
-              name="phoneNumber"
-              caption={formikCaption("phoneNumber", formik)}
-              error={formikError("phoneNumber", formik)}
-            /> */}
+
             <PhoneNumberInput
               label="Phone Number"
               handleChange={setPhoneNumber}
@@ -178,31 +169,12 @@ const GetStarted = () => {
             />
           </div>
           <div className="flex w-full my-8 items-center gap-5">
-            {/* <Input
-              label="Business Phone Number"
-              className="w-100 mr-5"
-              type="tel"
-              value={formik.values.businessPhoneNumber}
-              handleChange={formik.handleChange}
-              name="businessPhoneNumber"
-              caption={formikCaption("businessPhoneNumber", formik)}
-              error={formikError("businessPhoneNumber", formik)}
-            /> */}
             <PhoneNumberInput
               label="Business Phone Number"
               handleChange={setBusinessPhoneNumber}
               value={businessPhoneNumber}
             />
-            {/* <Input
-              label="Business Industry"
-              className="w-100 "
-              type="tel"
-              value={formik.values.businessIndustry}
-              handleChange={formik.handleChange}
-              name="businessIndustry"
-              caption={formikCaption("businessIndustry", formik)}
-              error={formikError("businessIndustry", formik)}
-            /> */}
+
             <Select
               label="Business Industry"
               options={industries}

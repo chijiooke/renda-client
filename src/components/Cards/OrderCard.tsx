@@ -18,7 +18,7 @@ const OrderCard: FC<Props> = ({
   className,
 }) => {
   const val = !number
-    ? "N" + value.toLocaleString()
+    ? "N" + value.toFixed(2).toLocaleString()
     : percentage
     ? value + "%"
     : "" + value;
@@ -27,8 +27,7 @@ const OrderCard: FC<Props> = ({
       {type == "primary" && (
         <div
           className={cn(
-            "grid w-full grid-cols-2 gap-4 rounded border-2 border-gray-300 p-3",
-            className
+            "grid w-full grid-cols-2 gap-1 rounded border-2 border-gray-300 p-5"
           )}
         >
           <p className=" font-extrabold text-3xl">{val}</p>
