@@ -115,12 +115,12 @@ const DashBoardLayout: FC<Props> = ({
         </div>
 
         <div
-          className="d-flex flex-column  rounded w-full h-full m-10"
+          className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow"
           style={{ height: "95vh" }}
         >
           <div className="d-flex flex-center flex-column flex-column-fluid bg-[#f4fbff]">
-            <div className="w-full h-full">
-              <div className="bg-white rounded w-full h-[95vh]  p-10 shadow overflow-scroll">
+            <div className="w-full h-full ">
+              <div className="bg-white rounded w-full h-full  p-10 ">
                 <div
                   className={cn("flex  w-full my-3", {
                     "flex-row-reverse": !backAction,

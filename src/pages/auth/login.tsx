@@ -21,19 +21,19 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response: AxiosResponse = await axios.post(
+      const { data: response }: AxiosResponse = await axios.post(
         baseURL + "Authorization",
         data
       );
-      console.log(response.headers["set-cookie"]);
+      // console.log(response.headers["set-cookie"]);
       // const loh = response.headers.get("Set-Cookie");
-      // if (response.success) {
-      // dispatch({
-      //   type: OnboardingAction.SET_LOGIN_DETAILS,
-      //   payload: data,
-      // });
-      // router.push(AuthRoutes.LOGIN_OTP);
-      // }
+      if (response.success) {
+        dispatch({
+          type: OnboardingAction.SET_LOGIN_DETAILS,
+          payload: data,
+        });
+        router.push(AuthRoutes.LOGIN_OTP);
+      }
     } catch (error) {
       setError(
         (error as any).response.data.errorMessage ||
@@ -50,12 +50,7 @@ const LoginPage = () => {
     },
     validationSchema: Yup.object({
       emailOrPhone: Yup.string().required("Email/Phone required"),
-      password: Yup.string()
-        .matches(
-          passwordRegex,
-          "Password must contain at least a letter, a number and six characters"
-        )
-        .required("Password must be entered"),
+      password: Yup.string().required("Password must be entered"),
     }),
     onSubmit: (value) => {
       login({ password: value.password, value: value.emailOrPhone });
