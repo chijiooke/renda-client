@@ -29,7 +29,7 @@ const Button: FC<Props> = ({
           "p-3": size === "sm",
           "bg-primary ": type == "primary",
           "bg-[#8DA9BF]": disabled,
-          "rounded-md": size == "sm",
+          "rounded-lg": size == "sm",
         },
         className
       )}

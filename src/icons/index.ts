@@ -9,3 +9,6 @@ export { DeliveryIcon } from "./delivery";
 export { ReturnsIcon } from "./returns";
 export { CheckIcon } from "./check";
 export { LeftArrowIcon } from "./leftArrow";
+export { BankIcon } from "./bank";
+export { RightArrowWithBg } from "./rightArrrowwithBg";
+export { DebitCardIcon } from "./debitCard";

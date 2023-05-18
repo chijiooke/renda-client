@@ -6,3 +6,4 @@ export { Select } from "./SelectDropdown";
 export { PhoneNumberInput } from "./Input/PhoneNumber";
 export * from "./Cards";
 export * from "./Tables";
+export * from "./Elem";
