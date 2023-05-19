@@ -1,4 +1,4 @@
-import { LoginContainer } from "./LoginSignUp";
-import { OnboardLayout } from "./OnboardLayout";
-import { DashBoardLayout } from "./DashboardLayout";
-export { LoginContainer, OnboardLayout, DashBoardLayout };
+export { LoginContainer } from "./LoginSignUp";
+export { OnboardLayout } from "./OnboardLayout";
+export { DashBoardLayout } from "./DashboardLayout";
+export { ReactPortal } from "./Portal";

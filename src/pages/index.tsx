@@ -109,6 +109,7 @@ export default function Home() {
             <AreaChartCard title="Month on Month Order Growth" />
           </div>
         </div>
+
         <OrderTable />
       </section>
     </DashBoardLayout>

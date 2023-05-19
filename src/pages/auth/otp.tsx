@@ -1,13 +1,71 @@
+import { useState } from "react";
 import { LoginContainer, OnboardLayout } from "@/layout";
 import { Input, Button, OTPInput } from "@/components";
 import { useRouter } from "next/router";
-import { AuthRoutes } from "@/utils";
-
+import { AuthRoutes, baseURL } from "@/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { OnboardingAction } from "@/types";
+import { StoreState } from "@/store/reducer";
+import axios from "axios";
 const ConfirmOTP = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const [otp, setOtp] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const { loginDetails } = useSelector((state: StoreState) => state);
+
+  const resentOtp = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const { data: response } = await axios.post(baseURL + "AccountRecovery", {
+        email: loginDetails.value,
+      });
+    } catch (error) {
+      setError(
+        (error as any).response.data.errorMessage ||
+          (error as any).response.data.data
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const { data: response } = await axios.post(baseURL + "VerifyOtp", {
+        userId: loginDetails.id,
+        otp: otp,
+      });
+      if (response.success) {
+        dispatch({
+          type: OnboardingAction.SET_LOGIN_DETAILS,
+          payload: { ...loginDetails, otp },
+        });
+        router.push(AuthRoutes.RESET_PASSWORD);
+      }
+    } catch (error) {
+      setError(
+        (error as any).response.data.errorMessage ||
+          (error as any).response.data.data
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <OnboardLayout steps={false}>
       <div className="w-100">
+        {error && (
+          <p className="text-white bg-red-500 p-4 rounded-md my-5 text-1xl">
+            {" "}
+            {error}
+          </p>
+        )}
         <div className="">
           <h1 className="text-primary mb-10 text-[35px] font-extrabold">
             Check your email for your <br />
@@ -20,7 +78,7 @@ const ConfirmOTP = () => {
           </p>
         </div>
         <div className="mb-10">
-          <OTPInput />
+          <OTPInput handleChange={setOtp} />
         </div>
         <div className="flex gap-5 justify-center max-w-2xl">
           <Button
@@ -29,15 +87,14 @@ const ConfirmOTP = () => {
             className="w-50"
             handleClick={() => router.push(AuthRoutes.LOGIN)}
           />
-          <Button
-            title="Next"
-            handleClick={() => router.push(AuthRoutes.RESET_PASSWORD)}
-          />
+          <Button title="Next" handleClick={verifyOtp} loading={loading} />
         </div>
         <p className="text-gray-200 mt-15 text-[16px]">
           Didn't recieve the email?{" "}
           <span className="font-bold text-primary">
-            <a role="button">Click to Resend</a>
+            <a role="button" onClick={resentOtp}>
+              Click to Resend
+            </a>
           </span>
         </p>
       </div>

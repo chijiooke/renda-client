@@ -21,8 +21,8 @@ const LoginOtp = () => {
     setError("");
     try {
       const { data: response }: AxiosResponse = await axios.post(
-        baseURL + "Authorization",
-        loginDetails
+        baseURL + "Authorize",
+        { value: loginDetails.value, password: loginDetails.password }
       );
     } catch (error) {
       setError("Error sending Otp, try logging in again");
@@ -34,9 +34,9 @@ const LoginOtp = () => {
     setLoading(true);
     setError("");
     try {
-      const { data: response } = await axios.post(baseURL + "ValidateOtp", {
-        action: "string",
-        otpCode: otp,
+      const { data: response } = await axios.post(baseURL + "OtpLogin", {
+        userId: loginDetails.id,
+        otp: otp,
       });
       if (response.success) {
         dispatch({
@@ -46,11 +46,6 @@ const LoginOtp = () => {
         router.push(DashBoardRoutes.DASHBOARD);
       }
     } catch (error) {
-      // dispatch({
-      //   type: OnboardingAction.SET_AUTHENTICATED,
-      //   payload: true,
-      // });
-      // router.push(DashBoardRoutes.DASHBOARD);
       setError(
         (error as any).response.data.errorMessage ||
           (error as any).response.data.data
@@ -58,31 +53,6 @@ const LoginOtp = () => {
     } finally {
       setLoading(false);
     }
-    // var myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-    // myHeaders.append(
-    //   "Cookie",
-    //   ".AspNetCore.Session=CfDJ8D3rXNLfxtZIm4bW5Fpa2EmSfkat%2BrjmLuo7RN3yPIMtZI02WGBGJW7Omt0xi1DcRTw4lyXS0yxF4XSKdrwWxwIp2nQoG8p0zFqXPBA10KA4gdrZukBZVQbj0tz8rRJ6MLgYPoluFpVdDnSMZnn91xOJLBEFJQ81JxpoEnmJMtmL"
-    // );
-    // var raw = JSON.stringify({
-    //   action: "string",
-    //   otpCode: otp,
-    // });
-
-    // var requestOptions: any = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw,
-    //   redirect: "follow",
-    // };
-
-    // fetch(
-    //   "http://tradeplaorg-001-site5.gtempurl.com/ValidateOtp",
-    //   requestOptions
-    // )
-    //   .then((response) => response.text())
-    //   .then((result) => console.log(result))
-    //   .catch((error) => console.log("error", error));
   };
   return (
     <LoginContainer>

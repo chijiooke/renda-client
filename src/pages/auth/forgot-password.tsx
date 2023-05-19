@@ -1,18 +1,43 @@
+import { useState } from "react";
 import { LoginContainer, OnboardLayout } from "@/layout";
 import { Button, Input } from "@/components";
 import { useRouter } from "next/router";
-import { AuthRoutes } from "@/utils";
+import { AuthRoutes, baseURL } from "@/utils";
 import { useFormik } from "formik";
 import { formikCaption, formikError } from "@/utils";
 import * as Yup from "yup";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { OnboardingAction } from "@/types";
 
 const ForgotPassword = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
-  const next = () => {
-    setTimeout(() => {
-      router.push(AuthRoutes.RESET_OTP);
-    }, 2000);
+  const next = async (email: string) => {
+    setLoading(true);
+    setError("");
+    try {
+      const { data: response } = await axios.post(baseURL + "AccountRecovery", {
+        email,
+      });
+      if (response.success) {
+        dispatch({
+          type: OnboardingAction.SET_LOGIN_DETAILS,
+          payload: { value: email, password: "", id: response.data.userid },
+        });
+        router.push(AuthRoutes.RESET_OTP);
+      }
+    } catch (error) {
+      setError(
+        (error as any).response.data.errorMessage ||
+          (error as any).response.data.data
+      );
+    } finally {
+      setLoading(false);
+    }
   };
   const formik = useFormik({
     initialValues: { email: "" },
@@ -21,13 +46,19 @@ const ForgotPassword = () => {
         .email("Invalid email format")
         .required(" email required"),
     }),
-    onSubmit: () => {
-      next();
+    onSubmit: ({ email }) => {
+      next(email);
     },
   });
   return (
     <OnboardLayout steps={false}>
       <div className="w-100 mb-20">
+        {error && (
+          <p className="text-white bg-red-500 p-4 rounded-md my-5 text-1xl">
+            {" "}
+            {error}
+          </p>
+        )}
         <div>
           <h1 className="font-bolder text-[35px] text-primary font-extrabold my-5">
             Oops! Forgotten Password?
@@ -56,7 +87,11 @@ const ForgotPassword = () => {
               className="w-[30%]"
               handleClick={() => router.push(AuthRoutes.LOGIN)}
             />
-            <Button title="Next" handleClick={formik.handleSubmit} />
+            <Button
+              title="Next"
+              handleClick={formik.handleSubmit}
+              loading={loading}
+            />
           </div>
         </div>
       </div>

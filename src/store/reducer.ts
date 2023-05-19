@@ -22,6 +22,8 @@ export interface StoreState {
   loginDetails: {
     value: string;
     password: string;
+    id: string;
+    otp: string;
   };
   onboardSteps: {
     getStarted: "done" | "not-done";
@@ -42,7 +44,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: true,
+  authenticated: false,
   companyRegistrationNumber: "",
   Kyc: new FormData(),
   fileList: {
@@ -53,6 +55,8 @@ export const initialValues: StoreState = {
   loginDetails: {
     value: "",
     password: "",
+    id: "",
+    otp: "",
   },
   onboardSteps: {
     getStarted: "not-done",

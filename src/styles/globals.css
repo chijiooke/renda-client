@@ -20,3 +20,46 @@ body {
 .border-primary {
   border: 1px solid #1b547f !important;
 }
+.nav:hover {
+  background-color: #1b547f !important;
+  color: white!;
+}
+.nav:hover.nav span,
+.nav:hover.nav div {
+  color: white !important;
+}
+
+.activeNav {
+  background-color: #1b547f !important;
+}
+.activeNav span,
+.activeNav div {
+  color: white !important;
+}
+#react-portal-modal-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  align-items: center;
+  padding: 3rem;
+}
+#react-portal-modal-container .container {
+  display: flex;
+}
+#react-portal-modal-container .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: white;
+  z-index: 40;
+  padding: 3rem;
+  font-size: 16px;
+  cursor: pointer;
+}

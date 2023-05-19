@@ -21,4 +21,5 @@ export const DashBoardRoutes = {
   STORAGE_DETAILS: "/storage/aaf",
   STORAGE_BOOKING: "/storage/booking",
   BOOKING_DETAILS: "/storage/booking/gffaf",
+  BOOKING_PAYMENT: "/storage/booking/payment",
 };

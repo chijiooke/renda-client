@@ -4,16 +4,44 @@ import { Input, Button, OTPInput } from "@/components";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { formikCaption, passwordRegex, formikError, AuthRoutes } from "@/utils";
+import {
+  formikCaption,
+  passwordRegex,
+  formikError,
+  AuthRoutes,
+  baseURL,
+} from "@/utils";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { OnboardingAction } from "@/types";
+import { StoreState } from "@/store/reducer";
 const ResetPassword = () => {
   const [done, setDone] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const submit = () => {
+  const [error, setError] = useState<string>("");
+
+  const { loginDetails } = useSelector((state: StoreState) => state);
+  const submit = async (password: string) => {
     setLoading(true);
-    setTimeout(() => {
+    setError("");
+
+    try {
+      const { data: response } = await axios.post(baseURL + "ResetPassword", {
+        userId: loginDetails.id,
+        password,
+        code: loginDetails.otp,
+      });
+      if (response.success) {
+        setDone(true);
+      }
+    } catch (error) {
+      setError(
+        (error as any).response.data.errorMessage ||
+          (error as any).response.data.data
+      );
+    } finally {
       setLoading(false);
-      setDone(true);
-    }, 2000);
+    }
   };
   const formik = useFormik({
     initialValues: {
@@ -31,14 +59,20 @@ const ResetPassword = () => {
         .oneOf([Yup.ref("password")], "Password must match")
         .required("Confirm password must match"),
     }),
-    onSubmit: () => {
-      submit();
+    onSubmit: ({ password }) => {
+      submit(password);
     },
   });
   return (
     <OnboardLayout steps={false}>
       {!done && (
         <div className=" max-w-2xl">
+          {error && (
+            <p className="text-white bg-red-500 p-4 rounded-md my-5 text-1xl">
+              {" "}
+              {error}
+            </p>
+          )}
           <div className="flex flex-col gap-4 ">
             <h1 className="text-black mb-3 text-[35px] font-bold text-primary">
               Enter New Password
@@ -104,7 +138,6 @@ const AllDone = () => {
           title="Go to Login"
           className=""
           handleClick={() => router.push(AuthRoutes.LOGIN)}
-          disabled={true}
         />
       </div>
     </div>

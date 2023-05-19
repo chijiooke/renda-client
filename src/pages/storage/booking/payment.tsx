@@ -24,6 +24,10 @@ const tabs = [
     text: "Pay with your Debit card",
   },
 ];
+function classNames(...classes: any[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
 export default function StoragePayment() {
   return (
     <DashBoardLayout backAction backText="Back to Storage Payment ">
@@ -39,10 +43,15 @@ export default function StoragePayment() {
                   {tabs.map(({ title, icon: Icon, text }, idx) => (
                     <Tab
                       key={idx}
-                      className="flex gap-10 p-10 outline-none item-center justify-between cursor-pointer"
+                      className={({ selected }) =>
+                        classNames(
+                          "flex gap-10 p-10 outline-none item-center justify-between cursor-pointer",
+                          selected ? "bg-[#EDF9FF]" : ""
+                        )
+                      }
                     >
                       <div className="flex items-center gap-5">
-                        <div className="bg-[#d9d9d9] p-5 rounded-full">
+                        <div className="bg-[#d9d9d9] p-5 rounded-full  ">
                           <Icon />
                         </div>
 

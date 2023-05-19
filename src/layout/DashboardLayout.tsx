@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/reducer";
-import { AuthRoutes } from "@/utils";
+import { AuthRoutes, DashBoardRoutes } from "@/utils";
 import cn from "classnames";
 import {
   DashboardIcon,
@@ -15,6 +15,7 @@ import {
   DeliveryIcon,
   ReturnsIcon,
   LeftArrowIcon,
+  RightArrowIcon,
 } from "@/icons";
 type Props = {
   children: ReactNode;
@@ -25,47 +26,57 @@ interface NavRoutes {
   icon: () => JSX.Element;
   title: string;
   route: string;
+  children?: {
+    title: string;
+    route: string;
+  }[];
 }
 const routes: NavRoutes[] = [
   {
     icon: DashboardIcon,
     title: "Dashboard",
-    route: "/",
+    route: DashBoardRoutes.DASHBOARD,
   },
   {
     icon: StorageIcon,
     title: "Storage",
-    route: "/storage",
+    route: DashBoardRoutes.STORAGE,
+    children: [
+      {
+        title: "Storage Booking",
+        route: DashBoardRoutes.STORAGE_BOOKING,
+      },
+    ],
   },
   {
     icon: InventoryIcon,
     title: "Inventory",
-    route: "/",
+    route: "",
   },
   {
     icon: OrderManagementIcon,
     title: "Order Mgt",
-    route: "/",
+    route: "",
   },
   {
     icon: DeliveryIcon,
     title: "Delivery",
-    route: "/",
+    route: "",
   },
   {
     icon: ReturnsIcon,
     title: "Returns",
-    route: "/",
+    route: "",
   },
   {
     icon: InventoryIcon,
     title: "Reconciliation",
-    route: "/",
+    route: "",
   },
   {
     icon: OrderManagementIcon,
     title: "Reports",
-    route: "/",
+    route: "",
   },
 ];
 const DashBoardLayout: FC<Props> = ({
@@ -80,6 +91,9 @@ const DashBoardLayout: FC<Props> = ({
       router.push(AuthRoutes.LOGIN);
     }
   }, [authenticated]);
+  const isActive = (route: string) => {
+    return route.split("/")[1] === router.pathname.split("/")[1];
+  };
   return (
     <div className="d-flex flex-column flex-root" id="kt_app_root">
       <div
@@ -93,22 +107,53 @@ const DashBoardLayout: FC<Props> = ({
               src="/assets/images/Renda-logo-with-tagline.svg"
               className="h-70px"
             />
-            <nav className="flex flex-col mt-5 mx-7 justify-center">
+            <nav className="flex flex-col mt-5  justify-center">
               <ul>
                 {" "}
-                {routes.map(({ title, icon: Icon, route }, i) => (
-                  <Link
-                    href={route}
-                    key={i}
-                    className=" my-4 bg-[#000000] flex hover:bg-[#1b547f] cursor-pointer items-center gap-5  p-4 text-[18px]  font-semibold   group-hover:text-[#ffffff]"
-                  >
-                    <div className="w-[40px] flex justify-center">
-                      <Icon />
-                    </div>
+                {routes.map(
+                  ({ title, icon: Icon, route, children: innerRoutes }, i) => (
+                    <>
+                      <Link
+                        href={route}
+                        key={i}
+                        className={cn(
+                          "my-4 bg-[#000000] flex hover:bg-[#1b547f] cursor-pointer items-center gap-5  px-10 py-4 text-[18px]  font-semibold   group-hover:text-[#ffffff] nav",
+                          { activeNav: router.pathname === route }
+                        )}
+                      >
+                        <div className="w-[40px] flex justify-center">
+                          <Icon />
+                        </div>
 
-                    <span className="text-start font-extrabold">{title}</span>
-                  </Link>
-                ))}
+                        <span className="text-start font-extrabold">
+                          {title}
+                        </span>
+                        {innerRoutes && (
+                          <span>
+                            {" "}
+                            <RightArrowIcon />
+                          </span>
+                        )}
+                      </Link>
+                      {innerRoutes &&
+                        isActive(route) &&
+                        innerRoutes.map(({ title, route }, idx) => (
+                          <Link
+                            href={route}
+                            key={idx}
+                            className={cn("text-center hover:bg-primary nav", {
+                              activeNav: router.pathname === route,
+                            })}
+                          >
+                            <span className="px-20 text-[16px] font-semibold p-3">
+                              {" "}
+                              {title}
+                            </span>
+                          </Link>
+                        ))}
+                    </>
+                  )
+                )}
               </ul>
             </nav>
           </div>
@@ -145,9 +190,6 @@ const DashBoardLayout: FC<Props> = ({
                         <RedDot />
                       </span>
                     </div>
-                    {/* <div>
-                      <img src="/assets/images/user.png" />
-                    </div> */}
                   </div>
                 </div>
                 <div className="my-10">{children}</div>

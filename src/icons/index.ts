@@ -12,3 +12,6 @@ export { LeftArrowIcon } from "./leftArrow";
 export { BankIcon } from "./bank";
 export { RightArrowWithBg } from "./rightArrrowwithBg";
 export { DebitCardIcon } from "./debitCard";
+export { RightArrowIcon } from "./rightArrow";
+export { ArrowNextIcon } from "./ArrowNext";
+export { ArrowPreviousIcon } from "./ArrowPrevious";

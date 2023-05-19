@@ -1,7 +1,10 @@
 import { Button } from "@/components";
 import { CheckIcon } from "@/icons";
+import { DashBoardRoutes } from "@/utils";
+import { useRouter } from "next/router";
 
 const BookingDetail = () => {
+  const router = useRouter();
   return (
     <div className=" grid grid-cols-3 justify-between my-5 gap-5">
       <div className="col-span-2">
@@ -78,7 +81,12 @@ const BookingDetail = () => {
       </div>
       <div>
         <div className="max-w-sm items-center flex flex-col gap-3 justify-end">
-          <Button title="Pay for Booking " size="sm" className="w-[40%]" />
+          <Button
+            title="Pay for Booking "
+            size="sm"
+            className="w-[40%]"
+            handleClick={() => router.push(DashBoardRoutes.BOOKING_PAYMENT)}
+          />
           <Button title="Renew Bookings" size="sm" className="w-[40%]" />
         </div>
       </div>
