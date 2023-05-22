@@ -37,6 +37,7 @@ const PhoneNumberInput: FC<Props> = ({
           paddingTop: "1.25rem",
           paddingBottom: "1.25rem",
           height: "100%",
+          borderRadius: "40px",
         }}
         value={value}
         containerClass="items-center mr-5"

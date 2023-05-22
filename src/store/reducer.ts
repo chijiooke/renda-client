@@ -44,7 +44,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: true,
+  authenticated: false,
   companyRegistrationNumber: "",
   Kyc: new FormData(),
   fileList: {

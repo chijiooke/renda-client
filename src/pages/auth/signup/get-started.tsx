@@ -78,8 +78,7 @@ const GetStarted = () => {
         .email("Invalid email format")
         .required("Email required"),
       businessAddress: Yup.string()
-        .min(8, "Business address must have at least 8 characters")
-        .required("Address is required"),
+      .required("Address is required"),
 
       businessIndustry: Yup.string(),
       officeAddress: Yup.string(),
