@@ -3,6 +3,7 @@ import { ImageWindowIcon } from "@/icons";
 import { Button } from "../Button";
 import { ReactPortal } from "@/layout";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
+import { ImagePreviewClickable } from "@/container";
 type Props = {
   handleClick?: () => void;
 };
@@ -10,7 +11,7 @@ const StorageCard: FC<Props> = ({ handleClick }) => {
   const [show, setShow] = useState(false);
   const viewImages: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
-    setShow(true);
+    //setShow(true);
   };
   const closeModal = () => {
     setShow(false);
@@ -35,9 +36,13 @@ const StorageCard: FC<Props> = ({ handleClick }) => {
           <div>
             <div className=" flex justify-between items-center">
               <p className="font-extrabold">Name of Storage Facilities</p>
-              <div className="cursor-pointer" onClick={viewImages}>
+              <ImagePreviewClickable
+                handleClick={viewImages}
+                show={show}
+                close={closeModal}
+              >
                 <ImageWindowIcon />
-              </div>
+              </ImagePreviewClickable>
             </div>
           </div>
 

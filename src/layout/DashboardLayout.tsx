@@ -12,8 +12,6 @@ import {
   OrderManagementIcon,
   NotificationIcon,
   RedDot,
-  DeliveryIcon,
-  ReturnsIcon,
   LeftArrowIcon,
   RightArrowIcon,
 } from "@/icons";
@@ -58,26 +56,6 @@ const routes: NavRoutes[] = [
     title: "Order Mgt",
     route: "",
   },
-  {
-    icon: DeliveryIcon,
-    title: "Delivery",
-    route: "",
-  },
-  {
-    icon: ReturnsIcon,
-    title: "Returns",
-    route: "",
-  },
-  {
-    icon: InventoryIcon,
-    title: "Reconciliation",
-    route: "",
-  },
-  {
-    icon: OrderManagementIcon,
-    title: "Reports",
-    route: "",
-  },
 ];
 const DashBoardLayout: FC<Props> = ({
   children,
@@ -115,7 +93,7 @@ const DashBoardLayout: FC<Props> = ({
                     <>
                       <Link
                         href={route}
-                        key={i}
+                        key={i + route}
                         className={cn(
                           "my-4 bg-[#000000] flex hover:bg-[#1b547f] cursor-pointer items-center gap-5  px-10 py-4 text-[18px]  font-semibold   group-hover:text-[#ffffff] nav",
                           { activeNav: router.pathname === route }

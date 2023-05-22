@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Input, Button, Select, PhoneNumberInput } from "@/components";
 import { OnboardLayout } from "@/layout";
 import { useRouter } from "next/router";
@@ -40,11 +40,11 @@ const GetStarted = () => {
   const { getStarted } = useSelector((state: StoreState) => state);
   const [loading, setLoading] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState(getStarted.phoneNumber);
-  const [businessPhoneNumber, setBusinessPhoneNumber] = useState(
+  const [businessPhoneNumber, setBusinessPhoneNumber] = useState<string>(
     getStarted.businessPhoneNumber
   );
-  const [businessIndustry, setBusinessIndustry] = useState(
-    getStarted.businessIndustry
+  const [businessIndustry, setBusinessIndustry] = useState<string | undefined>(
+    industries.find((industry) => industry === getStarted.businessIndustry)
   );
   const router = useRouter();
 
@@ -57,7 +57,7 @@ const GetStarted = () => {
     officeAddress: string;
     phoneNumber: string;
     businessPhoneNumber: string;
-    businessIndustry: string;
+    businessIndustry: string | undefined;
     businessAddress?: string | undefined;
   }) => {
     dispatch({
@@ -80,28 +80,48 @@ const GetStarted = () => {
       businessAddress: Yup.string()
         .min(8, "Business address must have at least 8 characters")
         .required("Address is required"),
-      phoneNumber: Yup.string().matches(phoneRegExp, "Phone number not valid"),
-      businessPhoneNumber: Yup.string().matches(
-        phoneRegExp,
-        "Business phone number valid"
-      ),
+
       businessIndustry: Yup.string(),
-      officeAddress: Yup.string()
-        .min(8, "Address must have at least 8 characters")
-        .required("Address is required"),
+      officeAddress: Yup.string(),
     }),
     onSubmit: (value) => {
       next({ ...value, phoneNumber, businessPhoneNumber, businessIndustry });
     },
   });
 
+  const validatePhone = (phone: string) => {
+    return (
+      phoneRegExp.test("+" + phone) &&
+      (phone.length === 14 || phone.length === 13)
+    );
+  };
+
+  const validate = useMemo(() => {
+    return (
+      Object.values(
+        Object.fromEntries(
+          Object.entries(formik.values).filter(
+            (v) =>
+              ![
+                "officeAddress",
+                "phoneNumber",
+                "businessPhoneNumber",
+                "businessIndustry",
+              ].includes(v[0])
+          )
+        )
+      ).every((v) => v?.length! > 0) &&
+      validatePhone(phoneNumber) &&
+      businessIndustry &&
+      validatePhone(businessPhoneNumber)
+    );
+  }, [formik]);
+  console.log(validate);
   return (
     <OnboardLayout>
       <div className="flex flex-col">
         <div>
-          <h1 className="text-[35px] text-primary font-bold my-5">
-            Get Started
-          </h1>
+          <h1 className="text-[35px] text-primary font-bold">Get Started</h1>
           <p className="text-[13px] md:text-[16px] text-gray-200">
             {" "}
             Ready to create your profile? Tell us more about your Business.
@@ -208,6 +228,7 @@ const GetStarted = () => {
               title="Next"
               handleClick={formik.handleSubmit}
               loading={loading}
+              disabled={!validate}
             />
           </div>
         </div>

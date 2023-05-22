@@ -30,6 +30,8 @@ const Button: FC<Props> = ({
           "bg-primary ": type == "primary",
           "bg-[#8DA9BF]": disabled,
           "rounded-lg": size == "sm",
+          "cursor-pointer": !disabled,
+          "cursor-not-allowed opacity-40": disabled,
         },
         className
       )}

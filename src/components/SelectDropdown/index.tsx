@@ -29,7 +29,12 @@ const Select: FC<Props> = ({
       )}
       <div className="relative">
         <select
-          className="cursor-pointer p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  appearance-none"
+          className={cn(
+            "cursor-pointer p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  appearance-none text-gray-100",
+            {
+              input: !value?.trim(),
+            }
+          )}
           onChange={handleChange}
           value={value}
         >

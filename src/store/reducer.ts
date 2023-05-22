@@ -8,7 +8,7 @@ export interface StoreState {
     officeAddress: string;
     phoneNumber: string;
     businessPhoneNumber: string;
-    businessIndustry: string;
+    businessIndustry: string | undefined;
     businessAddress?: string;
   };
   authenticated: boolean;
@@ -44,7 +44,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: false,
+  authenticated: true,
   companyRegistrationNumber: "",
   Kyc: new FormData(),
   fileList: {

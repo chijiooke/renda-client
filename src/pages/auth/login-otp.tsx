@@ -47,8 +47,8 @@ const LoginOtp = () => {
       }
     } catch (error) {
       setError(
-        (error as any).response.data.errorMessage ||
-          (error as any).response.data.data
+        (error as any).response?.data.errorMessage ||
+          (error as any).response?.data.data
       );
     } finally {
       setLoading(false);

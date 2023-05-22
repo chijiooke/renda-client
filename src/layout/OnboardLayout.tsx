@@ -14,7 +14,7 @@ const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
   return (
     <OnboardContextProvider>
       <div
-        className="d-flex flex-column flex-root h-screen"
+        className="d-flex flex-column flex-root h-screen md:overflow-hidden"
         id="kt_app_root"
         style={{ backgroundColor: "#f0fbff", height: "100vh" }}
       >
@@ -132,7 +132,7 @@ const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
             </div>
           </div>
 
-          <div className="d-flex flex-column flex-lg-row-fluid py-10 mt-5">
+          <div className="d-flex flex-column flex-lg-row-fluid ">
             <div className="d-flex flex-row-reverse p-5">
               <img
                 alt="Logo"
@@ -143,8 +143,8 @@ const OnboardLayout: FC<Props> = ({ children, steps = true }) => {
             </div>
 
             <div className="d-flex flex-center flex-column flex-column-fluid">
-              <div className="w-lg-800px w-xl-1000px p-10 p-lg-15 mx-auto">
-                <div className="my-auto">{children}</div>
+              <div className="w-lg-800px w-xl-1000px p-5 p-lg-10 mx-auto">
+                <div className="">{children}</div>
               </div>
             </div>
           </div>

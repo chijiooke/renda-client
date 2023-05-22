@@ -52,8 +52,9 @@ const KycUpload = () => {
   const formik = useFormik({
     initialValues: { number: companyRegistrationNumber },
     validationSchema: Yup.object({
-      number: Yup.number()
-        .min(6, "CAC number should six digits above")
+      number: Yup.string()
+        .min(7, "Registration number should be seven characters")
+        .max(7, "Registration number should be seven characters")
         .required("CAC number required"),
     }),
     onSubmit: () => {
@@ -72,7 +73,7 @@ const KycUpload = () => {
     <OnboardLayout>
       <div>
         <div>
-          <h1 className="text-[35px] text-primary font-bold mb-5">
+          <h1 className="text-[35px] text-primary font-bold mb-1">
             KYC Upload
           </h1>
           <p className="text-[13px] md:text-[16px] text-gray-200">

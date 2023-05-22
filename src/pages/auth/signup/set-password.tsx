@@ -40,7 +40,11 @@ const ConfirmPassword = () => {
         }
       }
     } catch (error) {
-      setError((error as any).response.data.errorMessage);
+      setError(
+        (error as any).response?.data.errorMessage ||
+          (error as any).response?.data.data ||
+          "Error creating account"
+      );
     } finally {
       setLoading(false);
     }
@@ -70,7 +74,7 @@ const ConfirmPassword = () => {
     <OnboardLayout>
       <div className="max-w-5xl">
         <div>
-          <h1 className="text-[35px] text-primary font-extrabold my-5">
+          <h1 className="text-[35px] text-primary font-extrabold">
             Create A Password
           </h1>
           <p className=" text-[13px] md:text-[16px] text-gray-200">
