@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { OnboardingAction } from "@/types";
 import { StoreState } from "@/store/reducer";
 import axios from "axios";
+import { EmailMask } from "@/container";
 const ConfirmOTP = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -74,7 +75,9 @@ const ConfirmOTP = () => {
           <p className="text-gray-500 text-[16px]">
             {" "}
             We sent a code to{" "}
-            <span className="text-black font-bold">ad**@g****.com</span>
+            <span className="text-black font-bold">
+              <EmailMask email={loginDetails.value} maskDomain />
+            </span>
           </p>
         </div>
         <div className="mb-10">
