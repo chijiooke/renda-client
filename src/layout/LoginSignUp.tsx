@@ -12,30 +12,29 @@ type Props = {
 const LoginContainer: FC<Props> = ({ children }) => {
   const router = useRouter();
   return (
-    <div className="container-fluid bg-white relative">
+    <div className="container-fluid bg-white">
       <div className="row no-gutter">
         <div
           style={{
             height: "95vh",
-            backgroundImage: "url('/assets/images/first_background.png')",
+            //backgroundImage: "url('/assets/images/first_background.png')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
+
+            width: "45%",
           }}
-          className="rounded-lg inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 m-5 rounded overflow-hidden relative"
+          className=""
+          // className="rounded-lg inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 m-5 rounded overflow-hidden relative"
         >
-          <div
-            style={{
-              height: "95vh",
-              width: "100%",
-              opacity: 1,
-              backgroundImage:
-                "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))",
-            }}
-            className="rounded-tl-3xl rounded-tr-3xl"
-          />
-          <div className=" absolute inset-x-0 bottom-0 px-16 pb-28 ">
-            <div className="py-8 px-12 text-center">
+          <div className="">
+            <div
+              style={{
+                height: "95vh",
+                width: "100%",
+              }}
+              className="py-8 px-12 text-center justify--center"
+            >
               <CarouselComponent />
             </div>
           </div>
