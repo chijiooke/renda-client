@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "public\next.svg";
 import { Inter } from "next/font/google";
 import { DashBoardLayout } from "@/layout";
 import {
