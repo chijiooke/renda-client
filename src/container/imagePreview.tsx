@@ -8,7 +8,7 @@ type Props = {
   show: boolean;
   close: () => void;
 };
-const ImagePreviewClickable: FC<Props> = ({ children, handleClick }) => {
+const ImagePreviewClickable: FC<Props> = ({ children, handleClick, close }) => {
   const [show, setShow] = useState(false);
   const viewImage: MouseEventHandler<HTMLDivElement> = (e) => {
     if (handleClick) {

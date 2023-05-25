@@ -76,7 +76,7 @@ const ConfirmOTP = () => {
             {" "}
             We sent a code to{" "}
             <span className="text-black font-bold">
-              <EmailMask email={loginDetails.value} maskDomain />
+              <EmailMask email={loginDetails.value!} maskDomain />
             </span>
           </p>
         </div>
