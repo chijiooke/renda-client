@@ -1,11 +1,12 @@
 import React from "react";
 import Carousel from "nuka-carousel";
 
-
 export default class CarouselComponent extends React.Component {
   render() {
     return (
       <Carousel
+        renderBottomCenterControls={null}
+        withoutControls
         autoplay={{
           interval: 5000,
           direction: "next",
@@ -20,7 +21,7 @@ export default class CarouselComponent extends React.Component {
             backgroundRepeat: "no-repeat",
             width: "100%",
           }}
-          className="rounded-lg inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 rounded overflow-hidden relative"
+          className="rounded-md inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 overflow-hidden relative object-cover"
         >
           <div
             style={{
@@ -58,7 +59,7 @@ export default class CarouselComponent extends React.Component {
             backgroundRepeat: "no-repeat",
             width: "100%",
           }}
-          className="rounded-lg inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 rounded overflow-hidden relative"
+          className="rounded-md inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 overflow-hidden relative object-cover"
         >
           <div
             style={{
@@ -96,7 +97,7 @@ export default class CarouselComponent extends React.Component {
             backgroundRepeat: "no-repeat",
             width: "100%",
           }}
-          className="rounded-lg inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 rounded overflow-hidden relative"
+          className="rounded-md inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20  overflow-hidden relative object-cover"
         >
           <div
             style={{
@@ -134,7 +135,7 @@ export default class CarouselComponent extends React.Component {
             backgroundRepeat: "no-repeat",
             width: "100%",
           }}
-          className="rounded-lg inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20 rounded overflow-hidden relative"
+          className="rounded-md inset-x-0 col-md-5 p-0 d-none d-md-flex position-relative vh-20  overflow-hidden relative object-cover"
         >
           <div
             style={{

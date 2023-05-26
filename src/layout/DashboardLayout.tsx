@@ -1,10 +1,11 @@
 import { FC, ReactNode, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "@/store/reducer";
-import { AuthRoutes, DashBoardRoutes } from "@/utils";
+import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
 import cn from "classnames";
+
 import {
   DashboardIcon,
   StorageIcon,
@@ -15,6 +16,8 @@ import {
   LeftArrowIcon,
   RightArrowIcon,
 } from "@/icons";
+import axios from "axios";
+import { OnboardingAction } from "@/types";
 type Props = {
   children: ReactNode;
   backAction?: boolean;
@@ -63,15 +66,35 @@ const DashBoardLayout: FC<Props> = ({
   backText = "Back",
 }) => {
   const router = useRouter();
-  const { authenticated } = useSelector((state: StoreState) => state);
+  const dispatch = useDispatch();
+  const { authenticated, userId, user } = useSelector(
+    (state: StoreState) => state
+  );
+
+  const getUser = async () => {
+    const { data: response } = await axios.get(
+      baseURL + "CustomerDetails/" + userId
+    );
+    if (response.success) {
+      dispatch({
+        type: OnboardingAction.SET_USER,
+        payload: response.data,
+      });
+    }
+  };
   useEffect(() => {
     if (!authenticated) {
       router.push(AuthRoutes.LOGIN);
+    } else {
+      getUser();
     }
   }, [authenticated]);
   const isActive = (route: string) => {
     return route.split("/")[1] === router.pathname.split("/")[1];
   };
+  if (!authenticated) {
+    return <h1>Loading</h1>;
+  }
   return (
     <div className="d-flex flex-column flex-root" id="kt_app_root">
       <div
@@ -170,7 +193,13 @@ const DashBoardLayout: FC<Props> = ({
                     </div>
                   </div>
                 </div>
-                <div className="my-10">{children}</div>
+                <div className="my-10">
+                  {Object.keys(user).length > 0 ? (
+                    <> {children}</>
+                  ) : (
+                    <>Loading</>
+                  )}
+                </div>
               </div>
             </div>
           </div>

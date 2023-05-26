@@ -39,9 +39,14 @@ const LoginOtp = () => {
         otp: otp,
       });
       if (response.success) {
+        console.log(response);
         dispatch({
           type: OnboardingAction.SET_AUTHENTICATED,
           payload: true,
+        });
+        dispatch({
+          type: OnboardingAction.SET_USER_ID,
+          payload: response.data.userId,
         });
         router.push(DashBoardRoutes.DASHBOARD);
       }

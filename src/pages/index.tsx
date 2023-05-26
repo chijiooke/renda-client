@@ -8,6 +8,8 @@ import {
   OrderTable,
 } from "@/components";
 const inter = Inter({ subsets: ["latin"] });
+import { useSelector, useDispatch } from "react-redux";
+import { StoreState } from "@/store/reducer";
 interface DateType {
   value: number;
   title: string;
@@ -78,11 +80,15 @@ const data: DateType[] = [
   },
 ];
 export default function Home() {
+  const { user } = useSelector((state: StoreState) => state);
+
   return (
     <DashBoardLayout>
       <section>
         <div>
-          <h1 className="text-[32px] font-bold">Welcome Pelumi</h1>
+          <h1 className="text-[32px] font-bold">
+            Welcome {user?.contactName?.split(" ")[0]}
+          </h1>
           <p className="capitalize text-gray-100 text-[14px] mt-1">
             Where do you want to start today
           </p>
