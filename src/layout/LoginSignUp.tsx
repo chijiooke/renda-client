@@ -5,11 +5,11 @@ import { AuthRoutes } from "@/utils";
 import CarouselComponent from "../components/carousel/CarouselComponent";
 import { url } from "inspector";
 
-
 type Props = {
   children: React.ReactNode;
+  autoCenter?: boolean;
 };
-const LoginContainer: FC<Props> = ({ children }) => {
+const LoginContainer: FC<Props> = ({ children, autoCenter = false }) => {
   const router = useRouter();
   return (
     <div className="container-fluid bg-white">
@@ -55,7 +55,9 @@ const LoginContainer: FC<Props> = ({ children }) => {
             <div className="container h-full ">
               <div className="row">
                 <div
-                  className={cn("col-lg-10 col-xl-7 mx-auto my-auto mt-20 ")}
+                  className={cn("col-lg-10 col-xl-7 my-auto mt-20 ", {
+                    "mx-auto": !autoCenter,
+                  })}
                   style={{ height: "90vh", paddingTop: "16rem" }}
                 >
                   {children}

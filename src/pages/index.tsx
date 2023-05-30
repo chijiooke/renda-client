@@ -87,7 +87,10 @@ export default function Home() {
       <section>
         <div>
           <h1 className="text-[32px] font-bold">
-            Welcome {user?.contactName?.split(" ")[0]}
+            Welcome{" "}
+            <span className="capitalize">
+              {user?.customerBusinessName?.split(" ")}
+            </span>
           </h1>
           <p className="capitalize text-gray-100 text-[14px] mt-1">
             Where do you want to start today

@@ -88,7 +88,7 @@ const DashBoardLayout: FC<Props> = ({
     } else {
       getUser();
     }
-  }, [authenticated]);
+  }, []);
   const isActive = (route: string) => {
     return route.split("/")[1] === router.pathname.split("/")[1];
   };
@@ -191,6 +191,10 @@ const DashBoardLayout: FC<Props> = ({
                         <RedDot />
                       </span>
                     </div>
+                    <img
+                      src="/assets/images/profile.jpeg"
+                      className="h-[30px] scale-150"
+                    />
                   </div>
                 </div>
                 <div className="my-10">
