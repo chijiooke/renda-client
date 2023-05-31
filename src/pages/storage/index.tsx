@@ -9,7 +9,7 @@ export default function Storage() {
   return (
     <>
       {/* <ImagePreview /> */}
-      <ConfirmModal show={true} close={() => true} />
+     
       <DashBoardLayout>
         <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
           <div className="border-b-2 border-b-gray-300 p-7">

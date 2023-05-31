@@ -52,7 +52,17 @@ const routes: NavRoutes[] = [
   {
     icon: InventoryIcon,
     title: "Inventory",
-    route: "",
+    route: DashBoardRoutes.INVENTORY,
+    children: [
+      {
+        title: "All Inventory",
+        route: DashBoardRoutes.STORAGE_BOOKING,
+      },
+      {
+        title: "Add New Stock",
+        route: DashBoardRoutes.STORAGE_BOOKING,
+      },
+    ],
   },
   {
     icon: OrderManagementIcon,
@@ -194,7 +204,7 @@ const DashBoardLayout: FC<Props> = ({
                   </div>
                 </div>
                 <div className="my-10">
-                  {Object.keys(user).length > 0 ? (
+                  {!(Object.keys(user).length > 0) ? (
                     <> {children}</>
                   ) : (
                     <>Loading</>

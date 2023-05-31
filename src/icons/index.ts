@@ -15,3 +15,6 @@ export { DebitCardIcon } from "./debitCard";
 export { RightArrowIcon } from "./rightArrow";
 export { ArrowNextIcon } from "./ArrowNext";
 export { ArrowPreviousIcon } from "./ArrowPrevious";
+export { DeleteIcon } from './delete';
+export { AddIcon } from './add';
+export { UploadIcon } from './upload';

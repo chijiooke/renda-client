@@ -7,7 +7,9 @@ body {
   padding: 0;
   font-family: "Poppins";
 }
-
+.clip-path-polygon {
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 100%, 91% 4%);
+}
 .bg-primary {
   background-color: #1b547f !important;
 }

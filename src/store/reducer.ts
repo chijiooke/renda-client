@@ -46,7 +46,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: false,
+  authenticated: true,
   userId: "",
   user: {},
   companyRegistrationNumber: "",
