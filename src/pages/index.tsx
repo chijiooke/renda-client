@@ -10,6 +10,7 @@ import {
 const inter = Inter({ subsets: ["latin"] });
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "@/store/reducer";
+import { MyModal } from "@/modals";
 interface DateType {
   value: number;
   title: string;
@@ -84,6 +85,9 @@ export default function Home() {
 
   return (
     <DashBoardLayout>
+        {/* <MyModal /> */}
+      
+
       <section>
         <div>
           <h1 className="text-[32px] font-bold">

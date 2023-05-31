@@ -18,6 +18,7 @@ import {
 } from "@/icons";
 import axios from "axios";
 import { OnboardingAction } from "@/types";
+import { MyModal } from "@/modals";
 type Props = {
   children: ReactNode;
   backAction?: boolean;
@@ -111,6 +112,7 @@ const DashBoardLayout: FC<Props> = ({
         className="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep"
         id="kt_create_account_stepper"
       >
+        
         <div className="d-flex flex-column flex-lg-row-auto w-lg-200px w-xl-300px">
           <div className="d-flex flex-column h-full top-0 bottom-0 w-lg-200px w-xl-300px scroll-y text-black bg-white shadow pt-15">
             <img

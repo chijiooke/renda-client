@@ -10,6 +10,7 @@ import {
   AddViaCsv,
   AddViaApi
 } from "@/_pages/Inventory";
+import { MyModal } from "@/modals";
 
 const headers =[
   "Add a Single Inventory",
