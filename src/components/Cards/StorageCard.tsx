@@ -4,12 +4,14 @@ import { Button } from "../Button";
 import { ReactPortal } from "@/layout";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 import { ImagePreviewClickable } from "@/container";
+import { BookStorageModal } from "@/modals";
 type Props = {
   handleClick?: () => void;
   data: any;
 };
 const StorageCard: FC<Props> = ({ handleClick, data }) => {
   const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const viewImages: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
     //setShow(true);
@@ -17,8 +19,13 @@ const StorageCard: FC<Props> = ({ handleClick, data }) => {
   const closeModal = () => {
     setShow(false);
   };
+
+  const showBookStorage = () => {
+    setShowModal(true);
+  };
   return (
     <>
+      <BookStorageModal show={showModal} data={data} />
       <ImagePreview show={show} close={closeModal} />
       <div
         className="p-5 border-gray-300 border-2 rounded cursor-pointer"
@@ -33,7 +40,7 @@ const StorageCard: FC<Props> = ({ handleClick, data }) => {
             {data?.storageType}
           </p>
         </div>
-        <div className="flex flex-col gap-4 mt-3">
+        <div className="flex flex-col gap-4 mt-3 ">
           <div>
             <div className=" flex justify-between items-center">
               <p className="font-extrabold">{data?.storageFacilityName}</p>
@@ -66,7 +73,11 @@ const StorageCard: FC<Props> = ({ handleClick, data }) => {
             {data?.storageType === "Dedicated" && <p>For Price:</p>}
           </div>
           {data?.storageType === "Shared" && (
-            <Button title="Book Storage" size="sm" />
+            <Button
+              title="Book Storage"
+              size="sm"
+              handleClick={showBookStorage}
+            />
           )}
           {data?.storageType === "Dedicated" && (
             <Button title="Contact Us" size="sm" />

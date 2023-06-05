@@ -22,4 +22,9 @@ export const DashBoardRoutes = {
   STORAGE_BOOKING: "/storage/booking",
   BOOKING_DETAILS: "/storage/booking/gffaf",
   BOOKING_PAYMENT: "/storage/booking/payment",
+  INVENTORY: "/inventory",
+  INVENTORY_DETAILS: "/inventory/details",
+  INVENTORY_ALL: "/inventory/allInventory",
+  INVENTORY_NEW_UPLOAD: "/inventory/newUpload",
+  INVENTORY_CONFIRM_INVENTORY: "/inventory/newUpload/confirmInventory",
 };

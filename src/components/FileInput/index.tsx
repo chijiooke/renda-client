@@ -7,6 +7,7 @@ type Props = {
   multiple?: boolean;
   handleChange?: SetStateAction<any>;
   value: File[];
+  variant?: "button" | "primary";
 };
 const FileInput: FC<Props> = ({
   title = "",
@@ -14,6 +15,7 @@ const FileInput: FC<Props> = ({
   multiple = true,
   handleChange,
   value,
+  variant = "primary",
 }) => {
   const [files, setFiles] = useState<File[]>(value);
   const onFilesSelected = (e: { target: HTMLInputElement }) => {
@@ -33,6 +35,7 @@ const FileInput: FC<Props> = ({
   useEffect(() => {
     handleChange(files);
   }, [files]);
+
   return (
     <>
       {files && files.length === 0 && (

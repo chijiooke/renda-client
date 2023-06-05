@@ -4,10 +4,10 @@ import { GetInTouch, Input, Select, StorageCard } from "@/components";
 import { useRouter } from "next/router";
 import { DashBoardRoutes } from "@/utils";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
-import { ConfirmModal } from "@/modals/success";
+
 import axios from "axios";
 import { storageURL } from "@/utils/constant";
-import { BookStorageModal } from "@/modals";
+
 export default function Storage() {
   const router = useRouter();
   const [facilities, setFacilities] = useState([]);
@@ -25,7 +25,6 @@ export default function Storage() {
   }, []);
   return (
     <>
-      {/* <BookStorageModal /> */}
       <DashBoardLayout>
         <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
           <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">

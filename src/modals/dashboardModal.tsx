@@ -1,14 +1,12 @@
-import React, { useState, ReactNode, ChangeEventHandler } from "react";
+import React, { useState, ReactNode } from "react";
 import cn from "classnames";
 import { Input, Button, Select } from "@/components";
 
 type Props = {
   show: boolean;
-  data: any;
 };
 
-function BookStorageModal({ show, data }: Props) {
-  const [details, setDetails] = useState({} as any);
+function MyModal({ show }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -17,17 +15,6 @@ function BookStorageModal({ show, data }: Props) {
 
   const closeModal = () => {
     setIsOpen(false);
-  };
-
-  const handleChange: ChangeEventHandler<
-    HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  > = (e) => {
-    const target = e.target as HTMLInputElement;
-    const dt = {
-      ...details,
-      [target.name]: target.value,
-    };
-    setDetails(dt);
   };
 
   return show ? (
@@ -52,7 +39,7 @@ function BookStorageModal({ show, data }: Props) {
                 <Layout option="Duration of Usage" center={false}>
                   <div className="flex flex-col gap-4">
                     <div className="grid grid-cols-3 gap-2">
-                      <Input name="" handleChange={handleChange} />
+                      <Input name="" />
                       <div className="col-span-2">
                         <Select options={["Monthly", "Yearly"]} />
                       </div>
@@ -66,19 +53,6 @@ function BookStorageModal({ show, data }: Props) {
 
                 <Layout option="Size of Space Required">
                   <Input placeholder="Minimum of 100sqm" name="spaceRequired" />
-                </Layout>
-                <Layout option="Amount to be paid">
-                  <Input
-                    placeholder=""
-                    name="amount"
-                    handleChange={handleChange}
-                    disabled={true}
-                    value={
-                      "₦ " +
-                      (String(data?.spaceRequired * +data?.priceOfStorage!) ||
-                        0)
-                    }
-                  />
                 </Layout>
               </div>
               <div className=" w-full">
@@ -113,4 +87,4 @@ const Layout = ({
   );
 };
 
-export { BookStorageModal };
+export { MyModal };

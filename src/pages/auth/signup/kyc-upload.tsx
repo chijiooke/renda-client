@@ -112,11 +112,6 @@ const KycUpload = () => {
           />
         </div>
         <div className=" gap-10 mt-10 max-w-md">
-          {/* <Button
-            title="Skip"
-            type="secondary"
-            handleClick={() => router.push(OnboardRoutes.SET_PASSWORD)}
-          /> */}
           <Button
             title="Next"
             handleClick={formik.handleSubmit}

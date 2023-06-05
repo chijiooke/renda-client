@@ -18,7 +18,7 @@ import {
 } from "@/icons";
 import axios from "axios";
 import { OnboardingAction } from "@/types";
-import { BookStorageModal } from "@/modals";
+
 type Props = {
   children: ReactNode;
   backAction?: boolean;
@@ -53,7 +53,17 @@ const routes: NavRoutes[] = [
   {
     icon: InventoryIcon,
     title: "Inventory",
-    route: "",
+    route: DashBoardRoutes.INVENTORY,
+    children: [
+      {
+        title: "All Inventory",
+        route: DashBoardRoutes.INVENTORY_ALL,
+      },
+      {
+        title: "Add New Stock",
+        route: DashBoardRoutes.INVENTORY_NEW_UPLOAD,
+      },
+    ],
   },
   {
     icon: OrderManagementIcon,
