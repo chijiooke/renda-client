@@ -2,8 +2,12 @@ import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
+import { MyModal } from "@/modals";
+
 export default function ConfirmInventory() {
   const router = useRouter();
+    
+  
   return (
     <DashBoardLayout backAction>
       <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
@@ -30,21 +34,21 @@ export default function ConfirmInventory() {
               <p>BRIEF DESCRIPTION</p>
               <p>IMAGE</p>
             </div>
-            <div
-              className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer"
-              onClick={() => router.push(DashBoardRoutes.BOOKING_DETAILS)}
-            >
-              <p className="text-green-300">Active</p>
-              <p>#RND9801</p>
-              <p>Facility Name </p>
-              <p>12-03-2023</p>
-              <p>Lagos Island, Lagos</p>
-              <p>N8,000,000 </p>
-              <p>3 Weeks</p>
-              <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
-                Make Payment
-              </p>
-            </div>
+            <button>
+              <div className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer">
+                <p className="text-green-300">Active</p>
+                <MyModal />
+                <p>#RND9801</p>
+                <p>Facility Name </p>
+                <p>12-03-2023</p>
+                <p>Lagos Island, Lagos</p>
+                <p>N8,000,000 </p>
+                <p>3 Weeks</p>
+                <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
+                  Make Payment
+                </p>
+              </div>
+            </button>
             <div className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center">
               <p className="text-green-300">Active</p>
               <p>#RND9801</p>
@@ -67,6 +71,19 @@ export default function ConfirmInventory() {
               <p>3 Weeks</p>
               <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
                 Make Payment
+              </p>
+            </div>
+          </div>
+
+          <div className="flex justify-end py-5 gap-3">
+            <div className="inline-flex space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 bg-blue-900 rounded-md">
+              <p className="text-xs font-semibold leading-none text-white">
+                Confirm Items
+              </p>
+            </div>
+            <div className="inline-flex space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 border-1 rounded-md border-blue-900">
+              <p className="text-xs font-semibold leading-none text-blue-900">
+                Back{" "}
               </p>
             </div>
           </div>
