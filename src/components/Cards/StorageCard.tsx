@@ -6,8 +6,9 @@ import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 import { ImagePreviewClickable } from "@/container";
 type Props = {
   handleClick?: () => void;
+  data: any;
 };
-const StorageCard: FC<Props> = ({ handleClick }) => {
+const StorageCard: FC<Props> = ({ handleClick, data }) => {
   const [show, setShow] = useState(false);
   const viewImages: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
@@ -29,13 +30,13 @@ const StorageCard: FC<Props> = ({ handleClick }) => {
             className="w-full object-cover rounded"
           />
           <p className="absolute top-[20px] font-bold p-2 text-white bg-orange-400 rounded-r">
-            Dedicated storage
+            {data?.storageType}
           </p>
         </div>
         <div className="flex flex-col gap-4 mt-3">
           <div>
             <div className=" flex justify-between items-center">
-              <p className="font-extrabold">Name of Storage Facilities</p>
+              <p className="font-extrabold">{data?.storageFacilityName}</p>
               <ImagePreviewClickable
                 handleClick={viewImages}
                 show={show}
@@ -49,15 +50,27 @@ const StorageCard: FC<Props> = ({ handleClick }) => {
           <div>
             <p className="text-[10px]">
               {" "}
-              6 Months | Badagry | Available Space (100qm)
+              {data?.maximumDurationOfUsage} Months | {data?.locationOfStorage}{" "}
+              | Available Space ({data?.availableSpace}qm)
             </p>
           </div>
           <div>
-            <p>
-              From <span className="font-bold text-1xl">NGN 780,000</span>
-            </p>
+            {data?.storageType === "Shared" && (
+              <p>
+                From{" "}
+                <span className="font-bold text-1xl">
+                  NGN {data?.rendaPrice} per sqm
+                </span>
+              </p>
+            )}
+            {data?.storageType === "Dedicated" && <p>For Price:</p>}
           </div>
-          <Button title="Contact Us" size="sm" />
+          {data?.storageType === "Shared" && (
+            <Button title="Book Storage" size="sm" />
+          )}
+          {data?.storageType === "Dedicated" && (
+            <Button title="Contact Us" size="sm" />
+          )}
         </div>
       </div>
     </>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Image from "public\next.svg";
 import { Inter } from "next/font/google";
 import { DashBoardLayout } from "@/layout";
@@ -6,10 +7,12 @@ import {
   PieChartCard,
   AreaChartCard,
   OrderTable,
+  Button,
 } from "@/components";
 const inter = Inter({ subsets: ["latin"] });
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "@/store/reducer";
+import { BookStorageModal } from "@/modals";
 interface DateType {
   value: number;
   title: string;
@@ -81,6 +84,7 @@ const data: DateType[] = [
 ];
 export default function Home() {
   const { user } = useSelector((state: StoreState) => state);
+  const [show, setShow] = useState(false);
 
   return (
     <DashBoardLayout>
@@ -88,9 +92,7 @@ export default function Home() {
         <div>
           <h1 className="text-[32px] font-bold">
             Welcome{" "}
-            <span className="capitalize">
-              {user?.customerBusinessName?.split(" ")}
-            </span>
+            <span className="capitalize">{user?.customerBusinessName}</span>
           </h1>
           <p className="capitalize text-gray-100 text-[14px] mt-1">
             Where do you want to start today

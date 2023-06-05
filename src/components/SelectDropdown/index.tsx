@@ -10,6 +10,7 @@ type Props = {
   value?: string;
   error?: boolean;
   caption?: string;
+  size?: "sm" | "md" | "lg";
 };
 const Select: FC<Props> = ({
   label,
@@ -19,6 +20,7 @@ const Select: FC<Props> = ({
   value,
   error = false,
   caption,
+  size = "md",
 }) => {
   return (
     <div className="flex flex-col w-full">
@@ -33,6 +35,7 @@ const Select: FC<Props> = ({
             "cursor-pointer p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  appearance-none text-gray-100",
             {
               input: !value?.trim(),
+              "py-2": size === "sm",
             }
           )}
           onChange={handleChange}
@@ -49,7 +52,9 @@ const Select: FC<Props> = ({
         </select>
         <img
           src="/assets/images/chevron-down.svg"
-          className="h-[20px] absolute right-5 top-5 cursor-pointer"
+          className={cn("h-[20px] absolute right-5 top-5 cursor-pointer", {
+            "top-3": size === "sm",
+          })}
         />
       </div>
       {error && (

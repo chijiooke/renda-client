@@ -37,6 +37,7 @@ type Props = {
   name?: string;
   error?: boolean;
   caption?: string;
+  size?: "sm" | "md" | "lg";
 };
 const Input: FC<Props> = ({
   label = "",
@@ -49,6 +50,7 @@ const Input: FC<Props> = ({
   handleChange,
   error = false,
   caption = "",
+  size = "md",
 }) => {
   const [iType, setIType] = useState<HTMLInputTypeAttribute>(type);
   const togglePassword = () => {
@@ -73,6 +75,7 @@ const Input: FC<Props> = ({
             "p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  ",
             {
               "border-rose-600": error,
+              "py-2": size === "sm",
             }
           )}
           required={required}

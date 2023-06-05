@@ -18,7 +18,7 @@ export const OnboardRoutes = {
 export const DashBoardRoutes = {
   DASHBOARD: "/",
   STORAGE: "/storage",
-  STORAGE_DETAILS: "/storage/aaf",
+  STORAGE_DETAILS: "/storage/[[facility]]",
   STORAGE_BOOKING: "/storage/booking",
   BOOKING_DETAILS: "/storage/booking/gffaf",
   BOOKING_PAYMENT: "/storage/booking/payment",
