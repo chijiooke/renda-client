@@ -24,7 +24,7 @@ export const DashBoardRoutes = {
   BOOKING_PAYMENT: "/storage/booking/payment",
   INVENTORY: "/inventory",
   INVENTORY_DETAILS: "/inventory/details",
-  INVENTORY_ALL: "/inventory/all",
-  INVENTORY_NEW_STOCK: "/inventory/add_new_stock",
-  // INVENTORY_PAYMENT: "/inventory/booking/payment",
+  INVENTORY_ALL: "/inventory/allInventory",
+  INVENTORY_NEW_UPLOAD: "/inventory/newUpload",
+  INVENTORY_CONFIRM_INVENTORY: "/inventory/newUpload/confirmInventory",
 };

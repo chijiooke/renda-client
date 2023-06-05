@@ -57,11 +57,11 @@ const routes: NavRoutes[] = [
     children: [
       {
         title: "All Inventory",
-        route: DashBoardRoutes.STORAGE_BOOKING,
+        route: DashBoardRoutes.INVENTORY_ALL,
       },
       {
         title: "Add New Stock",
-        route: DashBoardRoutes.STORAGE_BOOKING,
+        route: DashBoardRoutes.INVENTORY_NEW_UPLOAD,
       },
     ],
   },

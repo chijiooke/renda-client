@@ -1,3 +1,3 @@
-export { AddViaCsv } from "./viaCSV";
-export { AddViaApi } from "./viaAPI";
-export { AddNewInventory } from "./addNEW";
+export { AddViaCsv } from "./new/upload/viaCSV";
+export { AddViaApi } from "./new/upload/viaAPI";
+export { AddNewInventory } from "./new/addNEW";
