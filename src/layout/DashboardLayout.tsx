@@ -216,7 +216,7 @@ const DashBoardLayout: FC<Props> = ({
                     </div>
                   </div>
                   <div className="my-10">
-                    {!(Object.keys(user).length > 0) ? (
+                    {Object.keys(user).length > 0 ? (
                       <> {children}</>
                     ) : (
                       <>Loading</>
