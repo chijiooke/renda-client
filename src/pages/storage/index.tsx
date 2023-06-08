@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, MouseEventHandler, SyntheticEvent } from "react";
 import { DashBoardLayout, ReactPortal } from "@/layout";
 import { GetInTouch, Input, Select, StorageCard } from "@/components";
 import { useRouter } from "next/router";
@@ -23,15 +23,20 @@ export default function Storage() {
   useEffect(() => {
     getStorage();
   }, []);
+
   return (
     <>
       <DashBoardLayout>
         <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
           <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">
             <h1 className="text-2xl font-extrabold">Storage Facilities</h1>
-            <div className="flex gap-3 items-center">
+            <div className="grid grid-cols-3 gap-3 items-center">
               <Input placeholder="Search" size="sm" className="w-100" />
-              <Select options={["1", "2"]} size="sm" placeholder="Duration" />
+              <Select
+                options={["Months", "Years"]}
+                size="sm"
+                placeholder="Duration"
+              />
               <Select
                 options={["Shared", "Dedicated"]}
                 size="sm"
@@ -42,16 +47,7 @@ export default function Storage() {
           {facilities.length > 0 && (
             <div className="grid md:grid-cols-4 md:gap-8 p-6 mt-5 grid-cols-1 ">
               {facilities.map((facility: any, idx) => (
-                <StorageCard
-                  data={facility}
-                  key={idx}
-                  handleClick={() =>
-                    router.push({
-                      pathname: DashBoardRoutes.STORAGE_DETAILS,
-                      query: { facility: facility?.storageFacilityId },
-                    })
-                  }
-                />
+                <StorageCard data={facility} key={idx} />
               ))}
               <GetInTouch />
             </div>

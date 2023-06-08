@@ -4,14 +4,17 @@ import { Button } from "../Button";
 import { ReactPortal } from "@/layout";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 import { ImagePreviewClickable } from "@/container";
-import { BookStorageModal } from "@/modals";
+import { BookStorageModal, ContactUsModal } from "@/modals";
+import { DashBoardRoutes } from "@/utils";
+import { useRouter } from "next/router";
 type Props = {
-  handleClick?: () => void;
   data: any;
 };
-const StorageCard: FC<Props> = ({ handleClick, data }) => {
+const StorageCard: FC<Props> = ({ data }) => {
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
   const viewImages: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
     //setShow(true);
@@ -20,16 +23,42 @@ const StorageCard: FC<Props> = ({ handleClick, data }) => {
     setShow(false);
   };
 
-  const showBookStorage = () => {
+  const showBookStorage: MouseEventHandler<HTMLButtonElement> = (e) => {
     setShowModal(true);
+  };
+  const showContactUsModal = () => {
+    setShowContactModal(true);
+  };
+
+  const goToDetails: MouseEventHandler<HTMLDivElement> = (e) => {
+    const path = e.nativeEvent.composedPath();
+
+    if (
+      !["Contact Us", "Book Storage"].includes(
+        ((path[1] as HTMLElement).childNodes[0] as HTMLElement).innerText
+      )
+    ) {
+      router.push({
+        pathname: DashBoardRoutes.STORAGE_DETAILS,
+        query: { facility: data?.storageFacilityId },
+      });
+    }
   };
   return (
     <>
-      <BookStorageModal show={showModal} data={data} />
+      <BookStorageModal
+        show={showModal}
+        data={data}
+        close={() => setShowModal(false)}
+      />
+      <ContactUsModal
+        show={showContactModal}
+        close={() => setShowContactModal(false)}
+      />
       <ImagePreview show={show} close={closeModal} />
       <div
         className="p-5 border-gray-300 border-2 rounded cursor-pointer"
-        onClick={handleClick}
+        onClick={goToDetails}
       >
         <div className="relative ">
           <img
@@ -80,7 +109,11 @@ const StorageCard: FC<Props> = ({ handleClick, data }) => {
             />
           )}
           {data?.storageType === "Dedicated" && (
-            <Button title="Contact Us" size="sm" />
+            <Button
+              title="Contact Us"
+              size="sm"
+              handleClick={showContactUsModal}
+            />
           )}
         </div>
       </div>

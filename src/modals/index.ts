@@ -1,2 +1,3 @@
 export { BookStorageModal } from "./bookStorage";
-export {MyModal} from './dashboardModal';
+export { MyModal } from "./dashboardModal";
+export { ContactUsModal } from "./contact";

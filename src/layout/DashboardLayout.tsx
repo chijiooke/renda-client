@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
@@ -82,15 +82,23 @@ const DashBoardLayout: FC<Props> = ({
     (state: StoreState) => state
   );
 
+  const [loading, setLoading] = useState(false);
+
   const getUser = async () => {
-    const { data: response } = await axios.get(
-      baseURL + "CustomerDetails/" + userId
-    );
-    if (response.success) {
-      dispatch({
-        type: OnboardingAction.SET_USER,
-        payload: response.data,
-      });
+    setLoading(true);
+    try {
+      const { data: response } = await axios.get(
+        baseURL + "CustomerById/" + userId
+      );
+      if (response.success) {
+        dispatch({
+          type: OnboardingAction.SET_USER,
+          payload: response.data,
+        });
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -216,11 +224,7 @@ const DashBoardLayout: FC<Props> = ({
                     </div>
                   </div>
                   <div className="my-10">
-                    {Object.keys(user).length > 0 ? (
-                      <> {children}</>
-                    ) : (
-                      <>Loading</>
-                    )}
+                    {!loading ? <> {children}</> : <>Loading</>}
                   </div>
                 </div>
               </div>

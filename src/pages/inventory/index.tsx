@@ -5,18 +5,10 @@ import { DashBoardRoutes } from "@/utils";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 import { ConfirmModal } from "@/modals/success";
 import { Tab } from "@headlessui/react";
-import {
-  AddNewInventory,
-  AddViaCsv,
-  AddViaApi
-} from "@/_pages/Inventory";
+import { AddNewInventory, AddViaCsv, AddViaApi } from "@/_pages/inventory";
 import { MyModal } from "@/modals";
 
-const headers =[
-  "Add a Single Inventory",
-  "Add via CSV",
-  "Import via API"
-]
+const headers = ["Add a Single Inventory", "Add via CSV", "Import via API"];
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -65,4 +57,3 @@ export default function Storage() {
     </>
   );
 }
-

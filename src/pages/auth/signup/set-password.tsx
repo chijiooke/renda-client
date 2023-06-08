@@ -91,11 +91,10 @@ const ConfirmPassword = () => {
           </p>
         )}
         <form className="max-w-2xl">
-          <div className="my-10">
+          <div className="my-10 flex flex-col gap-10">
             <Input
               label="Create Password"
               type="password"
-              className="my-10"
               value={formik.values.password}
               handleChange={formik.handleChange}
               caption={formikCaption("password", formik)}
@@ -105,7 +104,6 @@ const ConfirmPassword = () => {
             <Input
               label="Confirm Password"
               type="password"
-              className="my-10"
               value={formik.values.confirmPassword}
               handleChange={formik.handleChange}
               caption={formikCaption("confirmPassword", formik)}

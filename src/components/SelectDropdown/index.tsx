@@ -53,7 +53,7 @@ const Select: FC<Props> = ({
         <img
           src="/assets/images/chevron-down.svg"
           className={cn("h-[20px] absolute right-5 top-5 cursor-pointer", {
-            "top-3": size === "sm",
+            "top-2": size === "sm",
           })}
         />
       </div>

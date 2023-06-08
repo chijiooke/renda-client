@@ -6,8 +6,7 @@ import { MyModal } from "@/modals";
 
 export default function ConfirmInventory() {
   const router = useRouter();
-    
-  
+
   return (
     <DashBoardLayout backAction>
       <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
@@ -37,7 +36,7 @@ export default function ConfirmInventory() {
             <button>
               <div className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer">
                 <p className="text-green-300">Active</p>
-                <MyModal />
+
                 <p>#RND9801</p>
                 <p>Facility Name </p>
                 <p>12-03-2023</p>

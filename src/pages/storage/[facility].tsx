@@ -11,6 +11,7 @@ import { data } from "autoprefixer";
 const Facility = () => {
   const router = useRouter();
   const [facility, setFacility] = useState({} as any);
+  const [show, setShow] = useState(false);
   const { facility: id } = router.query;
   console.log(id);
   const getFacilityDetails = async () => {
@@ -42,7 +43,11 @@ const Facility = () => {
   }, [facility]);
   return (
     <>
-      {/* <BookStorageModal /> */}
+      <BookStorageModal
+        close={() => setShow(false)}
+        show={show}
+        data={facility}
+      />
 
       <DashBoardLayout backAction backText="Back to Storage">
         {Object.keys(facility).length > 0 && (
@@ -116,8 +121,13 @@ const Facility = () => {
                     ))}
                   </div>
                 </div>
-                <div className="w-[25%] my-6">
-                  <Button title="Book Storage" className="w-[90%]" size="sm" />
+                <div className="w[50%] my-6">
+                  <Button
+                    title="Book Storage"
+                    className="w-[90%]"
+                    size="sm"
+                    handleClick={() => setShow(true)}
+                  />
                 </div>
               </div>
             </div>

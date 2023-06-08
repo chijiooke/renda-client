@@ -77,8 +77,7 @@ const GetStarted = () => {
       emailAddress: Yup.string()
         .email("Invalid email format")
         .required("Email required"),
-      businessAddress: Yup.string()
-      .required("Address is required"),
+      businessAddress: Yup.string().required("Address is required"),
 
       businessIndustry: Yup.string(),
       officeAddress: Yup.string(),
@@ -115,7 +114,7 @@ const GetStarted = () => {
       validatePhone(businessPhoneNumber)
     );
   }, [formik]);
-  console.log(validate);
+
   return (
     <OnboardLayout>
       <div className="flex flex-col">
@@ -127,10 +126,10 @@ const GetStarted = () => {
           </p>
         </div>
         <div>
-          <div className="flex w-full my-8 gap-5">
+          <div className="grid grid-cols-2 w-full my-8 gap-5">
             <Input
               label="Business Name"
-              className="w-100 "
+              className="w-100"
               value={formik.values.businessName}
               handleChange={formik.handleChange}
               name="businessName"
@@ -139,7 +138,7 @@ const GetStarted = () => {
             />
             <Input
               label="Contact Person"
-              className="w-100 "
+              className="w-100"
               value={formik.values.contactPerson}
               handleChange={formik.handleChange}
               name="contactPerson"
@@ -147,7 +146,7 @@ const GetStarted = () => {
               error={formikError("contactPerson", formik)}
             />
           </div>
-          <div className="flex w-full my-8 gap-5">
+          <div className="grid grid-cols-2 w-full my-8 gap-5">
             <Input
               label="Business Email Address"
               className="w-100 "
@@ -169,7 +168,7 @@ const GetStarted = () => {
               error={formikError("emailAddress", formik)}
             />
           </div>
-          <div className="flex w-full my-8 items-center gap-5">
+          <div className="grid grid-cols-2 w-full my-8 items-center gap-5">
             <Input
               label="Business Address"
               className="w-100"
@@ -187,7 +186,7 @@ const GetStarted = () => {
               value={phoneNumber}
             />
           </div>
-          <div className="flex w-full my-8 items-center gap-5">
+          <div className="grid grid-cols-2 w-full my-8 items-center gap-5">
             <PhoneNumberInput
               label="Business Phone Number"
               handleChange={setBusinessPhoneNumber}
@@ -205,10 +204,10 @@ const GetStarted = () => {
               handleChange={(e) => setBusinessIndustry(e.target.value)}
             />
           </div>
-          <div className="flex w-full my-8">
+          <div className="grid w-full  my-8">
             <Input
               label="Office Address (If different from the business address)"
-              className="w-100 "
+              className="w-50 mr-5 "
               type="tel"
               value={formik.values.officeAddress}
               handleChange={formik.handleChange}

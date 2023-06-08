@@ -75,7 +75,7 @@ const Input: FC<Props> = ({
           onChange={handleChange}
           disabled={disabled}
           className={cn(
-            "p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  ",
+            "p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300 ",
             {
               "border-rose-600": error,
               "py-2 rounded-lg": size == "sm",
