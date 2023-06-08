@@ -27,4 +27,6 @@ export const DashBoardRoutes = {
   INVENTORY_ALL: "/inventory/allInventory",
   INVENTORY_NEW_UPLOAD: "/inventory/newUpload",
   INVENTORY_CONFIRM_INVENTORY: "/inventory/newUpload/confirmInventory",
+  INVENTORY_INBOUND_DETAILS: "/inventory/allInventory/inboundDetails",
+  INVENTORY_TOPUP: "/inventory/allInventory/topUpInbound",
 };

@@ -18,3 +18,6 @@ export { ArrowPreviousIcon } from "./ArrowPrevious";
 export { DeleteIcon } from './delete';
 export { AddIcon } from './add';
 export { UploadIcon } from './upload';
+export { ComputerIcon } from './computerIcon';
+export { DoubleArrow } from './doubleArrow';
+export { ComputerImage } from "./computerImage";
