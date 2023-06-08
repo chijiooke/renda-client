@@ -53,7 +53,7 @@ const routes: NavRoutes[] = [
   {
     icon: InventoryIcon,
     title: "Inventory",
-    route: DashBoardRoutes.INVENTORY,
+    route: DashBoardRoutes.INVENTORY_ALL,
     children: [
       {
         title: "All Inventory",

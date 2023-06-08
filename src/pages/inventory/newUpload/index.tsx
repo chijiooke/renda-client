@@ -7,22 +7,46 @@ import { ConfirmModal } from "@/modals/success";
 import { Tab } from "@headlessui/react";
 import { AddNewInventory, AddViaCsv, AddViaApi } from "@/_pages/inventory";
 import { MyModal } from "@/modals";
+import { useState } from "react";
 
 const headers = ["Add a Single Inventory", "Add via CSV", "Import via API"];
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
-export default function Storage() {
+export default function Inventory() {
   const router = useRouter();
+  const [showUploadButton, setShowUploadButton] = useState(true);
+  const handleProcessItemsClick2: any = () => {
+    setShowUploadButton(false);
+  };
+
   return (
     <>
       {/* <ImagePreview /> */}
       <DashBoardLayout>
         <div className="rounded flex-grow border-1 border-gray-300 h-[83vh] pt-2">
-          <div className="border-b-2 border-b-gray-300 p-7 flex flex-col ">
-            <h1 className="text-3xl font-extrabold">Add New Stock</h1>
-            <p>Add a new stock via your prffered upload cahnnel</p>
-          </div>
+          {showUploadButton && (
+            <div className="border-b-2 border-b-gray-300 p-7 flex flex-col ">
+              <h1 className="text-3xl font-extrabold">Add New Stock</h1>
+              <p>Add a new stock via your preffered upload cahnnel</p>
+            </div>
+          )}
+          {!showUploadButton && (
+            <div className="border-b-2 border-b-gray-300 p-7 flex items-center justify-between">
+              <div className="border-b-2 border-b-gray-300 p-7 flex flex-col ">
+                <h1 className="text-3xl font-extrabold">Add New Stock</h1>
+                <p>Add a new stock via your preffered upload cahnnel</p>
+              </div>
+              <div>
+                <Button
+                  title="Upload"
+                  size="sm"
+                  className="max-w-sm"
+                />
+              </div>
+            </div>
+          )}
+
           <div className="w-full px-10 py-5">
             <Tab.Group>
               <Tab.List className="flex pl-10 pt-3 gap-1 rounded-sm border-2 text-center">

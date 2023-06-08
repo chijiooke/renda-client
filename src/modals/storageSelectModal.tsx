@@ -161,13 +161,15 @@
 // export { MyModal };
 
 import React, { useState } from "react";
+import { ConfirmModal, HowItemsToBeDeliveredHandler, MyModal } from "@/modals";
 
-function MyModal() {
-  const [isOpen, setIsOpen] = useState(false);
+interface MyModalProps {
+  onClose: () => void;
+}
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
+const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
 
   const closeModal = () => {
     setIsOpen(false);
@@ -175,7 +177,6 @@ function MyModal() {
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
 
       {isOpen && (
         <div
@@ -207,7 +208,7 @@ function MyModal() {
                 className="relative w-full h-full"
                 style={{ width: "400px", height: "60vh" }}
               >
-                <div className="inline-flex flex-col space-y-10 gap-5 items-center justify-start rounded-xl w-full max-w-md mx-auto">
+                <div className="flex flex-col space-y-10 gap-5 items-center  text-black rounded-xl w-full max-w-md mx-auto">
                   <div className="inline-flex space-x-4 items-center justify-end py-2 pl-4 pr-3 w-full">
                     <p className="text-sm font-semibold leading-tight text-gray-600"></p>
                   </div>
@@ -216,7 +217,7 @@ function MyModal() {
                       <p className="w-full text-lg font-semibold leading-7">
                         Confirm the storage facility you are adding inventory to
                       </p>
-                      <div className="inline-flex space-x-4 space-y-4 items-center justify-end">
+                      <div className="inline-flex py-3 gap-2 py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
                         <input
                           type="radio"
                           className="w-6 h-6 border-2 rounded-full border-black"
@@ -230,7 +231,7 @@ function MyModal() {
                           Omo-Onile Storage Facility
                         </label>
                       </div>
-                      <div className="inline-flex space-x-4 space-y-4 items-center justify-end">
+                      <div className="inline-flex py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
                         <input
                           type="radio"
                           className="w-6 h-6 border-2 rounded-full border-black"
@@ -244,7 +245,7 @@ function MyModal() {
                           Lagos Island Storage Facility
                         </label>
                       </div>
-                      <div className="inline-flex space-x-4 items-center justify-end">
+                      <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
                         <input
                           type="radio"
                           className="w-6 h-6 border-2 rounded-full border-black"
@@ -258,7 +259,7 @@ function MyModal() {
                           Surulere Storage Facility
                         </label>
                       </div>
-                      <div className="inline-flex space-x-4 items-center justify-end">
+                      <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
                         <input
                           type="radio"
                           className="w-6 h-6 border-2 rounded-full border-black"
@@ -272,7 +273,7 @@ function MyModal() {
                           Badagry Storage Facility
                         </label>
                       </div>
-                      <div className="inline-flex space-x-4 items-center justify-end">
+                      <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
                         <input
                           type="radio"
                           className="w-6 h-6 border-2 rounded-full border-black"
@@ -288,15 +289,16 @@ function MyModal() {
                       </div>
                     </div>
                   </div>
-                  <div className="absolute flex fixed bottom-4 bottom-0">
+                  <div className="absolute flex  bottom-4 ">
                     <div
-                      className="inline-flex cursor-pointer w-full space-x-1.5 items-center justify-center py-2.5 bg-blue-900 shadow rounded-md"
+                      className="inline-flex py-3 gap-2 cursor-pointer w-full space-x-1.5 items-center justify-center py-2.5 bg-blue-900 shadow rounded-md"
                       style={{ height: 48, width: 400 }}
-                      onClick={closeModal}
+                      
                     >
-                      <p className="text-sm font-semibold leading-tight text-white">
+                      {/* <p className="text-sm font-semibold  text-white">
                         <button onClick={closeModal}>Submit</button>
-                      </p>
+                      </p> */}
+                      <HowItemsToBeDeliveredHandler />
                     </div>
                   </div>
                 </div>
@@ -307,6 +309,6 @@ function MyModal() {
       )}
     </div>
   );
-}
+};
 
-export { MyModal };
+export { StorageSelect };
