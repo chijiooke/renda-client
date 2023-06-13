@@ -33,6 +33,10 @@ export interface StoreState {
     createPassword: "done" | "not-done";
     confirmEmail: "done" | "not-done";
   };
+  bookingDetails: {
+    amount: number;
+    bookingId: string;
+  };
 }
 export const initialValues: StoreState = {
   getStarted: {
@@ -46,7 +50,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: true,
+  authenticated: false,
   userId: "",
   user: {},
   companyRegistrationNumber: "",
@@ -67,6 +71,10 @@ export const initialValues: StoreState = {
     kycUpload: "not-done",
     createPassword: "not-done",
     confirmEmail: "not-done",
+  },
+  bookingDetails: {
+    amount: 0,
+    bookingId: "",
   },
 };
 interface ActionType {
@@ -118,6 +126,11 @@ const reducer = (
       return {
         ...state,
         user: action.payload,
+      };
+    case OnboardingAction.SET_BOOKING_DETAILS:
+      return {
+        ...state,
+        bookingDetails: action.payload,
       };
     default:
       return state;

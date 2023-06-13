@@ -52,7 +52,7 @@ const BookingDetail = () => {
           <p>Payment Structure</p>
           <p>Monthly payment</p>
         </div>
-        <div className="grid grid-cols-2 py-4">
+        {/* <div className="grid grid-cols-2 py-4">
           <p>Other Renda services booked</p>
           <ul className="flex flex-wrap gap-3 max-w-2xl ">
             <li className="text-[14px] pr-8 flex items-center gap-3">
@@ -77,7 +77,7 @@ const BookingDetail = () => {
               Returns Management
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
       <div>
         <div className="max-w-sm items-center flex flex-col gap-3 justify-end">

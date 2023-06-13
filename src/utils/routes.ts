@@ -28,3 +28,11 @@ export const DashBoardRoutes = {
   INVENTORY_NEW_UPLOAD: "/inventory/newUpload",
   INVENTORY_CONFIRM_INVENTORY: "/inventory/newUpload/confirmInventory",
 };
+
+export const queryStringBuilder = (obj: {}) => {
+  let route = "";
+  Object.entries(obj).forEach(
+    (v, i) => (route = route + (i == 0 ? "?" : "&") + v[0] + "=" + v[1])
+  );
+  return route;
+};
