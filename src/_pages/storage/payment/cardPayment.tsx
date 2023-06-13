@@ -1,68 +1,57 @@
+import { useState } from "react";
 import { Button, Input, TermsAndCondition } from "@/components";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import dayjs from "dayjs";
+import { useEffect } from "react";
+import axios from "axios";
+import { baseURL, queryStringBuilder } from "@/utils";
+import { useSelector } from "react-redux";
+import { StoreState } from "@/store/reducer";
 
 const CardPayment = () => {
-  return (
-    <div className="max-w-4xl">
-      <div className="bg-[#f2f2f2] p-15 rounded border-1 border-[#d9d9d9] mx-6">
-        <div className="bg-white rounded flex items-center py-8 px-20 gap-5 font-bold border-1 border-[#d9d9d9] justify-center">
-          <p>Amount</p>
-          <p className="text-3xl font-extrabold">NGN 780,000</p>
-        </div>
-        <div className="my-10 flex flex-col gap-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-black font-bold text-[14px] text-start">
-                Card Number
-              </p>
-              <p className="text-[12px] opacity-50">
-                Enter the 16-digit card number on the card
-              </p>
-            </div>
-            <Input />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-black font-bold text-[14px] text-start">
-                CVV Number
-              </p>
-              <p className="text-[12px] opacity-50">
-                Enter the 3 or 4 digit number on the card
-              </p>
-            </div>
+  const { bookingDetails, user } = useSelector((state: StoreState) => state);
+  const config = {
+    public_key: "FLWPUBK_TEST-bf4efecf672fbdab00ada453243661e8-X",
+    tx_ref: dayjs(Date.now()).format("YYYY/MM/DD"),
+    amount: bookingDetails.amount,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: user.customerBusinessEmailAddress,
+      phone_number: user.customerBusinessPhoneNumber,
+      name: user.customerBusinessName,
+    },
+    customizations: {
+      title: "Pay for Renda360 Storage",
+      description: "Payment for items in cart",
+      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
 
-            <Input />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-black font-bold text-[14px] text-start">
-                Expiry Date
-              </p>
-              <p className="text-[12px] opacity-50">
-                Enter the expiry date of the card
-              </p>
-            </div>
-            <div className="flex gap-1 items-center">
-              <Input /> <span className="mx-4">/</span>
-              <Input />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-black font-bold text-[14px] text-start">
-                4 Digit Security code
-              </p>
-              <p className="text-[12px] opacity-50">
-                Enter your card transaction pin
-              </p>
-            </div>
-            <Input />
-          </div>
-        </div>
-        <Button title="Pay Now" />
-      </div>
-      <TermsAndCondition />
-    </div>
-  );
+  const handleFlutterPayment = useFlutterwave(config);
+
+  const verifyPayment = async (data: {}) => {
+    const queryString = queryStringBuilder(data);
+    try {
+      const { data } = await axios.put(baseURL + `VerifyPayment${queryString}`);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    handleFlutterPayment({
+      callback: async (response) => {
+        console.log(response);
+        await verifyPayment({
+          bookingId: bookingDetails.bookingId,
+          transactionId: response.transaction_id,
+          flw_ref: response.flw_ref,
+        });
+        closePaymentModal(); // this will close the modal programmatically
+      },
+      onClose: () => {},
+    });
+  });
+  return null;
 };
 
 export { CardPayment };

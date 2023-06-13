@@ -1,6 +1,7 @@
 export { BookStorageModal } from "./bookStorage";
 export { MyModal } from "./dashboardModal";
 export { ContactUsModal } from "./contact";
+export { SuccessModal } from "./success";
 export { ConfirmModal } from "./confirmStorage";
 export { StorageSelect } from "./storageSelectModal";
 export { DeliveryByCustomerModal } from "./deliveryByCustomer";

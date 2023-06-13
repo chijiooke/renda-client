@@ -30,3 +30,11 @@ export const DashBoardRoutes = {
   INVENTORY_INBOUND_DETAILS: "/inventory/allInventory/inboundDetails",
   INVENTORY_TOPUP: "/inventory/allInventory/topUpInbound",
 };
+
+export const queryStringBuilder = (obj: {}) => {
+  let route = "";
+  Object.entries(obj).forEach(
+    (v, i) => (route = route + (i == 0 ? "?" : "&") + v[0] + "=" + v[1])
+  );
+  return route;
+};

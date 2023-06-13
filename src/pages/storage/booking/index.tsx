@@ -1,19 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState, MouseEventHandler } from "react";
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { DashBoardRoutes } from "@/utils";
+import { DashBoardRoutes, baseURL } from "@/utils";
 import { useRouter } from "next/router";
 import { BookStorageModal } from "@/modals";
+import axios from "axios";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import cn from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { OnboardingAction } from "@/types";
+import { StoreState } from "@/store/reducer";
+
+dayjs.extend(relativeTime);
 export default function StorageBooking() {
   const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
+  const [bookings, setBookings] = useState([]);
+  const { userId, user } = useSelector((state: StoreState) => state);
+
+  const getBookings = async () => {
+    try {
+      const { data } = await axios.get(
+        baseURL + `api/bookings/GetCustomerbyId/${user.customerId}`
+      );
+      setBookings(data.data);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getBookings();
+  }, []);
   return (
     <>
-      <BookStorageModal
-        show={showModal}
-        // data={data}
-        close={() => setShowModal(false)}
-      />
+      <BookStorageModal show={showModal} close={() => setShowModal(false)} />
       <DashBoardLayout backAction>
         <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
           <div className="border-b-2 border-b-gray-300 p-7 flex items-center justify-between">
@@ -40,45 +58,11 @@ export default function StorageBooking() {
                 <p>Duration</p>
                 <p>Action</p>
               </div>
-              <div
-                className="grid grid-cols-8 justify-evenly p-5 items-center cursor-pointer"
-                onClick={() => router.push(DashBoardRoutes.BOOKING_DETAILS)}
-              >
-                <p className="text-green-300">Active</p>
-                <p>#RND9801</p>
-                <p>Facility Name </p>
-                <p>12-03-2023</p>
-                <p>Lagos Island, Lagos</p>
-                <p>N8,000,000 </p>
-                <p>3 Weeks</p>
-                <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
-                  Make Payment
-                </p>
-              </div>
-              <div className="grid grid-cols-8 justify-evenly p-5 items-center">
-                <p className="text-green-300">Active</p>
-                <p>#RND9801</p>
-                <p>Facility Name </p>
-                <p>12-03-2023</p>
-                <p>Lagos Island, Lagos</p>
-                <p>N8,000,000 </p>
-                <p>3 Weeks</p>
-                <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
-                  Make Payment
-                </p>
-              </div>{" "}
-              <div className="grid grid-cols-8 justify-evenly p-5 items-center">
-                <p className="text-red-500">Expired</p>
-                <p>#RND9801</p>
-                <p>Facility Name </p>
-                <p>12-03-2023</p>
-                <p>Lagos Island, Lagos</p>
-                <p>N8,000,000 </p>
-                <p>3 Weeks</p>
-                <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
-                  Make Payment
-                </p>
-              </div>
+            </div>
+            <div>
+              {bookings.map((booking, idx) => (
+                <TableData data={booking} key={idx} />
+              ))}
             </div>
           </div>
         </div>
@@ -86,3 +70,63 @@ export default function StorageBooking() {
     </>
   );
 }
+
+const TableData = ({ data }: { data: any }) => {
+  const time = dayjs(data?.startDate).to(dayjs(data?.endDate), true);
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const goToDetails: MouseEventHandler<HTMLDivElement> = (e) => {
+    const path = e.nativeEvent.composedPath();
+    if ((path[0] as HTMLElement)?.innerText !== "Make Payment") {
+      router.push(DashBoardRoutes.BOOKING_DETAILS);
+    }
+  };
+  const goToPayments: MouseEventHandler<HTMLDivElement> = () => {
+    dispatch({
+      type: OnboardingAction.SET_BOOKING_DETAILS,
+      payload: {
+        amount: data?.amount,
+        bookingId: data?.bookingId,
+      },
+    });
+    router.push(DashBoardRoutes.BOOKING_PAYMENT);
+  };
+  return (
+    <div
+      className="grid grid-cols-8 justify-evenly p-5 items-center cursor-pointer"
+      onClick={goToDetails}
+    >
+      <p
+        className={cn("", {
+          "text-green-600":
+            data?.status === "Approved" || data?.status === "Active",
+          "text-red-500": data?.status === "Expired",
+          "text-orange-400": data?.status === "Pending",
+        })}
+      >
+        {data?.status}
+      </p>
+      <p>#{data?.bookingId}</p>
+      <p>Facility Name </p>
+      <p>12-03-2023</p>
+      <p>Lagos Island, Lagos</p>
+      <p>N{data?.amount} </p>
+      <p>{time}</p>
+      <p
+        className={cn(
+          "bg-[#E1E1E1] rounded-lg font-semibold text-center capitalize text-[#979797] p-1 cursor-not-allowed",
+          {
+            "bg-[#c7ecff] text-primary cursor-pointer":
+              data?.status === "Approved",
+          }
+        )}
+        onClick={(e) => {
+          data?.status === "Approved" && goToPayments(e);
+        }}
+      >
+        Make Payment
+      </p>
+    </div>
+  );
+};

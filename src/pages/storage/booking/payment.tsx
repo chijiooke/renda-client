@@ -9,18 +9,13 @@ import { Tab } from "@headlessui/react";
 
 const tabs = [
   {
-    icon: BankIcon,
-    title: " Pay with Bank Transfer",
-    text: "  Transfer to Merchants Account",
-  },
-  {
     icon: DebitCardIcon,
-    title: "Pay with Card",
+    title: "Generate Invoice",
     text: "Pay with your Debit card",
   },
   {
     icon: DebitCardIcon,
-    title: "Generate Invoice",
+    title: "Pay  Instantly",
     text: "Pay with your Debit card",
   },
 ];
@@ -69,13 +64,10 @@ export default function StoragePayment() {
               </div>
               <Tab.Panels>
                 <Tab.Panel>
-                  <BankTransfer />
+                  <GenerateInvoice />
                 </Tab.Panel>
                 <Tab.Panel>
                   <CardPayment />
-                </Tab.Panel>
-                <Tab.Panel>
-                  <GenerateInvoice />
                 </Tab.Panel>
               </Tab.Panels>
             </div>

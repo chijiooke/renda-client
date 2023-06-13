@@ -37,8 +37,7 @@ const Facility = () => {
       "Storage Type": facility?.storageType,
       "Payment Structure": facility?.paymentStructure,
 
-      Price:
-        "NGN" + " " + facility?.priceOfStorage?.toLocaleString() + " monthly",
+      Price: "NGN" + " " + facility?.rendaPrice?.toLocaleString() + " monthly",
     };
   }, [facility]);
   return (

@@ -88,7 +88,7 @@ const DashBoardLayout: FC<Props> = ({
     setLoading(true);
     try {
       const { data: response } = await axios.get(
-        baseURL + "CustomerById/" + userId
+        baseURL + "CustomerbyAppUser/" + userId
       );
       if (response.success) {
         dispatch({

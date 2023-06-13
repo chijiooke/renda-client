@@ -76,7 +76,6 @@ import { Button, GetInTouch, Input, StorageCard } from "@/components";
 import { useRouter } from "next/router";
 import { DashBoardRoutes } from "@/utils";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
-import { ConfirmModal } from "@/modals/success";
 import { Tab } from "@headlessui/react";
 import { MyModal } from "@/modals";
 import { useState } from "react";

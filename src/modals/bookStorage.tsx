@@ -1,22 +1,34 @@
-import React, { useState, ReactNode, ChangeEventHandler } from "react";
+import React, {
+  useState,
+  ReactNode,
+  ChangeEventHandler,
+  useEffect,
+} from "react";
 import cn from "classnames";
 import { Input, Button, Select } from "@/components";
 import axios from "axios";
+import dayjs from "dayjs";
 import { baseURL } from "@/utils";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/reducer";
+
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 type Props = {
   show: boolean;
   data?: any;
   close: () => void;
 };
-
+const periods = ["Months", "Years"];
 function BookStorageModal({ show, data, close }: Props) {
   const [details, setDetails] = useState({} as any);
   const [loading, setLoading] = useState(false);
-  const { userId } = useSelector((state: StoreState) => state);
-
+  const { user } = useSelector((state: StoreState) => state);
+  const [endDate, setEndDate] = useState("");
+  const [duration, setDuration] = useState<number>(0);
+  const [period, setPeriod] = useState(periods[0]);
   const handleChange: ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
   > = (e) => {
@@ -24,13 +36,28 @@ function BookStorageModal({ show, data, close }: Props) {
     const dt = {
       ...details,
       [target.name]: target.value,
-      amount: +details?.spaceRequired * +data?.priceOfStorage!,
+      amount:
+        +(target.name == "spaceRequired" && target.value) * +data?.rendaPrice!,
       storageFacilityId: data?.storageFacilityId,
-      customerId: userId,
+      customerId: user.customerId,
+      endDate,
     };
     setDetails(dt);
-    console.log(dt);
   };
+  const handleDuration: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setDuration(+(e.target as HTMLInputElement).value);
+  };
+  const handlePeriod: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    setPeriod((e.target as HTMLSelectElement).value);
+  };
+  useEffect(() => {
+    const t = dayjs(details.startDate).add(
+      duration,
+      period == "Months" ? "month" : "year"
+    );
+    const v = dayjs(t).format("YYYY/MM/DD").replaceAll("/", "-");
+    setEndDate(v);
+  }, [details.startDate, duration, period]);
   const bookStorage = async () => {
     setLoading(true);
     try {
@@ -43,13 +70,7 @@ function BookStorageModal({ show, data, close }: Props) {
   };
   return show ? (
     <div className="modal">
-      <div
-        style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "4px",
-        }}
-      >
+      <div className="rounded bg-white p-10">
         <div className="relative flex ">
           <div
             className="relative w-full h-full p-4"
@@ -69,9 +90,13 @@ function BookStorageModal({ show, data, close }: Props) {
                 <Layout option="Duration of Usage" center={false}>
                   <div className="flex flex-col gap-4">
                     <div className="grid grid-cols-3 gap-2">
-                      <Input name="" handleChange={handleChange} />
+                      <Input
+                        name=""
+                        handleChange={handleDuration}
+                        type="number"
+                      />
                       <div className="col-span-2">
-                        <Select options={["Months", "Years"]} />
+                        <Select options={periods} handleChange={handlePeriod} />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
@@ -85,7 +110,8 @@ function BookStorageModal({ show, data, close }: Props) {
                         type="date"
                         label="End Date"
                         name="endDate"
-                        handleChange={handleChange}
+                        value={endDate}
+                        disabled
                       />
                     </div>
                   </div>
@@ -106,9 +132,8 @@ function BookStorageModal({ show, data, close }: Props) {
                     disabled={true}
                     value={
                       "₦ " +
-                      (String(
-                        +details?.spaceRequired * +data?.priceOfStorage!
-                      ) || 0)
+                      (String(+details?.spaceRequired * +data?.rendaPrice!) ||
+                        0)
                     }
                   />
                 </Layout>

@@ -1,68 +1,71 @@
-import { Fragment, FC } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { Button } from "@/components";
+import { EmailIcon, PhoneIcon, WhatsAppIcon } from "@/icons";
+import React from "react";
 
 type Props = {
   show: boolean;
+
   close: () => void;
 };
-const ConfirmModal: FC<Props> = ({ show, close }) => {
-  return (
-    <Transition appear show={show} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={close}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+function SuccessModal({ show, close }: Props) {
+  return show ? (
+    <div className="modal">
+      <div className="rounded bg-white p-10">
+        <div className="relative flex ">
+          <div
+            className="relative w-full h-full p-4 mx-auto flex"
+            style={{ width: "300px" }}
+          >
+            <p
+              onClick={close}
+              className="absolute right-0 top-0 scale-125 cursor-pointer"
             >
-              <Dialog.Panel
-                className="w-full max-w-md h-[300px] grid items-center
-                 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
-              >
-                <Dialog.Title as="h3">
-                  <div className="text-[20px] mt-8 font-bold text-center text-gray-900">
-                    Confirm Approval
+              X
+            </p>
+            <div className="inline-flex w-fit flex-col space-y-10 gap-5 items-center mx-auto">
+              {/* <div className="w-full flex flex-col gap-8 justify-between my-10 mx-auto ">
+                <p className="text-center  text-primary font-extrabold text-[18px] w-full">
+                  Contact Us
+                </p>
+                <div className="flex gap-10 items-center justify-center w-full">
+                  <div className="flex gap-3  items-center">
+                    <WhatsAppIcon />
+                    <a
+                      target="_blank"
+                      className="opacity-50 font-bold"
+                      href="https://api.whatsapp.com/send?phone=2349076825598"
+                    >
+                      WhatsApp
+                    </a>
                   </div>
-                  <p className="text-[14px] mt-3 text-center grid items-start text-gray-300">
-                    Approving a customer activates the customer's account.
-                  </p>
-                </Dialog.Title>
-
-                <div className="flex mb-8 justify-center gap-7">
-                  <Button
-                    title="Cancel"
-                    type="secondary"
-                    size="sm"
-                    className="px-8"
-                    handleClick={close}
-                  />
-                  <Button title="Approve" size="sm" className="px-8" />
+                  <div className="flex gap-3  items-center">
+                    <EmailIcon />
+                    <a
+                      target="_blank"
+                      className="opacity-50 font-bold"
+                      href="mailto:hello@renda.co"
+                    >
+                      hello@renda.co
+                    </a>
+                  </div>
+                  <div className="flex gap-3  items-center">
+                    <PhoneIcon />
+                    <a
+                      href="tel:09159890056"
+                      target="_blank"
+                      className="opacity-50 font-bold"
+                    >
+                      +2349159890056
+                    </a>
+                  </div>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              </div> */}
+            </div>
           </div>
         </div>
-      </Dialog>
-    </Transition>
-  );
-};
+      </div>
+    </div>
+  ) : null;
+}
 
-export { ConfirmModal };
+export { SuccessModal };

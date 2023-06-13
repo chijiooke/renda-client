@@ -10,13 +10,7 @@ type Props = {
 function ContactUsModal({ show, close }: Props) {
   return show ? (
     <div className="modal">
-      <div
-        style={{
-          background: "#fff",
-          padding: "20px",
-          borderRadius: "4px",
-        }}
-      >
+      <div className="rounded bg-white p-10">
         <div className="relative flex ">
           <div
             className="relative w-full h-full p-4 mx-auto flex"
