@@ -177,7 +177,6 @@ const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
 
   return (
     <div>
-
       {isOpen && (
         <div
           style={{
@@ -200,100 +199,107 @@ const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
               borderRadius: "4px",
             }}
           >
-            <div
-              className="relative flex "
-              style={{ width: "400px", height: "60vh" }}
-            >
+            <div className="relative flex " style={{ }}>
               <div
                 className="relative w-full h-full"
-                style={{ width: "400px", height: "60vh" }}
+                style={{ padding: "auto" }}
               >
-                <div className="flex flex-col space-y-10 gap-5 items-center  text-black rounded-xl w-full max-w-md mx-auto">
-                  <div className="inline-flex space-x-4 items-center justify-end py-2 pl-4 pr-3 w-full">
-                    <p className="text-sm font-semibold leading-tight text-gray-600"></p>
-                  </div>
-                  <div className="overflow-y-auto  p-4">
-                    <div className="flex flex-col space-y-4 items-start justify-end">
-                      <p className="w-full text-lg font-semibold leading-7">
-                        Confirm the storage facility you are adding inventory to
-                      </p>
-                      <div className="inline-flex py-3 gap-2 py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
-                        <input
-                          type="radio"
-                          className="w-6 h-6 border-2 rounded-full border-black"
-                          id="facility1"
-                          name="storageFacility"
-                        />
-                        <label
-                          htmlFor="facility1"
-                          className="text-sm font-medium leading-7 text-center"
-                        >
-                          Omo-Onile Storage Facility
-                        </label>
+                <div className="flex flex-col space-y-10 gap-5 items-center justify-center  text-black rounded-lg w-full max-w-md mx-auto">
+                  <div className="overflow-y-auto">
+                    <div className="flex items-center justify-end rounded-lg">
+                      <div className="flex  items-center justify-end pr-3">
+                        <div className="flex text-black items-center justify-end border h-full py-1.5 rounded-lg">
+                          <button onClick={closeModal}>X</button>
+                        </div>
                       </div>
-                      <div className="inline-flex py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
-                        <input
-                          type="radio"
-                          className="w-6 h-6 border-2 rounded-full border-black"
-                          id="facility2"
-                          name="storageFacility"
-                        />
-                        <label
-                          htmlFor="facility2"
-                          className="text-sm font-medium leading-7 text-center"
-                        >
-                          Lagos Island Storage Facility
-                        </label>
-                      </div>
-                      <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
-                        <input
-                          type="radio"
-                          className="w-6 h-6 border-2 rounded-full border-black"
-                          id="facility3"
-                          name="storageFacility"
-                        />
-                        <label
-                          htmlFor="facility3"
-                          className="text-sm font-medium leading-7 text-center"
-                        >
-                          Surulere Storage Facility
-                        </label>
-                      </div>
-                      <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
-                        <input
-                          type="radio"
-                          className="w-6 h-6 border-2 rounded-full border-black"
-                          id="facility4"
-                          name="storageFacility"
-                        />
-                        <label
-                          htmlFor="facility4"
-                          className="text-sm font-medium leading-7 text-center"
-                        >
-                          Badagry Storage Facility
-                        </label>
-                      </div>
-                      <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
-                        <input
-                          type="radio"
-                          className="w-6 h-6 border-2 rounded-full border-black"
-                          id="facility5"
-                          name="storageFacility"
-                        />
-                        <label
-                          htmlFor="facility5"
-                          className="text-sm font-medium leading-7 text-center"
-                        >
-                          Badagry Storage Facility
-                        </label>
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <div className="flex flex-col space-y-4  items-start">
+                        <p className="text-lg font-semibold pb-4 leading-7">
+                          Confirm the storage facility <br /> you are adding
+                          inventory to
+                        </p>
+                        <div className="inline-flex py-3 gap-2 py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
+                          <input
+                            type="radio"
+                            className="w-6 h-6 border-2 rounded-full border-black"
+                            id="facility1"
+                            name="storageFacility"
+                          />
+                          <label
+                            htmlFor="facility1"
+                            className="text-sm font-medium leading-7 text-center"
+                          >
+                            Omo-Onile Storage Facility
+                          </label>
+                        </div>
+                        <div className="inline-flex py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
+                          <input
+                            type="radio"
+                            className="w-6 h-6 border-2 rounded-full border-black"
+                            id="facility2"
+                            name="storageFacility"
+                          />
+                          <label
+                            htmlFor="facility2"
+                            className="text-sm font-medium leading-7 text-center"
+                          >
+                            Lagos Island Storage Facility
+                          </label>
+                        </div>
+                        <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
+                          <input
+                            type="radio"
+                            className="w-6 h-6 border-2 rounded-full border-black"
+                            id="facility3"
+                            name="storageFacility"
+                          />
+                          <label
+                            htmlFor="facility3"
+                            className="text-sm font-medium leading-7 text-center"
+                          >
+                            Surulere Storage Facility
+                          </label>
+                        </div>
+                        <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
+                          <input
+                            type="radio"
+                            className="w-6 h-6 border-2 rounded-full border-black"
+                            id="facility4"
+                            name="storageFacility"
+                          />
+                          <label
+                            htmlFor="facility4"
+                            className="text-sm font-medium leading-7 text-center"
+                          >
+                            Badagry Storage Facility
+                          </label>
+                        </div>
+                        <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
+                          <input
+                            type="radio"
+                            className="w-6 h-6 border-2 rounded-full border-black"
+                            id="facility5"
+                            name="storageFacility"
+                          />
+                          <label
+                            htmlFor="facility5"
+                            className="text-sm font-medium leading-7 text-center"
+                          >
+                            Badagry Storage Facility
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="absolute flex  bottom-4 ">
+                  <div className=" flex  bottom-4 ">
                     <div
-                      className="inline-flex py-3 gap-2 cursor-pointer w-full space-x-1.5 items-center justify-center py-2.5 bg-blue-900 shadow rounded-md"
-                      style={{ height: 48, width: 400 }}
-                      
+                      className="inline-flex py-3 gap-2 cursor-pointer w-full space-x-1.5 items-center justify-center py-2.5 shadow rounded-md"
+                      style={{
+                        height: 48,
+                        width: 200,
+                        backgroundColor: `#1B547F`,
+                      }}
                     >
                       {/* <p className="text-sm font-semibold  text-white">
                         <button onClick={closeModal}>Submit</button>

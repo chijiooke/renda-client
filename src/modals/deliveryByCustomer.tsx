@@ -40,10 +40,7 @@ function DeliveryByCustomerModal() {
               borderRadius: "4px",
             }}
           >
-            <div
-              className="relative "
-              style={{ width: "400px", height: "60vh" }}
-            >
+            <div className="relative rounded-lg" style={{}}>
               <div className=" items-center justify-end pr-3">
                 <p className="text-lg font-semibold  text-black"></p>
                 <div className="flex  items-center text-black justify-end h-full py-1.5 rounded-lg">
@@ -135,7 +132,8 @@ function DeliveryByCustomerModal() {
 
                   <button
                     type="submit"
-                    className="bg-blue-900 text-white py-2 px-4 w-full h-10"
+                    className=" text-white py-2 px-4 w-full h-10"
+                    style={{ backgroundColor: `#1B547F` }}
                   >
                     <SuccesAlert />
                   </button>

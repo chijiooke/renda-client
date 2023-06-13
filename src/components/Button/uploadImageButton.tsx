@@ -11,10 +11,14 @@ function UploadImageButton() {
 
   const divClassName = selectedImage
     ? "justify-start  px-3 bg-white border rounded-md border-black border-opacity-25"
-    : "flex justify-center items-center text-white px-3 bg-blue-900 border rounded-md border-black border-opacity-25";
+    : "flex justify-center items-center text-white px-3  border rounded-md border-black border-opacity-25";
 
   return (
-    <label htmlFor="upload-input" className={divClassName}>
+    <label
+      htmlFor="upload-input"
+      className={divClassName}
+      style={{ backgroundColor: `#1B547F` }}
+    >
       Upload
       <input
         id="upload-input"

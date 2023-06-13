@@ -108,7 +108,8 @@ export default function Inventory() {
                 </div>
                 <div className="flex justify-center gap-2 mr-7">
                   <div
-                    className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 bg-blue-900 cursor-pointer  rounded-md"
+                    style={{ backgroundColor: `#1B547F` }}
+                    className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 cursor-pointer  rounded-md"
                     onClick={() => router.push(DashBoardRoutes.INVENTORY_TOPUP)}
                   >
                     <p className="text-xs font-semibold text-center items-center pt-2 text-white">
@@ -116,7 +117,10 @@ export default function Inventory() {
                     </p>
                   </div>
                   <div className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 cursor-pointer  border-1 rounded-md border-blue-900">
-                    <p className="text-xs font-semibold text-center items-center pt-2 text-blue-900">
+                    <p
+                      style={{ color: `#1B547F` }}
+                      className="text-xs font-semibold text-center items-center pt-2 "
+                    >
                       Create Order
                     </p>
                   </div>

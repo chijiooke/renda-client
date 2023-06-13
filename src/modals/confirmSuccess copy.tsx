@@ -13,7 +13,7 @@ function SuccesAlert() {
 
   return (
     <div>
-      <button onClick={openModal}>Done</button>
+      <button onClick={openModal}>Send</button>
 
       {isOpen && (
         <div
