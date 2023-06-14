@@ -18,25 +18,25 @@ function SomeComponent() {
   return (
     <div onClick={handleDivClick}>
       <div className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer">
-        <div className="inline-flex items-center justify-start w-36  px-3 py-1.5  border rounded-md">
+        <div className="flex items-center justify-start w-36  px-3 py-1.5  ">
           <p className="">Mac Book </p>
         </div>
-        <div className="inline-flex items-center justify-start  px-3 py-1.5  border rounded-md">
+        <div className="flex items-center justify-start  px-3 py-1.5  ">
           <p className="">12</p>
         </div>
-        <div className="inline-flex items-center justify-start  px-3 py-1.5  border rounded-md">
+        <div className="flex items-center justify-start  px-3 py-1.5  ">
           <p className="">14cm</p>
         </div>
-        <div className="inline-flex items-center justify-start  px-3 py-1.5  border rounded-md">
+        <div className="flex items-center justify-start  px-3 py-1.5  ">
           <p className="">Black</p>
         </div>
-        <div className="inline-flex items-center justify-start  px-3 py-1.5  border rounded-md">
+        <div className="flex items-center justify-start  px-3 py-1.5  ">
           <p className="">450,000</p>
         </div>
         <p className="w-44  leading-none">
-          Corem ipsum dolor sit amet, consectetur adipiscing elit.
+          40,000
         </p>
-        <div className="inline-flex items-center justify-start  px-3 py-1.5  border rounded-md">
+        <div className="flex items-center justify-start  px-3 py-1.5  ">
           <p className="">70kg</p>
         </div>
 

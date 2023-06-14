@@ -28,7 +28,7 @@ export default function Inventory() {
           {showUploadButton && (
             <div className="border-b-2 border-b-gray-300 p-7 flex flex-col ">
               <h1 className="text-3xl font-extrabold">Add New Stock</h1>
-              <p>Add a new stock via your preffered upload cahnnel</p>
+              <p>Preferred upload channel</p>
             </div>
           )}
           {!showUploadButton && (
@@ -38,11 +38,7 @@ export default function Inventory() {
                 <p>Add a new stock via your preffered upload cahnnel</p>
               </div>
               <div>
-                <Button
-                  title="Upload"
-                  size="sm"
-                  className="max-w-sm"
-                />
+                <Button title="Upload" size="sm" className="max-w-sm" />
               </div>
             </div>
           )}

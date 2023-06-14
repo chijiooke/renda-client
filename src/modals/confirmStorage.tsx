@@ -42,13 +42,13 @@ const ConfirmModal: React.FC<MyModalProps> = ({ onClose }) => {
                 className="relative w-full"
                 style={{ maxWidth: 469, height: 200 }}
               >
-                <div className="inline-flex flex-col space-y-8 items-center  bg-white shadow rounded-xl w-full h-full">
+                <div className="inline-flex flex-col space-y-8 items-center  bg-white shadow rounded-lg w-full h-full">
                   <div className="inline-flex space-x-16 items-center justify-end py-1.5 px-4 w-full h-12">
                     <p className="text-sm font-semibold leading-tight text-gray-600"></p>
-                    <div className="flex items-center justify-center h-full px-2 py-1.5 rounded-lg">
-                      <div className="inline-flex  items-center justify-end pr-3">
-                        <p className="text-sm font-semibold leading-tight "></p>
-                        <div className="flex text-black items-center justify-end border h-full py-1.5 rounded-lg">
+                    <div className="flex items-center justify-end h-full px-2 py-1.5 rounded-lg">
+                      <div className="flex  items-center justify-end pr-3">
+                        <p className="text-sm font-semibold  "></p>
+                        <div className="flex  text-black items-center justify-end border h-full py-1.5 rounded-lg">
                           <button onClick={closeModal1}>X</button>
                         </div>
                       </div>
@@ -69,12 +69,18 @@ const ConfirmModal: React.FC<MyModalProps> = ({ onClose }) => {
                         storage facility
                       </p>
                       <div className="flex justify-between py-2">
-                        <button className="inline-flex space-x-1 items-center justify-center w-1/2 h-12 px-3 bg-blue-900 shadow rounded-md text-white text-sm font-semibold leading-none">
+                        <button
+                          style={{ color: `#1B547F` }}
+                          className="inline-flex space-x-1 items-center justify-center w-1/2 h-12 px-3  shadow rounded-md  text-sm font-semibold leading-none"
+                        >
                           <>
                             <DeliveryByCustomerModal />
                           </>
                         </button>
-                        <button className="inline-flex space-x-1 items-center justify-center w-1/2 h-12 px-3  shadow border rounded-md border-blue-900 text-blue-900 text-sm font-semibold leading-none">
+                        <button
+                          style={{ backgroundColor: `#1B547F` }}
+                          className="inline-flex space-x-1 items-center justify-center w-1/2 h-12 px-3  shadow border rounded-md text-white text-sm font-semibold leading-none"
+                        >
                           <DeliveryByRendaModal />
                         </button>
                       </div>
