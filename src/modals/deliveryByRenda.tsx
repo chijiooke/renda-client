@@ -40,10 +40,7 @@ function DeliveryByRendaModal() {
               borderRadius: "4px",
             }}
           >
-            <div
-              className="relative "
-              style={{ width: "400px", height: "60vh" }}
-            >
+            <div className="relative " style={{}}>
               <div className=" items-center justify-end pr-3">
                 <p className="text-lg font-semibold  text-black"></p>
                 <div className="flex  items-center text-black justify-end h-full py-1.5 rounded-lg">
@@ -51,7 +48,10 @@ function DeliveryByRendaModal() {
                 </div>
               </div>
               <div className="container mx-auto p-4">
-                <p className="text-xl font-semibold leading-normal mb-5 text-center text-blue-900">
+                <p
+                  style={{ color: `#1B547F` }}
+                  className="text-xl font-semibold leading-normal mb-5 text-center"
+                >
                   Shipping Inventory by Renda
                 </p>
 
@@ -146,7 +146,8 @@ function DeliveryByRendaModal() {
 
                   <button
                     type="submit"
-                    className="bg-blue-900 text-white py-2 px-4 w-full h-10"
+                    className=" text-white py-2 px-4 w-full h-10 rounded-sm"
+                    style={{ backgroundColor: `#1B547F` }}
                   >
                     <SuccesAlert />
                   </button>
@@ -157,7 +158,6 @@ function DeliveryByRendaModal() {
             </div>
           </div>
         </div>
-      
       )}
     </div>
   );

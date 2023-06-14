@@ -55,7 +55,7 @@ function AddForm() {
                 <th className="py-4 ">ITEM NAME</th>
                 <th>QTY</th>
                 <th>BRIEF DESCRIPTION</th>
-                <th>DIMENTION</th>
+                <th>DIMENSION</th>
                 <th>COLOUR</th>
                 <th>WEIGHT</th>
                 <th>UNIT PRICE</th>

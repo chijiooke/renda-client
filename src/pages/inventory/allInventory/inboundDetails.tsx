@@ -16,7 +16,7 @@ export default function InboundDetail() {
               <p className="text-xl font-semibold leading-none">
                 Inbound request details
               </p>
-              <p className="text-xs font-medium leading-tight text-gray-500">
+              <p className=" font-medium leading-tight text-gray-500">
                 Inbound ID - #RND1234
               </p>
             </div>
@@ -71,7 +71,7 @@ export default function InboundDetail() {
           </div>
           <div>
             <div className="inline-flex items-center justify-center px-2.5 py-1.5 bg-blue-900 border rounded-sm">
-              <p className="text-xs text-center text-white">Download</p>
+              <p className=" text-center text-white">Download</p>
             </div>
           </div>
         </div>
@@ -113,30 +113,30 @@ export default function InboundDetail() {
             className="flex space-x-96 items-center justify-between m-4"
             style={{ }}
           >
-            <p className="opacity-50 text-xs font-medium text-black text-opacity-50">
+            <p className="opacity-50  font-medium text-black text-opacity-50">
               Showing 1{" "}
             </p>
             <div className="flex space-x-2.5 items-start justify-start">
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-                <p className="text-xs font-medium text-center text-gray-500">
+                <p className=" font-medium text-center text-gray-500">
                   Previous
                 </p>
               </div>
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 bg-blue-900 rounded-sm">
-                <p className="text-xs font-medium text-center text-white">1</p>
+                <p className=" font-medium text-center text-white">1</p>
               </div>
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-                <p className="text-xs font-medium text-center text-gray-500">
+                <p className=" font-medium text-center text-gray-500">
                   2
                 </p>
               </div>
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-                <p className="text-xs font-medium text-center text-gray-500">
+                <p className=" font-medium text-center text-gray-500">
                   3
                 </p>
               </div>
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-                <p className="text-xs font-medium text-center text-gray-500">
+                <p className=" font-medium text-center text-gray-500">
                   Next
                 </p>
               </div>
