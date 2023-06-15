@@ -160,23 +160,214 @@
 
 // export { MyModal };
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import { ConfirmModal, HowItemsToBeDeliveredHandler, MyModal } from "@/modals";
+
+// interface MyModalProps {
+//   onClose: () => void;
+// }
+
+// const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
+//   const [isOpen, setIsOpen] = useState(true);
+
+
+//   const closeModal = () => {
+//     setIsOpen(false);
+//   };
+
+//   return (
+//     <div>
+//       {isOpen && (
+//         <div
+//           style={{
+//             position: "fixed",
+//             top: 0,
+//             left: 0,
+//             width: "100%",
+//             height: "100%",
+//             display: "flex",
+//             alignItems: "center",
+//             justifyContent: "center",
+//             background: "rgba(0, 0, 0, 0.5)",
+//             zIndex: 9999,
+//           }}
+//         >
+//           <div
+//             style={{
+//               background: "#fff",
+//               padding: "20px",
+//               borderRadius: "4px",
+//             }}
+//           >
+//             <div className="relative flex " style={{ }}>
+//               <div
+//                 className="relative w-full h-full"
+//                 style={{ padding: "auto" }}
+//               >
+//                 <div className="flex flex-col space-y-10 gap-5 items-center justify-center  text-black rounded-lg w-full max-w-md mx-auto">
+//                   <div className="overflow-y-auto">
+//                     <div className="flex items-center justify-end rounded-lg">
+//                       <div className="flex  items-center justify-end pr-3">
+//                         <div className="flex text-black items-center justify-end border h-full py-1.5 rounded-lg">
+//                           <button onClick={closeModal}>X</button>
+//                         </div>
+//                       </div>
+//                     </div>
+//                     <div className="flex justify-center items-center">
+//                       <div className="flex flex-col space-y-4  items-start">
+//                         <p className="text-lg font-semibold pb-4 leading-7">
+//                           Confirm the storage facility <br /> you are adding
+//                           inventory to
+//                         </p>
+//                         <div className="inline-flex py-3 gap-2 py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
+//                           <input
+//                             type="radio"
+//                             className="w-6 h-6 border-2 rounded-full border-black"
+//                             id="facility1"
+//                             name="storageFacility"
+//                           />
+//                           <label
+//                             htmlFor="facility1"
+//                             className="text-sm font-medium leading-7 text-center"
+//                           >
+//                             Omo-Onile Storage Facility
+//                           </label>
+//                         </div>
+//                         <div className="inline-flex py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
+//                           <input
+//                             type="radio"
+//                             className="w-6 h-6 border-2 rounded-full border-black"
+//                             id="facility2"
+//                             name="storageFacility"
+//                           />
+//                           <label
+//                             htmlFor="facility2"
+//                             className="text-sm font-medium leading-7 text-center"
+//                           >
+//                             Lagos Island Storage Facility
+//                           </label>
+//                         </div>
+//                         <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
+//                           <input
+//                             type="radio"
+//                             className="w-6 h-6 border-2 rounded-full border-black"
+//                             id="facility3"
+//                             name="storageFacility"
+//                           />
+//                           <label
+//                             htmlFor="facility3"
+//                             className="text-sm font-medium leading-7 text-center"
+//                           >
+//                             Surulere Storage Facility
+//                           </label>
+//                         </div>
+//                         <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
+//                           <input
+//                             type="radio"
+//                             className="w-6 h-6 border-2 rounded-full border-black"
+//                             id="facility4"
+//                             name="storageFacility"
+//                           />
+//                           <label
+//                             htmlFor="facility4"
+//                             className="text-sm font-medium leading-7 text-center"
+//                           >
+//                             Badagry Storage Facility
+//                           </label>
+//                         </div>
+//                         <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
+//                           <input
+//                             type="radio"
+//                             className="w-6 h-6 border-2 rounded-full border-black"
+//                             id="facility5"
+//                             name="storageFacility"
+//                           />
+//                           <label
+//                             htmlFor="facility5"
+//                             className="text-sm font-medium leading-7 text-center"
+//                           >
+//                             Badagry Storage Facility
+//                           </label>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className=" flex  bottom-4 ">
+//                     <div
+//                       className="inline-flex py-3 gap-2 cursor-pointer w-full space-x-1.5 items-center justify-center py-2.5 shadow rounded-md"
+//                       style={{
+//                         height: 48,
+//                         width: 200,
+//                         backgroundColor: `#1B547F`,
+//                       }}
+//                     >
+//                       {/* <p className="text-sm font-semibold  text-white">
+//                         <button onClick={closeModal}>Submit</button>
+//                       </p> */}
+//                       <HowItemsToBeDeliveredHandler />
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export { StorageSelect };
+
+import React, { useState, useEffect } from "react";
 import { ConfirmModal, HowItemsToBeDeliveredHandler, MyModal } from "@/modals";
+import axios from "axios";
+
+
 
 interface MyModalProps {
   onClose: () => void;
 }
+interface StorageFacility {
+  storageFacilityId: string;
+  storageFacilityName: string;
+  // Add other necessary properties here
+}
 
 const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
+   const [storageFacilities, setStorageFacilities] = useState<
+     StorageFacility[]
+   >([]);
 
+  useEffect(() => {
+    // Fetch the storage facility data from the API
+    const fetchStorageFacilities = async () => {
+      try {
+        const response = await axios.get(
+          "http://tradeplaorg-001-site9.gtempurl.com/api/v1/Storage/StorageList"
+        );
+        setStorageFacilities(response.data);
+      } catch (error) {
+        console.error("Error fetching storage facilities:", error);
+      }
+    };
+
+    fetchStorageFacilities();
+  }, []);
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
   return (
     <div>
+      <button onClick={openModal} className="text-black">
+        Submit
+      </button>
       {isOpen && (
         <div
           style={{
@@ -199,13 +390,13 @@ const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
               borderRadius: "4px",
             }}
           >
-            <div className="relative flex " style={{ }}>
+            <div className="relative flex-col " style={{}}>
               <div
                 className="relative w-full h-full"
                 style={{ padding: "auto" }}
               >
                 <div className="flex flex-col space-y-10 gap-5 items-center justify-center  text-black rounded-lg w-full max-w-md mx-auto">
-                  <div className="overflow-y-auto">
+                  <div className="overflow-y-auto ">
                     <div className="flex items-center justify-end rounded-lg">
                       <div className="flex  items-center justify-end pr-3">
                         <div className="flex text-black items-center justify-end border h-full py-1.5 rounded-lg">
@@ -214,97 +405,40 @@ const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
                       </div>
                     </div>
                     <div className="flex justify-center items-center">
-                      <div className="flex flex-col space-y-4  items-start">
+                      <div className="flex flex-col space-y-4  items-start overflow-scroll">
                         <p className="text-lg font-semibold pb-4 leading-7">
                           Confirm the storage facility <br /> you are adding
                           inventory to
                         </p>
-                        <div className="inline-flex py-3 gap-2 py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
-                          <input
-                            type="radio"
-                            className="w-6 h-6 border-2 rounded-full border-black"
-                            id="facility1"
-                            name="storageFacility"
-                          />
-                          <label
-                            htmlFor="facility1"
-                            className="text-sm font-medium leading-7 text-center"
+                        {storageFacilities.map((facility) => (
+                          <div
+                            key={facility.storageFacilityId}
+                            className="inline-flex py-3 gap-2 space-x-4 space-y-4 items-center justify-end"
                           >
-                            Omo-Onile Storage Facility
-                          </label>
-                        </div>
-                        <div className="inline-flex py-3 gap-2 space-x-4 space-y-4 items-center justify-end">
-                          <input
-                            type="radio"
-                            className="w-6 h-6 border-2 rounded-full border-black"
-                            id="facility2"
-                            name="storageFacility"
-                          />
-                          <label
-                            htmlFor="facility2"
-                            className="text-sm font-medium leading-7 text-center"
-                          >
-                            Lagos Island Storage Facility
-                          </label>
-                        </div>
-                        <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
-                          <input
-                            type="radio"
-                            className="w-6 h-6 border-2 rounded-full border-black"
-                            id="facility3"
-                            name="storageFacility"
-                          />
-                          <label
-                            htmlFor="facility3"
-                            className="text-sm font-medium leading-7 text-center"
-                          >
-                            Surulere Storage Facility
-                          </label>
-                        </div>
-                        <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
-                          <input
-                            type="radio"
-                            className="w-6 h-6 border-2 rounded-full border-black"
-                            id="facility4"
-                            name="storageFacility"
-                          />
-                          <label
-                            htmlFor="facility4"
-                            className="text-sm font-medium leading-7 text-center"
-                          >
-                            Badagry Storage Facility
-                          </label>
-                        </div>
-                        <div className="inline-flex py-3 gap-2 space-x-4 items-center justify-end">
-                          <input
-                            type="radio"
-                            className="w-6 h-6 border-2 rounded-full border-black"
-                            id="facility5"
-                            name="storageFacility"
-                          />
-                          <label
-                            htmlFor="facility5"
-                            className="text-sm font-medium leading-7 text-center"
-                          >
-                            Badagry Storage Facility
-                          </label>
-                        </div>
+                            <input
+                              type="radio"
+                              className="..."
+                              // Add necessary props based on the facility data
+                            />
+                            <label>{facility.storageFacilityName}</label>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
-                  <div className=" flex  bottom-4 ">
-                    <div
-                      className="inline-flex py-3 gap-2 cursor-pointer w-full space-x-1.5 items-center justify-center py-2.5 shadow rounded-md"
-                      style={{
-                        height: 48,
-                        width: 200,
-                        backgroundColor: `#1B547F`,
-                      }}
-                    >
-                      {/* <p className="text-sm font-semibold  text-white">
-                        <button onClick={closeModal}>Submit</button>
-                      </p> */}
-                      <HowItemsToBeDeliveredHandler />
+                    <div className=" flex  bottom-4 ">
+                      <div
+                        className="inline-flex py-3 gap-2 cursor-pointer w-full space-x-1.5 items-center justify-center py-2.5 shadow rounded-md"
+                        style={{
+                          height: 48,
+                          width: 200,
+                          backgroundColor: `#1B547F`,
+                        }}
+                      >
+                        {/* <p className="text-sm font-semibold  text-white">
+                         <button onClick={closeModal}>Submit</button>
+                       </p> */}
+                        <HowItemsToBeDeliveredHandler />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -317,4 +451,4 @@ const StorageSelect: React.FC<MyModalProps> = ({ onClose }) => {
   );
 };
 
-export { StorageSelect };
+export { StorageSelect};
