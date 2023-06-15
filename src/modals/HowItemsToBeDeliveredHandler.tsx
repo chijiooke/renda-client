@@ -17,8 +17,8 @@ function HowItemsToBeDeliveredHandler() {
 
   return (
     <div onClick={handleDivClick}>
-      <p className="text-sm font-semibold  text-white">
-        <button onClick={closeModal}>Submit</button>
+      <p className="text-sm font-semibold text-white ">
+        <button onClick={closeModal}>Delivery Mode</button>
       </p>
       {/* Content of your component */}
       {/* When this div is clicked, the handleDivClick function is triggered */}

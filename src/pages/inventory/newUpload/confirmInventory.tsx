@@ -34,11 +34,6 @@ export default function ConfirmInventory() {
               <p>IMAGE</p>
             </div>
             <SomeComponent />
-            <SomeComponent />
-            <SomeComponent />
-            <SomeComponent />
-            <SomeComponent />
-            <SomeComponent />
           </div>
 
           <div className="flex justify-end py-5 gap-3">

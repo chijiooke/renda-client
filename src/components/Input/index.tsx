@@ -39,6 +39,7 @@ type Props = {
   caption?: string;
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
+  id?:string
 };
 const Input: FC<Props> = ({
   label = "",
@@ -53,6 +54,7 @@ const Input: FC<Props> = ({
   caption = "",
   size = "md",
   disabled = false,
+  id
 }) => {
   const [iType, setIType] = useState<HTMLInputTypeAttribute>(type);
   const togglePassword = () => {
@@ -74,6 +76,7 @@ const Input: FC<Props> = ({
           value={value}
           onChange={handleChange}
           disabled={disabled}
+          id={id}
           className={cn(
             "p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300 ",
             {

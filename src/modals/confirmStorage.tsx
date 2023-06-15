@@ -19,7 +19,7 @@ const ConfirmModal: React.FC<MyModalProps> = ({ onClose }) => {
 
   return (
     <div>
-      <button onClick={openModal}>Next</button>
+      <button onClick={openModal} className="text-black">Select Storage</button>
 
       {isOpen && (
         <div
