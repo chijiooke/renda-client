@@ -69,7 +69,7 @@ const StorageSelectModal: React.FC<MyModalProps> = ({
                     >
                       <input
                         type="radio"
-                        className="scale-150"
+                        className="scale-150 cursor-pointer"
                         name="facility"
                         onChange={() =>
                           setFacilityId(facility.storageFacilityId)

@@ -16,7 +16,7 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
   close,
   facilityId,
 }) => {
-  const { inventoryItems } = useSelector((state: StoreState) => state);
+  const { inventoryItems, user } = useSelector((state: StoreState) => state);
   const [details, setDetails] = useState({} as any);
   const [loading, setLoading] = useState(false);
 
@@ -46,11 +46,12 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
         inventoryItems
       );
       const { data: inboundData } = await axios.post(
-        baseURL + "api/customers/yBEB89/InboundInventory/inbound-request",
+        baseURL +
+          `api/customers/${user.customerId}/InboundInventory/inbound-request`,
         {
-          customerBusinessId: "yBEB89",
+          customerBusinessId: user.customerId,
           deliveryDetails: {
-            customerBusinessId: "yBEB89",
+            customerBusinessId: user.customerId,
             rendaPickUpDetails: dt,
             pickupLocation: "lagos",
             deliveryBy: "renda",
