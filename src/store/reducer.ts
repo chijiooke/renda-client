@@ -1,4 +1,16 @@
 import { OnboardingAction } from "@/types";
+
+export type InventoryType = {
+  id?: string;
+  itemName: string;
+  quantity: number;
+  description: string;
+  size: string;
+  colour: string;
+  picture?: string;
+  unitPrice: number;
+  customerBusinessId: string;
+};
 export interface StoreState {
   getStarted: {
     businessName: string;
@@ -37,6 +49,7 @@ export interface StoreState {
     amount: number;
     bookingId: string;
   };
+  inventoryItems: InventoryType[];
 }
 export const initialValues: StoreState = {
   getStarted: {
@@ -50,7 +63,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: false,
+  authenticated: true,
   userId: "",
   user: {},
   companyRegistrationNumber: "",
@@ -76,6 +89,7 @@ export const initialValues: StoreState = {
     amount: 0,
     bookingId: "",
   },
+  inventoryItems: [] as InventoryType[],
 };
 interface ActionType {
   type: OnboardingAction;
@@ -131,6 +145,11 @@ const reducer = (
       return {
         ...state,
         bookingDetails: action.payload,
+      };
+    case OnboardingAction.SET_INVENTORY_ITEMS:
+      return {
+        ...state,
+        inventoryItems: [...state.inventoryItems, ...action.payload],
       };
     default:
       return state;

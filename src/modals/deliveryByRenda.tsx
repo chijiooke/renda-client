@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ConfirmModal } from "./confirmStorage";
+import { ConfirmModal } from "./confirm";
 import { Input } from "@/components";
 import { SuccesAlert } from "./confirmSuccess copy";
 

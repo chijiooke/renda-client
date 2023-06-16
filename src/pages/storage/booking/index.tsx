@@ -14,7 +14,7 @@ import { StoreState } from "@/store/reducer";
 
 dayjs.extend(relativeTime);
 export default function StorageBooking() {
-  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
   const [bookings, setBookings] = useState([]);
   const { userId, user } = useSelector((state: StoreState) => state);
 
@@ -31,7 +31,6 @@ export default function StorageBooking() {
   }, []);
   return (
     <>
-      <BookStorageModal show={showModal} close={() => setShowModal(false)} />
       <DashBoardLayout backAction>
         <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
           <div className="border-b-2 border-b-gray-300 p-7 flex items-center justify-between">
@@ -41,7 +40,7 @@ export default function StorageBooking() {
                 title="Book New Storage"
                 size="sm"
                 className="max-w-sm"
-                handleClick={() => setShowModal(true)}
+                handleClick={() => router.push(DashBoardRoutes.STORAGE)}
               />
             </div>
           </div>
