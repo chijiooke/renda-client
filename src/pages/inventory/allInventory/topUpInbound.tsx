@@ -2,7 +2,7 @@ import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
-import { ConfirmModal, MyModal, ProcessItemsComponent, StorageSelect } from "@/modals";
+import { ConfirmModal, MyModal, ProcessItemsComponent } from "@/modals";
 import { TableDetails } from "@/components/InventoryTable/table details";
 import { TopUpTableDetails } from "@/components/InventoryTable";
 
