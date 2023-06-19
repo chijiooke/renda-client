@@ -2,10 +2,13 @@ import { ModalLayout } from "./layout";
 import cn from "classnames";
 import { Input, Button } from "@/components";
 import { FC, ReactNode, ChangeEventHandler, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "@/store/reducer";
 import axios from "axios";
-import { baseURL } from "@/utils";
+import { baseURL, DashBoardRoutes } from "@/utils";
+import { SuccessModal } from "./success";
+import { useRouter } from "next/router";
+import { OnboardingAction } from "@/types";
 type ModalProps = {
   show: boolean;
   close: () => void;
@@ -17,9 +20,11 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
   facilityId,
 }) => {
   const { inventoryItems, user } = useSelector((state: StoreState) => state);
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [details, setDetails] = useState({} as any);
   const [loading, setLoading] = useState(false);
-
+  const [showModal, setShowModal] = useState(false);
   const handleDetails: ChangeEventHandler<HTMLInputElement> = (e) => {
     const target = e.target as HTMLInputElement;
     const dt = {
@@ -27,6 +32,14 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
       [target.name]: target.value,
     };
     setDetails(dt);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    dispatch({
+      type: OnboardingAction.CLEAR_INVENTORY_ITEMS,
+    });
+    router.push(DashBoardRoutes.INVENTORY_ALL);
   };
 
   const SubmitData = async () => {
@@ -60,6 +73,7 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
         }
       );
       close();
+      setShowModal(true);
     } catch (error) {
       console.log(error);
     } finally {
@@ -67,62 +81,69 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
     }
   };
   return (
-    <ModalLayout
-      title="Shipping Inventory by Renda"
-      show={show}
-      close={close}
-      size="lg"
-    >
-      <Layout option="Pickup address">
-        <Input
-          placeholder="enter address"
-          handleChange={handleDetails}
-          name="pickupAddress"
-        />
-      </Layout>
-      <Layout option="Pickup LGA">
-        <Input
-          placeholder="enter pickup LGA"
-          handleChange={handleDetails}
-          name="pickup_LGA"
-        />
-      </Layout>
-      <Layout option="Pickup state">
-        <Input
-          placeholder="enter pickup state"
-          handleChange={handleDetails}
-          name="pickupState"
-        />
-      </Layout>
-      <Layout option="Pickup Date & Time">
-        <div className="grid grid-cols-2 gap-2">
-          <Input type="date" handleChange={handleDetails} name="date" />
-          <Input type="time" handleChange={handleDetails} name="time" />
-        </div>
-      </Layout>
-      <Layout option="Pickup Contact Name">
-        <Input
-          placeholder="enter contact name"
-          handleChange={handleDetails}
-          name="pickupContactName"
-        />
-      </Layout>
-      <Layout option="Pickup Phone Number ">
-        <Input
-          placeholder="enter contact phone number"
-          handleChange={handleDetails}
-          name="pickupContactNumber"
-        />
-      </Layout>
-
-      <Button
-        title="Send"
-        size="sm"
-        className="py-4"
-        handleClick={SubmitData}
-        loading={loading}
+    <>
+      <SuccessModal
+        show={showModal}
+        close={closeModal}
+        details="Customer’s pickup request has been received and is being processed. Email has been sent to Customer."
       />
-    </ModalLayout>
+      <ModalLayout
+        title="Shipping Inventory by Renda"
+        show={show}
+        close={close}
+        size="lg"
+      >
+        <Layout option="Pickup address">
+          <Input
+            placeholder="enter address"
+            handleChange={handleDetails}
+            name="pickupAddress"
+          />
+        </Layout>
+        <Layout option="Pickup LGA">
+          <Input
+            placeholder="enter pickup LGA"
+            handleChange={handleDetails}
+            name="pickup_LGA"
+          />
+        </Layout>
+        <Layout option="Pickup state">
+          <Input
+            placeholder="enter pickup state"
+            handleChange={handleDetails}
+            name="pickupState"
+          />
+        </Layout>
+        <Layout option="Pickup Date & Time">
+          <div className="grid grid-cols-2 gap-2">
+            <Input type="date" handleChange={handleDetails} name="date" />
+            <Input type="time" handleChange={handleDetails} name="time" />
+          </div>
+        </Layout>
+        <Layout option="Pickup Contact Name">
+          <Input
+            placeholder="enter contact name"
+            handleChange={handleDetails}
+            name="pickupContactName"
+          />
+        </Layout>
+        <Layout option="Pickup Phone Number ">
+          <Input
+            placeholder="enter contact phone number"
+            handleChange={handleDetails}
+            name="pickupContactNumber"
+          />
+        </Layout>
+
+        <Button
+          title="Send"
+          size="sm"
+          className="py-4"
+          handleClick={SubmitData}
+          loading={loading}
+        />
+      </ModalLayout>
+    </>
   );
 };
 

@@ -151,6 +151,11 @@ const reducer = (
         ...state,
         inventoryItems: [...state.inventoryItems, ...action.payload],
       };
+    case OnboardingAction.CLEAR_INVENTORY_ITEMS:
+      return {
+        ...state,
+        inventoryItems: [] as InventoryType[],
+      };
     default:
       return state;
   }

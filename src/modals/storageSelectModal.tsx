@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import { ConfirmModal, MyModal } from "@/modals";
 import axios from "axios";
 import { Button } from "@/components";
-
+import { baseURL } from "@/utils";
+import { useSelector } from "react-redux";
+import { StoreState } from "@/store/reducer";
 interface MyModalProps {
   onClose: () => void;
   show: boolean;
   handleSubmit: (id: string) => void;
 }
 interface StorageFacility {
-  storageFacilityId: string;
-  storageFacilityName: string;
+  id: string;
+  facilityName: string;
   // Add other necessary properties here
 }
 
@@ -19,6 +21,7 @@ const StorageSelectModal: React.FC<MyModalProps> = ({
   show,
   handleSubmit,
 }) => {
+  const { user } = useSelector((state: StoreState) => state);
   const [storageFacilities, setStorageFacilities] = useState<StorageFacility[]>(
     []
   );
@@ -27,10 +30,10 @@ const StorageSelectModal: React.FC<MyModalProps> = ({
     // Fetch the storage facility data from the API
     const fetchStorageFacilities = async () => {
       try {
-        const response = await axios.get(
-          "http://tradeplaorg-001-site9.gtempurl.com/api/v1/Storage/StorageList"
+        const { data } = await axios.get(
+          baseURL + `api/bookings/${user.customerId}/MyBookedStorage`
         );
-        setStorageFacilities(response.data);
+        setStorageFacilities(data.data);
       } catch (error) {
         console.error("Error fetching storage facilities:", error);
       }
@@ -64,21 +67,19 @@ const StorageSelectModal: React.FC<MyModalProps> = ({
                 >
                   {storageFacilities.map((facility) => (
                     <div
-                      key={facility.storageFacilityId}
+                      key={facility.id}
                       className="flex py-3 gap-3 my-2 items-center"
                     >
                       <input
                         type="radio"
                         className="scale-150 cursor-pointer"
                         name="facility"
-                        onChange={() =>
-                          setFacilityId(facility.storageFacilityId)
-                        }
+                        onChange={() => setFacilityId(facility.id)}
 
                         // Add necessary props based on the facility data
                       />
                       <label className="text-black text-[15px]">
-                        {facility.storageFacilityName}
+                        {facility.facilityName}
                       </label>
                     </div>
                   ))}
