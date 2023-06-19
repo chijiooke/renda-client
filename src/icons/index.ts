@@ -25,3 +25,5 @@ export { UploadIcon } from "./upload";
 export { ComputerIcon } from "./computerIcon";
 export { DoubleArrow } from "./doubleArrow";
 export { ComputerImage } from "./computerImage";
+export { CheckedIcon } from "./checked";
+export { DeclinedIcon } from "./decline";
