@@ -2,7 +2,7 @@ import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
-import { ConfirmModal, MyModal, StorageSelect } from "@/modals";
+import { ConfirmModal, MyModal } from "@/modals";
 
 export default function InboundDetail() {
   const router = useRouter();
@@ -111,7 +111,7 @@ export default function InboundDetail() {
         <div>
           <div
             className="flex space-x-96 items-center justify-between m-4"
-            style={{ }}
+            style={{}}
           >
             <p className="opacity-50  font-medium text-black text-opacity-50">
               Showing 1{" "}
@@ -126,19 +126,13 @@ export default function InboundDetail() {
                 <p className=" font-medium text-center text-white">1</p>
               </div>
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-                <p className=" font-medium text-center text-gray-500">
-                  2
-                </p>
+                <p className=" font-medium text-center text-gray-500">2</p>
               </div>
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-                <p className=" font-medium text-center text-gray-500">
-                  3
-                </p>
+                <p className=" font-medium text-center text-gray-500">3</p>
               </div>
               <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-                <p className=" font-medium text-center text-gray-500">
-                  Next
-                </p>
+                <p className=" font-medium text-center text-gray-500">Next</p>
               </div>
             </div>
           </div>

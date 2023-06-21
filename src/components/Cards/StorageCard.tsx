@@ -86,7 +86,7 @@ const StorageCard: FC<Props> = ({ data }) => {
           <div>
             <p className="text-[10px]">
               {" "}
-              {data?.maximumDurationOfUsage} Months | {data?.locationOfStorage}{" "}
+              {data?.minimumDurationOfUsage} Months | {data?.locationOfStorage}{" "}
               | Available Space ({data?.availableSpace}qm)
             </p>
           </div>

@@ -27,3 +27,5 @@ export { DoubleArrow } from "./doubleArrow";
 export { ComputerImage } from "./computerImage";
 export { DropDown } from "./dropDown";
 export { Trash } from "./trash";
+export { CheckedIcon } from "./checked";
+export { DeclinedIcon } from "./decline";

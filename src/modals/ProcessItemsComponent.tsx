@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { StorageSelect } from "./storageSelectModal";
-
+import { StorageSelectModal } from "./storageSelectModal";
 
 function ProcessItemsComponent() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +27,13 @@ function ProcessItemsComponent() {
       {/* You can add any content or elements you want here */}
 
       {/* Render the MyModal component */}
-      {isOpen && <StorageSelect onClose={closeModal} />}
+      {isOpen && (
+        <StorageSelectModal
+          onClose={closeModal}
+          show={isOpen}
+          handleSubmit={() => {}}
+        />
+      )}
     </div>
   );
 }

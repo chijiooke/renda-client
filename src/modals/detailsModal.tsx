@@ -1,56 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MyModal } from "./dashboardModal";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { StoreState } from "@/store/reducer";
 
+type Item = {
+  id: number;
+  itemName: string;
+  quantity: number;
+  description: string;
+  size: string;
+  colour: string;
+  picture: string;
+  unitPrice: number;
+  customerBusinessId: string;
+};
 
 function SomeComponent() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleDivClick = () => {
-    // Open the modal by setting isOpen to true
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    // Close the modal by setting isOpen to false
-    setIsOpen(false);
-  };
-
+  const { inventoryItems } = useSelector((state: StoreState) => state);
   return (
-    <div onClick={handleDivClick}>
-      <div className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer">
-        <div className="flex items-center justify-start w-36  px-3 py-1.5  ">
-          <p className="">Mac Book </p>
+    <div>
+      {inventoryItems.map((item, idx) => (
+        <div
+          key={idx}
+          className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer"
+        >
+          <div
+            title="itemName"
+            className="flex items-center justify-start w-36  px-3 py-1.5  "
+          >
+            <p className="">{item.itemName}</p>
+          </div>
+          <div
+            title="quantity"
+            className="flex items-center justify-start  px-3 py-1.5  "
+          >
+            <p className="">{item.quantity}</p>
+          </div>
+          <div
+            title="size"
+            className="flex items-center justify-start  px-3 py-1.5  "
+          >
+            <p className="">{item.size}</p>
+          </div>
+          <div
+            title="colour"
+            className="flex items-center justify-start  px-3 py-1.5  "
+          >
+            <p className="">{item.colour}</p>
+          </div>
+          <div
+            title="size"
+            className="flex items-center justify-start  px-3 py-1.5  "
+          >
+            <p className="">{item.size}</p>
+          </div>
+          <div
+            title="unitPrice"
+            className="flex items-center justify-start  px-3 py-1.5  "
+          >
+            <p className="">{item.unitPrice}</p>
+          </div>
+          <div title="description" className="w-44  leading-none">
+            <p>{item.description}</p>
+          </div>
+          <p className="picture">{item.picture}</p>
         </div>
-        <div className="flex items-center justify-start  px-3 py-1.5  ">
-          <p className="">12</p>
-        </div>
-        <div className="flex items-center justify-start  px-3 py-1.5  ">
-          <p className="">14cm</p>
-        </div>
-        <div className="flex items-center justify-start  px-3 py-1.5  ">
-          <p className="">Black</p>
-        </div>
-        <div className="flex items-center justify-start  px-3 py-1.5  ">
-          <p className="">450,000</p>
-        </div>
-        <p className="w-44  leading-none">
-          40,000
-        </p>
-        <div className="flex items-center justify-start  px-3 py-1.5  ">
-          <p className="">70kg</p>
-        </div>
-
-        <p className="">img001111.jpg</p>
-      </div>
+      ))}
       {/* Content of your component */}
       {/* When this div is clicked, the handleDivClick function is triggered */}
       {/* and it opens the modal by setting isOpen to true */}
       {/* You can add any content or elements you want here */}
-
-      {/* Render the MyModal component */}
-      {isOpen && <MyModal onClose={closeModal} />}
     </div>
   );
 }
 
-export {SomeComponent};
+export { SomeComponent };
