@@ -1,7 +1,4 @@
-import { Button } from "@/components";
 import { UploadArea } from "@/components/UploadArea";
-import { CheckIcon, UploadIcon } from "@/icons";
-import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
 
 const AddViaCsv = () => {
