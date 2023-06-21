@@ -16,7 +16,7 @@ const TopUpTableDetails = () => {
   return (
     <div className="container mx-auto pt-4">
       <div
-        className="bg-white h-20 flex justify-around border rounded-sm border-black border-opacity-25"
+        className="bg-white h-20 grid grid-cols-9 pl-12 border rounded-sm border-black border-opacity-25"
         style={{}}
       >
         <div className="flex items-center">
@@ -51,10 +51,7 @@ const TopUpTableDetails = () => {
         </div>
       </div>
       <TopUpTableRow />
-      <TopUpTableRow />
-      <TopUpTableRow />
-      <TopUpTableRow />
-      <TopUpTableRow />
+
     </div>
   );
 };

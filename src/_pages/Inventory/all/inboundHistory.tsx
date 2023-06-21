@@ -22,19 +22,45 @@ type InboundRequest = {
           // ...
           pickupLocation: string;
           deliveryBy: string;
+          rendaPickUpDetails: {
+            //
+            pickupContactName: string;
+            pickupContactNumber: string;
+          };
           // ...
         };
+        inventoryItems: [
+          {
+            skuId: number;
+            itemName: string;
+            quantity: number;
+            description: string;
+            size: string;
+            colour: string;
+            picture: string;
+            unitPrice: number;
+            weight: number;
+            quantityRecieved: number,
+            quantityDamaged: number,
+            quantityMissing: number,
+            acceptanceStatus: string
+          }
+        ];
         // ...
         storageFacilityId: string;
-        storageFacility: null;
+        storageFacility: {
+          storageFacilityName: string;
+        };
       }
     ];
     // ...
   };
 
-  storageFacility: string;
-  storageFacilityId: string;
+  // storageFacility: string;
+  // storageFacilityId: string;
   deliveryBy: string;
+  totalNumberOfItems: number;
+  totalValue: number;
   status: string;
 };
 
@@ -73,12 +99,15 @@ const InboundHistory = () => {
           <p className="font-semibold leading-none uppercase">STATUS</p>
         </div>
 
-        {inboundRequests.map((request) => (
+        {inboundRequests.map((request, idx) => (
           <div
             key={request.inboundId}
             className="grid grid-cols-8 justify-evenly p-5 items-center cursor-pointer"
             onClick={() =>
-              router.push(DashBoardRoutes.INVENTORY_INBOUND_DETAILS)
+              router.push({
+                pathname: DashBoardRoutes.INVENTORY_INBOUND_DETAILS,
+                query: { index: idx, id: request.inboundId },
+              })
             }
           >
             <div className="inline-flex space-x-1 items-center justify-start">
@@ -106,7 +135,7 @@ const InboundHistory = () => {
             </div>
             <div className="inline-flex space-x-1 items-center justify-start">
               <p title="storageFacility" className="leading-none">
-                {request.storageFacility}
+                {request.shipment.inventoryItems[0].storageFacility.storageFacilityName}
               </p>
             </div>
             <div className="inline-flex space-x-1 items-center justify-start">

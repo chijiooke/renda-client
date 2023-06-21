@@ -366,16 +366,82 @@
 
 // export { TableRow };
 import { ComputerImage } from "@/icons";
-import { DashBoardRoutes } from "@/utils";
+import { DashBoardRoutes, baseURL } from "@/utils";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../Input";
+import { StoreState } from "@/store/reducer";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+type Inventories = {
+  id: number;
+  dateAdded: string;
+  dateUpdated: string;
+  customerBusinessId: string;
+  deliveryDetails: {
+    id: number;
+    customerBusinessId: string;
+    deliveryDetailsId: number;
+    pickupLocation: string;
+    customerDeliveryDetails: any;
+    rendaPickUpDetails: any;
+    deliveryBy: string;
+    totalNumberOfItems: number;
+    totalValue: number;
+    deliveryStatus: string;
+  };
+  inventoryItems: Array<{
+    id: number;
+    skuId: string;
+    itemName: string;
+    quantity: number;
+    description: string;
+    size: string;
+    colour: string;
+    picture: string;
+    unitPrice: number;
+    weight: null;
+    customerBusinessId: string;
+    storageFacilityId: string;
+    storageFacility: null;
+    itemPosition: string;
+    quantityRecieved: number;
+    quantityDamaged: number;
+    quantityMissing: number;
+    acceptanceStatus: string;
+  }>;
+  storageFacilityId: string;
+  // storageFacility: {
+  //   storageFacilityName: string;
+  // };
+};
+
+
 
 const TopUpTableRow = () => {
   const [expanded, setExpanded] = useState(false);
   const [initialRowVisible, setInitialRowVisible] = useState(true);
   const router = useRouter();
 
+  //api/customers/aSMfML/InboundInventory/inventories
+  const { user } = useSelector((state: StoreState) => state);
+  const [inventories, setInventories] = useState<Inventories[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(
+          baseURL +
+            `api/customers/${user.customerId}/InboundInventory/inventories`
+        );
+        setInventories(data);
+      } catch (error) {
+        console.error("Failed to fetch data from the endpoint:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div
@@ -383,35 +449,41 @@ const TopUpTableRow = () => {
         expanded ? "h-80" : "h-16"
       }`}
     >
-      <div className="flex justify-around">
-        <div className="p-2">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              className="form-checkbox h-4 w-4 text-blue-500"
-            />
-          </div>
-        </div>
-        <div className="p-2">Item 1</div>
-        <div className="p-2">Facility 1</div>
-        <div className="p-2">
-          <Input placeholder="" size="sm" className=" pt-0" />
-        </div>
+      {inventories
+        .filter((number) => number.inventoryItems.map((nuu) => nuu.skuId))
+        .map((req) =>
+          req.inventoryItems.map((recc) => (
+            <div className="grid grid-cols-9 pl-10 ">
+              <div className="p-2">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    className="form-checkbox h-4 w-4 text-blue-500"
+                  />
+                </div>
+              </div>
+              <div className="p-2">{recc.skuId}</div>
+              <div className="p-2">{recc.itemName}</div>
+              <div className="p-2">
+                <Input placeholder="" size="sm" className=" pt-0" />
+              </div>
 
-        <div className="p-2">
-          <p className="">Badagry, Lagos</p>
-        </div>
-        <div className="p-2">Facility Name 1</div>
-        <div className="p-2">
-          <p className="">Black</p>
-        </div>
-        <div className="p-2">
-          <p className="">22kg</p>
-        </div>
-        <div className="p-2">
-          <p className="">456,000</p>
-        </div>
-      </div>
+              <div className="p-2">
+                <p className="">{recc.storageFacilityId}</p>
+              </div>
+              <div className="p-2">{recc.quantity}</div>
+              <div className="p-2">
+                <p className="">{recc.colour}</p>
+              </div>
+              <div className="p-2">
+                <p className="">{recc.weight}</p>
+              </div>
+              <div className="p-2">
+                <p className="">{recc.unitPrice}</p>
+              </div>
+            </div>
+          ))
+        )}
     </div>
   );
 };

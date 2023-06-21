@@ -2,9 +2,42 @@ import { Button } from "@/components";
 import { CheckIcon } from "@/icons";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { StoreState } from "@/store/reducer";
+
+// Define the type for the inbound request
+type InboundRequest = {
+  inboundId: string;
+  dateCreated: string;
+  timeCreated: string;
+  shipment: {
+    // ...
+    inventoryItems: [
+      {
+        // ...
+        deliveryDetails: {
+          // ...
+          pickupLocation: string;
+          deliveryBy: string;
+          // ...
+        };
+        // ...
+        storageFacilityId: string;
+        storageFacility: null;
+      }
+    ];
+    // ...
+  };
+
+  storageFacility: string;
+  storageFacilityId: string;
+  deliveryBy: string;
+  status: string;
+};
 
 const InboundDetail = () => {
   const router = useRouter();
+  
   return (
     <div className=" grid grid-cols-3 justify-between my-5 gap-5">
       <div className="col-span-2">
