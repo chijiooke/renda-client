@@ -3,16 +3,25 @@ import cn from "classnames";
 import { ReactNode, useState } from "react";
 
 import { Minus, Plus } from "@/icons";
+import { capitalizeText } from "@/utils/capitalizeText";
 
 type Props = {
   show: boolean;
   close: (data?: any) => void;
 };
+
+enum DeliveryTimeEnum {
+  IMMEDIATELY = "IMMEDIATELY",
+  SET_DATE = "SET_DATE",
+}
 const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
 
 function ExternalOrderDetailsModal({ show, close }: Props) {
+  const [data, setdata] = useState({});
 
-  const [data, setdata] = useState({})
+  const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>(
+    DeliveryTimeEnum.IMMEDIATELY
+  );
   return show ? (
     <div className="modal">
       <div className="rounded bg-white p-10">
@@ -39,7 +48,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     name=""
                     placeholder="Enter recipient's name"
                     type="text"
-                    handleChange={()=>{}}
+                    handleChange={() => {}}
                   />
                 </Layout>
                 <Layout option="Recipient's phone number" center={true}>
@@ -164,28 +173,37 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   </div>
                 </Layout>
                 <Layout option="Set Delivery Time" center={true}>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className=" flex gap-3">
-                      <input
-                        type="radio"
-                        value="immediately"
-                        //   checked={selectedRadio === 'immediately'}
-                        //   onChange={handleOptionChange}
-                      />
-                      <div>Immediately</div>
-                    </div>
-
-                    <div className="flex gap-3">
-                      <input
-                        type="radio"
-                        value="setdate"
-                        //   checked={selectedRadio === 'setdate'}
-                        //   onChange={handleOptionChange}
-                      />
-                      <div>Set Delivery Date & Time</div>
-                    </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "0.5rem",
+                      alignItems: "center",
+                    }}
+                  >
+                    {Object.keys(DeliveryTimeEnum).map((dtime) => (
+                      <>
+                         {" "}
+                        <label htmlFor={dtime} className="flex gap-1">
+                          <input
+                            type="radio"
+                            id={dtime}
+                            name="delivery_time"
+                            value={dtime}
+                            checked={deliveryTime === dtime}
+                            onChange={(e) =>
+                              setDliveryTime(e.target.value as DeliveryTimeEnum)
+                            }
+                          />
+                          {capitalizeText(dtime.replace("_", " "))}
+                        </label>
+                      </>
+                    ))}
                   </div>
                 </Layout>
+
+                {deliveryTime === DeliveryTimeEnum.SET_DATE && (
+                  <Input type="date" className="flex align-self-end w-100 " />
+                )}
               </div>
 
               <div className=" w-full">
