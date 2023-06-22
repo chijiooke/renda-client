@@ -1,9 +1,11 @@
 import { Button } from "@/components"
+import { ExternalOrderDetailsModal } from "@/modals/externalDetailsModal"
 import { ExternalOrderModal } from "@/modals/externalOrderModal"
 import { useState } from "react"
 
 const ExternalOrders = () => {
     let [isOpen, setIsOpen] = useState(false)
+    let [showExternalDetails, setShowExternalDetails] = useState(false)
   
     function closeModal() {
       setIsOpen(false)
@@ -18,8 +20,16 @@ const ExternalOrders = () => {
 
 <ExternalOrderModal 
          show={isOpen}
-        //  data={data}
+        //  data={data}\\
+        onSubmit={()=> {
+            setIsOpen(false)
+            setShowExternalDetails(true)
+        }}
          close={() => setIsOpen(false)}/>
+         <ExternalOrderDetailsModal
+         show={showExternalDetails}
+         close={() => setShowExternalDetails(false)}
+         />
         <div>
         <div className=" bg-[#E7F4FF] p-5 font-medium text-[#7A7A7A]">
             Orders from external Pickup Locations

@@ -15,15 +15,17 @@ import React, {
   import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useRouter } from "next/router";
 import { ExternalOrderDetailsModal } from "./externalDetailsModal";
+import { OrdermgtRoutes } from "@/utils/routes";
   
   type Props = {
     show: boolean;
     data?: any;
     close: () => void;
+    onSubmit: () => void;
   };
 
 
-function ExternalOrderModal ({ show, data, close }: Props) {
+function ExternalOrderModal ({ show, data, close, onSubmit }: Props) {
     const router = useRouter();
     const [selectedButton, setSelectedButton] = useState('');
     const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -36,14 +38,15 @@ function ExternalOrderModal ({ show, data, close }: Props) {
         // Perform any necessary actions before routing
         // Based on the selected button, route to a specific page
         if (selectedButton === 'Button 1') {
-            show === false
-            setShowDetailsModal(true)
+            
         } else if (selectedButton === 'Button 2') {
-          router.push('/page2');
+          router.push(OrdermgtRoutes.CREATEORDER_CSV);
         } else if (selectedButton === 'Button 3') {
           router.push('/page3');
         }
+        onSubmit()
       };
+     
   
     return show? (
         

@@ -14,6 +14,7 @@ import React, {
   
   import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useRouter } from "next/router";
+import { AddIcon, Minus, Plus } from "@/icons";
   
   type Props = {
     show: boolean;
@@ -21,6 +22,8 @@ import { useRouter } from "next/router";
     close: () => void;
   };
   const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
+  
+  
   function ExternalOrderDetailsModal ({ show, data, close }: Props) {
 
     return show? (
@@ -44,48 +47,105 @@ import { useRouter } from "next/router";
                   </p>
 
                   <div className="grid gap-6" >
-                  <Layout option="Recipient's Name" center={true}>                 
-                        <Input
+                  <Layout option="Recipient's Name" center={true}>   
+                  <Input
+                  className="h-10"
                           name=""
                           placeholder="Enter recipient's name"
                           type="text"
-                        />
+                        />             
+                       
                   </Layout> 
                   <Layout option="Recipient's phone number" center={true}>                 
                         <Input
+                        className="h-10"
                           name=""
                           placeholder="Enter recipient's phone number"
                           type="text"
                         />
                   </Layout> 
-                  <Layout option="Drop off address" center={true}>                 
-                        <Input
+                  <Layout option="Pick up LGA" center={true}>                 
+                        <Select
+                      
                           name=""
-                          placeholder="Drop off address"
+                          placeholder="Select Pick up LGA"
+                         options={location}
+                        />
+                  </Layout>
+                  <Layout option="Pick up address" center={true}>                 
+                        <Input
+                        className="h-10"
+                          name=""
+                          placeholder="Pick up address"
                           type="text"
                         />
                   </Layout> 
-                  <Layout option="Drop off address" center={true}>                 
+                  <Layout option="Pick up contact" center={true}>                 
                         <Input
+                        className="h-10"
                           name=""
-                          placeholder="Drop off address"
+                          placeholder="Enter Pick up contact"
                           type="text"
                         />
                   </Layout> 
-                  <Layout option="Delivery Location" center={true}>                 
-                        <Select
+                  <Layout option="Contact Phone no." center={true}>                 
+                        <Input
+                        className="h-10"
                           name=""
-                          placeholder="Select Delivery location"
-                         options={location}
+                          placeholder="Enter Contact Phone no."
+                          type="number"
                         />
                   </Layout> 
-                  <Layout option="State" center={true}>                 
+                  <Layout option="Delivery LGA" center={true}>                 
                         <Select
+                        
                           name=""
-                          placeholder="Select State"
+                          placeholder="Select Delivery LGA"
                          options={location}
                         />
+                  </Layout>
+                  <Layout option="Delivery address" center={true}>                 
+                        <Input
+                        className="h-10"
+                          name=""
+                          placeholder="Delivery address"
+                          type="text"
+                        />
                   </Layout> 
+                  <div className="boarder-2 rounded grid justify-center" style={{backgroundColor: '#0000001a'}}>
+                   <div className="flex gap-2 mt-4">
+                        <div>
+                           <p className="font-bold">Name of Item</p>
+                            <input type="text" className="my-1 rounded h-12" />
+                        </div>
+                        <div> 
+                            <p className="font-bold">Dimension</p>
+                            <input type="text" className="my-1 rounded h-12" />
+                        </div>
+                        <div>
+                        <p className="font-bold">Qty</p>
+                            <input type="text" className="my-1 rounded h-12" />
+                        </div>
+                        <div>
+                        <p className="font-bold">Unit Price</p>
+                            <input type="text" className="my-1 rounded h-12" />
+                        </div>
+                    </div> 
+              
+                    <div className="flex gap-2 my-3 justify-end">
+                        <button className="flex gap-2 items-center justify-center rounded-lg" style={{backgroundColor: '#CF0000', width: '80px', height: '25px' }}
+                        >
+                            <Minus/>
+                            <p className="text-white">Delete</p>
+                        </button>
+                        <button className="flex gap-2 items-center justify-center rounded-lg" style={{backgroundColor: '#008753', width: '80px' }}
+                        >
+                           <Plus/>
+                            <p className="text-white ">Add</p>
+                        </button>
+                      
+                    </div>
+                  </div>
                   <Layout option="Payment Mode" center={true}>  
                   <div className="grid grid-cols-2 gap-4">
                         <div className="flex gap-4 border-2 rounded items-center " style={{backgroundColor: '#F5F5F5', height: '50px'}}>
@@ -172,4 +232,5 @@ import { useRouter } from "next/router";
       </div>
     );
   };
+
   export { ExternalOrderDetailsModal };

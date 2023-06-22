@@ -8,12 +8,14 @@ import React, {
   import { Input, Button, Select } from "@/components";
   import axios from "axios";
   import dayjs from "dayjs";
-  import { baseURL, DashBoardRoutes } from "@/utils";
+  import { baseURL, DashBoardRoutes,  } from "@/utils";
   import { useSelector } from "react-redux";
   import { StoreState } from "@/store/reducer";
   
   import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useRouter } from "next/router";
+import { OrdermgtRoutes } from "@/utils/routes";
+
   
   type Props = {
     show: boolean;
@@ -36,7 +38,7 @@ import { useRouter } from "next/router";
         if (selectedButton === 'Button 1') {
           router.push(DashBoardRoutes.INVENTORY_ALL);
         } else if (selectedButton === 'Button 2') {
-          router.push('/page2');
+          router.push(OrdermgtRoutes.CREATEORDER_CSV);
         } else if (selectedButton === 'Button 3') {
           router.push('/page3');
         }
