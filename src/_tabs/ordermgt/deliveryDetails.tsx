@@ -1,4 +1,4 @@
-import { DeleteIcon, Trash } from "@/icons";
+import { Trash } from "@/icons";
 import { useState } from "react";
 
 const DeliveryDetails = () => {
@@ -34,4 +34,4 @@ const DeliveryDetails = () => {
         </>
     )
 }
-export {DeliveryDetails}
+export { DeliveryDetails };

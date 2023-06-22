@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { ConfirmModal } from "./confirm";
-import { Input } from "@/components";
+import { useState } from "react";
 import { SuccesAlert } from "./confirmSuccess copy";
 
 function DeliveryByCustomerModal() {
