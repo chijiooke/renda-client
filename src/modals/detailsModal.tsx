@@ -9,6 +9,7 @@ type Item = {
   itemName: string;
   quantity: number;
   description: string;
+  weight: string;
   size: string;
   colour: string;
   picture: string;
@@ -50,10 +51,10 @@ function SomeComponent() {
             <p className="">{item.colour}</p>
           </div>
           <div
-            title="size"
+            title="weight"
             className="flex items-center justify-start  px-3 py-1.5  "
           >
-            <p className="">{item.size}</p>
+            <p className="">{item.weight}</p>
           </div>
           <div
             title="unitPrice"

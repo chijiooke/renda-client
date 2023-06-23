@@ -1,5 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TableRow } from "./allRow";
+import { StoreState } from "@/store/reducer";
+import { baseURL } from "@/utils";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+type Inventorie = {
+  id: number;
+  dateAdded: string;
+  dateUpdated: string;
+  customerBusinessId: string;
+  deliveryDetails: {
+    id: number;
+    customerBusinessId: string;
+    deliveryDetailsId: number;
+    pickupLocation: string;
+    customerDeliveryDetails: any;
+    rendaPickUpDetails: any;
+    deliveryBy: string;
+    totalNumberOfItems: number;
+    totalValue: number;
+    deliveryStatus: string;
+  };
+  inventoryItems: Array<{
+    id: number;
+    skuId: string;
+    itemName: string;
+    quantity: number;
+    description: string;
+    size: string;
+    colour: string;
+    picture: string;
+    unitPrice: number;
+    weight: null;
+    customerBusinessId: string;
+    storageFacilityId: string;
+    storageFacility: null;
+    itemPosition: string;
+    quantityRecieved: number;
+    quantityDamaged: number;
+    quantityMissing: number;
+    acceptanceStatus: string;
+  }>;
+  storageFacilityId: string;
+  storageFacility: {
+    storageFacilityName: string;
+  };
+};
 
 const TableDetails = () => {
   const [expandedRow, setExpandedRow] = useState(null);
@@ -12,8 +59,26 @@ const TableDetails = () => {
     }
   };
 
+    const { user } = useSelector((state: StoreState) => state);
+    const [inventories, setInventories] = useState<Inventorie[]>([]);
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const { data } = await axios.get(
+            baseURL +
+              `api/customers/${user.customerId}/InboundInventory/inventories`
+          );
+          setInventories(data);
+        } catch (error) {
+          console.error("Failed to fetch data from the endpoint:", error);
+        }
+      };
+
+      fetchData();
+    }, []);
+
   return (
-    <div className="container mx-auto pt-4">
+    <div className="container h-[60vh] mx-auto pt-4">
       <div
         className="bg-white pl-10 h-20 grid grid-cols-8 border rounded-sm border-black border-opacity-25"
         style={{}}
@@ -46,7 +111,13 @@ const TableDetails = () => {
           <p className=" font-semibold uppercase">ACTION</p>
         </div>
       </div>
-      <TableRow />
+      {inventories.map(
+        (inventory) =>
+          inventory.inventoryItems.map((inx) => (
+            <TableRow key={inx.id} inventoryItem={inx} Inventory={inventory} />
+          ))
+        // <TableRow key={inventory.id} inventory={inventory} />
+      )}
       {/* <TableRow />
       <TableRow /> */}
     </div>

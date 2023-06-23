@@ -53,6 +53,9 @@ function AddForm() {
         const colour =
           (document.getElementById(`colour-${form.id}`) as HTMLInputElement)
             ?.value || "";
+        const weight =
+          (document.getElementById(`weight-${form.id}`) as HTMLInputElement)
+            ?.value || "";
         // Update with the actual picture value
         const picture = "picture";
         const unitPrice = parseInt(
@@ -67,6 +70,7 @@ function AddForm() {
           quantity,
           description,
           size,
+          weight,
           colour,
           picture,
           unitPrice,

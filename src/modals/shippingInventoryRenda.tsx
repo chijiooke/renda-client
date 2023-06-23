@@ -13,11 +13,15 @@ type ModalProps = {
   show: boolean;
   close: () => void;
   facilityId?: string;
+  skuId: string;
+  count: number;
 };
 const ShippingInventoryRendaModal: FC<ModalProps> = ({
   show,
   close,
   facilityId,
+  skuId,
+  count,
 }) => {
   const { inventoryItems, user } = useSelector((state: StoreState) => state);
   const router = useRouter();
@@ -54,22 +58,39 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
     };
 
     try {
-      
-      const { data: inboundData } = await axios.post(
-        baseURL +
-          `api/customers/${user.customerId}/InboundInventory/inbound-request`,
-        {
-          customerBusinessId: user.customerId,
-          deliveryDetails: {
-            customerBusinessId: user.customerId,
-            rendaPickUpDetails: dt,
-            pickupLocation: "lagos",
-            deliveryBy: "renda",
-          },
-          storageFacilityId: facilityId,
-          inventoryItems,
-        }
-      );
+      if ((skuId ==="")&&(count===0)) {
+              const { data: inboundData } = await axios.post(
+                baseURL +
+                  `api/customers/${user.customerId}/InboundInventory/inbound-request`,
+                {
+                  customerBusinessId: user.customerId,
+                  deliveryDetails: {
+                    customerBusinessId: user.customerId,
+                    rendaPickUpDetails: dt,
+                    pickupLocation: dt.pickupAddress,
+                    deliveryBy: "renda",
+                  },
+                  storageFacilityId: facilityId,
+                  inventoryItems,
+                }
+              );
+      }else{
+              const { data: inboundData } = await axios.post(
+                baseURL +
+                  `api/customers/${user.customerId}/InboundInventory/topUp-inventory`,
+                {
+                  customerBusinessId: user.customerId,
+                  skuId,
+                  quantity: count,
+                  deliveryDetails: {
+                    customerBusinessId: user.customerId,
+                    rendaPickUpDetails: dt,
+                    pickupLocation: dt.pickupAddress,
+                    deliveryBy: "renda",
+                  },
+                }
+              );
+      }
       close();
       setShowModal(true);
     } catch (error) {

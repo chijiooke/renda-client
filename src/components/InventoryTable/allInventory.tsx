@@ -36,16 +36,13 @@ function AllInventoryTable() {
 
   return (
     <>
-      <div className="relative object-contain">
+      <div className="h-0">
         <div>
           <TableDetails />
         </div>
-        <div className="clas">
-
-        </div>
         <div
-          className="flex space-x-96 fixed items-center justify-between bottom-0 m-4"
-          style={{ height: 28 }}
+          className="flex justify-between bottom-0 m-4"
+          style={{ }}
         >
           <p className="opacity-50 text-xs font-medium text-black text-opacity-50">
             Showing 1{" "}
