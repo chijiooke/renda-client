@@ -13,3 +13,4 @@ export { ProcessItemsComponent } from "./ProcessItemsComponent";
 export { ModalLayout } from "./layout";
 export { ShippingInventoryRendaModal } from "./shippingInventoryRenda";
 export { ShippingInventoryCustomerModal } from "./shippingInventoryCustomer";
+export { Counter } from "./counter" ;

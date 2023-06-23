@@ -81,7 +81,7 @@ import { MyModal } from "@/modals";
 import { useState } from "react";
 // import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
 import { AllInventoryTable } from "@/components/InventoryTable";
-import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
+import { InboundHistory } from "@/_pages/Inventory/all/inboundHistory";
 
 const headers = ["ALL Inventory", "Inbound History"];
 function classNames(...classes: any[]) {
@@ -146,7 +146,7 @@ export default function Inventory() {
                 <h1 className="text-3xl font-extrabold">Inbound History</h1>
               </div>
               <div>
-                <div
+                {/* <div
                   className="inline-flex space-x-3 items-center justify-start px-4 py-3 bg-green-100 border rounded-md border-green-900"
                   style={{ width: 423, height: 38 }}
                 >
@@ -159,7 +159,7 @@ export default function Inventory() {
                       Inbound request has been made and would respond in 12hrs
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           )}

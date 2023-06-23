@@ -401,10 +401,10 @@ type Inventories = {
     colour: string;
     picture: string;
     unitPrice: number;
-    weight: null;
+    weight: string;
     customerBusinessId: string;
     storageFacilityId: string;
-    storageFacility: null;
+    storageFacility: {};
     itemPosition: string;
     quantityRecieved: number;
     quantityDamaged: number;

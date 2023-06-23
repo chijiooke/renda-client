@@ -6,6 +6,7 @@ export type InventoryType = {
   quantity: number;
   description: string;
   size: string;
+  weight: string;
   colour: string;
   picture?: string;
   unitPrice: number;

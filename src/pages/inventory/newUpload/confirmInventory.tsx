@@ -54,6 +54,8 @@ export default function ConfirmInventory() {
         show={showShippingRenda}
         close={() => setShowShippingRenda(false)}
         facilityId={facilityId}
+        skuId=""
+        count={0}
       />
       <ShippingInventoryCustomerModal
         show={showShippingCustomer}
