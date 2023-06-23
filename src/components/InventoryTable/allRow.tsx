@@ -139,7 +139,7 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
             <p className=" leading-7">
               {Inventory.storageFacility.storageFacilityName}
             </p>
-            <p className="pl-10 leading-7">{inventoryItem.quantityRecieved}</p>
+            <p className="pl-10 leading-7">{inventoryItem.quantity}</p>
             <p className=" leading-none">{inventoryItem.unitPrice}</p>
             <div className="p-2 text-center flex items-center">
               <div
