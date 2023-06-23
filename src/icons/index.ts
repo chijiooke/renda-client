@@ -15,7 +15,7 @@ export { DebitCardIcon } from "./debitCard";
 export { RightArrowIcon } from "./rightArrow";
 export { ArrowNextIcon } from "./ArrowNext";
 export { ArrowPreviousIcon } from "./ArrowPrevious";
-
+export { DeliveryTruckIcon } from "./deliveryTruck";
 export { WhatsAppIcon } from "./whatsapp";
 export { EmailIcon } from "./email";
 export { PhoneIcon } from "./phone";
@@ -25,5 +25,7 @@ export { UploadIcon } from "./upload";
 export { ComputerIcon } from "./computerIcon";
 export { DoubleArrow } from "./doubleArrow";
 export { ComputerImage } from "./computerImage";
+export { DropDown } from "./dropDown";
+export { Trash } from "./trash";
 export { CheckedIcon } from "./checked";
 export { DeclinedIcon } from "./decline";

@@ -15,6 +15,8 @@ import {
   RedDot,
   LeftArrowIcon,
   RightArrowIcon,
+  DeliveryIcon,
+  DeliveryTruckIcon,
 } from "@/icons";
 import axios from "axios";
 import { OnboardingAction } from "@/types";
@@ -68,7 +70,7 @@ const routes: NavRoutes[] = [
   {
     icon: OrderManagementIcon,
     title: "Order Mgt",
-    route: "",
+    route: DashBoardRoutes.ORDERMGT,
   },
 ];
 const DashBoardLayout: FC<Props> = ({
@@ -78,11 +80,18 @@ const DashBoardLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { authenticated, user } = useSelector((state: StoreState) => state);
+  const {  user } = useSelector((state: StoreState) => state);
 
   const [loading, setLoading] = useState(false);
 
-  const getUser = async (id: string) => {
+  const showDeliveryTruckIcon = router.pathname === DashBoardRoutes.INVENTORY_ALL
+
+  const handleTruckClick = () => {
+  
+    router.push({pathname: DashBoardRoutes.DELIVERY_VAN});
+  };
+
+  const getUser = async (id:string) => {
     setLoading(true);
     try {
       const { data: response } = await axios.get(
@@ -209,6 +218,12 @@ const DashBoardLayout: FC<Props> = ({
                     )}
 
                     <div className="flex gap-5 items-center">
+                      <div>
+                      {  showDeliveryTruckIcon && <button onClick={handleTruckClick}>
+                        <DeliveryTruckIcon/>
+                        </button> }
+                      </div>
+                   
                       <p className="text-[green] font-extrabold">Active</p>
                       <div className="relative">
                         <NotificationIcon />

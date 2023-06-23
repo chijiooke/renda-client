@@ -29,6 +29,8 @@ export const DashBoardRoutes = {
   INVENTORY_CONFIRM_INVENTORY: "/inventory/newUpload/confirmInventory",
   INVENTORY_INBOUND_DETAILS: "/inventory/allInventory/inboundDetails",
   INVENTORY_TOPUP: "/inventory/allInventory/topUpInbound",
+  ORDERMGT: "/ordermgt",
+  DELIVERY_VAN: "/ordermgt/deliveryVan",
 };
 
 export const queryStringBuilder = (obj: {}) => {
