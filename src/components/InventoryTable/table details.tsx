@@ -47,8 +47,8 @@ const TableDetails = () => {
         </div>
       </div>
       <TableRow />
-      <TableRow />
-      <TableRow />
+      {/* <TableRow />
+      <TableRow /> */}
     </div>
   );
 };

@@ -51,10 +51,6 @@ const ShippingInventoryCustomerModal: FC<ModalProps> = ({
       driverPhoneNumber: details.driverPhoneNumber,
     };
     try {
-      // const { data: inventoryData } = await axios.post(
-      //   baseURL + "api/InventoryUpload/add-multiple-inventory",
-      //   inventoryItems
-      // );
       const { data: inboundData } = await axios.post(
         baseURL +
           `api/customers/${user.customerId}/InboundInventory/inbound-request`,
