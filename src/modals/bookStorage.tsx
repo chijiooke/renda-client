@@ -8,11 +8,12 @@ import cn from "classnames";
 import { Input, Button, Select } from "@/components";
 import axios from "axios";
 import dayjs from "dayjs";
-import { baseURL } from "@/utils";
+import { baseURL, formatCurrency } from "@/utils";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/reducer";
 
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { SuccessModal } from "./success";
 
 dayjs.extend(customParseFormat);
 
@@ -29,6 +30,9 @@ function BookStorageModal({ show, data, close }: Props) {
   const [endDate, setEndDate] = useState("");
   const [duration, setDuration] = useState<number>(0);
   const [period, setPeriod] = useState(periods[0]);
+  const [durationError, setDurationError] = useState(false);
+  const [availableError, setAvailableError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const handleChange: ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
   > = (e) => {
@@ -59,99 +63,146 @@ function BookStorageModal({ show, data, close }: Props) {
     setEndDate(v);
   }, [details.startDate, duration, period]);
   const bookStorage = async () => {
+    if (!validate()) return;
     setLoading(true);
     try {
       const response = await axios.post(baseURL + "api/bookings", details);
       close();
+      setShowModal(true);
     } catch (error) {
     } finally {
       setLoading(false);
     }
   };
-  return show ? (
-    <div className="modal">
-      <div className="rounded bg-white p-10">
-        <div className="relative flex ">
-          <div
-            className="relative w-full h-full p-4"
-            style={{ width: "600px" }}
-          >
-            <p
-              onClick={close}
-              className="absolute right-0 top-0 scale-125 cursor-pointer"
-            >
-              X
-            </p>
-            <div className="inline-flex w-fit flex-col space-y-10 gap-5 items-center justify-start rounded mx-auto">
-              <div className="w-full flex flex-col gap-8 justify-between my-10">
-                <p className="text-center text-primary font-extrabold text-[18px]">
-                  Book a Storage Facility
+
+  const validate = () => {
+    let valid = true;
+    if (period === "Months" && duration < 6) {
+      setDurationError(true);
+      valid = false;
+    } else {
+      setDurationError(false);
+    }
+    if (details.spaceRequired >= data.availableSpace) {
+      setAvailableError(true);
+      valid = false;
+    } else {
+      setAvailableError(false);
+    }
+
+    return valid;
+  };
+
+  useEffect(() => {
+    if (durationError || availableError) {
+      validate();
+    }
+  }, [period, duration, durationError, availableError, details.spaceRequired]);
+  return (
+    <>
+      <SuccessModal
+        show={showModal}
+        close={() => setShowModal(false)}
+        state="approved"
+        details="You have successfully booked a storage facility for a customer. Email has been sent to customer"
+      />
+      {show ? (
+        <div className="modal">
+          <div className="rounded bg-white p-10">
+            <div className="relative flex ">
+              <div
+                className="relative w-full h-full p-4"
+                style={{ width: "600px" }}
+              >
+                <p
+                  onClick={close}
+                  className="absolute right-0 top-0 scale-125 cursor-pointer"
+                >
+                  X
                 </p>
-                <Layout option="Duration of Usage" center={false}>
-                  <div className="flex flex-col gap-4">
-                    <div className="grid grid-cols-3 gap-2">
+                <div className="inline-flex w-fit flex-col space-y-10 gap-5 items-center justify-start rounded mx-auto">
+                  <div className="w-full flex flex-col gap-8 justify-between my-10">
+                    <p className="text-center text-primary font-extrabold text-[18px]">
+                      Book a Storage Facility
+                    </p>
+                    <Layout option="Duration of Usage" center={false}>
+                      <div className="flex flex-col gap-4">
+                        <div className="grid grid-cols-3 gap-2">
+                          <Input
+                            name=""
+                            handleChange={handleDuration}
+                            type="number"
+                            error={durationError}
+                          />
+                          <div className="col-span-2">
+                            <Select
+                              options={periods}
+                              handleChange={handlePeriod}
+                              caption="6 months minimum"
+                              error={durationError}
+                            />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input
+                            type="date"
+                            label="Start Date"
+                            name="startDate"
+                            handleChange={handleChange}
+                          />
+                          <Input
+                            type="date"
+                            label="End Date"
+                            name="endDate"
+                            value={endDate}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                    </Layout>
+
+                    <Layout option="Size of Space Required">
                       <Input
-                        name=""
-                        handleChange={handleDuration}
+                        placeholder="Minimum of 100sqm"
+                        name="spaceRequired"
+                        handleChange={handleChange}
+                        error={availableError}
+                        caption={`There's only ${data.availableSpace}sqm available`}
                         type="number"
                       />
-                      <div className="col-span-2">
-                        <Select options={periods} handleChange={handlePeriod} />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    </Layout>
+                    <Layout option="Amount to be paid">
                       <Input
-                        type="date"
-                        label="Start Date"
-                        name="startDate"
+                        placeholder=""
+                        name="amount"
                         handleChange={handleChange}
+                        disabled={true}
+                        className="font-bold"
+                        value={
+                          "₦ " +
+                          formatCurrency(
+                            +details?.spaceRequired * +data?.rendaPrice! || 0
+                          )
+                        }
                       />
-                      <Input
-                        type="date"
-                        label="End Date"
-                        name="endDate"
-                        value={endDate}
-                        disabled
-                      />
-                    </div>
+                    </Layout>
                   </div>
-                </Layout>
-
-                <Layout option="Size of Space Required">
-                  <Input
-                    placeholder="Minimum of 100sqm"
-                    name="spaceRequired"
-                    handleChange={handleChange}
-                  />
-                </Layout>
-                <Layout option="Amount to be paid">
-                  <Input
-                    placeholder=""
-                    name="amount"
-                    handleChange={handleChange}
-                    disabled={true}
-                    value={
-                      "₦ " +
-                      (String(+details?.spaceRequired * +data?.rendaPrice!) ||
-                        0)
-                    }
-                  />
-                </Layout>
-              </div>
-              <div className=" w-full">
-                <Button
-                  title="Book Now"
-                  className="w-full"
-                  loading={loading}
-                  handleClick={bookStorage}
-                />
+                  <div className=" w-full">
+                    <Button
+                      title="Book Now"
+                      className="w-full"
+                      loading={loading}
+                      handleClick={bookStorage}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  ) : null;
+      ) : null}
+    </>
+  );
 }
 
 const Layout = ({

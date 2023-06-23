@@ -23,9 +23,8 @@ export interface StoreState {
     businessIndustry: string | undefined;
     businessAddress?: string;
   };
-  authenticated: boolean;
   userId: string;
-  user: any;
+  user: any | null;
   companyRegistrationNumber: string;
   Kyc: FormData;
   fileList: {
@@ -63,9 +62,8 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: false,
   userId: "",
-  user: {},
+  user: null,
   companyRegistrationNumber: "",
   Kyc: new FormData(),
   fileList: {
@@ -115,11 +113,6 @@ const reducer = (
       return {
         ...state,
         Kyc: action.payload,
-      };
-    case OnboardingAction.SET_AUTHENTICATED:
-      return {
-        ...state,
-        authenticated: action.payload,
       };
     case OnboardingAction.UPDATE_FILE_LIST:
       return {

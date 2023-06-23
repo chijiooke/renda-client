@@ -18,9 +18,9 @@ export const OnboardRoutes = {
 export const DashBoardRoutes = {
   DASHBOARD: "/",
   STORAGE: "/storage",
-  STORAGE_DETAILS: "/storage/[[facility]]",
+  STORAGE_DETAILS: "/storage/facility",
   STORAGE_BOOKING: "/storage/booking",
-  BOOKING_DETAILS: "/storage/booking/gffaf",
+  BOOKING_DETAILS: "/storage/booking/details",
   BOOKING_PAYMENT: "/storage/booking/payment",
   INVENTORY: "/inventory",
   INVENTORY_DETAILS: "/inventory/details",
@@ -29,6 +29,8 @@ export const DashBoardRoutes = {
   INVENTORY_CONFIRM_INVENTORY: "/inventory/newUpload/confirmInventory",
   INVENTORY_INBOUND_DETAILS: "/inventory/allInventory/inboundDetails",
   INVENTORY_TOPUP: "/inventory/allInventory/topUpInbound",
+  ORDERMGT: "/ordermgt",
+  DELIVERY_VAN: "/ordermgt/deliveryVan",
 };
 
 export const queryStringBuilder = (obj: {}) => {
