@@ -79,7 +79,7 @@ import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 import { Tab } from "@headlessui/react";
 import { MyModal } from "@/modals";
 import { useState } from "react";
-import { InboundHistory } from "@/_pages/Inventory/all/inboundHistory";
+import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
 import { AllInventoryTable } from "@/components/InventoryTable";
 
 const headers = ["ALL Inventory", "Inbound History"];
