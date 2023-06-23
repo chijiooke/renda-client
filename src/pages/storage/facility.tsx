@@ -3,16 +3,17 @@ import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
 import { CheckIcon } from "@/icons";
 import { BookStorageModal } from "@/modals";
-import { GetServerSideProps } from "next";
+
 import { useRouter } from "next/router";
 import axios from "axios";
 import { storageURL } from "@/utils/constant";
-import { data } from "autoprefixer";
+import { formatCurrency } from "@/utils";
+
 const Facility = () => {
   const router = useRouter();
   const [facility, setFacility] = useState({} as any);
   const [show, setShow] = useState(false);
-  const { facility: id } = router.query;
+  const { id } = router.query;
   console.log(id);
   const getFacilityDetails = async () => {
     try {
@@ -23,7 +24,7 @@ const Facility = () => {
 
   useLayoutEffect(() => {
     getFacilityDetails();
-  }, [id]);
+  }, []);
   const details = useMemo(() => {
     return {
       "Facility ID": facility?.storageFacilityId,
@@ -37,7 +38,7 @@ const Facility = () => {
       "Storage Type": facility?.storageType,
       "Payment Structure": facility?.paymentStructure,
 
-      Price: "NGN" + " " + facility?.rendaPrice?.toLocaleString() + " monthly",
+      Price: "NGN" + " " + formatCurrency(facility?.rendaPrice) + " monthly",
     };
   }, [facility]);
   return (
@@ -85,7 +86,7 @@ const Facility = () => {
               </div>
               <div>
                 <div className="mb-10 max-w-4xl">
-                  <h1 className="text-[25px] font-bold my-3">
+                  <h1 className="text-[25px] font-bold my-3 capitalize">
                     {facility?.storageFacilityName}
                   </h1>
                   <p className="leading-10">{facility?.briefDescription}</p>

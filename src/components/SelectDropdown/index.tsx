@@ -36,6 +36,7 @@ const Select: FC<Props> = ({
             {
               input: !value?.trim(),
               "py-2": size === "sm",
+              "border-red outline-[border-red]": error,
             }
           )}
           onChange={handleChange}

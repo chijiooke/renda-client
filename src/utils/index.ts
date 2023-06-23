@@ -6,3 +6,4 @@ export {
   DashBoardRoutes,
   queryStringBuilder,
 } from "./routes";
+export { formatCurrency } from "./formatCurrency";
