@@ -22,6 +22,10 @@ body {
 .border-primary {
   border: 1px solid #1b547f !important;
 }
+.border-red {
+  border-color: rgb(239, 65, 65) !important;
+  outline: rgb(239, 65, 65) !important;
+}
 .nav:hover {
   background-color: #1b547f !important;
   color: white!;
@@ -37,6 +41,24 @@ body {
 .activeNav span,
 .activeNav div {
   color: white !important;
+}
+.grid-c-5 {
+  grid-template-columns: repeat(5, 1fr) !important;
+}
+.grid-c-6 {
+  grid-template-columns: repeat(6, 1fr) !important;
+}
+.grid-c-9 {
+  grid-template-columns: repeat(9, 1fr) !important;
+}
+.col-sp-3 {
+  grid-column: span 3 / span 3 !important;
+}
+.grid-c-8 {
+  grid-template-columns: repeat(8, 1fr) !important;
+}
+.grid-c-10 {
+  grid-template-columns: repeat(10, 1fr) !important;
 }
 #react-portal-modal-container {
   position: absolute;

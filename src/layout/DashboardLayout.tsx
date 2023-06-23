@@ -78,17 +78,15 @@ const DashBoardLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { authenticated, userId, user } = useSelector(
-    (state: StoreState) => state
-  );
+  const { authenticated, user } = useSelector((state: StoreState) => state);
 
   const [loading, setLoading] = useState(false);
 
-  const getUser = async () => {
+  const getUser = async (id: string) => {
     setLoading(true);
     try {
       const { data: response } = await axios.get(
-        baseURL + "CustomerbyAppUser/" + userId
+        baseURL + "CustomerbyAppUser/" + id
       );
       if (response.success) {
         dispatch({
@@ -101,19 +99,20 @@ const DashBoardLayout: FC<Props> = ({
       setLoading(false);
     }
   };
+
   useEffect(() => {
-    if (!authenticated) {
+    const userId = sessionStorage.getItem("userId");
+    if (!userId) {
       router.push(AuthRoutes.LOGIN);
-    } else {
-      getUser();
+    }
+    if (!user) {
+      getUser(userId!);
     }
   }, []);
+
   const isActive = (route: string) => {
     return route.split("/")[1] === router.pathname.split("/")[1];
   };
-  if (!authenticated) {
-    return <h1>Loading</h1>;
-  }
   return (
     <>
       <div className="d-flex flex-column flex-root" id="kt_app_root">

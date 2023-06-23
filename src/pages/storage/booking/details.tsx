@@ -1,6 +1,6 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tab } from "@headlessui/react";
 import {
   BookingDetail,
@@ -8,6 +8,9 @@ import {
   StorageDetail,
   TransactionDetails,
 } from "@/_pages/storage/booking";
+import axios from "axios";
+import { baseURL } from "@/utils";
+import { useRouter } from "next/router";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -22,7 +25,21 @@ const headers = [
   "Transaction Details",
   "Renewals",
 ];
+// Task: write interface for both booking details and storage facility
+
 const BookingDetails = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [details, setDetails] = useState({});
+  const getBookingDetails = async () => {
+    try {
+      const { data } = await axios.get(baseURL + `api/bookings/booking/${id}`);
+      setDetails(data);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getBookingDetails();
+  }, []);
   return (
     <DashBoardLayout backAction>
       <div className="rounded border-1 border-gray-300 h-[83vh] pt-2">
@@ -54,10 +71,10 @@ const BookingDetails = () => {
               ))}
             </Tab.List>
             <Tab.Panel>
-              <BookingDetail />
+              <BookingDetail data={details} />
             </Tab.Panel>
             <Tab.Panel>
-              <StorageDetail />
+              <StorageDetail data={details} />
             </Tab.Panel>
             <Tab.Panel>
               <TransactionDetails />

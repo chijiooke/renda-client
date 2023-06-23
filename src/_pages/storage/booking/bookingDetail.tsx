@@ -2,82 +2,51 @@ import { Button } from "@/components";
 import { CheckIcon } from "@/icons";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import cn from "classnames";
 
-const BookingDetail = () => {
+dayjs.extend(relativeTime);
+const BookingDetail = ({ data }: { data: any }) => {
+  const { bookingDetails, storageDetails } = data;
   const router = useRouter();
+  const details = {
+    Status: (
+      <p
+        className={cn("", {
+          "text-green-600":
+            bookingDetails?.status === "Approved" ||
+            bookingDetails?.status === "Active",
+          "text-red-500": bookingDetails?.status === "Expired",
+          "text-orange-400": bookingDetails?.status === "Pending",
+        })}
+      >
+        {bookingDetails?.status}
+      </p>
+    ),
+    "Booking ID": bookingDetails?.bookingID,
+    "Name of storage facility": storageDetails?.locationOfTheFacility,
+    "Booking date and time": "",
+    "Duration of usage": dayjs(bookingDetails?.startDate).to(
+      dayjs(bookingDetails?.endDate),
+      true
+    ),
+    "Start date": dayjs(bookingDetails?.startDate).format("DD/MM/YY"),
+    "End date": dayjs(bookingDetails?.endDate).format("DD/MM/YY"),
+    "Storage type": bookingDetails?.storageType,
+    "Size of Space required (sqm)": bookingDetails?.sizeOfSpaceRequired,
+    "Renewal Status": bookingDetails?.renewalStatus || "null",
+    "Payment Structure": bookingDetails?.paymentStructure,
+  };
   return (
     <div className=" grid grid-cols-3 justify-between my-5 gap-5">
       <div className="col-span-2">
-        <div className="grid grid-cols-2 py-4">
-          <p>Status</p>
-          <p>Pending</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Booking ID</p>
-          <p>#12345678</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Name of storage facility</p>
-          <p>Omo-onile storage facility</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Booking date and time</p>
-          <p>Wed. 21st April 2023, 10:00am</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Duration of usage</p>
-          <p>6 Months</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Start date</p>
-          <p>Jul 1st, 2023</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>End date</p>
-          <p>Dec 31st, 2023</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Storage type</p>
-          <p>Shared</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Size of Space required (sqm)</p>
-          <p>100</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Renewal Status </p>
-          <p>None</p>
-        </div>
-        <div className="grid grid-cols-2 py-4">
-          <p>Payment Structure</p>
-          <p>Monthly payment</p>
-        </div>
-        {/* <div className="grid grid-cols-2 py-4">
-          <p>Other Renda services booked</p>
-          <ul className="flex flex-wrap gap-3 max-w-2xl ">
-            <li className="text-[14px] pr-8 flex items-center gap-3">
-              {" "}
-              <CheckIcon />
-              Inbound Shipping
-            </li>
-            <li className="text-[14px] pr-8 flex items-center gap-3">
-              <CheckIcon />
-              Delivery
-            </li>{" "}
-            <li className="text-[14px] pr-8 flex items-center gap-3">
-              <CheckIcon />
-              Cash Collection
-            </li>{" "}
-            <li className="text-[14px] pr-8 flex items-center gap-3">
-              <CheckIcon />
-              Generator
-            </li>{" "}
-            <li className="text-[14px] pr-8 flex items-center gap-3">
-              <CheckIcon />
-              Returns Management
-            </li>
-          </ul>
-        </div> */}
+        {Object.entries(details).map((b: string[], i: any) => (
+          <div className="grid grid-cols-2 py-4">
+            <p>{b[0]}</p>
+            <p>{b[1]}</p>
+          </div>
+        ))}
       </div>
       <div>
         <div className="max-w-sm items-center flex flex-col gap-3 justify-end">
@@ -85,9 +54,15 @@ const BookingDetail = () => {
             title="Pay for Booking "
             size="sm"
             className="w-[40%]"
+            disabled={!(bookingDetails?.status === "Approved")}
             handleClick={() => router.push(DashBoardRoutes.BOOKING_PAYMENT)}
           />
-          <Button title="Renew Bookings" size="sm" className="w-[40%]" />
+          <Button
+            title="Renew Bookings"
+            size="sm"
+            className="w-[40%]"
+            disabled
+          />
         </div>
       </div>
     </div>

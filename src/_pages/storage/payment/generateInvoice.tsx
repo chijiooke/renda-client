@@ -1,6 +1,10 @@
 import { Button } from "@/components";
+import { useSelector } from "react-redux";
+import { StoreState } from "@/store/reducer";
+import { formatCurrency } from "@/utils";
 
 const GenerateInvoice = () => {
+  const { bookingDetails } = useSelector((state: StoreState) => state);
   return (
     <div className="max-w-4xl mx-6">
       <div className="bg-[#f2f2f2] p-7 rounded border-1 border-[#d9d9d9] ">
@@ -21,7 +25,7 @@ const GenerateInvoice = () => {
             <div>
               <p className="text-end opacity-50 text-[11px]">Amount to pay</p>
               <div className="bg-[#C8EBFF] border-1 border-[#1B547F] font-extrabold text-2xl text-center rounded py-3 px-4 my-1">
-                N953000
+                N {formatCurrency(bookingDetails.amount)}
               </div>
             </div>
           </div>
