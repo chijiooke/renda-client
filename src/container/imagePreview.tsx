@@ -1,6 +1,6 @@
 import { FC, ReactNode, MouseEventHandler, useState } from "react";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
-import { ReactPortal } from "@/layout";
+// import { ReactPortal } from "@/layout";
 
 type Props = {
   children: ReactNode;
@@ -19,7 +19,7 @@ const ImagePreviewClickable: FC<Props> = ({ children, handleClick, close }) => {
   };
   return (
     <>
-      <ImagePreview show={show} close={close} />
+      {/* <ImagePreview show={show} close={close} /> */}
       <div onClick={viewImage} className="cursor-pointer">
         {children}
       </div>
@@ -27,25 +27,25 @@ const ImagePreviewClickable: FC<Props> = ({ children, handleClick, close }) => {
   );
 };
 
-const ImagePreview = ({
-  show,
-  close,
-}: {
-  show: boolean;
-  close: () => void;
-}) => {
-  return show ? (
-    <ReactPortal wrapperId="react-portal-modal-container">
-      <p className="close" onClick={close}>
-        X
-      </p>
-      <ArrowPreviousIcon />
-      <div className="">
-        <img src="/assets/images/storage-lg-0.png" />
-      </div>
-      <ArrowNextIcon />
-    </ReactPortal>
-  ) : null;
-};
+// const ImagePreview = ({
+//   show,
+//   close,
+// }: {
+//   show: boolean;
+//   close: () => void;
+// }) => {
+//   return show ? (
+//     <ReactPortal wrapperId="react-portal-modal-container">
+//       <p className="close" onClick={close}>
+//         X
+//       </p>
+//       <ArrowPreviousIcon />
+//       <div className="">
+//         <img src="/assets/images/storage-lg-0.png" />
+//       </div>
+//       <ArrowNextIcon />
+//     </ReactPortal>
+//   ) : null;
+// };
 
 export { ImagePreviewClickable };

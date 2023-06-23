@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler, useState } from "react";
 import { ImageWindowIcon } from "@/icons";
 import { Button } from "../Button";
-import { ReactPortal } from "@/layout";
+// import { ReactPortal } from "@/layout";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 import { ImagePreviewClickable } from "@/container";
 import { BookStorageModal, ContactUsModal } from "@/modals";
@@ -57,7 +57,7 @@ const StorageCard: FC<Props> = ({ data }) => {
         show={showContactModal}
         close={() => setShowContactModal(false)}
       />
-      <ImagePreview show={show} close={closeModal} />
+      {/* <ImagePreview show={show} close={closeModal} /> */}
       <div
         className="p-5 border-gray-300 border-2 rounded cursor-pointer"
         onClick={goToDetails}
@@ -127,25 +127,25 @@ const StorageCard: FC<Props> = ({ data }) => {
     </>
   );
 };
-const ImagePreview = ({
-  show,
-  close,
-}: {
-  show: boolean;
-  close: () => void;
-}) => {
-  return show ? (
-    <ReactPortal wrapperId="react-portal-modal-container">
-      <p className="close" onClick={close}>
-        X
-      </p>
-      <ArrowPreviousIcon />
-      <div className="">
-        <img src="/assets/images/storage-lg-0.png" />
-      </div>
-      <ArrowNextIcon />
-    </ReactPortal>
-  ) : null;
-};
+// const ImagePreview = ({
+//   show,
+//   close,
+// }: {
+//   show: boolean;
+//   close: () => void;
+// }) => {
+//   return show ? (
+//     <ReactPortal wrapperId="react-portal-modal-container">
+//       <p className="close" onClick={close}>
+//         X
+//       </p>
+//       <ArrowPreviousIcon />
+//       <div className="">
+//         <img src="/assets/images/storage-lg-0.png" />
+//       </div>
+//       <ArrowNextIcon />
+//     </ReactPortal>
+//   ) : null;
+// };
 
 export { StorageCard };

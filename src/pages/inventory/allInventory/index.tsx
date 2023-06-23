@@ -71,7 +71,7 @@
 //     </DashBoardLayout>
 //   );
 // }
-import { DashBoardLayout, ReactPortal } from "@/layout";
+import { DashBoardLayout } from "@/layout";
 import { Button, GetInTouch, Input, StorageCard } from "@/components";
 import { useRouter } from "next/router";
 import { DashBoardRoutes } from "@/utils";
@@ -81,7 +81,7 @@ import { MyModal } from "@/modals";
 import { useState } from "react";
 // import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
 import { AllInventoryTable } from "@/components/InventoryTable";
-import { InboundHistory } from "@/_pages/Inventory/all/inboundHistory";
+import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
 
 const headers = ["ALL Inventory", "Inbound History"];
 function classNames(...classes: any[]) {
@@ -106,14 +106,16 @@ export default function Inventory() {
                   <h1 className="text-3xl font-extrabold">All Inventory</h1>
                 </div>
                 <div className="flex justify-center gap-2 mr-7">
-                <div
-                    style={{ backgroundColor: `#ECFFF8`, borderColor: `#008753`}}
+                  <div
+                    style={{
+                      backgroundColor: `#ECFFF8`,
+                      borderColor: `#008753`,
+                    }}
                     className=" space-x-1 items-center justify-center w-72 h-10 flex gap-2 cursor-pointer border-2 rounded-md"
                     // onClick={() => router.push(DashBoardRoutes.INVENTORY_TOPUP)}
                   >
-                     <CheckIcon/>
+                    <CheckIcon />
                     <p className="text-xs font-semibold text-center items-center text-[#008753]">
-                   
                       Your Items have been added to van
                     </p>
                   </div>
