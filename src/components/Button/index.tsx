@@ -6,7 +6,7 @@ type Props = {
   handleClick?: any;
   title: string;
   className?: string;
-  type?: "primary" | "secondary";
+  type?: "primary" | "secondary" | "danger";
   loading?: boolean;
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
@@ -32,6 +32,7 @@ const Button: FC<Props> = ({
           "rounded-lg": size == "sm",
           "cursor-pointer": !disabled,
           "cursor-not-allowed opacity-40": disabled,
+          "bg-red-600 border-red-600": type == "danger",
         },
         className
       )}

@@ -1,7 +1,7 @@
 import { useEffect, useState, MouseEventHandler } from "react";
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { DashBoardRoutes, baseURL } from "@/utils";
+import { DashBoardRoutes, baseURL, formatCurrency } from "@/utils";
 import { useRouter } from "next/router";
 import { BookStorageModal } from "@/modals";
 import axios from "axios";
@@ -50,11 +50,11 @@ export default function StorageBooking() {
               <div className="grid grid-cols-8 justify-between   p-5 bg-[#f9f9f9] rounded border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
                 <p>Status</p>
                 <p>Booking Id</p>
-                <p>Facility Name</p>
-                <p>Booking date</p>
-                <p>Facility location</p>
-                <p>Amount</p>
+                <p>Facility name</p>
+                <p>Start date</p>
+                <p>End date</p>
                 <p>Duration</p>
+                <p>Amount</p>
                 <p>Action</p>
               </div>
             </div>
@@ -78,7 +78,17 @@ const TableData = ({ data }: { data: any }) => {
   const goToDetails: MouseEventHandler<HTMLDivElement> = (e) => {
     const path = e.nativeEvent.composedPath();
     if ((path[0] as HTMLElement)?.innerText !== "Make Payment") {
-      router.push(DashBoardRoutes.BOOKING_DETAILS);
+      dispatch({
+        type: OnboardingAction.SET_BOOKING_DETAILS,
+        payload: {
+          amount: data?.amount,
+          bookingId: data?.bookingId,
+        },
+      });
+      router.push({
+        pathname: DashBoardRoutes.BOOKING_DETAILS,
+        query: { id: data?.bookingId },
+      });
     }
   };
   const goToPayments: MouseEventHandler<HTMLDivElement> = () => {
@@ -107,11 +117,11 @@ const TableData = ({ data }: { data: any }) => {
         {data?.status}
       </p>
       <p>#{data?.bookingId}</p>
-      <p>Facility Name </p>
-      <p>12-03-2023</p>
-      <p>Lagos Island, Lagos</p>
-      <p>N{data?.amount} </p>
+      <p>{data?.facilityName} </p>
+      <p>{dayjs(data?.startDate).format("DD/MM/YY")}</p>
+      <p>{dayjs(data?.endDate).format("DD/MM/YY")}</p>
       <p>{time}</p>
+      <p>N{formatCurrency(data?.amount)} </p>
       <p
         className={cn(
           "bg-[#E1E1E1] rounded-lg font-semibold text-center capitalize text-[#979797] p-1 cursor-not-allowed",

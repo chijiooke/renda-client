@@ -1,5 +1,5 @@
 import { useEffect, useState, MouseEventHandler, SyntheticEvent } from "react";
-import { DashBoardLayout, ReactPortal } from "@/layout";
+import { DashBoardLayout } from "@/layout";
 import { GetInTouch, Input, Select, StorageCard } from "@/components";
 import { useRouter } from "next/router";
 import { DashBoardRoutes } from "@/utils";
@@ -58,14 +58,14 @@ export default function Storage() {
   );
 }
 
-const ImagePreview = () => {
-  return (
-    <ReactPortal wrapperId="react-portal-modal-container">
-      <ArrowPreviousIcon />
-      <div className="">
-        <img src="/assets/images/storage-lg-0.png" />
-      </div>
-      <ArrowNextIcon />
-    </ReactPortal>
-  );
-};
+// const ImagePreview = () => {
+//   return (
+//     <ReactPortal wrapperId="react-portal-modal-container">
+//       <ArrowPreviousIcon />
+//       <div className="">
+//         <img src="/assets/images/storage-lg-0.png" />
+//       </div>
+//       <ArrowNextIcon />
+//     </ReactPortal>
+//   );
+// };

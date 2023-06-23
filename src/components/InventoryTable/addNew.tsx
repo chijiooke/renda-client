@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { OnboardingAction } from "@/types";
 import { InventoryType, StoreState } from "@/store/reducer";
 function AddForm() {
-  const { inventoryItems } = useSelector((state: StoreState) => state);
+  const { inventoryItems, user } = useSelector((state: StoreState) => state);
   const [forms, setForms] = useState([{ id: 1 }]);
   const [showUploadButton, setShowUploadButton] = useState(true);
   const router = useRouter();
@@ -63,7 +63,7 @@ function AddForm() {
             ?.value || "0"
         );
         // Update with the actual customerBusinessId value
-        const customerBusinessId = "b3pile";
+        const customerBusinessId = user.customerId;
 
         const payload = {
           itemName,
@@ -78,33 +78,6 @@ function AddForm() {
         };
         items.push(payload);
         console.log(payload);
-
-        // const response = await axios.post(
-        //   "https://tradeplaorg-001-site9.gtempurl.com/api/InventoryUpload/add-single-inventoryItem",
-        //   payload
-        // );
-
-        // console.log("Response:", response.data);
-
-        // Make a POST request to the server
-        // const response = await fetch(
-        //   "http://tradeplaorg-001-site9.gtempurl.com/api/InventoryUpload/add-single-inventoryItem",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(payload),
-        //   }
-        // );
-        // console.log(payload);
-        // if (response.ok) {
-        //   // Handle success
-        //   console.log("Data posted successfully");
-        // } else {
-        //   // Handle error
-        //   console.error("Failed to post data to the server");
-        // }
         // Perform any additional logic or update UI based on the response
       }
 
@@ -150,7 +123,7 @@ function AddForm() {
     <>
       <div className="position-relative object-contain">
         <div>
-          <table className="w-full bg-white  text-center">
+          {/* <table className="w-full bg-white  text-center">
             <thead>
               <tr className="rounded-sm border-2 text-center">
                 {!showUploadButton && (
@@ -177,26 +150,47 @@ function AddForm() {
             <tbody>
               <tr></tr>
             </tbody>
-          </table>
+          </table> */}
+          <div className="grid grid-c-10 items-center uppercase  font-extrabold border-2 p-3 rounded-lg gap-2">
+            <span>
+              <Button
+                title="Delete all"
+                size="sm"
+                className="w-fit bg-red-600 px-5 rounded-md"
+                type="danger"
+              />
+            </span>
+
+            <p>Item name</p>
+            <p>Qty</p>
+            <p className="col-span-2">BRIEF DESCRIPTION</p>
+            <p>dimension</p>
+            <p>Colour</p>
+            <p>weight</p>
+            <p>Unit Price</p>
+            <p>IMAGE</p>
+          </div>
           {forms.map((form) => (
-            <form key={form.id} className="flex gap-2 text-center m-5">
-              <div className="flex items-center justify-center flex-1 bg-white">
-                {form === forms[forms.length - 1] && (
-                  <button type="button" onClick={handleAddForm}>
-                    <AddIcon />
-                  </button>
-                )}
-              </div>
-              <div className="flex items-center justify-center flex-1 bg-white">
-                {forms.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveForm(form.id)}
-                  >
-                    <DeleteIcon />
-                  </button>
-                )}
-              </div>
+            <form key={form.id} className="grid grid-c-10 gap-2 my-6">
+              <span className="flex items-center  justify-center w-full scale-125  gap-2">
+                <div
+                  onClick={() =>
+                    form === forms[forms.length - 1] && handleAddForm()
+                  }
+                >
+                  <AddIcon
+                    color={
+                      form === forms[forms.length - 1] ? "#008753" : "#000"
+                    }
+                  />
+                </div>
+
+                <div
+                  onClick={() => forms.length > 1 && handleRemoveForm(form.id)}
+                >
+                  <DeleteIcon />
+                </div>
+              </span>
               <Input
                 id={`itemName-${form.id}`}
                 placeholder="Item name"
@@ -207,6 +201,7 @@ function AddForm() {
                 id={`description-${form.id}`}
                 placeholder="Brief description"
                 size="md"
+                className="col-span-2"
               />
               <Input id={`size-${form.id}`} placeholder="Dimension" size="md" />
               <Input id={`colour-${form.id}`} placeholder="Colour" size="md" />
