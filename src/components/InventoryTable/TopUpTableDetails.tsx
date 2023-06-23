@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TableRow } from "./allRow";
+import { TableRow } from "./inventoryTableRow";
 import { TopUpTableRow } from "./TopUpallRow";
 
 const TopUpTableDetails = () => {

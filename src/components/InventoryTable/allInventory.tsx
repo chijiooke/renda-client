@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import { Button, Input } from "@/components";
-import { AddIcon, CheckIcon, DeleteIcon } from "@/icons";
-import classNames from "classnames";
-import Router, { useRouter } from "next/router";
-import { DashBoardRoutes } from "@/utils/routes";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { TableDetails } from "./table details";
 
 function AllInventoryTable() {

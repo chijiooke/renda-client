@@ -1,8 +1,5 @@
-import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
-import { ConfirmModal, MyModal } from "@/modals";
 
 export default function InboundDetail() {
   const router = useRouter();

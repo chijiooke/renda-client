@@ -1,14 +1,13 @@
-import { useState, useEffect, useMemo } from "react";
+import { Button, FileInput, Input } from "@/components";
 import { OnboardLayout } from "@/layout";
-import { Button, Input, FileInput } from "@/components";
-import { useRouter } from "next/router";
-import { OnboardRoutes } from "@/utils";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { formikCaption, formikError } from "@/utils";
 import { StoreState } from "@/store/reducer";
-import { useDispatch, useSelector } from "react-redux";
 import { OnboardingAction } from "@/types";
+import { OnboardRoutes, formikCaption, formikError } from "@/utils";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
 
 const KycUpload = () => {
   const { fileList, companyRegistrationNumber } = useSelector(

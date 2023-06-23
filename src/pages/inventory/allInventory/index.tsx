@@ -71,17 +71,28 @@
 //     </DashBoardLayout>
 //   );
 // }
-import { DashBoardLayout, ReactPortal } from "@/layout";
-import { Button, GetInTouch, Input, StorageCard } from "@/components";
-import { useRouter } from "next/router";
-import { DashBoardRoutes } from "@/utils";
-import { ArrowNextIcon, ArrowPreviousIcon, CheckIcon } from "@/icons";
-import { Tab } from "@headlessui/react";
-import { MyModal } from "@/modals";
-import { useState } from "react";
-// import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
-import { AllInventoryTable } from "@/components/InventoryTable";
 import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
+import { AllInventoryTable } from "@/components/InventoryTable";
+import { CheckIcon } from "@/icons";
+import { DashBoardLayout } from "@/layout";
+import { DashBoardRoutes } from "@/utils";
+import { Tab } from "@headlessui/react";
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Table,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
 
 const headers = ["ALL Inventory", "Inbound History"];
 function classNames(...classes: any[]) {
@@ -90,9 +101,41 @@ function classNames(...classes: any[]) {
 export default function Inventory() {
   const router = useRouter();
   const [showUploadButton, setShowUploadButton] = useState(true);
+  const [open, setOpen] = useState(true);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
   };
+
+  const inventoryData: inventoryDataType[] = [
+    {
+      title: "mac Book Pro",
+      SKUId: 12345,
+      facilityID: 12345,
+      position: "Upper Shelf",
+      facilityName: "Badagry, lagos",
+      quantity: 20,
+      unitPrice: 100,
+      dmgItems: 10,
+      description: "Lorem ipsum dolor emet",
+      color: "grey",
+      weight: "100 pounds",
+      img: "string",
+    },
+    {
+      title: "Samsung Z Book ",
+      SKUId: 12346,
+      facilityID: 12346,
+      position: "Upper Shelf",
+      facilityName: "Badagry, lagos",
+      quantity: 50,
+      unitPrice: 100,
+      dmgItems: 10,
+      description: "Lorem ipsum dolor emet",
+      color: "grey",
+      weight: "100 pounds",
+      img: "string",
+    },
+  ];
 
   return (
     <>
@@ -106,34 +149,31 @@ export default function Inventory() {
                   <h1 className="text-3xl font-extrabold">All Inventory</h1>
                 </div>
                 <div className="flex justify-center gap-2 mr-7">
-                <div
-                    style={{ backgroundColor: `#ECFFF8`, borderColor: `#008753`}}
+                  <div
+                    style={{
+                      backgroundColor: `#ECFFF8`,
+                      borderColor: `#008753`,
+                    }}
                     className=" space-x-1 items-center justify-center w-72 h-10 flex gap-2 cursor-pointer border-2 rounded-md"
-                    // onClick={() => router.push(DashBoardRoutes.INVENTORY_TOPUP)}
                   >
-                     <CheckIcon/>
+                    <CheckIcon />
                     <p className="text-xs font-semibold text-center items-center text-[#008753]">
-                   
                       Your Items have been added to van
                     </p>
                   </div>
-                  <div
-                    style={{ backgroundColor: `#1B547F` }}
-                    className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 cursor-pointer  rounded-md"
+
+                  <button
                     onClick={() => router.push(DashBoardRoutes.INVENTORY_TOPUP)}
+                    className=" flex items-center bg-[#1B547F] justify-center w-36 h-10 px-3 cursor-pointer  rounded-md text-xs font-semibold text-center items-center  text-white"
                   >
-                    <p className="text-xs font-semibold text-center items-center pt-2 text-white">
-                      Top-Up Stock
-                    </p>
-                  </div>
-                  <div className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 cursor-pointer  border-1 rounded-md border-blue-900">
-                    <p
-                      style={{ color: `#1B547F` }}
-                      className="text-xs font-semibold text-center items-center pt-2 "
-                    >
-                      Create Order
-                    </p>
-                  </div>
+                    Top-Up Stock
+                  </button>
+                  <button
+                    onClick={() => setOpen(true)}
+                    className=" flex items-center justify-center w-36 h-10 px-3  cursor-pointer  border-1 rounded-md border-blue-900 text-[#1B547F] text-xs font-semibold"
+                  >
+                    Create Order
+                  </button>
                 </div>
               </div>
             </>
@@ -223,6 +263,79 @@ export default function Inventory() {
           </div>
         </div>
       </DashBoardLayout>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+            width: "100%",
+            minWidth: "100%",
+          }}
+        >
+          <IconButton onClick={() => setOpen(false)}>
+            <CloseRoundedIcon />
+          </IconButton>
+        </Box>
+        <DialogContent>
+          <Typography variant="h5" fontWeight={500}>
+            Create Order
+          </Typography>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>SKU ID</TableCell>
+                <TableCell>Item Name</TableCell>
+                <TableCell>Unit Price</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+
+            {inventoryData.map((item) => (
+              <TableRow>
+                <TableCell>{item?.SKUId}</TableCell>
+                <TableCell>{item?.title}</TableCell>
+                <TableCell>{item?.unitPrice}</TableCell>
+                <TableCell>
+                  <>
+                    <div className="flex justify-center items-center">
+                      <span
+                        className=" flex rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
+                        // onClick={() =>
+                        //   orderCount < data?.quantity
+                        //     ? setOrderCount((prev) => prev + 1)
+                        //     : null
+                        // }
+                      >
+                        +
+                      </span>
+                    </div>
+                    <div className="flex justify-center  items-center  border rounded-lg border-gray-900">
+                      <p className="flex justify-center  items-center m-2 font-medium  ">
+                        {0}/{" "}
+                        <span className=" flex rounded-full text-gray-800 h-4 p-1 items-center ">
+                          {item?.quantity}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <span
+                        className=" flex justify-center rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
+                        // onClick={() =>
+                        //   orderCount > 0
+                        //     ? setOrderCount((prev) => --prev)
+                        //     : null
+                        // }
+                      >
+                        -
+                      </span>
+                    </div>
+                  </>
+                </TableCell>
+              </TableRow>
+            ))}
+          </Table>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
