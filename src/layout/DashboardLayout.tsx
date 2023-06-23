@@ -80,18 +80,18 @@ const DashBoardLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const {  user } = useSelector((state: StoreState) => state);
+  const { user } = useSelector((state: StoreState) => state);
 
   const [loading, setLoading] = useState(false);
 
-  const showDeliveryTruckIcon = router.pathname === DashBoardRoutes.INVENTORY_ALL
+  const showDeliveryTruckIcon =
+    router.pathname === DashBoardRoutes.INVENTORY_ALL;
 
   const handleTruckClick = () => {
-  
-    router.push({pathname: DashBoardRoutes.DELIVERY_VAN});
+    router.push({ pathname: DashBoardRoutes.DELIVERY_VAN });
   };
 
-  const getUser = async (id:string) => {
+  const getUser = async (id: string) => {
     setLoading(true);
     try {
       const { data: response } = await axios.get(
@@ -104,6 +104,7 @@ const DashBoardLayout: FC<Props> = ({
         });
       }
     } catch (error) {
+      router.push(AuthRoutes.LOGIN);
     } finally {
       setLoading(false);
     }
@@ -218,12 +219,16 @@ const DashBoardLayout: FC<Props> = ({
                     )}
 
                     <div className="flex gap-5 items-center">
-                      <div>
-                      {  showDeliveryTruckIcon && <button onClick={handleTruckClick}>
-                        <DeliveryTruckIcon/>
-                        </button> }
-                      </div>
-                   
+                      <button
+                        onClick={handleTruckClick}
+                        className={cn(" rounded-sm p-3", {
+                          "text-primary": !showDeliveryTruckIcon,
+                          "text-white bg-primary": showDeliveryTruckIcon,
+                        })}
+                      >
+                        <DeliveryTruckIcon />
+                      </button>
+
                       <p className="text-[green] font-extrabold">Active</p>
                       <div className="relative">
                         <NotificationIcon />

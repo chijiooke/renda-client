@@ -44,7 +44,6 @@ type Inventorie = {
     quantityDamaged: number;
     quantityMissing: number;
     acceptanceStatus: string;
-    
   }>;
   storageFacilityId: string;
   storageFacility: {
@@ -53,29 +52,28 @@ type Inventorie = {
 };
 
 type Invent = {
-      id: number;
-    skuId: string;
-    itemName: string;
-    quantity: number;
-    description: string;
-    size: string;
-    colour: string;
-    picture: string;
-    unitPrice: number;
-    weight: null;
-    customerBusinessId: string;
-    storageFacilityId: string;
-    storageFacility: null;
-    itemPosition: string;
-    quantityRecieved: number;
-    quantityDamaged: number;
-    quantityMissing: number;
-    acceptanceStatus: string;
-}
+  id: number;
+  skuId: string;
+  itemName: string;
+  quantity: number;
+  description: string;
+  size: string;
+  colour: string;
+  picture: string;
+  unitPrice: number;
+  weight: null;
+  customerBusinessId: string;
+  storageFacilityId: string;
+  storageFacility: null;
+  itemPosition: string;
+  quantityRecieved: number;
+  quantityDamaged: number;
+  quantityMissing: number;
+  acceptanceStatus: string;
+};
 type TableRowProps = {
   inventoryItem: Invent;
   Inventory: Inventorie;
-
 };
 
 const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
@@ -182,8 +180,12 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
                     src="https://via.placeholder.com/10x10"
                   />
                 </div>
-                <p className=" leading-7">{Inventory.storageFacility.storageFacilityName}</p>
-                <p className="pl-10 leading-7">{inventoryItem.quantityRecieved}</p>
+                <p className=" leading-7">
+                  {Inventory?.storageFacility?.storageFacilityName}
+                </p>
+                <p className="pl-10 leading-7">
+                  {inventoryItem.quantityRecieved}
+                </p>
                 <p className=" leading-none">{inventoryItem.unitPrice}</p>
                 <div className="p-2">
                   <div
@@ -229,19 +231,29 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
                       </thead>
                       <tbody>
                         <td>
-                          <p className="text-xs">{inventoryItem.itemPosition}</p>
+                          <p className="text-xs">
+                            {inventoryItem.itemPosition}
+                          </p>
                         </td>
                         <td>
-                          <p className="text-xs leading-7">{inventoryItem.quantityDamaged}</p>
+                          <p className="text-xs leading-7">
+                            {inventoryItem.quantityDamaged}
+                          </p>
                         </td>
                         <td>
-                          <p className="w-28 text-xs leading-none">{inventoryItem.description}</p>
+                          <p className="w-28 text-xs leading-none">
+                            {inventoryItem.description}
+                          </p>
                         </td>
                         <td>
-                          <p className="text-xs leading-none">{inventoryItem.colour}</p>
+                          <p className="text-xs leading-none">
+                            {inventoryItem.colour}
+                          </p>
                         </td>
                         <td>
-                          <p className="text-xs leading-none">{inventoryItem.weight}</p>
+                          <p className="text-xs leading-none">
+                            {inventoryItem.weight}
+                          </p>
                         </td>
                       </tbody>
                     </table>
@@ -249,8 +261,7 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
                 </div>
               </div>
               <div className="flex justify-end gap-1">
-                
-                  <Counter  skuId={inventoryItem.skuId}/>
+                <Counter skuId={inventoryItem.skuId} />
               </div>
             </div>
           </>
