@@ -5,7 +5,7 @@ import { Button } from "../Button";
 import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 import { ImagePreviewClickable } from "@/container";
 import { BookStorageModal, ContactUsModal } from "@/modals";
-import { DashBoardRoutes, formatCurrency } from "@/utils";
+import { DashBoardRoutes, formatCurrency, imageURL } from "@/utils";
 import { useRouter } from "next/router";
 type Props = {
   data: any;
@@ -46,6 +46,10 @@ const StorageCard: FC<Props> = ({ data }) => {
       });
     }
   };
+
+  const src =
+    imageURL + data.storageFacilityMedia[0].storageFacilityMediaLocation;
+
   return (
     <>
       <BookStorageModal
@@ -63,10 +67,7 @@ const StorageCard: FC<Props> = ({ data }) => {
         onClick={goToDetails}
       >
         <div className="relative ">
-          <img
-            src="/assets/images/storage-0.png"
-            className="w-full object-cover rounded"
-          />
+          <img src={src} className="w-full object-cover rounded h-[170px]" />
           <p className="absolute top-[20px] font-bold p-2 text-white bg-orange-400 rounded-r">
             {data?.storageType}
           </p>

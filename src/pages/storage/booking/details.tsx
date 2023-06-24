@@ -77,7 +77,7 @@ const BookingDetails = () => {
               <StorageDetail data={details} />
             </Tab.Panel>
             <Tab.Panel>
-              <TransactionDetails />
+              <TransactionDetails data={details} />
             </Tab.Panel>
             <Tab.Panel>
               <RenewalDetails />

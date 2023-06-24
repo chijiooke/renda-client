@@ -6,15 +6,19 @@ import { BookStorageModal } from "@/modals";
 
 import { useRouter } from "next/router";
 import axios from "axios";
-import { storageURL } from "@/utils/constant";
+import { imageURL, storageURL } from "@/utils/constant";
 import { formatCurrency } from "@/utils";
-
+import cn from "classnames";
+interface mediaType {
+  storageFacilityId: string;
+  storageFacilityMediaId: string;
+  storageFacilityMediaLocation: string;
+}
 const Facility = () => {
   const router = useRouter();
   const [facility, setFacility] = useState({} as any);
   const [show, setShow] = useState(false);
   const { id } = router.query;
-  console.log(id);
   const getFacilityDetails = async () => {
     try {
       const { data } = await axios.get(storageURL + "api/v1/Storage/" + id);
@@ -24,7 +28,7 @@ const Facility = () => {
 
   useLayoutEffect(() => {
     getFacilityDetails();
-  }, []);
+  }, [id]);
   const details = useMemo(() => {
     return {
       "Facility ID": facility?.storageFacilityId,
@@ -38,8 +42,15 @@ const Facility = () => {
       "Storage Type": facility?.storageType,
       "Payment Structure": facility?.paymentStructure,
 
-      Price: "NGN" + " " + formatCurrency(facility?.rendaPrice) + " monthly",
+      Price: "NGN" + " " + formatCurrency(facility?.rendaPrice),
     };
+  }, [facility]);
+
+  const images = useMemo(() => {
+    const { storageFacilityMedia: media } = facility;
+    return media?.map(
+      (m: mediaType) => imageURL + m.storageFacilityMediaLocation
+    );
   }, [facility]);
   return (
     <>
@@ -63,26 +74,18 @@ const Facility = () => {
             </div>
             <div className="flex gap-10 p-10">
               <div className="grid grid-cols-2 gap-5">
-                <img
-                  src="/assets/images/storage-0.png"
-                  className="w-full object-cover rounded col-span-2 row-span-5"
-                />
-                <img
-                  src="/assets/images/storage-0.png"
-                  className="w-full object-cover rounded"
-                />
-                <img
-                  src="/assets/images/storage-0.png"
-                  className="w-full object-cover rounded"
-                />{" "}
-                <img
-                  src="/assets/images/storage-0.png"
-                  className="w-full object-cover rounded"
-                />{" "}
-                <img
-                  src="/assets/images/storage-0.png"
-                  className="w-full object-cover rounded"
-                />
+                {images.slice(0, 3).map((m: string, i: number) => (
+                  <img
+                    key={i}
+                    src={m}
+                    className={cn(
+                      "w-full object-cover rounded  row-span-5 h-[300px] md:w-[300px]",
+                      {
+                        "col-span-2 md:w-[600px]": i === 0,
+                      }
+                    )}
+                  />
+                ))}
               </div>
               <div>
                 <div className="mb-10 max-w-4xl">
