@@ -9,6 +9,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { OnboardingAction } from "@/types";
 import { InventoryType, StoreState } from "@/store/reducer";
+
 function AddForm() {
   const { inventoryItems, user } = useSelector((state: StoreState) => state);
   const [forms, setForms] = useState([{ id: 1 }]);
@@ -16,14 +17,35 @@ function AddForm() {
   const router = useRouter();
   const dispatch = useDispatch();
 
+
   // Button upload starts
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
-  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setSelectedImage(file || null);
-    // Perform additional logic for image upload, such as sending it to the server
-  };
+const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
+  const file = event.target.files?.[0];
+  setSelectedImage(file || null);
+
+  if (file) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    axios
+      .post(
+        "http://tradeplaorg-001-site9.gtempurl.com/api/File/upload",
+        formData
+      )
+      .then((response) => {
+        const imageUrl = response.data;
+        console.log("Uploaded image URL:", imageUrl);
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+      });
+  }
+};
+
+
 
   const divClassName = selectedImage
     ? "justify-start  px-3 bg-white border rounded-md border-black border-opacity-25"
@@ -57,7 +79,7 @@ function AddForm() {
           (document.getElementById(`weight-${form.id}`) as HTMLInputElement)
             ?.value || "";
         // Update with the actual picture value
-        const picture = "picture";
+        const picture =imageUrl;
         const unitPrice = parseInt(
           (document.getElementById(`unitPrice-${form.id}`) as HTMLInputElement)
             ?.value || "0"
@@ -225,6 +247,12 @@ function AddForm() {
                   className="hidden"
                 />
                 {selectedImage && <p>{selectedImage.name}</p>}
+                {imageUrl && (
+                  <img
+                    src={"https://rendamedia.s3.amazonaws.com/" + imageUrl}
+                    alt="Uploaded"
+                  />
+                )}
               </label>
             </form>
           ))}
