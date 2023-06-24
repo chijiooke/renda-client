@@ -42,7 +42,7 @@ const Facility = () => {
       "Storage Type": facility?.storageType,
       "Payment Structure": facility?.paymentStructure,
 
-      Price: "NGN" + " " + formatCurrency(facility?.rendaPrice),
+      "Price per sqm": "NGN" + " " + formatCurrency(facility?.rendaPrice),
     };
   }, [facility]);
 
