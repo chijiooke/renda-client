@@ -1,3 +1,4 @@
+import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
 import { OnboardingAction } from "@/types";
 
 export type InventoryType = {
@@ -50,6 +51,7 @@ export interface StoreState {
     bookingId: string;
   };
   inventoryItems: InventoryType[];
+  itemsToOrder: inventoryDataType[];
 }
 export const initialValues: StoreState = {
   getStarted: {
@@ -90,6 +92,7 @@ export const initialValues: StoreState = {
     bookingId: "",
   },
   inventoryItems: [] as InventoryType[],
+  itemsToOrder: [],
 };
 interface ActionType {
   type: OnboardingAction;
@@ -155,6 +158,11 @@ const reducer = (
       return {
         ...state,
         inventoryItems: [] as InventoryType[],
+      };
+    case OnboardingAction.ADD_SELECTED_INVENTORY_ITEM:
+      return {
+        ...state,
+        itemsToOrder: [...state.itemsToOrder, action.payload] ,
       };
     default:
       return state;
