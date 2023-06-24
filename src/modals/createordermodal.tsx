@@ -18,10 +18,10 @@ type Props = {
 };
 
 enum CreateOrderByEnum {
-  CSV = "CSV",
-  SINGLE_ORDER = "SINGLE_ORDER",
-  API = "API",
   FROM_INVENTORY = "FROM_INVENTORY",
+  SINGLE_ORDER = "SINGLE_ORDER",
+  CSV = "CSV",
+  API = "API",
 }
 
 function CreateOrderModal({
@@ -74,7 +74,7 @@ function CreateOrderModal({
               </p>
             </div>
             <div className="grid justify-center">
-              <div className="grid my-6 gap-6">
+              <div className="grid max-w-md w-full my-6 gap-6">
                 <RadioGroup value={createOrderBy} onChange={setCreateOrderBy}>
                   {Object.keys(CreateOrderByEnum).map((item) => {
                     if (
@@ -95,13 +95,13 @@ function CreateOrderModal({
                           className={({ active, checked }) =>
                             `${
                               active
-                                ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-sky-300 text-sky-400"
-                                : ""
+                                ? "border-2 rounded w-full radio-order"
+                                : "radio-order"
                             }
                           ${
                             checked
-                              ? "border-solid border-2 border-sky-500 text-sky-400"
-                              : ""
+                              ? "border-solid rounded border-2 radio-checked"
+                              : "border-2 rounded"
                           }
                             w-full  items-center justify-between text-sky-400`
                           }
@@ -109,7 +109,7 @@ function CreateOrderModal({
                           {({ active, checked }) => (
                             <RadioGroup.Label
                               as="p"
-                              className={`font-medium  ${
+                              className={`font-lg flex items-center uppercase radio-text mt-5 ${
                                 checked ? "text-[#1B547F]" : "text-gray-900"
                               }`}
                             >
@@ -138,25 +138,25 @@ function CreateOrderModal({
   ) : null;
 }
 
-const Layout = ({
-  children,
-  option,
-  center = true,
-}: {
-  children: ReactNode;
-  option: string;
-  center?: boolean;
-}) => {
-  return (
-    <div
-      className={cn("grid grid-cols-3 w-full ", {
-        "items-center": center,
-      })}
-    >
-      <p className="text-[14px] font-semibold "> {option}</p>
-      <div className=" w-full col-span-2">{children}</div>
-    </div>
-  );
-};
+// const Layout = ({
+//   children,
+//   option,
+//   center = true,
+// }: {
+//   children: ReactNode;
+//   option: string;
+//   center?: boolean;
+// }) => {
+//   return (
+//     <div
+//       className={cn("grid grid-cols-3 w-full ", {
+//         "items-center": center,
+//       })}
+//     >
+//       <p className="text-[14px] font-semibold "> {option}</p>
+//       <div className=" w-full col-span-2">{children}</div>
+//     </div>
+//   );
+// };
 
 export { CreateOrderModal };

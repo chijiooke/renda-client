@@ -29,6 +29,23 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
           </div>
           <div className="px-5"></div>
         </div>
+
+        <div className="grid grid-c-9 p-4 justify-between relative">
+          <p className="text-center">1234567</p>
+          <p className="text-center">34</p>
+          <p className="text-center">Oni Ile facility</p>
+          <p className="text-center">RND12345</p>
+          <p className="text-center">11/04/2023</p>
+          <p className="text-center">Promise Eze</p>
+          <p className="text-center">Ketu</p>
+          <p className="text-center">paid</p>
+          <p className="text-center">Pending</p>
+          <div>
+            <div className="absolute top-5  ">
+              <input type="checkbox" className="pl-3 scale-150" />
+            </div>
+          </div>
+        </div>
         {loading && "loading..."}
         {!data.length && !loading ? (
           <div className="grid justify-center mt-40 mb-40">
