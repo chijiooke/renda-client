@@ -65,12 +65,12 @@ const Facility = () => {
           <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
             <div className="border-b-2 border-b-gray-300 p-7 flex justify-between items-center">
               <h1 className="text-2xl font-extrabold">Storage Facilities</h1>
-              <div className="bg-[#EAF6FF] p-3 rounded border-1 border-[#1B547F] flex gap-4">
+              {/* <div className="bg-[#EAF6FF] p-3 rounded border-1 border-[#1B547F] flex gap-4">
                 <img src="/assets/images/box-check.svg" />
                 <p className="font-normal">
                   Notify me when there is more space available
                 </p>
-              </div>
+              </div> */}
             </div>
             <div className="flex gap-10 p-10">
               <div className="grid grid-cols-2 gap-5">
