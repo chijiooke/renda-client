@@ -1,12 +1,9 @@
 import { DashBoardLayout } from "@/layout";
 import { Button, GetInTouch, Input, StorageCard } from "@/components";
 import { useRouter } from "next/router";
-import { DashBoardRoutes } from "@/utils";
-import { ArrowNextIcon, ArrowPreviousIcon } from "@/icons";
 
 import { Tab } from "@headlessui/react";
-import { AddNewInventory, AddViaCsv, AddViaApi } from "@/_pages/inventory";
-import { MyModal } from "@/modals";
+import { AddNewInventory, AddViaApi, AddViaCsv } from "@/_tabs/Inventory";
 
 const headers = ["Add a Single Inventory", "Add via CSV", "Import via API"];
 function classNames(...classes: any[]) {
