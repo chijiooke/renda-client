@@ -28,19 +28,19 @@ const LoginPage = () => {
       if (response.success) {
         dispatch({
           type: OnboardingAction.SET_LOGIN_DETAILS,
-          payload: { ...data, id: response.data.userid },
+          payload: { ...data, id: response?.data.userid },
         });
         router.push(AuthRoutes.LOGIN_OTP);
       } else {
         setError(
-          (error as any).response.data.errorMessage ||
-            (error as any).response.data.data
+          (error as any).response?.data?.errorMessage ||
+            (error as any).response?.data?.data
         );
       }
     } catch (error) {
       setError(
-        (error as any).response.data.errorMessage ||
-          (error as any).response.data.data
+        (error as any).response?.data?.errorMessage ||
+          (error as any).response?.data?.data
       );
     } finally {
       setLoading(false);
