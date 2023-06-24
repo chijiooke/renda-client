@@ -7,7 +7,7 @@ import {
   RenewalDetails,
   StorageDetail,
   TransactionDetails,
-} from "@/_pages/storage/booking";
+} from "@/_tabs/storage/booking";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }

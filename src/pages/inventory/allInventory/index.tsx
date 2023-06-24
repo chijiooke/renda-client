@@ -81,7 +81,7 @@ import { MyModal } from "@/modals";
 import { useState } from "react";
 // import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
 import { AllInventoryTable } from "@/components/InventoryTable";
-import { InboundHistory } from "@/_pages/Inventory/all/inboundHistory";
+import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
 
 const headers = ["ALL Inventory", "Inbound History"];
 function classNames(...classes: any[]) {

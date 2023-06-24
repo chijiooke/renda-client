@@ -1,44 +1,55 @@
-import React, {
-  useState,
-  ReactNode,
-  ChangeEventHandler,
-  useEffect,
-} from "react";
+import { Button } from "@/components";
+import { DashBoardRoutes } from "@/utils";
 import cn from "classnames";
-import { Input, Button, Select } from "@/components";
-import axios from "axios";
-import dayjs from "dayjs";
-import { baseURL, DashBoardRoutes } from "@/utils";
-import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+import { Dispatch, ReactNode, useState } from "react";
 
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useRouter } from "next/router";
+import { OrderManagementTabsEnum } from "@/pages/ordermgt";
+import { capitalizeText } from "@/utils/capitalizeText";
 import { OrdermgtRoutes } from "@/utils/routes";
+import { RadioGroup } from "@headlessui/react";
+import { useRouter } from "next/router";
 
 type Props = {
   show: boolean;
   data?: any;
   close: () => void;
+  modalType: OrderManagementTabsEnum;
+  openCreateModal: () => void;
 };
 
-function CreateOrderModal({ show, data, close }: Props) {
-  const router = useRouter();
-  const [selectedButton, setSelectedButton] = useState("");
+enum CreateOrderByEnum {
+  CSV = "CSV",
+  SINGLE_ORDER = "SINGLE_ORDER",
+  API = "API",
+  FROM_INVENTORY = "FROM_INVENTORY",
+}
 
-  const handleButtonClick = (buttonName: any) => {
-    setSelectedButton(buttonName);
-  };
+function CreateOrderModal({
+  show,
+  data,
+  close,
+  modalType,
+  openCreateModal,
+}: Props) {
+  const router = useRouter();
+
+  const [createOrderBy, setCreateOrderBy] = useState<CreateOrderByEnum>();
+
+  // const handleChange = (value: CreateOrderByEnum) => {
+  //   setCreateOrderBy(value);
+  // };
 
   const handleSubmit = () => {
     // Perform any necessary actions before routing
     // Based on the selected button, route to a specific page
-    if (selectedButton === "Button 1") {
+    if (createOrderBy === CreateOrderByEnum.FROM_INVENTORY) {
       router.push(DashBoardRoutes.INVENTORY_ALL);
-    } else if (selectedButton === "Button 2") {
+    } else if (createOrderBy === CreateOrderByEnum.CSV) {
       router.push(OrdermgtRoutes.CREATEORDER_CSV);
-    } else if (selectedButton === "Button 3") {
+    } else if (createOrderBy === CreateOrderByEnum.API) {
       router.push("/page3");
+    } else {
+      openCreateModal();
     }
   };
 
@@ -64,57 +75,52 @@ function CreateOrderModal({ show, data, close }: Props) {
             </div>
             <div className="grid justify-center">
               <div className="grid my-6 gap-6">
-                <button
-                  className={
-                    selectedButton === "Button 1" ? "selected" : "notSelected"
-                  }
-                  onClick={() => handleButtonClick("Button 1")}
-                >
-                  <p>Direct from Inventory</p>
-                </button>
-                <button
-                  className={
-                    selectedButton === "Button 2" ? "selected" : "notSelected"
-                  }
-                  onClick={() => handleButtonClick("Button 2")}
-                >
-                  Via CSV
-                </button>
-                <button
-                  className={
-                    selectedButton === "Button 3" ? "selected" : "notSelected"
-                  }
-                  onClick={() => handleButtonClick("Button 3")}
-                >
-                  VIA API
-                </button>
-                {/* <button onClick={handleSubmit}>Submit</button> */}
-
-                <style jsx>{`
-                  .selected {
-                    width: 317px;
-                    height: 48px;
-                    left: 648px;
-                    top: 363px;
-
-                    background: #ffffff;
-                    border: 2px solid #1b547f;
-                    border-radius: 4.93211px;
-                    .p {
-                      text-color: #1b547f;
+                <RadioGroup value={createOrderBy} onChange={setCreateOrderBy}>
+                  {Object.keys(CreateOrderByEnum).map((item) => {
+                    if (
+                      modalType === OrderManagementTabsEnum.EXTERNAL_ORDERS &&
+                      item === CreateOrderByEnum.FROM_INVENTORY
+                    ) {
+                      return;
+                    } else if (
+                      modalType === OrderManagementTabsEnum.INVENTORY_ORDERS &&
+                      item === CreateOrderByEnum.SINGLE_ORDER
+                    ) {
+                      return;
+                    } else {
+                      return (
+                        <RadioGroup.Option
+                          key={item}
+                          value={item}
+                          className={({ active, checked }) =>
+                            `${
+                              active
+                                ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-sky-300 text-sky-400"
+                                : ""
+                            }
+                          ${
+                            checked
+                              ? "border-solid border-2 border-sky-500 text-sky-400"
+                              : ""
+                          }
+                            w-full  items-center justify-between text-sky-400`
+                          }
+                        >
+                          {({ active, checked }) => (
+                            <RadioGroup.Label
+                              as="p"
+                              className={`font-medium  ${
+                                checked ? "text-[#1B547F]" : "text-gray-900"
+                              }`}
+                            >
+                              {capitalizeText(item.replace("_", " "))}
+                            </RadioGroup.Label>
+                          )}
+                        </RadioGroup.Option>
+                      );
                     }
-                  }
-                  .notSelected {
-                    width: 317px;
-                    height: 48px;
-                    left: 648px;
-                    top: 439px;
-
-                    background: #ffffff;
-                    border: 1px solid rgba(0, 0, 0, 0.15);
-                    border-radius: 4.93211px;
-                  }
-                `}</style>
+                  })}
+                </RadioGroup>
               </div>
             </div>
 
