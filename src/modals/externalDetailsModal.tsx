@@ -23,6 +23,35 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     DeliveryTimeEnum.IMMEDIATELY
   );
 
+  const [items, setitems] = useState<
+    {
+      nameOfItem: string;
+      dimension: string;
+      quantity: string;
+      unitPrice: string;
+    }[]
+  >([{ nameOfItem: "", dimension: "", quantity: "", unitPrice: "" }]);
+
+  const handleFormChange = (
+    index: number,
+    event: { key: string; value: string }
+  ) => {
+    let data = [...items];
+    data[index][event.key] = event.value;
+    console.log(data);
+    setitems(data);
+  };
+  const handleAddButton = () => {
+    setitems([
+      ...items,
+      { nameOfItem: "", dimension: "", quantity: "", unitPrice: "" },
+    ]);
+  };
+
+  const handleDeleteButton = (index: number) => {
+    setitems(items.filter((item, ind) => index !== ind));
+  };
+
   return show ? (
     <div className="modal">
       <div className="rounded bg-white p-10">
@@ -106,90 +135,38 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     type="text"
                   />
                 </Layout>
-                <div
-                  className="boarder-2 rounded grid justify-center"
-                  style={{ backgroundColor: "#0000001a" }}
-                >
-                  <div className="flex gap-2 mt-4 mx-3">
-                    <div>
-                      <p className="font-bold">Name of Item</p>
-                      <input
-                        type="text"
-                        value={items[index].value2}
-                        onChange={(e) => {
-                          handleFormChange(index, {
-                            key: "value2",
-                            value: e?.target?.value,
-                          });
+                {items.map((item, index) => (
+                  <div
+                    className="boarder-2 rounded grid justify-center"
+                    style={{ backgroundColor: "#0000001a" }}
+                  >
+                    <div className="flex gap-2 my-3 mx-3 justify-end">
+                      <button
+                        onClick={() => {
+                          handleDeleteButton(index);
                         }}
-                        className="my-1 rounded h-12"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold">Dimension</p>
-                      <input
-                        type="text"
-                        value={items[index].value2}
-                        onChange={(e) => {
-                          handleFormChange(index, {
-                            key: "value2",
-                            value: e?.target?.value,
-                          });
+                        className="flex gap-2 items-center justify-center rounded-lg"
+                        style={{
+                          backgroundColor: "#CF0000",
+                          width: "80px",
+                          height: "25px",
                         }}
-                        className="my-1 rounded h-12"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold">Qty</p>
-                      <input
-                        type="text"
-                        value={items[index].value2}
-                        onChange={(e) => {
-                          handleFormChange(index, {
-                            key: "value2",
-                            value: e?.target?.value,
-                          });
-                        }}
-                        className="my-1 rounded h-12"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold">Unit Price</p>
-                      <input
-                        type="text"
-                        value={items[index].value2}
-                        onChange={(e) => {
-                          handleFormChange(index, {
-                            key: "value2",
-                            value: e?.target?.value,
-                          });
-                        }}
-                        className="my-1 rounded h-12"
-                      />
+                      >
+                        <Minus />
+                        <p className="text-white">Delete</p>
+                      </button>
+                      <button
+                        className="flex gap-2 items-center justify-center rounded-lg"
+                        style={{ backgroundColor: "#008753", width: "80px" }}
+                        onClick={handleAddButton}
+                      >
+                        <Plus />
+                        <p className="text-white ">Add</p>
+                      </button>
                     </div>
                   </div>
+                ))}
 
-                  <div className="flex gap-2 my-3 mx-3 justify-end">
-                    <button
-                      className="flex gap-2 items-center justify-center rounded-lg"
-                      style={{
-                        backgroundColor: "#CF0000",
-                        width: "80px",
-                        height: "25px",
-                      }}
-                    >
-                      <Minus />
-                      <p className="text-white">Delete</p>
-                    </button>
-                    <button
-                      className="flex gap-2 items-center justify-center rounded-lg"
-                      style={{ backgroundColor: "#008753", width: "80px" }}
-                    >
-                      <Plus />
-                      <p className="text-white ">Add</p>
-                    </button>
-                  </div>
-                </div>
                 <Layout option="Payment Mode" center={true}>
                   <div className="grid grid-cols-2 gap-4">
                     <div
