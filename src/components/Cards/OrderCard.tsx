@@ -1,7 +1,7 @@
 import { FC } from "react";
 import cn from "classnames";
 type Props = {
-  value: number;
+  value: string;
   title: string;
   type?: "primary" | "secondary";
   number?: boolean;
@@ -18,7 +18,7 @@ const OrderCard: FC<Props> = ({
   className,
 }) => {
   const val = !number
-    ? "N" + value.toFixed(2).toLocaleString()
+    ? "N" + Number(value).toFixed(2).toLocaleString()
     : percentage
     ? value + "%"
     : "" + value;
