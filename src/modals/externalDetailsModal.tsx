@@ -23,22 +23,23 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     DeliveryTimeEnum.IMMEDIATELY
   );
 
-  const [items, setitems] = useState<
-    {
-      nameOfItem: string;
-      dimension: string;
-      quantity: string;
-      unitPrice: string;
-    }[]
-  >([{ nameOfItem: "", dimension: "", quantity: "", unitPrice: "" }]);
+  type DataType = {
+    nameOfItem: string;
+    dimension: string;
+    quantity: string;
+    unitPrice: string;
+  };
+
+  const [items, setitems] = useState<DataType[]>([
+    { nameOfItem: "", dimension: "", quantity: "", unitPrice: "" },
+  ]);
 
   const handleFormChange = (
     index: number,
     event: { key: string; value: string }
   ) => {
     let data = [...items];
-    data[index][event.key] = event.value;
-    console.log(data);
+    data[index][event.key as keyof DataType] = event.value;
     setitems(data);
   };
   const handleAddButton = () => {
