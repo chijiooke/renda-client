@@ -51,7 +51,7 @@ type Inventorie = {
 const TableDetails = () => {
   const [expandedRow, setExpandedRow] = useState(null);
 
-  const handleShowMore = (row :any) => {
+  const handleShowMore = (row: any) => {
     if (expandedRow === row) {
       setExpandedRow(null);
     } else {
@@ -59,23 +59,23 @@ const TableDetails = () => {
     }
   };
 
-    const { user } = useSelector((state: StoreState) => state);
-    const [inventories, setInventories] = useState<Inventorie[]>([]);
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const { data } = await axios.get(
-            baseURL +
-              `api/customers/${user.customerId}/InboundInventory/inventories`
-          );
-          setInventories(data);
-        } catch (error) {
-          console.error("Failed to fetch data from the endpoint:", error);
-        }
-      };
+  const { user } = useSelector((state: StoreState) => state);
+  const [inventories, setInventories] = useState<Inventorie[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(
+          baseURL +
+            `api/customers/${user.customerId}/InboundInventory/inventories`
+        );
+        setInventories(data);
+      } catch (error) {
+        console.error("Failed to fetch data from the endpoint:", error);
+      }
+    };
 
-      fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
   return (
     <div className="container h-[60vh] mx-auto pt-4">
@@ -113,9 +113,15 @@ const TableDetails = () => {
       </div>
       {inventories.map(
         (inventory) =>
-          inventory.inventoryItems.map((inx) => (
-            <TableRow key={inx.id} inventoryItem={inx} Inventory={inventory} />
-          ))
+          inventory.inventoryItems
+            .filter((f: any) => f.skuId)
+            .map((inx) => (
+              <TableRow
+                key={inx.id}
+                inventoryItem={inx}
+                Inventory={inventory}
+              />
+            ))
         // <TableRow key={inventory.id} inventory={inventory} />
       )}
       {/* <TableRow />

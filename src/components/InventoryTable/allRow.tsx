@@ -129,15 +129,11 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
             <p className=" leading-7">{inventoryItem.itemName}</p>
             <div className="inline-flex space-x-1 items-center   h-7">
               <p className=" leading-7">{Inventory.storageFacilityId}</p>
-              <img
-                className="w-2.5 h-2.5 rounded-full"
-                src="https://via.placeholder.com/10x10"
-              />
             </div>
             <p className=" leading-7">
               {Inventory.storageFacility.storageFacilityName}
             </p>
-            <p className="pl-10 leading-7">{inventoryItem.quantityRecieved}</p>
+            <p className="pl-10 leading-7">{inventoryItem.quantity}</p>
             <p className=" leading-none">{inventoryItem.unitPrice}</p>
             <div className="p-2 text-center flex items-center">
               <div
