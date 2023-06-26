@@ -206,9 +206,15 @@ const TableData = ({
   return (
     <form key={form.id} className="grid grid-c-10 gap-2 my-6">
       <span className="flex items-center  justify-center w-full scale-125  gap-2">
-        <div onClick={() => form === forms[forms.length - 1] && updateItem()}>
+        <div
+          onClick={() =>
+            form === forms[forms.length - 1] && imgUrl && updateItem()
+          }
+        >
           <AddIcon
-            color={form === forms[forms.length - 1] ? "#008753" : "#000"}
+            color={
+              form === forms[forms.length - 1] && imgUrl ? "#008753" : "#000"
+            }
           />
         </div>
 
@@ -241,7 +247,7 @@ const TableData = ({
           onChange={handleImageUpload}
           className="hidden"
         />
-        {selectedImage && <p>{selectedImage.name}</p>}
+        {selectedImage && <p>{selectedImage.name.substring(0, 7)}...</p>}
         {/* {imageUrl && (
           <img
             src={"https://rendamedia.s3.amazonaws.com/" + imageUrl}

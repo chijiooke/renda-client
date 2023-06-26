@@ -4,12 +4,16 @@ import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import axios from "axios";
-import { baseURL, queryStringBuilder } from "@/utils";
+import { DashBoardRoutes, baseURL, queryStringBuilder } from "@/utils";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/reducer";
+import { SuccessModal } from "@/modals";
+import { useRouter } from "next/router";
 
 const CardPayment = () => {
+  const router = useRouter();
   const { bookingDetails, user } = useSelector((state: StoreState) => state);
+  const [show, setShow] = useState(false);
   const config = {
     public_key: "FLWPUBK_TEST-bf4efecf672fbdab00ada453243661e8-X",
     tx_ref: dayjs(Date.now()).format("YYYY/MM/DD"),
@@ -47,11 +51,24 @@ const CardPayment = () => {
           flw_ref: response.flw_ref,
         });
         closePaymentModal(); // this will close the modal programmatically
+        setShow(true);
       },
       onClose: () => {},
     });
   });
-  return null;
+  return (
+    <>
+      <SuccessModal
+        show={show}
+        close={() => {
+          setShow(false);
+          router.push(DashBoardRoutes.STORAGE_BOOKING);
+        }}
+        details="You have successfully booked this storage"
+        title="Booking Successful"
+      />
+    </>
+  );
 };
 
 export { CardPayment };

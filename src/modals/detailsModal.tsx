@@ -3,6 +3,7 @@ import { MyModal } from "./dashboardModal";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { StoreState } from "@/store/reducer";
+import { formatCurrency } from "@/utils";
 
 type Item = {
   id: number;
@@ -60,12 +61,12 @@ function SomeComponent() {
             title="unitPrice"
             className="flex items-center justify-start  px-3 py-1.5  "
           >
-            <p className="">{item.unitPrice}</p>
+            <p className="">{formatCurrency(item.unitPrice)}</p>
           </div>
           <div title="description" className="w-44  leading-none">
             <p>{item.description}</p>
           </div>
-          <p className="picture">{item.picture}</p>
+          <p className="picture">{item.picture?.substring(0, 20)}..</p>
         </div>
       ))}
       {/* Content of your component */}
