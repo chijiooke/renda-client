@@ -22,6 +22,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
   const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>(
     DeliveryTimeEnum.IMMEDIATELY
   );
+
   return show ? (
     <div className="modal">
       <div className="rounded bg-white p-10">
@@ -41,7 +42,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 Create Order
               </p>
 
-              <div className="grid gap-6">
+              <div className="grid gap-9">
                 <Layout option="Recipient's Name" center={true}>
                   <Input
                     className="h-10"
@@ -109,26 +110,66 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   className="boarder-2 rounded grid justify-center"
                   style={{ backgroundColor: "#0000001a" }}
                 >
-                  <div className="flex gap-2 mt-4">
+                  <div className="flex gap-2 mt-4 mx-3">
                     <div>
                       <p className="font-bold">Name of Item</p>
-                      <input type="text" className="my-1 rounded h-12" />
+                      <input
+                        type="text"
+                        value={items[index].value2}
+                        onChange={(e) => {
+                          handleFormChange(index, {
+                            key: "value2",
+                            value: e?.target?.value,
+                          });
+                        }}
+                        className="my-1 rounded h-12"
+                      />
                     </div>
                     <div>
                       <p className="font-bold">Dimension</p>
-                      <input type="text" className="my-1 rounded h-12" />
+                      <input
+                        type="text"
+                        value={items[index].value2}
+                        onChange={(e) => {
+                          handleFormChange(index, {
+                            key: "value2",
+                            value: e?.target?.value,
+                          });
+                        }}
+                        className="my-1 rounded h-12"
+                      />
                     </div>
                     <div>
                       <p className="font-bold">Qty</p>
-                      <input type="text" className="my-1 rounded h-12" />
+                      <input
+                        type="text"
+                        value={items[index].value2}
+                        onChange={(e) => {
+                          handleFormChange(index, {
+                            key: "value2",
+                            value: e?.target?.value,
+                          });
+                        }}
+                        className="my-1 rounded h-12"
+                      />
                     </div>
                     <div>
                       <p className="font-bold">Unit Price</p>
-                      <input type="text" className="my-1 rounded h-12" />
+                      <input
+                        type="text"
+                        value={items[index].value2}
+                        onChange={(e) => {
+                          handleFormChange(index, {
+                            key: "value2",
+                            value: e?.target?.value,
+                          });
+                        }}
+                        className="my-1 rounded h-12"
+                      />
                     </div>
                   </div>
 
-                  <div className="flex gap-2 my-3 justify-end">
+                  <div className="flex gap-2 my-3 mx-3 justify-end">
                     <button
                       className="flex gap-2 items-center justify-center rounded-lg"
                       style={{

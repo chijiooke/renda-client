@@ -107,7 +107,7 @@ function classNames(...classes: any[]) {
 export default function Inventory() {
   const router = useRouter();
   const [showUploadButton, setShowUploadButton] = useState(true);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
   };
@@ -175,7 +175,7 @@ export default function Inventory() {
                     Top-Up Stock
                   </button>
                   <button
-                    onClick={() => setOpen(true)}
+                    // onClick={() => setOpen(true)}
                     className=" flex items-center justify-center w-36 h-10 px-3  cursor-pointer  border-1 rounded-md border-blue-900 text-[#1B547F] text-xs font-semibold"
                   >
                     Create Order

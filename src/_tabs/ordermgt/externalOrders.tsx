@@ -2,7 +2,6 @@ import { Button } from "@/components";
 import { FC } from "react";
 
 const ExternalOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
-
   return (
     <div>
       <div className=" bg-[#E7F4FF] p-5 font-medium text-[#7A7A7A]">
@@ -28,7 +27,7 @@ const ExternalOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
         <div className="px-5"></div>
       </div>
 
-      <div className="grid justify-center mt-40 mb-40">
+      <div className="grid justify-center mt-3 mb-40">
         <p className="flex justify-center mb-6">You have no order</p>
         <Button size="sm" title="Create order" handleClick={openModal} />
       </div>
