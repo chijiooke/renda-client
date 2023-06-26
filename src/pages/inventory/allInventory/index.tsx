@@ -106,7 +106,7 @@ export default function Inventory() {
                   <h1 className="text-3xl font-extrabold">All Inventory</h1>
                 </div>
                 <div className="flex justify-center gap-2 mr-7">
-                  <div
+                  {/* <div
                     style={{
                       backgroundColor: `#ECFFF8`,
                       borderColor: `#008753`,
@@ -118,7 +118,7 @@ export default function Inventory() {
                     <p className="text-xs font-semibold text-center items-center text-[#008753]">
                       Your Items have been added to van
                     </p>
-                  </div>
+                  </div> */}
                   <div
                     style={{ backgroundColor: `#1B547F` }}
                     className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 cursor-pointer  rounded-md"

@@ -41,10 +41,10 @@ const Button: FC<Props> = ({
     >
       <div className="flex justify-center">
         <p
-          className={cn("font-bold ", {
+          className={cn("font-bold break-normal", {
             "text-white  ": type === "primary",
             "text-primary": type === "secondary",
-            "text-[15px]": size === "sm",
+            "text-[13px]": size === "sm",
           })}
         >
           {title}

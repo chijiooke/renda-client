@@ -117,7 +117,7 @@ const TableData = ({ data }: { data: any }) => {
         {data?.status}
       </p>
       <p>#{data?.bookingId}</p>
-      <p>{data?.facilityName} </p>
+      <p className="px-[5px]">{data?.facilityName} </p>
       <p>{dayjs(data?.startDate).format("DD/MM/YY")}</p>
       <p>{dayjs(data?.endDate).format("DD/MM/YY")}</p>
       <p>{time}</p>

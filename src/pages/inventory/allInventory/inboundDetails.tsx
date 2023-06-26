@@ -109,60 +109,65 @@ export default function InboundDetail() {
             </div>
           </div>
           <div className="flex justify-between m-5">
-            <div className="flex gap-5">
+            <div className="flex gap-10">
               <div>
-                <div className="inline-flex flex-col space-y-1.5 items-start justify-start">
-                  <p className="">Facility ID</p>
-                  <p className="text-sm leading-7">Facility name</p>
-                  <p className="text-sm leading-7">Date and time of creation</p>
-                  <p className="text-sm leading-7">Status</p>
-                  <p className="text-sm leading-7">Pickup location</p>
-                  <p className="text-sm leading-7">Contact Person</p>
-                  <p className="text-sm leading-7">
+                <div className="inline-flex flex-col space-y-1.5 items-start justify-start font-bold">
+                  <p className="my-5">Facility ID</p>
+                  <p className="text-sm leading-7 my-5">Facility name</p>
+                  <p className="text-sm leading-7 my-5">
+                    Date and time of creation
+                  </p>
+                  <p className="text-sm leading-7 my-5">Status</p>
+                  <p className="text-sm leading-7 my-5">Pickup location</p>
+                  <p className="text-sm leading-7 my-5">Contact Person</p>
+                  <p className="text-sm leading-7 my-5">
                     Total number of items to be picked up
                   </p>
-                  <p className="text-sm leading-7">Total value of items</p>
-                  <p className="text-sm leading-7">Date Received</p>
+                  <p className="text-sm leading-7 my-5">Total value of items</p>
+                  <p className="text-sm leading-7 my-5">Date Received</p>
                 </div>
               </div>
               <div>
                 {request.shipment.inventoryItems.map((rex) => (
                   <div className="inline-flex flex-col space-y-1.5 items-start justify-start">
-                    <p className="text-sm leading-7 text-black text-opacity-50">
-                      {rex.storageFacilityId}
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
+                      {rex?.storageFacilityId}
                     </p>
-                    <p className="text-sm leading-7 text-black text-opacity-50">
-                      {rex.storageFacility.storageFacilityName}
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
+                      {rex.storageFacility?.storageFacilityName}
                     </p>
-                    <p className="text-sm leading-7 text-black text-opacity-50">
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
                       {format(
                         new Date(request.dateCreated),
                         "EEE. do MMMM yyyy, hh:mma"
                       )}
                     </p>
-                    <p className="text-sm leading-7 text-yellow-500">
-                      {request.status}
+                    <p className="text-[13px] leading-7 text-yellow-500 my-5">
+                      {request?.status}
                     </p>
-                    <p className="text-sm leading-7 text-black text-opacity-50">
-                      {rex.deliveryDetails.pickupLocation}
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
+                      {rex.deliveryDetails?.pickupLocation}
                     </p>
-                    <p className="text-sm leading-7 text-black text-opacity-50">
-                      {rex.deliveryDetails.rendaPickUpDetails.pickupContactName}
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
+                      {
+                        rex.deliveryDetails?.rendaPickUpDetails
+                          ?.pickupContactName
+                      }
                       ,{" "}
                       {
                         rex.deliveryDetails.rendaPickUpDetails
-                          .pickupContactNumber
+                          ?.pickupContactNumber
                       }
                     </p>
-                    <p className="text-sm leading-7 text-black text-opacity-50">
-                      {rex.deliveryDetails.totalNumberOfItems}
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
+                      {rex?.deliveryDetails?.totalNumberOfItems}
                     </p>
-                    <p className="text-sm leading-7 text-black text-opacity-50">
-                      {rex.deliveryDetails.totalValue}
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
+                      {rex.deliveryDetails?.totalValue}
                     </p>
-                    <p className="text-sm leading-7 text-black text-opacity-50">
+                    <p className="text-sm leading-7 text-black text-opacity-50 my-5">
                       {format(
-                        new Date(request.dateCreated),
+                        new Date(request?.dateCreated),
                         "EEE. do MMMM yyyy, hh:mma"
                       )}
                     </p>
@@ -171,15 +176,16 @@ export default function InboundDetail() {
               </div>
             </div>
             <div>
-              <div className="inline-flex items-center justify-center px-2.5 py-1.5 bg-blue-900 border rounded-sm">
+              {/* <div className="inline-flex items-center justify-center px-2.5 py-1.5 bg-blue-900 border rounded-sm">
                 <p className=" text-center text-white">Download</p>
-              </div>
+              </div> */}
+              <Button title="Download" size="sm" />
             </div>
           </div>
           <div className="m-5">
             <div className="rounded-lg border border-black border-opacity-25">
               <div
-                className="bg-blue-900 flex  items-center"
+                className="bg-primary flex  items-center"
                 style={{ height: 40 }}
               >
                 <p className="text-white pl-3 text-center">Items</p>
@@ -227,7 +233,7 @@ export default function InboundDetail() {
                     Previous
                   </p>
                 </div>
-                <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 bg-blue-900 rounded-sm">
+                <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 bg-primary rounded-sm">
                   <p className=" font-medium text-center text-white">1</p>
                 </div>
                 <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
