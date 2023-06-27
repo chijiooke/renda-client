@@ -24,9 +24,8 @@ enum DeliveryTimeEnum {
 const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
 
 function ExternalOrderDetailsModal({ show, close }: Props) {
-  const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>(
-    DeliveryTimeEnum.IMMEDIATELY
-  );
+  const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>();
+  // DeliveryTimeEnum.IMMEDIATELY
 
   const itemsPlaceholder = {
     nameOfItem: "",
@@ -379,9 +378,15 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                           name="delivery_time"
                           value={dtime}
                           checked={deliveryTime === dtime}
-                          onChange={(e) =>
-                            setDliveryTime(e.target.value as DeliveryTimeEnum)
-                          }
+                          onChange={(e) => {
+                            setDliveryTime(e.target.value as DeliveryTimeEnum);
+                            formik.setFieldValue(
+                              "deliveryDate",
+                              e.target.value === DeliveryTimeEnum.IMMEDIATELY
+                                ? new Date()
+                                : null
+                            );
+                          }}
                         />
                         {capitalizeText(dtime.replace("_", " "))}
                       </label>
@@ -403,29 +408,18 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
             </div>
           </div>
           <div className=" w-full">
-            {/* <Button
+            <Button
               title="Book Now"
               className="w-full"
-              handleClick={(e) => {
-                e.preventDefault();
+              handleClick={() => {
+                console.log("hello");
                 formik.handleSubmit();
               }}
               loading={isSubmitting}
               disabled={isSubmitting}
-              // type="button"
-            /> */}
-            <button
               type="button"
-              onClick={(e) => {
-                console.log("hello");
-                formik.handleSubmit();
-              }}
-            >
-              Submit
-            </button>
+            />
           </div>
-
-          {/* </div> */}
         </div>
       </form>
     </div>

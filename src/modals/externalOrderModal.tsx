@@ -113,7 +113,7 @@ function ExternalOrderModal({ show, data, close, onSubmit }: Props) {
               <div className=" w-full flex justify-center">
                 <Button
                   title="Create order"
-                  type="primary"
+                  variant="primary"
                   handleClick={handleSubmit}
                 />
               </div>

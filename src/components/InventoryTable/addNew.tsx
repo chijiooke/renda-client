@@ -157,7 +157,7 @@ function AddForm() {
                 title="Delete all"
                 size="sm"
                 className="w-fit bg-red-600 px-5 rounded-md"
-                type="danger"
+                variant="danger"
               />
             </span>
 

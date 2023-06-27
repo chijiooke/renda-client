@@ -127,7 +127,7 @@ function CreateOrderModal({
             <div className=" w-full flex justify-center">
               <Button
                 title="Create order"
-                type="primary"
+                variant="primary"
                 handleClick={handleSubmit}
               />
             </div>

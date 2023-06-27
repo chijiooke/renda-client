@@ -83,7 +83,7 @@ const ForgotPassword = () => {
           <div className="flex justify-center gap-5 mt-10 max-w-2xl">
             <Button
               title="Back to Login"
-              type="secondary"
+              variant="secondary"
               className="w-[30%]"
               handleClick={() => router.push(AuthRoutes.LOGIN)}
             />
