@@ -6,19 +6,21 @@ type Props = {
   handleClick?: any;
   title: string;
   className?: string;
-  type?: "primary" | "secondary" | "danger";
+  variant?: "primary" | "secondary" | "danger";
   loading?: boolean;
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
+  type?: "button" | "submit";
 };
 const Button: FC<Props> = ({
   title = "",
   loading = false,
-  type = "primary",
+  variant = "primary",
   className = "",
   handleClick,
   size = "md",
   disabled = false,
+  type = "submit",
 }) => {
   return (
     <button
@@ -27,23 +29,24 @@ const Button: FC<Props> = ({
         {
           "p-5": size == "md",
           "p-3": size === "sm",
-          "bg-primary ": type == "primary",
+          "bg-primary ": variant == "primary",
           "bg-[#8DA9BF]": disabled,
           "rounded-lg": size == "sm",
           "cursor-pointer": !disabled,
           "cursor-not-allowed opacity-40": disabled,
-          "bg-red-600 border-red-600": type == "danger",
+          "bg-red-600 border-red-600": variant == "danger",
         },
         className
       )}
       onClick={handleClick}
       disabled={disabled}
+      type={type}
     >
       <div className="flex justify-center">
         <p
           className={cn("font-bold ", {
-            "text-white  ": type === "primary",
-            "text-primary": type === "secondary",
+            "text-white  ": variant === "primary",
+            "text-primary": variant === "secondary",
             "text-[15px]": size === "sm",
           })}
         >

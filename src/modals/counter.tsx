@@ -96,7 +96,7 @@ const Counter = ({ skuId }: ItemSkuIdRowProps) => {
         facilityId={facilityId}
       />
       <div className="flex gap-1">
-        <Button title="Create Order" type="secondary" 
+        <Button title="Create Order" variant="secondary" 
         size="sm"/>
         <div className="flex justify-center items-center">
           <div

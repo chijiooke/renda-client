@@ -1,6 +1,6 @@
 import { Button, Input, PhoneNumberInput, Select } from "@/components";
 import cn from "classnames";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { DataType } from "@/_tabs/ordermgt/types/external-order-types";
 import { Minus, Plus } from "@/icons";
@@ -24,9 +24,8 @@ enum DeliveryTimeEnum {
 const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
 
 function ExternalOrderDetailsModal({ show, close }: Props) {
-  const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>(
-    DeliveryTimeEnum.IMMEDIATELY
-  );
+  const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>();
+  // DeliveryTimeEnum.IMMEDIATELY
 
   const itemsPlaceholder = {
     nameOfItem: "",
@@ -60,11 +59,11 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     initialValues: {
       recipientName: "",
       recipientPhoneNumber: "",
-      pickUpLGA: "",
+      pickUpLGA: null,
       pickUpAddress: "",
       contactName: "",
       contactPhoneNumber: "",
-      deliveryLGA: "",
+      deliveryLGA: null,
       deliveryAddress: "",
       deliveryDate: new Date().toISOString(),
     },
@@ -125,10 +124,14 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     }
   };
 
+  useEffect(() => {
+    formik.validateForm();
+  }, []);
+
   return show ? (
     <div className="modal">
       <form
-        className="rounded bg-white p-5 w-[40vw] max-h-36 h-36"
+        className="rounded bg-white  w-[40vw] max-h-36 h-36"
         style={{ height: "85vh", width: "60rem" }}
       >
         <div className="relative flex flex-column border-box h-full">
@@ -143,7 +146,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
             Create Order
           </p>
           <div
-            className="grid gap-6 mt-4 mb-6"
+            className="grid gap-6 mt-8 mb-6 p-10"
             style={{
               height: "100%",
               overflowY: "scroll",
@@ -181,7 +184,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   placeholder="Select Pick up LGA"
                   options={location}
                   handleChange={formik.handleChange("pickUpLGA")}
-                  value={formik.values.pickUpLGA}
+                  value={formik.values.pickUpLGA || ""}
                   caption={formikCaption("pickUpLGA", formik)}
                   error={formikError("pickUpLGA", formik)}
                 />
@@ -224,7 +227,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   placeholder="Select Delivery LGA"
                   options={location}
                   handleChange={formik.handleChange("deliveryLGA")}
-                  value={formik.values.deliveryLGA}
+                  value={formik.values.deliveryLGA || ""}
                   caption={formikCaption("deliveryLocation", formik)}
                   error={formikError("deliveryLocation", formik)}
                 />
@@ -306,6 +309,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     {/* <div className="w-full flex align-en"> */}
                     <div className="flex gap-2 mt-8  justify-end ">
                       <button
+                        type="button"
                         onClick={() => {
                           handleDeleteButton(index);
                         }}
@@ -322,6 +326,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
 
                       {index === items.length - 1 && (
                         <button
+                          type="button"
                           className="flex gap-2 items-center justify-center rounded-lg"
                           style={{
                             backgroundColor: "#008753",
@@ -379,9 +384,15 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                           name="delivery_time"
                           value={dtime}
                           checked={deliveryTime === dtime}
-                          onChange={(e) =>
-                            setDliveryTime(e.target.value as DeliveryTimeEnum)
-                          }
+                          onChange={(e) => {
+                            setDliveryTime(e.target.value as DeliveryTimeEnum);
+                            formik.setFieldValue(
+                              "deliveryDate",
+                              e.target.value === DeliveryTimeEnum.IMMEDIATELY
+                                ? new Date()
+                                : null
+                            );
+                          }}
                         />
                         {capitalizeText(dtime.replace("_", " "))}
                       </label>
@@ -390,42 +401,36 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 </div>
               </Layout>
               {deliveryTime === DeliveryTimeEnum.SET_DATE && (
-                <Input
-                  type="date"
-                  name="deliveryDate"
-                  className="flex align-self-end w-100 "
-                  handleChange={formik.handleChange}
-                  value={formik.values.deliveryDate || new Date().toISOString()}
-                  caption={formikCaption("deliveryDate", formik)}
-                  error={formikError("deliveryDate", formik)}
-                />
+                <div className="w-90">
+                  {" "}
+                  <Input
+                    type="date"
+                    name="deliveryDate"
+                    className=""
+                    handleChange={formik.handleChange}
+                    value={
+                      formik.values.deliveryDate || new Date().toISOString()
+                    }
+                    caption={formikCaption("deliveryDate", formik)}
+                    error={formikError("deliveryDate", formik)}
+                  />
+                </div>
               )}
             </div>
           </div>
-          <div className=" w-full">
-            {/* <Button
+          <div className=" w-full px-10 py-5">
+            <Button
               title="Book Now"
               className="w-full"
-              handleClick={(e) => {
-                e.preventDefault();
-                formik.handleSubmit();
-              }}
-              loading={isSubmitting}
-              disabled={isSubmitting}
-              // type="button"
-            /> */}
-            <button
-              type="button"
-              onClick={(e) => {
+              handleClick={() => {
                 console.log("hello");
                 formik.handleSubmit();
               }}
-            >
-              Submit
-            </button>
+              loading={isSubmitting}
+              disabled={isSubmitting || !formik.isValid}
+              type="button"
+            />
           </div>
-
-          {/* </div> */}
         </div>
       </form>
     </div>

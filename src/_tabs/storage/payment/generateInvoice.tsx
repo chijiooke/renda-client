@@ -89,7 +89,7 @@ const GenerateInvoice = () => {
         </div>
       </div>
       <div className="flex gap-5 my-5">
-        <Button title="Download" type="secondary" />
+        <Button title="Download" variant="secondary" />
         <Button title="Proceed to Book with invoice" />
       </div>
     </div>
