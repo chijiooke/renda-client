@@ -113,7 +113,8 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
       // });
 
       console.log({ ...value, items: items });
-      // close();
+      formik.resetForm()
+      close();
     } catch (error) {
       setError(
         (error as any).response.data.errorMessage ||
