@@ -1,9 +1,16 @@
-import { Button, Input, Select } from "@/components";
+import { Button, Input, PhoneNumberInput, Select } from "@/components";
 import cn from "classnames";
 import { ReactNode, useState } from "react";
 
+import { DataType } from "@/_tabs/ordermgt/types/external-order-types";
 import { Minus, Plus } from "@/icons";
+import { formikCaption, formikError } from "@/utils";
 import { capitalizeText } from "@/utils/capitalizeText";
+import { IconButton } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 type Props = {
   show: boolean;
@@ -17,22 +24,17 @@ enum DeliveryTimeEnum {
 const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
 
 function ExternalOrderDetailsModal({ show, close }: Props) {
-  const [data, setdata] = useState({});
-
   const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>(
     DeliveryTimeEnum.IMMEDIATELY
   );
 
-  type DataType = {
-    nameOfItem: string;
-    dimension: string;
-    quantity: string;
-    unitPrice: string;
+  const itemsPlaceholder = {
+    nameOfItem: "",
+    dimension: "",
+    quantity: "",
+    unitPrice: "",
   };
-
-  const [items, setitems] = useState<DataType[]>([
-    { nameOfItem: "", dimension: "", quantity: "", unitPrice: "" },
-  ]);
+  const [items, setitems] = useState<DataType[]>([itemsPlaceholder]);
 
   const handleFormChange = (
     index: number,
@@ -43,105 +45,266 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     setitems(data);
   };
   const handleAddButton = () => {
-    setitems([
-      ...items,
-      { nameOfItem: "", dimension: "", quantity: "", unitPrice: "" },
-    ]);
+    setitems([...items, itemsPlaceholder]);
   };
 
   const handleDeleteButton = (index: number) => {
-    setitems(items.filter((item, ind) => index !== ind));
+    const deletedItems = items.filter((item, ind) => index !== ind);
+    setitems(!!deletedItems.length ? [...deletedItems] : [itemsPlaceholder]);
+  };
+
+  const [isSubmitting, setisSubmitting] = useState(false);
+  const [error, setError] = useState<string>("");
+
+  const formik = useFormik({
+    initialValues: {
+      recipientName: "",
+      recipientPhoneNumber: "",
+      pickUpLGA: "",
+      pickUpAddress: "",
+      contactName: "",
+      contactPhoneNumber: "",
+      deliveryLGA: "",
+      deliveryAddress: "",
+      deliveryDate: new Date().toISOString(),
+    },
+    validationSchema: Yup.object({
+      recipientName: Yup.string().required("Kindly fill in your name"),
+      recipientPhoneNumber: Yup.string().required(
+        "Kindly fill in your phone number"
+      ),
+      pickUpLGA: Yup.string(),
+      pickUpAddress: Yup.string().required("this is a required field"),
+      contactName: Yup.string().required("this is a required field"),
+      contactPhoneNumber: Yup.string().required("this is a required field"),
+      deliveryLGA: Yup.string(),
+      deliveryAddress: Yup.string(),
+      deliveryDate: Yup.date(),
+    }),
+    onSubmit: ({
+      recipientName,
+      recipientPhoneNumber,
+      pickUpLGA,
+      pickUpAddress,
+      contactName,
+      contactPhoneNumber,
+      deliveryLGA,
+      deliveryDate,
+    }) => {
+      bookOrder({
+        recipientName,
+        recipientPhoneNumber,
+        pickUpLGA,
+        pickUpAddress,
+        contactName,
+        contactPhoneNumber,
+        deliveryLGA,
+        deliveryDate,
+      });
+    },
+  });
+
+  const bookOrder = async (value: any) => {
+    setisSubmitting(true);
+    setError("");
+    try {
+      // const { data: response } = await axios.post(baseURL + "orderitems", {
+      //   ...value,
+      //   items,
+      // });
+
+      console.log({ ...value, items: items });
+      // close();
+    } catch (error) {
+      setError(
+        (error as any).response.data.errorMessage ||
+          (error as any).response.data.data
+      );
+    } finally {
+      setisSubmitting(false);
+    }
   };
 
   return show ? (
     <div className="modal">
-      <div className="rounded bg-white p-10">
-        <div className="relative flex ">
-          <div
-            className="relative w-full h-full p-4"
-            // style={{ width: "600px" }}
-          >
-            <p
-              onClick={() => close()}
-              className="absolute right-0 top-0 scale-125 cursor-pointer"
-            >
-              X
-            </p>
-            <div className="grid gap-6">
-              <p className="text-center text-primary font-extrabold text-[18px]">
-                Create Order
-              </p>
+      <form
+        className="rounded bg-white p-5 w-[40vw] max-h-36 h-36"
+        style={{ height: "85vh", width: "60rem" }}
+      >
+        <div className="relative flex flex-column border-box h-full">
+          {/* <div className="relative w-full h-full"> */}
 
-              <div className="grid gap-9">
-                <Layout option="Recipient's Name" center={true}>
-                  <Input
-                    className="h-10"
-                    name=""
-                    placeholder="Enter recipient's name"
-                    type="text"
-                    handleChange={() => {}}
-                  />
-                </Layout>
-                <Layout option="Recipient's phone number" center={true}>
-                  <Input
-                    className="h-10"
-                    name=""
-                    placeholder="Enter recipient's phone number"
-                    type="text"
-                  />
-                </Layout>
-                <Layout option="Pick up LGA" center={true}>
-                  <Select
-                    name=""
-                    placeholder="Select Pick up LGA"
-                    options={location}
-                  />
-                </Layout>
-                <Layout option="Pick up address" center={true}>
-                  <Input
-                    className="h-10"
-                    name=""
-                    placeholder="Pick up address"
-                    type="text"
-                  />
-                </Layout>
-                <Layout option="Pick up contact" center={true}>
-                  <Input
-                    className="h-10"
-                    name=""
-                    placeholder="Enter Pick up contact"
-                    type="text"
-                  />
-                </Layout>
-                <Layout option="Contact Phone no." center={true}>
-                  <Input
-                    className="h-10"
-                    name=""
-                    placeholder="Enter Contact Phone no."
-                    type="number"
-                  />
-                </Layout>
-                <Layout option="Delivery LGA" center={true}>
-                  <Select
-                    name=""
-                    placeholder="Select Delivery LGA"
-                    options={location}
-                  />
-                </Layout>
-                <Layout option="Delivery address" center={true}>
-                  <Input
-                    className="h-10"
-                    name=""
-                    placeholder="Delivery address"
-                    type="text"
-                  />
-                </Layout>
+          <div className="w-full flex justify-end">
+            <IconButton onClick={() => close()}>
+              <CloseRoundedIcon />
+            </IconButton>
+          </div>
+          <p className="text-center text-primary font-extrabold text-[18px]">
+            Create Order
+          </p>
+          <div
+            className="grid gap-6 mt-4 mb-6"
+            style={{
+              height: "100%",
+              overflowY: "scroll",
+              boxSizing: "border-box",
+            }}
+          >
+            <div className="grid gap-9">
+              <Layout option="Recipient's Name" center={true}>
+                <Input
+                  className="h-10"
+                  name="recipientName"
+                  placeholder="Enter recipient's name"
+                  type="text"
+                  handleChange={formik.handleChange}
+                  value={formik.values.recipientName}
+                  caption={formikCaption("recipientName", formik)}
+                  error={formikError("recipientName", formik)}
+                />
+              </Layout>
+              <Layout option="Recipient's phone number" center={true}>
+                <Input
+                  className="h-10"
+                  name="recipientPhoneNumber"
+                  placeholder="Enter recipient's phone number"
+                  type="text"
+                  handleChange={formik.handleChange}
+                  value={formik.values.recipientPhoneNumber}
+                  caption={formikCaption("recipientPhoneNumber", formik)}
+                  error={formikError("recipientPhoneNumber", formik)}
+                />
+              </Layout>
+              <Layout option="Pick up LGA" center={true}>
+                <Select
+                  name="pickUpLGA"
+                  placeholder="Select Pick up LGA"
+                  options={location}
+                  handleChange={formik.handleChange("pickUpLGA")}
+                  value={formik.values.pickUpLGA}
+                  caption={formikCaption("pickUpLGA", formik)}
+                  error={formikError("pickUpLGA", formik)}
+                />
+              </Layout>
+              <Layout option="Pick up address" center={true}>
+                <Input
+                  className="h-10"
+                  name="pickUpAddress"
+                  placeholder="Pick up address"
+                  type="text"
+                  handleChange={formik.handleChange}
+                  value={formik.values.pickUpAddress}
+                  caption={formikCaption("pickUpAddress", formik)}
+                  error={formikError("pickUpAddress", formik)}
+                />
+              </Layout>
+              <Layout option="Pick up contact" center={true}>
+                <Input
+                  className="h-10"
+                  name="contactName"
+                  placeholder="Enter Pick up contact"
+                  type="text"
+                  handleChange={formik.handleChange}
+                  value={formik.values.contactName}
+                  caption={formikCaption("contactName", formik)}
+                  error={formikError("contactName", formik)}
+                />
+              </Layout>
+              <Layout option="Contact Phone no." center={true}>
+                <PhoneNumberInput
+                  handleChange={formik.handleChange("contactPhoneNumber")}
+                  value={formik.values.contactPhoneNumber}
+                  caption={formikCaption("contactPhoneNumber", formik)}
+                  error={formikError("contactPhoneNumber", formik)}
+                />
+              </Layout>
+              <Layout option="Delivery LGA" center={true}>
+                <Select
+                  name=""
+                  placeholder="Select Delivery LGA"
+                  options={location}
+                  handleChange={formik.handleChange("deliveryLGA")}
+                  value={formik.values.deliveryLGA}
+                  caption={formikCaption("deliveryLocation", formik)}
+                  error={formikError("deliveryLocation", formik)}
+                />
+              </Layout>
+              <Layout option="Delivery address" center={true}>
+                <Input
+                  className="h-10"
+                  name="deliveryAddress"
+                  placeholder="Delivery address"
+                  type="text"
+                  handleChange={formik.handleChange}
+                  value={formik.values.deliveryAddress}
+                  caption={formikCaption("deliveryLocation", formik)}
+                  error={formikError("deliveryLocation", formik)}
+                />
+              </Layout>{" "}
+              <div
+                className="boarder-2 rounded  mt-4"
+                style={{ backgroundColor: "#0000001a" }}
+              >
                 {items.map((item, index) => (
-                  <div
-                    className="boarder-2 rounded grid justify-center"
-                    style={{ backgroundColor: "#0000001a" }}
-                  >
-                    <div className="flex gap-2 my-3 mx-3 justify-end">
+                  <div className=" mt-2 p-2" key={index}>
+                    <div className="flex gap-2 mb-9">
+                      {" "}
+                      <Input
+                        className="h-10"
+                        name=""
+                        placeholder="Name of Item"
+                        type="text"
+                        value={item.nameOfItem}
+                        handleChange={(e) =>
+                          handleFormChange(index, {
+                            key: "nameOfItem",
+                            value: e.target.value,
+                          })
+                        }
+                      />
+                      <Input
+                        className="h-10"
+                        name=""
+                        placeholder="Dimension"
+                        type="text"
+                        value={item.dimension}
+                        handleChange={(e) =>
+                          handleFormChange(index, {
+                            key: "dimension",
+                            value: e.target.value,
+                          })
+                        }
+                      />
+                      <Input
+                        className="h-10"
+                        name=""
+                        placeholder="Delivery address"
+                        type="text"
+                        value={item.unitPrice}
+                        handleChange={(e) =>
+                          handleFormChange(index, {
+                            key: "unitPrice",
+                            value: e.target.value,
+                          })
+                        }
+                      />
+                      <Input
+                        className="h-10"
+                        name=""
+                        placeholder="Delivery address"
+                        type="text"
+                        value={item.quantity}
+                        handleChange={(e) =>
+                          handleFormChange(index, {
+                            key: "quantity",
+                            value: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+
+                    {/* <div className="w-full flex align-en"> */}
+                    <div className="flex gap-2 mt-8  justify-end ">
                       <button
                         onClick={() => {
                           handleDeleteButton(index);
@@ -156,86 +319,115 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                         <Minus />
                         <p className="text-white">Delete</p>
                       </button>
-                      <button
-                        className="flex gap-2 items-center justify-center rounded-lg"
-                        style={{ backgroundColor: "#008753", width: "80px" }}
-                        onClick={handleAddButton}
-                      >
-                        <Plus />
-                        <p className="text-white ">Add</p>
-                      </button>
+
+                      {index === items.length - 1 && (
+                        <button
+                          className="flex gap-2 items-center justify-center rounded-lg"
+                          style={{
+                            backgroundColor: "#008753",
+                            width: "80px",
+                          }}
+                          onClick={handleAddButton}
+                        >
+                          <Plus />
+                          <p className="text-white ">Add</p>
+                        </button>
+                      )}
                     </div>
+                    {/* </div> */}
                   </div>
                 ))}
-
-                <Layout option="Payment Mode" center={true}>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div
-                      className="flex gap-4 border-2 rounded items-center "
-                      style={{ backgroundColor: "#F5F5F5", height: "50px" }}
-                    >
-                      <div className="mx-3 mt-1">
-                        <input type="checkbox" className="pl-3 scale-150" />
-                      </div>
-                      <p>Pay on Delivery</p>
-                    </div>
-
-                    <div
-                      className="flex gap-4 border-2 rounded  h-40 items-center"
-                      style={{ backgroundColor: "#F5F5F5", height: "50px" }}
-                    >
-                      <div className="mx-3 mt-1 ">
-                        <input type="checkbox" className="pl-3 scale-150" />
-                      </div>
-                      <p> Paid</p>
-                    </div>
-                  </div>
-                </Layout>
-                <Layout option="Set Delivery Time" center={true}>
+              </div>
+              <Layout option="Payment Mode" center={true}>
+                <div className="grid grid-cols-2 gap-4">
                   <div
-                    style={{
-                      display: "flex",
-                      gap: "0.5rem",
-                      alignItems: "center",
-                    }}
+                    className="flex gap-4 border-2 rounded items-center "
+                    style={{ backgroundColor: "#F5F5F5", height: "50px" }}
                   >
-                    {Object.keys(DeliveryTimeEnum).map((dtime) => (
-                      <>
-                         {" "}
-                        <label htmlFor={dtime} className="flex gap-1">
-                          <input
-                            type="radio"
-                            id={dtime}
-                            name="delivery_time"
-                            value={dtime}
-                            checked={deliveryTime === dtime}
-                            onChange={(e) =>
-                              setDliveryTime(e.target.value as DeliveryTimeEnum)
-                            }
-                          />
-                          {capitalizeText(dtime.replace("_", " "))}
-                        </label>
-                      </>
-                    ))}
+                    <div className="mx-3 mt-1">
+                      <input type="checkbox" className="pl-3 scale-150" />
+                    </div>
+                    <p>Pay on Delivery</p>
                   </div>
-                </Layout>
 
-                {deliveryTime === DeliveryTimeEnum.SET_DATE && (
-                  <Input type="date" className="flex align-self-end w-100 " />
-                )}
-              </div>
-
-              <div className=" w-full">
-                <Button
-                  title="Book Now"
-                  className="w-full"
-                  handleClick={() => close(data)}
+                  <div
+                    className="flex gap-4 border-2 rounded  h-40 items-center"
+                    style={{ backgroundColor: "#F5F5F5", height: "50px" }}
+                  >
+                    <div className="mx-3 mt-1 ">
+                      <input type="checkbox" className="pl-3 scale-150" />
+                    </div>
+                    <p> Paid</p>
+                  </div>
+                </div>
+              </Layout>
+              <Layout option="Set Delivery Time" center={true}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "0.5rem",
+                    alignItems: "center",
+                  }}
+                >
+                  {Object.keys(DeliveryTimeEnum).map((dtime, ind) => (
+                    <div key={ind}>
+                       {" "}
+                      <label htmlFor={dtime} className="flex gap-1">
+                        <input
+                          type="radio"
+                          id={dtime}
+                          name="delivery_time"
+                          value={dtime}
+                          checked={deliveryTime === dtime}
+                          onChange={(e) =>
+                            setDliveryTime(e.target.value as DeliveryTimeEnum)
+                          }
+                        />
+                        {capitalizeText(dtime.replace("_", " "))}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </Layout>
+              {deliveryTime === DeliveryTimeEnum.SET_DATE && (
+                <Input
+                  type="date"
+                  name="deliveryDate"
+                  className="flex align-self-end w-100 "
+                  handleChange={formik.handleChange}
+                  value={formik.values.deliveryDate || new Date().toISOString()}
+                  caption={formikCaption("deliveryDate", formik)}
+                  error={formikError("deliveryDate", formik)}
                 />
-              </div>
+              )}
             </div>
           </div>
+          <div className=" w-full">
+            {/* <Button
+              title="Book Now"
+              className="w-full"
+              handleClick={(e) => {
+                e.preventDefault();
+                formik.handleSubmit();
+              }}
+              loading={isSubmitting}
+              disabled={isSubmitting}
+              // type="button"
+            /> */}
+            <button
+              type="button"
+              onClick={(e) => {
+                console.log("hello");
+                formik.handleSubmit();
+              }}
+            >
+              Submit
+            </button>
+          </div>
+
+          {/* </div> */}
         </div>
-      </div>
+      </form>
     </div>
   ) : null;
 }
