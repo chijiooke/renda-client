@@ -127,7 +127,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
   return show ? (
     <div className="modal">
       <form
-        className="rounded bg-white p-5 w-[40vw] max-h-36 h-36"
+        className="rounded bg-white  w-[40vw] max-h-36 h-36"
         style={{ height: "85vh", width: "60rem" }}
       >
         <div className="relative flex flex-column border-box h-full">
@@ -142,7 +142,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
             Create Order
           </p>
           <div
-            className="grid gap-6 mt-4 mb-6"
+            className="grid gap-6 mt-8 mb-6 p-10"
             style={{
               height: "100%",
               overflowY: "scroll",
@@ -395,19 +395,19 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 </div>
               </Layout>
               {deliveryTime === DeliveryTimeEnum.SET_DATE && (
-                <Input
+               <div className="w-90"> <Input
                   type="date"
                   name="deliveryDate"
-                  className="flex align-self-end w-100 "
+                  className=""
                   handleChange={formik.handleChange}
                   value={formik.values.deliveryDate || new Date().toISOString()}
                   caption={formikCaption("deliveryDate", formik)}
                   error={formikError("deliveryDate", formik)}
-                />
+                /></div>
               )}
             </div>
           </div>
-          <div className=" w-full">
+          <div className=" w-full px-10 py-5">
             <Button
               title="Book Now"
               className="w-full"
@@ -416,7 +416,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 formik.handleSubmit();
               }}
               loading={isSubmitting}
-              disabled={isSubmitting}
+              disabled={isSubmitting || !formik.isValid}
               type="button"
             />
           </div>
