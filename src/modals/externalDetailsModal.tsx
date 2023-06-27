@@ -1,6 +1,6 @@
 import { Button, Input, PhoneNumberInput, Select } from "@/components";
 import cn from "classnames";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import { DataType } from "@/_tabs/ordermgt/types/external-order-types";
 import { Minus, Plus } from "@/icons";
@@ -59,11 +59,11 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     initialValues: {
       recipientName: "",
       recipientPhoneNumber: "",
-      pickUpLGA: "",
+      pickUpLGA: null,
       pickUpAddress: "",
       contactName: "",
       contactPhoneNumber: "",
-      deliveryLGA: "",
+      deliveryLGA: null,
       deliveryAddress: "",
       deliveryDate: new Date().toISOString(),
     },
@@ -124,6 +124,10 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     }
   };
 
+  useEffect(() => {
+    formik.validateForm();
+  }, []);
+
   return show ? (
     <div className="modal">
       <form
@@ -180,7 +184,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   placeholder="Select Pick up LGA"
                   options={location}
                   handleChange={formik.handleChange("pickUpLGA")}
-                  value={formik.values.pickUpLGA}
+                  value={formik.values.pickUpLGA ||""}
                   caption={formikCaption("pickUpLGA", formik)}
                   error={formikError("pickUpLGA", formik)}
                 />
@@ -223,7 +227,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   placeholder="Select Delivery LGA"
                   options={location}
                   handleChange={formik.handleChange("deliveryLGA")}
-                  value={formik.values.deliveryLGA}
+                  value={formik.values.deliveryLGA || ""}
                   caption={formikCaption("deliveryLocation", formik)}
                   error={formikError("deliveryLocation", formik)}
                 />
@@ -395,15 +399,20 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 </div>
               </Layout>
               {deliveryTime === DeliveryTimeEnum.SET_DATE && (
-               <div className="w-90"> <Input
-                  type="date"
-                  name="deliveryDate"
-                  className=""
-                  handleChange={formik.handleChange}
-                  value={formik.values.deliveryDate || new Date().toISOString()}
-                  caption={formikCaption("deliveryDate", formik)}
-                  error={formikError("deliveryDate", formik)}
-                /></div>
+                <div className="w-90">
+                  {" "}
+                  <Input
+                    type="date"
+                    name="deliveryDate"
+                    className=""
+                    handleChange={formik.handleChange}
+                    value={
+                      formik.values.deliveryDate || new Date().toISOString()
+                    }
+                    caption={formikCaption("deliveryDate", formik)}
+                    error={formikError("deliveryDate", formik)}
+                  />
+                </div>
               )}
             </div>
           </div>
