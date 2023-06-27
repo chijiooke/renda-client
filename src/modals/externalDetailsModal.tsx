@@ -6,7 +6,15 @@ import { DataType } from "@/_tabs/ordermgt/types/external-order-types";
 import { Minus, Plus } from "@/icons";
 import { formikCaption, formikError } from "@/utils";
 import { capitalizeText } from "@/utils/capitalizeText";
-import { IconButton } from "@mui/material";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import {
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -61,6 +69,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
       recipientPhoneNumber: "",
       pickUpLGA: null,
       pickUpAddress: "",
+      paymentType: "",
       contactName: "",
       contactPhoneNumber: "",
       deliveryLGA: null,
@@ -79,6 +88,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
       deliveryLGA: Yup.string(),
       deliveryAddress: Yup.string(),
       deliveryDate: Yup.date(),
+      paymentType: Yup.string(),
     }),
     onSubmit: ({
       recipientName,
@@ -113,7 +123,8 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
       // });
 
       console.log({ ...value, items: items });
-      // close();
+      formik.resetForm();
+      close();
     } catch (error) {
       setError(
         (error as any).response.data.errorMessage ||
@@ -344,7 +355,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 ))}
               </div>
               <Layout option="Payment Mode" center={true}>
-                <div className="grid grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-2 gap-4">
                   <div
                     className="flex gap-4 border-2 rounded items-center "
                     style={{ backgroundColor: "#F5F5F5", height: "50px" }}
@@ -364,7 +375,39 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     </div>
                     <p> Paid</p>
                   </div>
-                </div>
+                </div> */}
+
+                <FormControl>
+                  <RadioGroup
+                    onChange={(e) =>
+                      formik.setFieldValue("paymentType", e.target.value)
+                    }
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="row-radio-buttons-group"
+                  >
+                    <FormControlLabel
+                      value="paid"
+                      control={
+                        <Radio
+                          icon={<CheckBoxOutlineBlankIcon />}
+                          checkedIcon={<CheckBoxIcon />}
+                        />
+                      }
+                      label="paid"
+                    />
+                    <FormControlLabel
+                      value="payOnDelivery"
+                      control={
+                        <Radio
+                          icon={<CheckBoxOutlineBlankIcon />}
+                          checkedIcon={<CheckBoxIcon />}
+                        />
+                      }
+                      label="payOnDelivery"
+                    />
+                  </RadioGroup>
+                </FormControl>
               </Layout>
               <Layout option="Set Delivery Time" center={true}>
                 <div
