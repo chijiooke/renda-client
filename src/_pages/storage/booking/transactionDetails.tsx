@@ -38,15 +38,6 @@ const TransactionDetails = ({ data }: { data: any }) => {
             <p>N{formatCurrency(+t.amount)} </p>
           </div>
         ))}
-
-        {/*  <div className="grid grid-cols-8 justify-evenly p-5 items-center">
-          <p className="text-red-500">Failed</p>
-          <p>01/07/2023</p>
-          <p>10:25am </p>
-          <p>12-03-2023</p>
-          <p>#RNDT123456</p>
-          <p>N8,000,000 </p>
-        </div> */}
       </div>
     </div>
   );

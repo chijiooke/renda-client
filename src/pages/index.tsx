@@ -9,7 +9,7 @@ import { StoreState } from "@/store/reducer";
 import { baseURL, queryStringBuilder } from "@/utils";
 import axios from "axios";
 import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,71 +47,70 @@ export default function Home() {
   const [loadingDashboardData, setLoadingDashboardData] =
     useState<boolean>(false);
 
-   const userId =  sessionStorage.getItem("userId");
-
-  const getDashboardData = async () => {
+  const getDashboardData = async (userId: string) => {
     setLoadingDashboardData(true);
     // const queryString = ;
     try {
       const { data } = await axios.get(
         baseURL +
-          "api/Dashboard/api/client/analytics" + 
+          "api/Dashboard/api/client/analytics" +
           queryStringBuilder({ customerId: userId })
       );
-      setDashboardData(data.data);
+      setDashboardData(data);
     } catch (error) {
     } finally {
       setLoadingDashboardData(false);
     }
   };
   useEffect(() => {
-    getDashboardData();
+    const userId = sessionStorage.getItem("userId");
+    getDashboardData(userId!);
   }, []);
 
   const data: DateType[] = [
     {
       value: dashboardData?.totalInventoryCost || "0",
-      title: "Total Inventory Cost",
-      type: "secondary",
+      title: "Total Inventory Count",
+      type: "primary",
       className: "bg-[#EBFFF8;] border-[#008753]",
       number: false,
     },
 
     {
       value: dashboardData?.totalOrderedDelivered || "0",
-      title: "total Ordered Delivery",
-      type: "secondary",
+      title: "Total volume of All orders",
+      type: "primary",
       className: "bg-[#DAF6FF] border-[#043E7D]",
       number: false,
     },
 
     {
       value: dashboardData?.valuesOfOrdersProcessed || "0",
-      title: "Values Of Orders Processed",
-      type: "secondary",
+      title: "Total volume of orders dispatched",
+      type: "primary",
       className: "bg-[#FFF6EB] border-[#FF9100]",
       number: false,
     },
 
     {
-      value: dashboardData?.totalOrdersProcessed || "0",
-      title: "total Orders Processed",
-      type: "secondary",
+      value: dashboardData?.totalOrdersProcessed || "N0.00",
+      title: "Total Inventory Value",
+      type: "primary",
       className: "bg-[#FFF6EB] border-[#FF9100]",
       number: false,
     },
     {
-      value: dashboardData?.totalOrdersReturned || "0",
-      title: "Total Orders Returned",
-      type: "secondary",
+      value: dashboardData?.totalOrdersReturned || "N0.00",
+      title: "Total Value of all Orders",
+      type: "primary",
       className: "bg-[#EBFFF8;] border-[#008753]",
       number: false,
     },
 
     {
-      value: dashboardData?.fulfilmentRate || "0",
-      title: "Fulfilment rate",
-      type: "secondary",
+      value: dashboardData?.fulfilmentRate || "N0.00",
+      title: "Total Value of Orders Dispatched",
+      type: "primary",
       className: "bg-[#DAF6FF] border-[#043E7D]",
       number: false,
     },

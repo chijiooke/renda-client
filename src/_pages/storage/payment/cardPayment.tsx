@@ -17,13 +17,13 @@ const CardPayment = () => {
   const config = {
     public_key: "FLWPUBK_TEST-bf4efecf672fbdab00ada453243661e8-X",
     tx_ref: dayjs(Date.now()).format("YYYY/MM/DD"),
-    amount: bookingDetails.amount,
+    amount: bookingDetails?.amount,
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd",
     customer: {
-      email: user.customerBusinessEmailAddress,
-      phone_number: user.customerBusinessPhoneNumber,
-      name: user.customerBusinessName,
+      email: user?.customerBusinessEmailAddress,
+      phone_number: user?.customerBusinessPhoneNumber,
+      name: user?.customerBusinessName,
     },
     customizations: {
       title: "Pay for Renda360 Storage",

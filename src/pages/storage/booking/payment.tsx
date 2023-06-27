@@ -8,11 +8,11 @@ import { DashBoardLayout } from "@/layout";
 import { Tab } from "@headlessui/react";
 
 const tabs = [
-  {
-    icon: DebitCardIcon,
-    title: "Generate Invoice",
-    text: "Pay with your Debit card",
-  },
+  // {
+  //   icon: DebitCardIcon,
+  //   title: "Generate Invoice",
+  //   text: "Pay with your Debit card",
+  // },
   {
     icon: DebitCardIcon,
     title: "Pay  Instantly",
@@ -63,9 +63,9 @@ export default function StoragePayment() {
                 </Tab.List>
               </div>
               <Tab.Panels>
-                <Tab.Panel>
+                {/* <Tab.Panel>
                   <GenerateInvoice />
-                </Tab.Panel>
+                </Tab.Panel> */}
                 <Tab.Panel>
                   <CardPayment />
                 </Tab.Panel>

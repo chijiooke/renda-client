@@ -18,7 +18,7 @@ const OrderCard: FC<Props> = ({
   className,
 }) => {
   const val = !number
-    ? "N" + Number(value).toFixed(2).toLocaleString()
+    ? Number(value).toFixed(0).toLocaleString()
     : percentage
     ? value + "%"
     : "" + value;
