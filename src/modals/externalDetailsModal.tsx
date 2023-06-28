@@ -385,7 +385,9 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
+                    className=" "
                   >
+                    <div></div>
                     <FormControlLabel
                       value="paid"
                       control={
@@ -395,6 +397,12 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                         />
                       }
                       label="paid"
+                      className="flex gap-2 border-2 rounded items-center mr-6 "
+                      style={{
+                        backgroundColor: "#F5F5F5",
+                        height: "50px",
+                        width: "150px",
+                      }}
                     />
                     <FormControlLabel
                       value="payOnDelivery"
@@ -405,6 +413,12 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                         />
                       }
                       label="payOnDelivery"
+                      className="flex gap-2 border-2 rounded items-center ml-6 "
+                      style={{
+                        backgroundColor: "#F5F5F5",
+                        height: "50px",
+                        width: "150px",
+                      }}
                     />
                   </RadioGroup>
                 </FormControl>
