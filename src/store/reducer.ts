@@ -146,7 +146,7 @@ const reducer = (
     case OnboardingAction.SET_INVENTORY_ITEMS:
       return {
         ...state,
-        inventoryItems: [...state.inventoryItems, ...action.payload],
+        inventoryItems: [...action.payload],
       };
     case OnboardingAction.CLEAR_INVENTORY_ITEMS:
       return {

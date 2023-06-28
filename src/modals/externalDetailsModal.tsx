@@ -2,12 +2,15 @@ import { Button, Input, PhoneNumberInput, Select } from "@/components";
 import cn from "classnames";
 import { ReactNode, useEffect, useState } from "react";
 
-import { DataType } from "@/_tabs/ordermgt/types/external-order-types";
+import {
+  IExternalOrderItemType,
+  IExternalOrderType
+} from "@/_tabs/ordermgt/types/external-order-types";
 import { Minus, Plus } from "@/icons";
-import { formikCaption, formikError } from "@/utils";
+import { baseURL, formikCaption, formikError } from "@/utils";
 import { capitalizeText } from "@/utils/capitalizeText";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import {
   FormControl,
   FormControlLabel,
@@ -18,7 +21,9 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+import { hasInValidItems } from "@/_tabs/ordermgt/utils/has-invalid-items";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import axios from "axios";
 
 type Props = {
   show: boolean;
@@ -33,22 +38,26 @@ const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
 
 function ExternalOrderDetailsModal({ show, close }: Props) {
   const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>();
-  // DeliveryTimeEnum.IMMEDIATELY
-
-  const itemsPlaceholder = {
-    nameOfItem: "",
+  const itemsPlaceholder: IExternalOrderItemType = {
+    itemName: "",
     dimension: "",
-    quantity: "",
-    unitPrice: "",
+    quantity: 0,
+    unitPrice: 0,
   };
-  const [items, setitems] = useState<DataType[]>([itemsPlaceholder]);
+
+  const [items, setitems] = useState<IExternalOrderItemType[]>([
+    itemsPlaceholder,
+  ]);
 
   const handleFormChange = (
     index: number,
-    event: { key: string; value: string }
+    eventData: { key: string; value: string | number }
   ) => {
     let data = [...items];
-    data[index][event.key as keyof DataType] = event.value;
+
+     // @ts-ignore
+    data[index][eventData.key as keyof IExternalOrderItemType] =
+      eventData.value as string | number;
     setitems(data);
   };
   const handleAddButton = () => {
@@ -66,10 +75,10 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
   const formik = useFormik({
     initialValues: {
       recipientName: "",
-      recipientPhoneNumber: "",
+      recipientPhoneNo: "",
       pickUpLGA: null,
       pickUpAddress: "",
-      paymentType: "",
+      paymentMode: "",
       contactName: "",
       contactPhoneNumber: "",
       deliveryLGA: null,
@@ -78,51 +87,58 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
     },
     validationSchema: Yup.object({
       recipientName: Yup.string().required("Kindly fill in your name"),
-      recipientPhoneNumber: Yup.string().required(
+      recipientPhoneNo: Yup.string().required(
         "Kindly fill in your phone number"
       ),
       pickUpLGA: Yup.string(),
       pickUpAddress: Yup.string().required("this is a required field"),
       contactName: Yup.string().required("this is a required field"),
       contactPhoneNumber: Yup.string().required("this is a required field"),
-      deliveryLGA: Yup.string(),
-      deliveryAddress: Yup.string(),
-      deliveryDate: Yup.date(),
-      paymentType: Yup.string(),
+      deliveryLGA: Yup.string().required(),
+      deliveryAddress: Yup.string().required(),
+      deliveryDate: Yup.date().required(),
+      paymentMode: Yup.string().required(),
     }),
     onSubmit: ({
       recipientName,
-      recipientPhoneNumber,
+      recipientPhoneNo,
       pickUpLGA,
       pickUpAddress,
       contactName,
       contactPhoneNumber,
       deliveryLGA,
       deliveryDate,
+      paymentMode,
+      deliveryAddress,
     }) => {
-      bookOrder({
+      const data: IExternalOrderType = {
         recipientName,
-        recipientPhoneNumber,
-        pickUpLGA,
+        paymentMode,
+        numberOfItems: items.length,
+        recipientPhoneNo,
         pickUpAddress,
+        pickUpLGA: pickUpLGA || "",
+        deliveryAddress,
+        deliveryLGA: deliveryLGA || "",
+        deliveryDate,
+        orderItems: items,
         contactName,
         contactPhoneNumber,
-        deliveryLGA,
-        deliveryDate,
-      });
+        // customerId
+        // pickUpTime,
+        // dispatchTime
+      };
+
+      bookOrder(data);
     },
   });
 
-  const bookOrder = async (value: any) => {
+  const bookOrder = async (data: IExternalOrderType) => {
     setisSubmitting(true);
     setError("");
-    try {
-      // const { data: response } = await axios.post(baseURL + "orderitems", {
-      //   ...value,
-      //   items,
-      // });
 
-      console.log({ ...value, items: items });
+    try {
+      const { data: response } = await axios.post(baseURL + "api/orders", data);
       formik.resetForm();
       close();
     } catch (error) {
@@ -146,8 +162,6 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
         style={{ height: "85vh", width: "60rem" }}
       >
         <div className="relative flex flex-column border-box h-full">
-          {/* <div className="relative w-full h-full"> */}
-
           <div className="w-full flex justify-end">
             <IconButton onClick={() => close()}>
               <CloseRoundedIcon />
@@ -178,15 +192,11 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 />
               </Layout>
               <Layout option="Recipient's phone number" center={true}>
-                <Input
-                  className="h-10"
-                  name="recipientPhoneNumber"
-                  placeholder="Enter recipient's phone number"
-                  type="text"
-                  handleChange={formik.handleChange}
-                  value={formik.values.recipientPhoneNumber}
-                  caption={formikCaption("recipientPhoneNumber", formik)}
-                  error={formikError("recipientPhoneNumber", formik)}
+                <PhoneNumberInput
+                  handleChange={formik.handleChange("recipientPhoneNo")}
+                  value={formik.values.contactPhoneNumber}
+                  caption={formikCaption("recipientPhoneNo", formik)}
+                  error={formikError("recipientPhoneNo", formik)}
                 />
               </Layout>
               <Layout option="Pick up LGA" center={true}>
@@ -268,10 +278,10 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                         name=""
                         placeholder="Name of Item"
                         type="text"
-                        value={item.nameOfItem}
+                        value={item.itemName}
                         handleChange={(e) =>
                           handleFormChange(index, {
-                            key: "nameOfItem",
+                            key: "itemName",
                             value: e.target.value,
                           })
                         }
@@ -292,26 +302,26 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                       <Input
                         className="h-10"
                         name=""
-                        placeholder="Delivery address"
-                        type="text"
+                        placeholder="Unit Price"
+                        type="number"
                         value={item.unitPrice}
                         handleChange={(e) =>
                           handleFormChange(index, {
                             key: "unitPrice",
-                            value: e.target.value,
+                            value: Number(e.target.value),
                           })
                         }
                       />
                       <Input
                         className="h-10"
                         name=""
-                        placeholder="Delivery address"
-                        type="text"
+                        placeholder="Quantity"
+                        type="number"
                         value={item.quantity}
                         handleChange={(e) =>
                           handleFormChange(index, {
                             key: "quantity",
-                            value: e.target.value,
+                            value: Number(e.target.value),
                           })
                         }
                       />
@@ -355,32 +365,10 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 ))}
               </div>
               <Layout option="Payment Mode" center={true}>
-                {/* <div className="grid grid-cols-2 gap-4">
-                  <div
-                    className="flex gap-4 border-2 rounded items-center "
-                    style={{ backgroundColor: "#F5F5F5", height: "50px" }}
-                  >
-                    <div className="mx-3 mt-1">
-                      <input type="checkbox" className="pl-3 scale-150" />
-                    </div>
-                    <p>Pay on Delivery</p>
-                  </div>
-
-                  <div
-                    className="flex gap-4 border-2 rounded  h-40 items-center"
-                    style={{ backgroundColor: "#F5F5F5", height: "50px" }}
-                  >
-                    <div className="mx-3 mt-1 ">
-                      <input type="checkbox" className="pl-3 scale-150" />
-                    </div>
-                    <p> Paid</p>
-                  </div>
-                </div> */}
-
                 <FormControl>
                   <RadioGroup
                     onChange={(e) =>
-                      formik.setFieldValue("paymentType", e.target.value)
+                      formik.setFieldValue("paymentMode", e.target.value)
                     }
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -406,6 +394,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     />
                     <FormControlLabel
                       value="payOnDelivery"
+                      className="p-10 bg-[#e5e5e5] min-w-[200]"
                       control={
                         <Radio
                           icon={<CheckBoxOutlineBlankIcon />}
@@ -484,7 +473,9 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 formik.handleSubmit();
               }}
               loading={isSubmitting}
-              disabled={isSubmitting || !formik.isValid}
+              disabled={
+                isSubmitting || !formik.isValid || !hasInValidItems(items)
+              }
               type="button"
             />
           </div>

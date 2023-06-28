@@ -30,7 +30,7 @@ export default function Storage() {
         <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
           <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">
             <h1 className="text-2xl font-extrabold">Storage Facilities</h1>
-            <div className="grid grid-cols-3 gap-3 items-center">
+            {/* <div className="grid grid-cols-3 gap-3 items-center">
               <Input placeholder="Search" size="sm" className="w-100" />
               <Select
                 options={["Months", "Years"]}
@@ -42,7 +42,7 @@ export default function Storage() {
                 size="sm"
                 placeholder="Storage type"
               />
-            </div>
+            </div> */}
           </div>
           {facilities.length > 0 && (
             <div className="grid md:grid-cols-4 md:gap-8 p-6 mt-5 grid-cols-1 ">

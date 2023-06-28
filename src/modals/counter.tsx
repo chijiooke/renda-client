@@ -11,8 +11,8 @@ import {
 import { useState } from "react";
 import { Button } from "@/components";
 type ItemSkuIdRowProps = {
-    skuId: string;
-}
+  skuId: string;
+};
 
 const Counter = ({ skuId }: ItemSkuIdRowProps) => {
   const [count, setCount] = useState(0);
@@ -96,8 +96,7 @@ const Counter = ({ skuId }: ItemSkuIdRowProps) => {
         facilityId={facilityId}
       />
       <div className="flex gap-1">
-        <Button title="Create Order" variant="secondary" 
-        size="sm"/>
+        <Button title="Create Order" variant="secondary" size="sm" />
         <div className="flex justify-center items-center">
           <div
             className="flex rounded-full bg-black h-4 text-white p-1 items-center"
@@ -123,8 +122,8 @@ const Counter = ({ skuId }: ItemSkuIdRowProps) => {
         <Button
           title="Top up Stock"
           size="sm"
-
           handleClick={() => setShowSelectStorage(true)}
+          className="py-1 px-8 text-[10px]"
         />
         {/* <div className="flex max-w-sm  py-5 gap-3 flex-end justify-end w-full">
           <Button
@@ -137,4 +136,4 @@ const Counter = ({ skuId }: ItemSkuIdRowProps) => {
   );
 };
 
-export {Counter};
+export { Counter };

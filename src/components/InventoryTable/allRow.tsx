@@ -119,25 +119,21 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
           <div className="grid grid-cols-8 pl-10 m-0">
             <div className="p-2">
               <div className="flex items-center">
-                <input
+                {/* <input
                   type="checkbox"
                   className="form-checkbox h-5 w-5 text-blue-500"
-                />
+                /> */}
               </div>
             </div>
             <p className=" leading-7">{inventoryItem.skuId}</p>
             <p className=" leading-7">{inventoryItem.itemName}</p>
             <div className="inline-flex space-x-1 items-center   h-7">
               <p className=" leading-7">{Inventory.storageFacilityId}</p>
-              <img
-                className="w-2.5 h-2.5 rounded-full"
-                src="https://via.placeholder.com/10x10"
-              />
             </div>
             <p className=" leading-7">
               {Inventory.storageFacility.storageFacilityName}
             </p>
-            <p className="pl-10 leading-7">{inventoryItem.quantityRecieved}</p>
+            <p className="pl-10 leading-7">{inventoryItem.quantity}</p>
             <p className=" leading-none">{inventoryItem.unitPrice}</p>
             <div className="p-2 text-center flex items-center">
               <div
@@ -175,10 +171,6 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
                 <p className=" leading-7">{inventoryItem.itemName}</p>
                 <div className="inline-flex space-x-1 items-center   h-7">
                   <p className=" leading-7">{Inventory.storageFacilityId}</p>
-                  <img
-                    className="w-2.5 h-2.5 rounded-full"
-                    src="https://via.placeholder.com/10x10"
-                  />
                 </div>
                 <p className=" leading-7">
                   {Inventory?.storageFacility?.storageFacilityName}
@@ -198,8 +190,12 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
               </div>
               <div className="grid grid-rows-1 py-2 mt-5">
                 <div className="grid grid-cols-7 m-0 p-0">
-                  <div className="grid col-span-2 ">
-                    <ComputerImage />
+                  <div className="grid col-span-2 justify-center">
+                    <img
+                      src={inventoryItem?.picture}
+                      className="h-[90px] object-cover"
+                      //style={{ height: "60px" }}
+                    />
                   </div>
                   <div className="grid col-span-4">
                     <table>
@@ -231,27 +227,27 @@ const TableRow = ({ inventoryItem, Inventory }: TableRowProps) => {
                       </thead>
                       <tbody>
                         <td>
-                          <p className="text-xs">
+                          <p className="text-[13px]">
                             {inventoryItem.itemPosition}
                           </p>
                         </td>
                         <td>
-                          <p className="text-xs leading-7">
+                          <p className="text-[13px]">
                             {inventoryItem.quantityDamaged}
                           </p>
                         </td>
                         <td>
-                          <p className="w-28 text-xs leading-none">
+                          <p className="w-28 text-[13px] leading-none">
                             {inventoryItem.description}
                           </p>
                         </td>
                         <td>
-                          <p className="text-xs leading-none">
+                          <p className="leading-none text-[13px]">
                             {inventoryItem.colour}
                           </p>
                         </td>
                         <td>
-                          <p className="text-xs leading-none">
+                          <p className=" leading-none">
                             {inventoryItem.weight}
                           </p>
                         </td>

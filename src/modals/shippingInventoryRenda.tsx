@@ -58,38 +58,38 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
     };
 
     try {
-      if ((skuId ==="")&&(count===0)) {
-              const { data: inboundData } = await axios.post(
-                baseURL +
-                  `api/customers/${user.customerId}/InboundInventory/inbound-request`,
-                {
-                  customerBusinessId: user.customerId,
-                  deliveryDetails: {
-                    customerBusinessId: user.customerId,
-                    rendaPickUpDetails: dt,
-                    pickupLocation: dt.pickupAddress,
-                    deliveryBy: "renda",
-                  },
-                  storageFacilityId: facilityId,
-                  inventoryItems,
-                }
-              );
-      }else{
-              const { data: inboundData } = await axios.post(
-                baseURL +
-                  `api/customers/${user.customerId}/InboundInventory/topUp-inventory`,
-                {
-                  customerBusinessId: user.customerId,
-                  skuId,
-                  quantity: count,
-                  deliveryDetails: {
-                    customerBusinessId: user.customerId,
-                    rendaPickUpDetails: dt,
-                    pickupLocation: dt.pickupAddress,
-                    deliveryBy: "renda",
-                  },
-                }
-              );
+      if (skuId === "" && count === 0) {
+        const { data: inboundData } = await axios.post(
+          baseURL +
+            `api/customers/${user.customerId}/InboundInventory/inbound-request`,
+          {
+            customerBusinessId: user.customerId,
+            deliveryDetails: {
+              customerBusinessId: user.customerId,
+              rendaPickUpDetails: dt,
+              pickupLocation: dt.pickupAddress,
+              deliveryBy: "renda",
+            },
+            storageFacilityId: facilityId,
+            inventoryItems,
+          }
+        );
+      } else {
+        const { data: inboundData } = await axios.post(
+          baseURL +
+            `api/customers/${user.customerId}/InboundInventory/topUp-inventory/${facilityId}`,
+          {
+            customerBusinessId: user.customerId,
+            skuId,
+            quantity: count,
+            deliveryDetails: {
+              customerBusinessId: user.customerId,
+              rendaPickUpDetails: dt,
+              pickupLocation: dt.pickupAddress,
+              deliveryBy: "renda",
+            },
+          }
+        );
       }
       close();
       setShowModal(true);

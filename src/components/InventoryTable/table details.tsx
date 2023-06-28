@@ -149,10 +149,16 @@ const TableDetails = () => {
       </div>
       {inventories.map(
         (inventory) =>
-          inventory.inventoryItems.map((inx) => (
-            <TableRow key={inx.id} inventoryItem={inx} Inventory={inventory} />
-          ))
-        //  <TableRow key={inventory.id} inventory={inventory} />
+          inventory.inventoryItems
+            .filter((f: any) => f.skuId)
+            .map((inx) => (
+              <TableRow
+                key={inx.id}
+                inventoryItem={inx}
+                Inventory={inventory}
+              />
+            ))
+        // <TableRow key={inventory.id} inventory={inventory} />
       )}
       {/* <TableRow />
       <TableRow /> */}
