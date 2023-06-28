@@ -3,9 +3,9 @@ import AccessTimeTwoToneIcon from '@mui/icons-material/AccessTimeTwoTone';
 import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
 import HomeWorkTwoToneIcon from '@mui/icons-material/HomeWorkTwoTone';
 import InventoryTwoToneIcon from '@mui/icons-material/InventoryTwoTone';
-// import { NavigationItemType } from '../types/navigation-item.type';
+import { NavigationItemType } from '../types/navigation-item.type';
 
-export const navigationItems = [
+export const navigationItems:NavigationItemType[] = [
     {
       Icon: DashboardTwoToneIcon,
       title: "Dashboard",

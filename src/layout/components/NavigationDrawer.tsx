@@ -10,9 +10,10 @@ import {
   Paper,
 } from "@mui/material";
 import React, { useState } from "react";
-// import { navigationItems } from "../utils/navigation-routes";
 import { useRouter } from "next/router";
 import { navigationItems } from "../utils/navigation-routes";
+import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 
 export const NavigationDrawer = () => {
   const router = useRouter();
@@ -24,6 +25,11 @@ export const NavigationDrawer = () => {
   const isActive = (route: string) => {
     return route.split("/")[1] === router.pathname.split("/")[1];
   };
+  const isActiveSubRoute = (route: string) => {
+    return route.split("/")[2] === router.pathname.split("/")[2];
+  };
+
+  // const [activeSubroute, setactiveSubroute] = useState(router.pathname.split("/")[2])
 
   return (
     <Drawer
@@ -82,18 +88,12 @@ export const NavigationDrawer = () => {
                     width: "100%",
                     "&.Mui-selected": {
                       color: "common.white",
-                      backgroundColor: "primary.main",
-          
+                      backgroundColor: "#1b547f",
+
                       "&:hover": {
                         backgroundColor: "primary.light",
                       },
                     },
-                    // backgroundColor: isActive(route)
-                    //   ? "primary.main"
-                    //   : "none",
-                    // color: isActive(route) ? "white" : "none", "&hover":{
-
-                    // }
                   }}
                 >
                   <>
@@ -104,22 +104,49 @@ export const NavigationDrawer = () => {
                         }}
                       />
                     </ListItemIcon>
+
                     <ListItemText primary={title} />
+                    {subNavigation && (
+                      <>
+                        {" "}
+                        {(activeIndex !== null &&
+                          activeIndex + 1 === index + 1) ||
+                        isActive(route) ? (
+                          <KeyboardArrowDownRoundedIcon />
+                        ) : (
+                          <KeyboardArrowRightRoundedIcon />
+                        )}
+                      </>
+                    )}
                   </>
                   {}
                 </ListItemButton>
                 {subNavigation && (
                   <Collapse
-                    in={activeIndex !== null && activeIndex + 1 === index + 1}
+                    in={
+                      (activeIndex !== null && activeIndex + 1 === index + 1) ||
+                      isActive(route)
+                    }
                     timeout="auto"
                     unmountOnExit
-                    sx={{ pl: 2, width: "100%" }}
+                    sx={{ width: "100%", p: 0 }}
                   >
-                    <List sx={{ width: "100%" }}>
+                    <List sx={{ width: "100%", p: 0 }}>
                       {subNavigation.map((subNav) => (
                         <ListItemButton
                           key={subNav?.route}
-                          sx={{ width: "100%" }}
+                          sx={{
+                            pl: 10,
+                            width: "100%",
+                            backgroundColor: isActiveSubRoute(subNav?.route)
+                              ? "#1b547f4d"
+                              : "none",
+                            "&:hover": {
+                              backgroundColor: isActiveSubRoute(subNav?.route)
+                                ? "#1b547f4d"
+                                : "none",
+                            },
+                          }}
                           onClick={() => {
                             router.push(subNav.route);
                           }}
