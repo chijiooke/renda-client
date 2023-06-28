@@ -5,24 +5,11 @@ export type DataType = {
   unitPrice: string;
 };
 
-export interface IOrderItemsDataType {
-  orderItemsId: string;
-  dimension: string;
-  quantity: number;
-  skuId: string;
-  unitPrice: number;
-  orderId: string;
-  orders: IOrderType;
-}
-
 export interface IOrderType {
-  orderId: string;
   recipientName: string;
   storageFacilityId: string;
   paymentMode: string;
   numberOfItems: number;
-  dateCreated: Date;
-  lastUpdated: Date;
   reciepientName: string;
   reciepientPhoneNo: string;
   pickUpAddress: string;
@@ -30,49 +17,39 @@ export interface IOrderType {
   deliveryAddress: string;
   pickUpTime: string;
   dispatchTime: string;
-  status: string;
   customerId: string;
-  customers: IOrderingCustomerDataType;
+  orderItems: IOrderItemType[];
 }
 
-export interface IOrderingCustomerDataType {
-  customerBusinessId: string;
-  customerBusinessName: string;
-  customerBusinessEmailAddress: string;
-  customerBusinessAddress: string;
-  customerOfficeAddress: string;
-  customerBusinessPhoneNumber: string;
-  customerBusinessIndustry: string;
-  createdBy: string;
-  createdDate: Date;
-  lastModifiedBy: string;
-  lastModifiedDate: Date;
-  status: string;
-  appUserId: string;
-  appUsers: IAppUserType;
+export interface IOrderItemType {
+  dimension: string;
+  quantity: number;
+  skuId: string;
+  unitPrice: number;
 }
 
-export interface IAppUserType {
-  appUserId: string;
+export interface IExternalOrderType {
+  recipientName: string;
+  paymentMode: string;
+  numberOfItems: number;
+  recipientPhoneNo: string;
+  pickUpAddress: string;
+  pickUpLGA: string;
+  deliveryLGA: string;
+  deliveryAddress: string;
+  deliveryDate:string;
+  orderItems: IExternalOrderItemType[];
   contactName: string;
-  email: string;
-  passwordHash: string;
-  phoneNo: string;
-  emailConfirmationCode: string;
-  emailConfirmed: true;
-  resetPasswordCode: string;
-  resetPasswordCodeExpiration: Date;
-  failedLoginAttempts: number;
-  isActive: boolean;
-  isLocked: boolean;
-  roleName: string;
-  createdAt: Date;
-  deactivationDate: Date;
-  passwordResetExpirationTime: Date;
-  isLockedOut: true;
-  otpCode: string;
-  otpExpirationTime: string;
-  passwordResetRequestedAt: string;
-  lockoutEnabled: true;
-  lockoutEnd: Date;
+  contactPhoneNumber: string;
+  // customerId: string;
+  // deliveryLocation: string;
+   // pickUpTime: string;
+  // dispatchTime: string;
+}
+
+export interface IExternalOrderItemType {
+  dimension: string;
+  itemName: string;
+  quantity: number;
+  unitPrice: number;
 }
