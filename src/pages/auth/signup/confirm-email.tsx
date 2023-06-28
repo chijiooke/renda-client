@@ -53,7 +53,7 @@ const ConfirmEmail = () => {
             <Button
               title="Resend email"
               className=""
-              type="secondary"
+              variant="secondary"
               loading={loading}
               handleClick={confirmEmail}
             />

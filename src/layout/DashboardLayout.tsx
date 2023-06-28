@@ -1,25 +1,25 @@
-import { FC, ReactNode, useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "@/store/reducer";
 import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
 import cn from "classnames";
+import { useRouter } from "next/router";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   DashboardIcon,
-  StorageIcon,
-  InventoryIcon,
-  OrderManagementIcon,
-  NotificationIcon,
-  RedDot,
-  LeftArrowIcon,
-  RightArrowIcon,
-  DeliveryIcon,
   DeliveryTruckIcon,
+  InventoryIcon,
+  LeftArrowIcon,
+  NotificationIcon,
+  OrderManagementIcon,
+  RedDot,
+  StorageIcon,
 } from "@/icons";
-import axios from "axios";
 import { OnboardingAction } from "@/types";
+import axios from "axios";
+import { NavigationDrawer } from "./components/NavigationDrawer";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import { Avatar, Badge } from "@mui/material";
 
 type Props = {
   children: ReactNode;
@@ -91,6 +91,8 @@ const DashBoardLayout: FC<Props> = ({
     router.push({ pathname: DashBoardRoutes.DELIVERY_VAN });
   };
 
+  // const [user, setuser] = useState("")
+
   const getUser = async (id: string) => {
     setLoading(true);
     try {
@@ -130,70 +132,7 @@ const DashBoardLayout: FC<Props> = ({
           className="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep"
           id="kt_create_account_stepper"
         >
-          <div className="d-flex flex-column flex-lg-row-auto w-lg-200px w-xl-300px">
-            <div className="d-flex flex-column h-full top-0 bottom-0 w-lg-200px w-xl-300px scroll-y text-black bg-white shadow pt-15">
-              <img
-                alt="Logo"
-                src="/assets/images/Renda-logo-with-tagline.svg"
-                className="h-70px"
-              />
-              <nav className="flex flex-col mt-5  justify-center">
-                <ul>
-                  {" "}
-                  {routes.map(
-                    (
-                      { title, icon: Icon, route, children: innerRoutes },
-                      i
-                    ) => (
-                      <>
-                        <Link
-                          href={route}
-                          key={i + route}
-                          className={cn(
-                            "my-4 bg-[#000000] flex hover:bg-[#1b547f] cursor-pointer items-center gap-5  px-10 py-4 text-[18px]  font-semibold   group-hover:text-[#ffffff] nav",
-                            { activeNav: router.pathname === route }
-                          )}
-                        >
-                          <div className="w-[40px] flex justify-center">
-                            <Icon />
-                          </div>
-
-                          <span className="text-start font-extrabold">
-                            {title}
-                          </span>
-                          {innerRoutes && (
-                            <span>
-                              {" "}
-                              <RightArrowIcon />
-                            </span>
-                          )}
-                        </Link>
-                        {innerRoutes &&
-                          isActive(route) &&
-                          innerRoutes.map(({ title, route }, idx) => (
-                            <Link
-                              href={route}
-                              key={idx}
-                              className={cn(
-                                "text-center hover:bg-primary nav",
-                                {
-                                  activeNav: router.pathname === route,
-                                }
-                              )}
-                            >
-                              <span className="px-20 text-[16px] font-semibold p-3">
-                                {" "}
-                                {title}
-                              </span>
-                            </Link>
-                          ))}
-                      </>
-                    )
-                  )}
-                </ul>
-              </nav>
-            </div>
-          </div>
+          <NavigationDrawer />
 
           <div
             className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow"
@@ -230,15 +169,20 @@ const DashBoardLayout: FC<Props> = ({
                       </button>
 
                       <p className="text-[green] font-extrabold">Active</p>
-                      <div className="relative">
-                        <NotificationIcon />
-                        <span className="absolute bottom-[-30px] start-0 -left-[30px]">
-                          <RedDot />
-                        </span>
-                      </div>
-                      <img
-                        src="/assets/images/profile.jpeg"
-                        className="h-[30px] scale-150"
+
+                      <Badge
+                        color="error"
+                        variant="dot"
+                        overlap="circular"
+                        // badgeContent={10}
+                        invisible={false}
+                      >
+                        <NotificationsNoneOutlinedIcon fontSize="large" />
+                      </Badge>
+
+                      <Avatar
+                        alt={user?.name}
+                        src="/static/images/avatar/1.jpg"
                       />
                     </div>
                   </div>

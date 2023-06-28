@@ -1,4 +1,3 @@
-import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes, baseURL } from "@/utils";
 import { useRouter } from "next/router";
@@ -9,6 +8,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { number } from "yup";
+import { Button } from "@/components";
 
 // Define the type for the inbound request
 type InboundRequest = {
@@ -83,7 +83,6 @@ export default function InboundDetail() {
             ).replace("#", "%23")}`
         );
         setInboundRequests(data);
-        console.log(id);
       } catch (error) {
         console.error("Failed to fetch data from the endpoint:", error);
       }

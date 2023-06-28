@@ -33,6 +33,11 @@ export const DashBoardRoutes = {
   DELIVERY_VAN: "/ordermgt/deliveryVan",
 };
 
+export const OrdermgtRoutes = {
+  ORDERMGT_DETAILS: "/",
+  CREATEORDER_CSV: "/ordermgt/csv-createorder",
+};
+
 export const queryStringBuilder = (obj: {}) => {
   let route = "";
   Object.entries(obj).forEach(

@@ -96,12 +96,7 @@ const Counter = ({ skuId }: ItemSkuIdRowProps) => {
         facilityId={facilityId}
       />
       <div className="flex gap-1">
-        <Button
-          title="Create Order"
-          type="secondary"
-          className="py-1 px-8 text-[10px]"
-          size="sm"
-        />
+        <Button title="Create Order" variant="secondary" size="sm" />
         <div className="flex justify-center items-center">
           <div
             className="flex rounded-full bg-black h-4 text-white p-1 items-center"

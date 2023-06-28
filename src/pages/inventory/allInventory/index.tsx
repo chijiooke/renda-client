@@ -1,76 +1,3 @@
-// import { Button } from "@/components";
-// import { DashBoardLayout } from "@/layout";
-// import { DashBoardRoutes } from "@/utils";
-// import { useRouter } from "next/router";
-// export default function StorageBooking() {
-//   const router = useRouter();
-//   return (
-//     <DashBoardLayout backAction>
-//       <div className="rounded border-1 border-gray-300  h-[95%] pt-2">
-//         <div className="border-b-2 border-b-gray-300 p-7 flex items-center justify-between">
-//           <h1 className="text-2xl font-extrabold">Storage Booking</h1>
-//           <div>
-//             <Button title="Book New Storage" size="sm" className="max-w-sm" />
-//           </div>
-//         </div>
-//         <div className="p-10">
-//           <p className="my-5 text-primary font-semibold">Bookings</p>
-//           <div className="flex flex-col w-full">
-//             <div className="grid grid-cols-8 justify-between   p-5 bg-[#f9f9f9] rounded border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
-//               <p>Status</p>
-//               <p>Booking Id</p>
-//               <p>Facility Name</p>
-//               <p>Booking date</p>
-//               <p>Facility location</p>
-//               <p>Amount</p>
-//               <p>Duration</p>
-//               <p>Action</p>
-//             </div>
-//             <div
-//               className="grid grid-cols-8 justify-evenly p-5 items-center cursor-pointer"
-//               onClick={() => router.push(DashBoardRoutes.BOOKING_DETAILS)}
-//             >
-//               <p className="text-green-300">Active</p>
-//               <p>#RND9801</p>
-//               <p>Facility Name </p>
-//               <p>12-03-2023</p>
-//               <p>Lagos Island, Lagos</p>
-//               <p>N8,000,000 </p>
-//               <p>3 Weeks</p>
-//               <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
-//                 Make Payment
-//               </p>
-//             </div>
-//             <div className="grid grid-cols-8 justify-evenly p-5 items-center">
-//               <p className="text-green-300">Active</p>
-//               <p>#RND9801</p>
-//               <p>Facility Name </p>
-//               <p>12-03-2023</p>
-//               <p>Lagos Island, Lagos</p>
-//               <p>N8,000,000 </p>
-//               <p>3 Weeks</p>
-//               <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
-//                 Make Payment
-//               </p>
-//             </div>{" "}
-//             <div className="grid grid-cols-8 justify-evenly p-5 items-center">
-//               <p className="text-red-500">Expired</p>
-//               <p>#RND9801</p>
-//               <p>Facility Name </p>
-//               <p>12-03-2023</p>
-//               <p>Lagos Island, Lagos</p>
-//               <p>N8,000,000 </p>
-//               <p>3 Weeks</p>
-//               <p className="bg-[#E1E1E1] text-center capitalize text-[#979797] p-1">
-//                 Make Payment
-//               </p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </DashBoardLayout>
-//   );
-// }
 import { DashBoardLayout } from "@/layout";
 import { Button, GetInTouch, Input, StorageCard } from "@/components";
 import { useRouter } from "next/router";
@@ -81,7 +8,24 @@ import { MyModal } from "@/modals";
 import { useState } from "react";
 // import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
 import { AllInventoryTable } from "@/components/InventoryTable";
-import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
+
+import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
+import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
+
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Table,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 const headers = ["ALL Inventory", "Inbound History"];
 function classNames(...classes: any[]) {
@@ -90,9 +34,41 @@ function classNames(...classes: any[]) {
 export default function Inventory() {
   const router = useRouter();
   const [showUploadButton, setShowUploadButton] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
   };
+
+  const inventoryData: inventoryDataType[] = [
+    {
+      title: "mac Book Pro",
+      SKUId: 12345,
+      facilityID: 12345,
+      position: "Upper Shelf",
+      facilityName: "Badagry, lagos",
+      quantity: 20,
+      unitPrice: 100,
+      dmgItems: 10,
+      description: "Lorem ipsum dolor emet",
+      color: "grey",
+      weight: "100 pounds",
+      img: "string",
+    },
+    {
+      title: "Samsung Z Book ",
+      SKUId: 12346,
+      facilityID: 12346,
+      position: "Upper Shelf",
+      facilityName: "Badagry, lagos",
+      quantity: 50,
+      unitPrice: 100,
+      dmgItems: 10,
+      description: "Lorem ipsum dolor emet",
+      color: "grey",
+      weight: "100 pounds",
+      img: "string",
+    },
+  ];
 
   return (
     <>
@@ -112,30 +88,30 @@ export default function Inventory() {
                       borderColor: `#008753`,
                     }}
                     className=" space-x-1 items-center justify-center w-72 h-10 flex gap-2 cursor-pointer border-2 rounded-md"
-                    // onClick={() => router.push(DashBoardRoutes.INVENTORY_TOPUP)}
                   >
                     <CheckIcon />
                     <p className="text-xs font-semibold text-center items-center text-[#008753]">
                       Your Items have been added to van
                     </p>
+
                   </div> */}
-                  <div
-                    style={{ backgroundColor: `#1B547F` }}
-                    className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 cursor-pointer  rounded-md"
-                    onClick={() => router.push(DashBoardRoutes.INVENTORY_TOPUP)}
-                  >
-                    <p className="text-xs font-semibold text-center items-center pt-2 text-white">
-                      Top-Up Stock
-                    </p>
-                  </div>
-                  <div className=" space-x-1 items-center justify-center w-36 h-10 px-3 py-1.5 cursor-pointer  border-1 rounded-md border-blue-900">
-                    <p
-                      style={{ color: `#1B547F` }}
-                      className="text-xs font-semibold text-center items-center pt-2 "
+                  <button>
+                    <div
+                      style={{ backgroundColor: `#1B547F` }}
+                      onClick={() =>
+                        router.push(DashBoardRoutes.INVENTORY_TOPUP)
+                      }
+                      className=" flex items-center bg-[#1B547F] justify-center w-36 h-10 px-3 cursor-pointer  rounded-md text-xs font-semibold text-center items-center  text-white"
                     >
-                      Create Order
-                    </p>
-                  </div>
+                      Top-Up Stock
+                    </div>
+                  </button>
+                  <button
+                    // onClick={() => setOpen(true)}
+                    className=" flex items-center justify-center w-36 h-10 px-3  cursor-pointer  border-1 rounded-md border-blue-900 text-[#1B547F] text-xs font-semibold"
+                  >
+                    Create Order
+                  </button>
                 </div>
               </div>
             </>
@@ -225,6 +201,79 @@ export default function Inventory() {
           </div>
         </div>
       </DashBoardLayout>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+            width: "100%",
+            minWidth: "100%",
+          }}
+        >
+          <IconButton onClick={() => setOpen(false)}>
+            <CloseRoundedIcon />
+          </IconButton>
+        </Box>
+        <DialogContent>
+          <Typography variant="h5" fontWeight={500}>
+            Create Order
+          </Typography>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>SKU ID</TableCell>
+                <TableCell>Item Name</TableCell>
+                <TableCell>Unit Price</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+
+            {inventoryData.map((item) => (
+              <TableRow>
+                <TableCell>{item?.SKUId}</TableCell>
+                <TableCell>{item?.title}</TableCell>
+                <TableCell>{item?.unitPrice}</TableCell>
+                <TableCell>
+                  <>
+                    <div className="flex justify-center items-center">
+                      <span
+                        className=" flex rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
+                        // onClick={() =>
+                        //   orderCount < data?.quantity
+                        //     ? setOrderCount((prev) => prev + 1)
+                        //     : null
+                        // }
+                      >
+                        +
+                      </span>
+                    </div>
+                    <div className="flex justify-center  items-center  border rounded-lg border-gray-900">
+                      <p className="flex justify-center  items-center m-2 font-medium  ">
+                        {0}/{" "}
+                        <span className=" flex rounded-full text-gray-800 h-4 p-1 items-center ">
+                          {item?.quantity}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="flex justify-center items-center">
+                      <span
+                        className=" flex justify-center rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
+                        // onClick={() =>
+                        //   orderCount > 0
+                        //     ? setOrderCount((prev) => --prev)
+                        //     : null
+                        // }
+                      >
+                        -
+                      </span>
+                    </div>
+                  </>
+                </TableCell>
+              </TableRow>
+            ))}
+          </Table>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

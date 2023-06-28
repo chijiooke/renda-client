@@ -219,7 +219,7 @@ const GetStarted = () => {
           <div className="flex justify-between gap-6 mt-15">
             <Button
               title="Back"
-              type="secondary"
+              variant="secondary"
               handleClick={() => router.back()}
             />
             <Button

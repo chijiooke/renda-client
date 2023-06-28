@@ -99,7 +99,7 @@ export default function ConfirmInventory() {
             <div className="flex max-w-sm  py-5 gap-3 flex-end justify-end w-full">
               <Button
                 title="Back"
-                type="secondary"
+                variant="secondary"
                 handleClick={() => router.back()}
               />
               <Button

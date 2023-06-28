@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TableRow } from "./allRow";
 import { StoreState } from "@/store/reducer";
 import { baseURL } from "@/utils";
 import axios from "axios";
 import { useSelector } from "react-redux";
+
+import { inventoryDataType } from "./inventoryTableRow";
+import { useRouter } from "next/router";
 
 type Inventorie = {
   id: number;
@@ -49,15 +52,43 @@ type Inventorie = {
 };
 
 const TableDetails = () => {
-  const [expandedRow, setExpandedRow] = useState(null);
+  const router = useRouter();
+  const [expandedItem, setExpandedItem] = useState<number | null>(null);
+  // const [isAllItemsSelected, setIsAllItemsSelected] = useState<boolean>(false);
+  const [selectedItems, setselectedItems] = useState<inventoryDataType[]>([]);
+  const inventoryData: inventoryDataType[] = [
+    {
+      title: "mac Book Pro",
+      SKUId: 12345,
+      facilityID: 12345,
+      position: "Upper Shelf",
+      facilityName: "Badagry, lagos",
+      quantity: 20,
+      unitPrice: 100,
+      dmgItems: 10,
+      description: "Lorem ipsum dolor emet",
+      color: "grey",
+      weight: "100 pounds",
+      img: "string",
+    },
+    {
+      title: "Samsung Z Book ",
+      SKUId: 12346,
+      facilityID: 12346,
+      position: "Upper Shelf",
+      facilityName: "Badagry, lagos",
+      quantity: 50,
+      unitPrice: 100,
+      dmgItems: 10,
+      description: "Lorem ipsum dolor emet",
+      color: "grey",
+      weight: "100 pounds",
+      img: "string",
+    },
+  ];
 
-  const handleShowMore = (row: any) => {
-    if (expandedRow === row) {
-      setExpandedRow(null);
-    } else {
-      setExpandedRow(row);
-    }
-  };
+  // let isAllItemsSelected = false;
+  const isAllItemsSelected = useRef(false);
 
   const { user } = useSelector((state: StoreState) => state);
   const [inventories, setInventories] = useState<Inventorie[]>([]);
@@ -87,6 +118,11 @@ const TableDetails = () => {
           <input
             type="checkbox"
             className="form-checkbox h-5 w-5 text-blue-500"
+            checked={isAllItemsSelected.current}
+            onClick={() => {
+              isAllItemsSelected.current = !isAllItemsSelected.current;
+              setselectedItems(isAllItemsSelected.current ? inventoryData : []);
+            }}
           />
         </div>
         <div className="pl-0 flex items-center">
@@ -126,6 +162,31 @@ const TableDetails = () => {
       )}
       {/* <TableRow />
       <TableRow /> */}
+      {/* {!!inventoryData &&
+        inventoryData.map((rowData) => (
+          <TableRow
+            isAllItemsSelected={isAllItemsSelected.current}
+            data={rowData}
+            isExpanded={expandedItem === rowData.SKUId}
+            collapseRow={() =>
+              !!expandedItem
+                ? setExpandedItem(null)
+                : setExpandedItem(rowData.SKUId)
+            }
+            selectedItems={selectedItems.map((items) => items.SKUId)}
+            selectItem={(item: inventoryDataType) => {
+              if (
+                selectedItems.map((items) => items.SKUId).includes(item.SKUId)
+              ) {
+                setselectedItems([
+                  ...selectedItems.filter((it) => it.SKUId !== item.SKUId),
+                ]);
+              } else {
+                setselectedItems([...selectedItems, item]);
+              }
+            }}
+          />
+        ))} */}
     </div>
   );
 };

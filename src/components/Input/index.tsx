@@ -31,7 +31,7 @@ type Props = {
   type?: HTMLInputTypeAttribute;
   className?: string;
   placeholder?: string;
-  value?: string;
+  value?: string|number;
   handleChange?: ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   name?: string;

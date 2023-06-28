@@ -29,3 +29,5 @@ export { DropDown } from "./dropDown";
 export { Trash } from "./trash";
 export { CheckedIcon } from "./checked";
 export { DeclinedIcon } from "./decline";
+export { Minus } from "./minus";
+export { Plus } from "./plus";
