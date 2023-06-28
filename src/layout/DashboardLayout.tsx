@@ -1,26 +1,25 @@
-import { FC, ReactNode, useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
 import { StoreState } from "@/store/reducer";
 import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
 import cn from "classnames";
+import { useRouter } from "next/router";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   DashboardIcon,
-  StorageIcon,
-  InventoryIcon,
-  OrderManagementIcon,
-  NotificationIcon,
-  RedDot,
-  LeftArrowIcon,
-  RightArrowIcon,
-  DeliveryIcon,
   DeliveryTruckIcon,
+  InventoryIcon,
+  LeftArrowIcon,
+  NotificationIcon,
+  OrderManagementIcon,
+  RedDot,
+  StorageIcon,
 } from "@/icons";
-import axios from "axios";
 import { OnboardingAction } from "@/types";
+import axios from "axios";
 import { NavigationDrawer } from "./components/NavigationDrawer";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import { Avatar, Badge } from "@mui/material";
 
 type Props = {
   children: ReactNode;
@@ -92,6 +91,8 @@ const DashBoardLayout: FC<Props> = ({
     router.push({ pathname: DashBoardRoutes.DELIVERY_VAN });
   };
 
+  // const [user, setuser] = useState("")
+
   const getUser = async (id: string) => {
     setLoading(true);
     try {
@@ -131,7 +132,7 @@ const DashBoardLayout: FC<Props> = ({
           className="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep"
           id="kt_create_account_stepper"
         >
-         <NavigationDrawer />
+          <NavigationDrawer />
 
           <div
             className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow"
@@ -168,15 +169,20 @@ const DashBoardLayout: FC<Props> = ({
                       </button>
 
                       <p className="text-[green] font-extrabold">Active</p>
-                      <div className="relative">
-                        <NotificationIcon />
-                        <span className="absolute bottom-[-30px] start-0 -left-[30px]">
-                          <RedDot />
-                        </span>
-                      </div>
-                      <img
-                        src="/assets/images/profile.jpeg"
-                        className="h-[30px] scale-150"
+
+                      <Badge
+                        color="error"
+                        variant="dot"
+                        overlap="circular"
+                        // badgeContent={10}
+                        invisible={false}
+                      >
+                        <NotificationsNoneOutlinedIcon fontSize="large" />
+                      </Badge>
+
+                      <Avatar
+                        alt={user?.name}
+                        src="/static/images/avatar/1.jpg"
                       />
                     </div>
                   </div>
