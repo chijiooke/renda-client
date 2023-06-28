@@ -51,12 +51,12 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
 
   const handleFormChange = (
     index: number,
-    eventData: { key: keyof IExternalOrderItemType; value: string | number }
+    eventData: { key: string; value: string | number }
   ) => {
     let data = [...items];
 
      // @ts-ignore
-    data[index][eventData.key] =
+    data[index][eventData.key as keyof IExternalOrderItemType] =
       eventData.value as string | number;
     setitems(data);
   };
@@ -139,8 +139,6 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
 
     try {
       const { data: response } = await axios.post(baseURL + "api/orders", data);
-
-      // console.log({ ...value, items: items });
       formik.resetForm();
       close();
     } catch (error) {
