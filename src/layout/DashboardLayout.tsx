@@ -20,6 +20,7 @@ import {
 } from "@/icons";
 import axios from "axios";
 import { OnboardingAction } from "@/types";
+import { NavigationDrawer } from "./components/NavigationDrawer";
 
 type Props = {
   children: ReactNode;
@@ -130,70 +131,7 @@ const DashBoardLayout: FC<Props> = ({
           className="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep"
           id="kt_create_account_stepper"
         >
-          <div className="d-flex flex-column flex-lg-row-auto w-lg-200px w-xl-300px">
-            <div className="d-flex flex-column h-full top-0 bottom-0 w-lg-200px w-xl-300px scroll-y text-black bg-white shadow pt-15">
-              <img
-                alt="Logo"
-                src="/assets/images/Renda-logo-with-tagline.svg"
-                className="h-70px"
-              />
-              <nav className="flex flex-col mt-5  justify-center">
-                <ul>
-                  {" "}
-                  {routes.map(
-                    (
-                      { title, icon: Icon, route, children: innerRoutes },
-                      i
-                    ) => (
-                      <>
-                        <Link
-                          href={route}
-                          key={i + route}
-                          className={cn(
-                            "my-4 bg-[#000000] flex hover:bg-[#1b547f] cursor-pointer items-center gap-5  px-10 py-4 text-[18px]  font-semibold   group-hover:text-[#ffffff] nav",
-                            { activeNav: router.pathname === route }
-                          )}
-                        >
-                          <div className="w-[40px] flex justify-center">
-                            <Icon />
-                          </div>
-
-                          <span className="text-start font-extrabold">
-                            {title}
-                          </span>
-                          {innerRoutes && (
-                            <span>
-                              {" "}
-                              <RightArrowIcon />
-                            </span>
-                          )}
-                        </Link>
-                        {innerRoutes &&
-                          isActive(route) &&
-                          innerRoutes.map(({ title, route }, idx) => (
-                            <Link
-                              href={route}
-                              key={idx}
-                              className={cn(
-                                "text-center hover:bg-primary nav",
-                                {
-                                  activeNav: router.pathname === route,
-                                }
-                              )}
-                            >
-                              <span className="px-20 text-[16px] font-semibold p-3">
-                                {" "}
-                                {title}
-                              </span>
-                            </Link>
-                          ))}
-                      </>
-                    )
-                  )}
-                </ul>
-              </nav>
-            </div>
-          </div>
+         <NavigationDrawer />
 
           <div
             className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow"
