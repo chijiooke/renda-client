@@ -1,4 +1,12 @@
 import { Button } from "@/components";
+import {
+  Checkbox,
+  Table,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { FC, useState } from "react";
 
 const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
@@ -7,9 +15,67 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
   return (
     <>
       <div>
-        <div className=" bg-[#E7F4FF] p-5 font-medium text-[#7A7A7A]">
+        <Typography
+          variant="body2"
+          className=" bg-[#E7F4FF] p-2 font-medium text-[#7A7A7A]  rounded-md "
+        >
           Orders from your Renda storage
-        </div>
+        </Typography>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell variant="head">
+                <Checkbox />
+              </TableCell>
+              < TableHeaderCell text="Order Id"/>
+              < TableHeaderCell text="Name of Items"/>
+              < TableHeaderCell text="facility"/>
+              < TableHeaderCell text="facility ID"/>
+              < TableHeaderCell text="Order Id"/>
+             
+             
+             
+              <TableCell
+                variant="head"
+                className=" font-bold rounded-md whitespace-nowrap"
+              >
+                FACILITY ID
+              </TableCell>
+              <TableCell
+                variant="head"
+                className=" font-bold rounded-md whitespace-nowrap"
+              >
+                DATE CREATED
+              </TableCell>
+              <TableCell
+                variant="head"
+                className=" font-bold rounded-md whitespace-nowrap"
+              >
+                RECIPIENTS NAME
+              </TableCell>
+              <TableCell
+                variant="head"
+                className=" font-bold rounded-md whitespace-nowrap"
+              >
+                DELIVERY LOCATION
+              </TableCell>
+              <TableCell
+                variant="head"
+                className=" font-bold rounded-md whitespace-nowrap"
+              >
+                MODE OF PAYMENT
+              </TableCell>
+              <TableCell
+                variant="head"
+                className=" font-bold rounded-md whitespace-nowrap"
+              >
+                STATUS
+              </TableCell>
+
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+        </Table>
         <div className="flex flex-col my-6 rounded border-1 border-gray-300 ">
           <div className="grid grid-c-9 uppercase p-4  justify-between relative">
             <p className="text-center">ORDER ID</p>
@@ -65,3 +131,9 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
 };
 
 export { InventoryOrders };
+
+const TableHeaderCell: FC<{ text: string }> = ({ text }) => (
+  <TableCell variant="head" className=" font-bold rounded-md whitespace-nowrap">
+    {text}
+  </TableCell>
+);

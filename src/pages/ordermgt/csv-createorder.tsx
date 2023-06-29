@@ -18,8 +18,8 @@ export default function CsvCreateorder () {
 
     return (
     <DashBoardLayout backAction backText="back">
-         <div className="rounded border-1 border-gray-300  h-[83vh] pt-2">
-          <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">
+         <div className="rounded border-1 border-gray-300  h-[83vh] pt-2 ">
+          <div className="border-b-2 border-b-gray-300 p-7 flex justify-between ">
             <div>
             <h1 className="text-2xl font-extrabold">Create Order</h1>
             <p>Create order from inventory</p>

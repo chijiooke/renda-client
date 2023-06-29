@@ -56,7 +56,7 @@ export default function Ordermgt() {
                   key={idx}
                   className={({ selected }) =>
                     classNames(
-                      "py-3 px-7 outline-none rounded-tl-lg  ",
+                      "py-3 px-7 outline-none rounded-tl-lg clip-path-polygon ",
                       selected ? "bg-primary text-white  " : "bg-[#f4f4f4]"
                     )
                   }
@@ -66,7 +66,12 @@ export default function Ordermgt() {
               ))}
             </Tab.List>
             <Tab.Panel>
-              <InventoryOrders openModal={() => setIsOpen(true)} />
+              <InventoryOrders
+                openModal={() => {
+                  console.log(500);
+                  setIsOpen(true);
+                }}
+              />
             </Tab.Panel>
             <Tab.Panel>
               <ExternalOrders openModal={() => setIsOpen(true)} />

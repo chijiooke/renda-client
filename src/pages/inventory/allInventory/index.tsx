@@ -1,22 +1,19 @@
 import { DashBoardLayout } from "@/layout";
-import { Button, GetInTouch, Input, StorageCard } from "@/components";
-import { useRouter } from "next/router";
 import { DashBoardRoutes } from "@/utils";
-import { ArrowNextIcon, ArrowPreviousIcon, CheckIcon } from "@/icons";
 import { Tab } from "@headlessui/react";
-import { MyModal } from "@/modals";
+import { useRouter } from "next/router";
 import { useState } from "react";
 // import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
-import { AllInventoryTable } from "@/components/InventoryTable";
-
-import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
 import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
+import { AllInventoryTable } from "@/components/InventoryTable";
+import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import {
   Box,
+  Button,
   Dialog,
   DialogContent,
-  DialogTitle,
   IconButton,
   Table,
   TableCell,
@@ -26,6 +23,7 @@ import {
 } from "@mui/material";
 
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 const headers = ["ALL Inventory", "Inbound History"];
 function classNames(...classes: any[]) {
@@ -82,19 +80,6 @@ export default function Inventory() {
                   <h1 className="text-3xl font-extrabold">All Inventory</h1>
                 </div>
                 <div className="flex justify-center gap-2 mr-7">
-                  {/* <div
-                    style={{
-                      backgroundColor: `#ECFFF8`,
-                      borderColor: `#008753`,
-                    }}
-                    className=" space-x-1 items-center justify-center w-72 h-10 flex gap-2 cursor-pointer border-2 rounded-md"
-                  >
-                    <CheckIcon />
-                    <p className="text-xs font-semibold text-center items-center text-[#008753]">
-                      Your Items have been added to van
-                    </p>
-
-                  </div> */}
                   <button>
                     <div
                       style={{ backgroundColor: `#1B547F` }}
@@ -107,7 +92,7 @@ export default function Inventory() {
                     </div>
                   </button>
                   <button
-                    // onClick={() => setOpen(true)}
+                    onClick={() => setOpen(true)}
                     className=" flex items-center justify-center w-36 h-10 px-3  cursor-pointer  border-1 rounded-md border-blue-900 text-[#1B547F] text-xs font-semibold"
                   >
                     Create Order
@@ -121,22 +106,7 @@ export default function Inventory() {
               <div className=" flex flex-col ">
                 <h1 className="text-3xl font-extrabold">Inbound History</h1>
               </div>
-              <div>
-                {/* <div
-                  className="inline-flex space-x-3 items-center justify-start px-4 py-3 bg-green-100 border rounded-md border-green-900"
-                  style={{ width: 423, height: 38 }}
-                >
-                  <img
-                    className="w-3.5 h-3.5 rounded-full"
-                    src="https://via.placeholder.com/14x14"
-                  />
-                  <div className="inline-flex flex-col items-start justify-start flex-1">
-                    <p className="text-xs font-medium leading-tight text-green-700">
-                      Inbound request has been made and would respond in 12hrs
-                    </p>
-                  </div>
-                </div> */}
-              </div>
+              <div></div>
             </div>
           )}
 
@@ -215,7 +185,7 @@ export default function Inventory() {
           </IconButton>
         </Box>
         <DialogContent>
-          <Typography variant="h5" fontWeight={500}>
+          <Typography variant="h5" fontWeight={600} textAlign="center" color="primary">
             Create Order
           </Typography>
           <Table>
@@ -234,44 +204,28 @@ export default function Inventory() {
                 <TableCell>{item?.title}</TableCell>
                 <TableCell>{item?.unitPrice}</TableCell>
                 <TableCell>
-                  <>
-                    <div className="flex justify-center items-center">
-                      <span
-                        className=" flex rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
-                        // onClick={() =>
-                        //   orderCount < data?.quantity
-                        //     ? setOrderCount((prev) => prev + 1)
-                        //     : null
-                        // }
-                      >
-                        +
-                      </span>
-                    </div>
-                    <div className="flex justify-center  items-center  border rounded-lg border-gray-900">
-                      <p className="flex justify-center  items-center m-2 font-medium  ">
-                        {0}/{" "}
-                        <span className=" flex rounded-full text-gray-800 h-4 p-1 items-center ">
-                          {item?.quantity}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="flex justify-center items-center">
-                      <span
-                        className=" flex justify-center rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
-                        // onClick={() =>
-                        //   orderCount > 0
-                        //     ? setOrderCount((prev) => --prev)
-                        //     : null
-                        // }
-                      >
-                        -
-                      </span>
-                    </div>
-                  </>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <IconButton>
+                      <AddCircleIcon />
+                    </IconButton>
+
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      {" "}
+                      <Typography variant="body2" sx={{}}>
+                        {0}/{item?.quantity}
+                      </Typography>
+                    </Box>
+                    <IconButton>
+                      <RemoveCircleIcon />
+                    </IconButton>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
           </Table>
+          <Button variant="contained" fullWidth sx={{ mt: 2 }} >
+            Add to delivery van
+          </Button>
         </DialogContent>
       </Dialog>
     </>

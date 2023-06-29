@@ -1,3 +1,5 @@
+"use client"
+
 import store from "@/store/store";
 import "@/styles/globals.css";
 import "@/styles/style.bundle.css";
@@ -12,14 +14,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loadingPage, setloadingPage] = useState(false);
   useEffect(() => {
-    // @ts-ignore
-    const handleRouteChange = (url: string, { shallow }) => {
+  
+    const handleRouteChange = (url: string) => {
       setloadingPage(true);
       return;
     };
 
-    // @ts-ignore
-    const handleRouteComplete = (url: string, { shallow }) => {
+    const handleRouteComplete = (url: string) => {
       setloadingPage(false);
       return;
     };

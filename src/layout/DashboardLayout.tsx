@@ -19,7 +19,8 @@ import { OnboardingAction } from "@/types";
 import axios from "axios";
 import { NavigationDrawer } from "./components/NavigationDrawer";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import { Avatar, Badge } from "@mui/material";
+import { Avatar, Badge, Button, IconButton, Typography } from "@mui/material";
+import { ContextMenu } from "@/components/context-menu/ContextMenu";
 
 type Props = {
   children: ReactNode;
@@ -90,8 +91,16 @@ const DashBoardLayout: FC<Props> = ({
   const handleTruckClick = () => {
     router.push({ pathname: DashBoardRoutes.DELIVERY_VAN });
   };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClickAway = () => {
+    setAnchorEl(null);
+  };
 
-  // const [user, setuser] = useState("")
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
 
   const getUser = async (id: string) => {
     setLoading(true);
@@ -121,6 +130,11 @@ const DashBoardLayout: FC<Props> = ({
       getUser(userId!);
     }
   }, []);
+
+  const signOut = () => {
+    sessionStorage.removeItem('userId');
+    router.push("auth/login")
+  };
 
   const isActive = (route: string) => {
     return route.split("/")[1] === router.pathname.split("/")[1];
@@ -157,33 +171,60 @@ const DashBoardLayout: FC<Props> = ({
                       </div>
                     )}
 
-                    <div className="flex gap-5 items-center">
-                      <button
+                    <div className="flex gap-3 items-center">
+                      <Typography
+                        sx={{
+                          color: "success.main",
+                          padding: "0.5rem 1rem",
+                          backgroundColor: "#4caf5033",
+                          borderRadius: "1rem",
+                        }}
+                      >
+                        Active
+                      </Typography>
+                      <IconButton>
+                        {" "}
+                        <Badge
+                          color="error"
+                          badgeContent={5}
+                          overlap="circular"
+                          invisible={false}
+                        >
+                          <NotificationsNoneOutlinedIcon fontSize="medium" />
+                        </Badge>
+                      </IconButton>
+                      <IconButton
                         onClick={handleTruckClick}
-                        className={cn(" rounded-sm p-3", {
-                          "text-primary": !showDeliveryTruckIcon,
-                          "text-white bg-primary": showDeliveryTruckIcon,
-                        })}
+                        sx={{ backgroundColor: "primary.main" }}
                       >
-                        <DeliveryTruckIcon />
-                      </button>
-
-                      <p className="text-[green] font-extrabold">Active</p>
-
-                      <Badge
-                        color="error"
-                        variant="dot"
-                        overlap="circular"
-                        // badgeContent={10}
-                        invisible={false}
+                        {" "}
+                        <Badge
+                          color="error"
+                          badgeContent={5}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          invisible={false}
+                        >
+                          <DeliveryTruckIcon />
+                        </Badge>
+                      </IconButton>
+                      <IconButton>
+                        <Avatar
+                          sx={{ width: 30, height: 30 }}
+                          alt={user?.name}
+                          src="/static/images/avatar/1.jpg"
+                          onClick={handleClick}
+                        />
+                      </IconButton>
+                      <ContextMenu
+                        handleClickAway={handleClickAway}
+                        open={open}
+                        anchorEl={anchorEl}
                       >
-                        <NotificationsNoneOutlinedIcon fontSize="large" />
-                      </Badge>
-
-                      <Avatar
-                        alt={user?.name}
-                        src="/static/images/avatar/1.jpg"
-                      />
+                        <Button onClick={() => signOut()}>Sign Out</Button>
+                      </ContextMenu>
                     </div>
                   </div>
                   <div className="my-10">

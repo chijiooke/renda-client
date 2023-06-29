@@ -53,9 +53,10 @@ export const NavigationDrawer = () => {
           boxSizing: "border-box",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+          // justifyContent: "center",
+          // alignItems: "center",
           paddingTop: "2rem",
+          minHeight: "100vh",
         }}
       >
         <Box sx={{ paddingLeft: "5rem", width: "100%" }}>
