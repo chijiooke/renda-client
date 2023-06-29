@@ -39,7 +39,7 @@ export const navigationItems:NavigationItemType[] = [
     },
     {
       Icon: AccessTimeTwoToneIcon,
-      title: "Order Mgt",
+      title: "Order Management",
       route: DashBoardRoutes.ORDERMGT,
     },
   ];

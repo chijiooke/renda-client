@@ -150,13 +150,13 @@ const DashBoardLayout: FC<Props> = ({
 
           <div
             className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow"
-            style={{ height: "95vh" }}
+            
           >
             <div className="d-flex flex-center flex-column flex-column-fluid bg-[#f4fbff]">
               <div className="w-full h-full ">
                 <div className="bg-white rounded w-full h-full  p-10 ">
                   <div
-                    className={cn("flex  w-full my-3", {
+                    className={cn("flex  w-full my-3  sticky  top-2/4" , {
                       "flex-row-reverse": !backAction,
                       "justify-between": backAction,
                     })}
@@ -227,7 +227,7 @@ const DashBoardLayout: FC<Props> = ({
                       </ContextMenu>
                     </div>
                   </div>
-                  <div className="my-10">
+                  <div >
                     {!loading ? <> {children}</> : <>Loading</>}
                   </div>
                 </div>

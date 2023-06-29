@@ -15,6 +15,7 @@ type Props = {
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
   type?: "button" | "submit";
+  fullWidth?: boolean;
 };
 const Button: FC<Props> = ({
   title = "",
@@ -25,6 +26,7 @@ const Button: FC<Props> = ({
   size = "md",
   disabled = false,
   type = "submit",
+  fullWidth = false,
 }) => {
   return (
     // <button
@@ -66,15 +68,14 @@ const Button: FC<Props> = ({
     <MUIbutton
       onClick={handleClick}
       disabled={disabled}
-      
       type={type}
       className={cn(
-        "w-100 rounded-[0.75rem] text-white border-primary cursor-pointer border-2 ",
+        " rounded-[0.75rem] text-white border-primary cursor-pointer border-2  whitespace-nowrap",
         {
-          "p-5": size == "md",
-          "p-3": size === "sm",
+          "p-4": size == "md",
+          "p-2": size === "sm",
           "bg-primary text-white": variant == "primary",
-
+          "w-100": fullWidth,
           "bg-[#8DA9BF]": disabled,
           "rounded-lg": size == "sm",
           "cursor-pointer": !disabled,

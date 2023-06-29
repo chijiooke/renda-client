@@ -32,11 +32,15 @@ export default function Ordermgt() {
 
   return (
     <DashBoardLayout backAction backText="back">
-      <div className="rounded border-1 border-gray-300  h-[83vh] pt-2">
+      <div className="rounded border-1 border-gray-300  pt-2">
         <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">
           <h1 className="text-2xl font-extrabold">Order Management</h1>
-          <div className="mr-6 w-72">
-            <Button title="Create Order" size="sm" />
+          <div className="">
+            <Button
+              title="Create Order"
+              size="sm"
+              handleClick={() => setopenCreateModal(true)}
+            />
           </div>
         </div>
 

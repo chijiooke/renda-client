@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import store from "@/store/store";
 import "@/styles/globals.css";
@@ -13,8 +13,8 @@ import { InfinitySpin } from "react-loader-spinner";
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loadingPage, setloadingPage] = useState(false);
+
   useEffect(() => {
-  
     const handleRouteChange = (url: string) => {
       setloadingPage(true);
       return;
