@@ -138,25 +138,5 @@ function CreateOrderModal({
   ) : null;
 }
 
-// const Layout = ({
-//   children,
-//   option,
-//   center = true,
-// }: {
-//   children: ReactNode;
-//   option: string;
-//   center?: boolean;
-// }) => {
-//   return (
-//     <div
-//       className={cn("grid grid-cols-3 w-full ", {
-//         "items-center": center,
-//       })}
-//     >
-//       <p className="text-[14px] font-semibold "> {option}</p>
-//       <div className=" w-full col-span-2">{children}</div>
-//     </div>
-//   );
-// };
 
 export { CreateOrderModal };
