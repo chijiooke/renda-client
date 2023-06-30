@@ -65,7 +65,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
         "Kindly fill in your phone number"
       ),
       // pickUpLGA: Yup.string(),
-      dropOffAddress: Yup.string().required("this is a required field"),
+      // dropOffAddress: Yup.string().required("this is a required field"),
       // pickUpAddress: Yup.string().required("this is a required field"),
       // contactName: Yup.string().required("this is a required field"),
       // contactPhoneNumber: Yup.string().required("this is a required field"),
@@ -81,6 +81,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
       recipientPhoneNumber,
       state,
       deliveryAddress,
+      paymentType,
       // pickUpLGA,
       // pickUpAddress,
       // contactName,
@@ -92,6 +93,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
         recipientName,
         recipientPhoneNumber,
         deliveryAddress,
+        paymentType,
         // pickUpLGA,
         state,
         // pickUpAddress,
@@ -158,6 +160,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                     value={formik.values.recipientName}
                     caption={formikCaption("recipientName", formik)}
                     error={formikError("recipientName", formik)}
+                    size="sm"
                   />
                 </Layout>
                 <Layout option="Recipient's phone number" center={true}>
@@ -169,6 +172,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                     value={formik.values.recipientPhoneNumber}
                     caption={formikCaption("recipientPhoneNumber", formik)}
                     error={formikError("recipientPhoneNumber", formik)}
+                    size="sm"
                   />
                 </Layout>
                 <Layout option="Delivery address" center={true}>
@@ -181,6 +185,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                     value={formik.values.deliveryAddress}
                     caption={formikCaption("deliveryLocation", formik)}
                     error={formikError("deliveryLocation", formik)}
+                    size="sm"
                   />
                 </Layout>{" "}
                 {/* <Layout option="Drop off address" center={true}>
@@ -213,6 +218,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                     value={formik.values.deliveryLGA || ""}
                     caption={formikCaption("state", formik)}
                     error={formikError("state", formik)}
+                    size="sm"
                   />
                 </Layout>
                 <Layout option="Delivery LGA" center={true}>
@@ -224,31 +230,10 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                     value={formik.values.deliveryLGA || ""}
                     caption={formikCaption("deliveryLGA", formik)}
                     error={formikError("deliveryLGA", formik)}
+                    size="sm"
                   />
                 </Layout>
                 <Layout option="Payment Mode" center={true}>
-                  {/* <div className="grid grid-cols-2 gap-4">
-                  <div
-                    className="flex gap-4 border-2 rounded items-center "
-                    style={{ backgroundColor: "#F5F5F5", height: "50px" }}
-                  >
-                    <div className="mx-3 mt-1">
-                      <input type="checkbox" className="pl-3 scale-150" />
-                    </div>
-                    <p>Pay on Delivery</p>
-                  </div>
-
-                  <div
-                    className="flex gap-4 border-2 rounded  h-40 items-center"
-                    style={{ backgroundColor: "#F5F5F5", height: "50px" }}
-                  >
-                    <div className="mx-3 mt-1 ">
-                      <input type="checkbox" className="pl-3 scale-150" />
-                    </div>
-                    <p> Paid</p>
-                  </div>
-                </div> */}
-
                   <FormControl>
                     <RadioGroup
                       onChange={(e) =>
@@ -257,7 +242,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
-                      className=""
+                      className="flex gap-3 "
                     >
                       <div></div>
                       <FormControlLabel
@@ -269,8 +254,12 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                           />
                         }
                         label="paid"
-                        className="flex gap-4 border-2 rounded items-center "
-                        style={{ backgroundColor: "#F5F5F5", height: "50px" }}
+                        className="flex gap-2 border-2 rounded items-center "
+                        style={{
+                          backgroundColor: "#F5F5F5",
+                          height: "50px",
+                          width: "120px",
+                        }}
                       />
                       <FormControlLabel
                         value="payOnDelivery"
@@ -281,8 +270,12 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                           />
                         }
                         label="payOnDelivery"
-                        className="flex gap-4 border-2 rounded items-center "
-                        style={{ backgroundColor: "#F5F5F5", height: "50px" }}
+                        className="flex gap-2 border-2 rounded items-center "
+                        style={{
+                          backgroundColor: "#F5F5F5",
+                          height: "50px",
+                          width: "190px",
+                        }}
                       />
                     </RadioGroup>
                   </FormControl>
@@ -291,7 +284,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                   <div
                     style={{
                       display: "flex",
-                      gap: "0.5rem",
+                      gap: "3rem",
                       alignItems: "center",
                     }}
                   >
@@ -336,6 +329,7 @@ function DeliveryDetailsModal({ show, data, close }: Props) {
                       }
                       caption={formikCaption("deliveryDate", formik)}
                       error={formikError("deliveryDate", formik)}
+                      size="sm"
                     />
                   </div>
                 )}

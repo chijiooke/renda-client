@@ -1,130 +1,130 @@
 import { Button } from "@/components";
 import {
+  Box,
   Checkbox,
   Table,
+  TableBody,
   TableCell,
   TableHead,
   TableRow,
   Typography,
 } from "@mui/material";
-import { FC, useState } from "react";
+import axios from "axios";
+import { FC, useEffect, useState } from "react";
+import { InternalOrdersType } from "./types/internal-order-types";
+import { InfinitySpin } from "react-loader-spinner";
+import dayjs from "dayjs";
+import { Info, InfoOutlined } from "@mui/icons-material";
+import { baseURL } from "@/utils";
 
 const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
-  const [data, setdata] = useState([]);
+  const [data, setdata] = useState<InternalOrdersType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const getInventoryOrders = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${baseURL}api/InternalOrders`);
+      console.log(res?.data);
+      setdata(res?.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getInventoryOrders();
+  }, []);
+
+  const tableHeaders = [
+    "Order ID",
+    "Name of Items",
+    "Facility Name",
+    "Facility ID",
+    "Order ID",
+    "Date Created",
+    "Reciepients Name",
+    "Delivery Location",
+    "Mode Of Payment",
+    "Status",
+  ];
   return (
     <>
-      <div>
-        <Typography
-          variant="body2"
-          className=" bg-[#E7F4FF] p-2 font-medium text-[#7A7A7A]  rounded-md "
-        >
-          Orders from your Renda storage
-        </Typography>
+      <Typography
+        variant="body2"
+        className=" bg-[#E7F4FF] p-2 font-medium text-[#7A7A7A]  rounded-md flex items-center gap-1 "
+      >
+        <InfoOutlined /> Orders from your Renda storage
+      </Typography>
+      <div className=" overflow-scroll">
         <Table>
-          <TableHead>
+          <TableHead className=" bg-gray-100">
             <TableRow>
-              <TableCell variant="head">
+              {/* <TableCell variant="head">
                 <Checkbox />
-              </TableCell>
-              < TableHeaderCell text="Order Id"/>
-              < TableHeaderCell text="Name of Items"/>
-              < TableHeaderCell text="facility"/>
-              < TableHeaderCell text="facility ID"/>
-              < TableHeaderCell text="Order Id"/>
-             
-             
-             
-              <TableCell
-                variant="head"
-                className=" font-bold rounded-md whitespace-nowrap"
-              >
-                FACILITY ID
-              </TableCell>
-              <TableCell
-                variant="head"
-                className=" font-bold rounded-md whitespace-nowrap"
-              >
-                DATE CREATED
-              </TableCell>
-              <TableCell
-                variant="head"
-                className=" font-bold rounded-md whitespace-nowrap"
-              >
-                RECIPIENTS NAME
-              </TableCell>
-              <TableCell
-                variant="head"
-                className=" font-bold rounded-md whitespace-nowrap"
-              >
-                DELIVERY LOCATION
-              </TableCell>
-              <TableCell
-                variant="head"
-                className=" font-bold rounded-md whitespace-nowrap"
-              >
-                MODE OF PAYMENT
-              </TableCell>
-              <TableCell
-                variant="head"
-                className=" font-bold rounded-md whitespace-nowrap"
-              >
-                STATUS
-              </TableCell>
-
-              <TableCell></TableCell>
+              </TableCell> */}
+              {tableHeaders.map((tableHead) => (
+                <TableHeaderCell text={tableHead} />
+              ))}
             </TableRow>
           </TableHead>
-        </Table>
-        <div className="flex flex-col my-6 rounded border-1 border-gray-300 ">
-          <div className="grid grid-c-9 uppercase p-4  justify-between relative">
-            <p className="text-center">ORDER ID</p>
-            <p className="text-center">NO OF ITEMS</p>
-            <p className="text-center">FACILITY NAME</p>
-            <p className="text-center">FACILITY ID</p>
-            <p className="text-center">DATE CREATED</p>
-            <p className="text-center">RECIPIENTS NAME</p>
-            <p className="text-center">DELIVERY LOCATION</p>
-            <p className="text-center">MODE OF PAYMENT</p>
-            <p className="text-center">status</p>
-            <div>
-              <div className="absolute top-5  ">
-                <input type="checkbox" className="pl-3 scale-150" />
-              </div>
-            </div>
-          </div>
-          <div className="px-5"></div>
-        </div>
+          <TableBody>
+            {loading && (
+              <TableRow>
+                <TableCell colSpan={10}>
+                  <Box className="flex  items-center justify-center min-w-full">
+                    {" "}
+                    <InfinitySpin color="#f99b21" />
+                  </Box>
+                </TableCell>
+              </TableRow>
+            )}
+            {!data.length && !loading && (
+              <TableRow>
+                <TableCell colSpan={10}>
+                  <Box className="flex  items-center justify-center min-w-full flex-col gap-2">
+                    <p className="flex justify-center mb-6">
+                      You have no order
+                    </p>
+                    <Button
+                      size="sm"
+                      title="Create order from inventory"
+                      handleClick={openModal}
+                    />
+                  </Box>
+                </TableCell>
+              </TableRow>
+            )}
 
-        <div className="grid grid-c-9 p-4 justify-between relative">
-          <p className="text-center">1234567</p>
-          <p className="text-center">34</p>
-          <p className="text-center">Oni Ile facility</p>
-          <p className="text-center">RND12345</p>
-          <p className="text-center">11/04/2023</p>
-          <p className="text-center">Promise Eze</p>
-          <p className="text-center">Ketu</p>
-          <p className="text-center">paid</p>
-          <p className="text-center">Pending</p>
-          <div>
-            <div className="absolute top-5  ">
-              <input type="checkbox" className="pl-3 scale-150" />
-            </div>
-          </div>
-        </div>
-        {loading && "loading..."}
-        {!data.length && !loading ? (
-          <div className="grid justify-center mt-40 mb-40">
-            <p className="flex justify-center mb-6">You have no order</p>
-            <Button
-              size="sm"
-              title="Create order from inventory"
-              handleClick={openModal}
-            />
-          </div>
-        ) : (
-          data.map((item) => <div>item</div>)
-        )}
+            {data.length && !loading
+              ? data.map((item: InternalOrdersType) => (
+                  <TableRow>
+                    {/* <TableCell variant="body">
+                      <Checkbox />
+                    </TableCell> */}
+                    <TableCell variant="body">{item?.orderId}</TableCell>
+                    <TableCell variant="body">{item?.numberOfItems}</TableCell>
+                    <TableCell variant="body">
+                      {item?.storageFacilityId}
+                    </TableCell>
+                    <TableCell variant="body">{item?.pickUpAddress}</TableCell>
+                    <TableCell variant="body">{item?.orderId}</TableCell>
+                    <TableCell variant="body">
+                      {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
+                    </TableCell>
+                    <TableCell variant="body">{item?.recipientName}</TableCell>
+                    <TableCell variant="body">
+                      {`${item?.deliveryAddress}, ${item?.deliveryLGA}, ${item?.deliveryState}`}
+                    </TableCell>
+                    <TableCell variant="body">{item?.paymentMode}</TableCell>
+                    <TableCell variant="body">{item?.status}</TableCell>
+                  </TableRow>
+                ))
+              : null}
+          </TableBody>
+        </Table>
       </div>
     </>
   );

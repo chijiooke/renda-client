@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 
 import {
   IExternalOrderItemType,
-  IExternalOrderType
+  IExternalOrderType,
 } from "@/_tabs/ordermgt/types/external-order-types";
 import { Minus, Plus } from "@/icons";
 import { baseURL, formikCaption, formikError } from "@/utils";
@@ -55,7 +55,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
   ) => {
     let data = [...items];
 
-     // @ts-ignore
+    // @ts-ignore
     data[index][eventData.key as keyof IExternalOrderItemType] =
       eventData.value as string | number;
     setitems(data);
@@ -171,17 +171,16 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
             Create Order
           </p>
           <div
-            className="grid gap-6 mt-8 mb-6 p-10"
+            className="grid gap-6 mt-8 mb-6 p-10 justify-between"
             style={{
               height: "100%",
               overflowY: "scroll",
               boxSizing: "border-box",
             }}
           >
-            <div className="grid gap-9">
+            <div className="grid gap-2">
               <Layout option="Recipient's Name" center={true}>
                 <Input
-                  className="h-10"
                   name="recipientName"
                   placeholder="Enter recipient's name"
                   type="text"
@@ -189,6 +188,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   value={formik.values.recipientName}
                   caption={formikCaption("recipientName", formik)}
                   error={formikError("recipientName", formik)}
+                  size="sm"
                 />
               </Layout>
               <Layout option="Recipient's phone number" center={true}>
@@ -208,11 +208,11 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   value={formik.values.pickUpLGA || ""}
                   caption={formikCaption("pickUpLGA", formik)}
                   error={formikError("pickUpLGA", formik)}
+                  size="sm"
                 />
               </Layout>
               <Layout option="Pick up address" center={true}>
                 <Input
-                  className="h-10"
                   name="pickUpAddress"
                   placeholder="Pick up address"
                   type="text"
@@ -220,11 +220,11 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   value={formik.values.pickUpAddress}
                   caption={formikCaption("pickUpAddress", formik)}
                   error={formikError("pickUpAddress", formik)}
+                  size="sm"
                 />
               </Layout>
               <Layout option="Pick up contact" center={true}>
                 <Input
-                  className="h-10"
                   name="contactName"
                   placeholder="Enter Pick up contact"
                   type="text"
@@ -232,6 +232,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   value={formik.values.contactName}
                   caption={formikCaption("contactName", formik)}
                   error={formikError("contactName", formik)}
+                  size="sm"
                 />
               </Layout>
               <Layout option="Contact Phone no." center={true}>
@@ -251,11 +252,12 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   value={formik.values.deliveryLGA || ""}
                   caption={formikCaption("deliveryLocation", formik)}
                   error={formikError("deliveryLocation", formik)}
+                  size="sm"
                 />
               </Layout>
               <Layout option="Delivery address" center={true}>
                 <Input
-                  className="h-10"
+                  className=""
                   name="deliveryAddress"
                   placeholder="Delivery address"
                   type="text"
@@ -263,6 +265,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   value={formik.values.deliveryAddress}
                   caption={formikCaption("deliveryLocation", formik)}
                   error={formikError("deliveryLocation", formik)}
+                  size="sm"
                 />
               </Layout>{" "}
               <div
@@ -274,7 +277,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     <div className="flex gap-2 mb-9">
                       {" "}
                       <Input
-                        className="h-10"
+                        size="sm"
                         name=""
                         placeholder="Name of Item"
                         type="text"
@@ -287,7 +290,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                         }
                       />
                       <Input
-                        className="h-10"
+                        size="sm"
                         name=""
                         placeholder="Dimension"
                         type="text"
@@ -300,7 +303,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                         }
                       />
                       <Input
-                        className="h-10"
+                        size="sm"
                         name=""
                         placeholder="Unit Price"
                         type="number"
@@ -313,7 +316,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                         }
                       />
                       <Input
-                        className="h-10"
+                        size="sm"
                         name=""
                         placeholder="Quantity"
                         type="number"
@@ -373,7 +376,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
-                    className=" "
+                    className="flex justify-end gap-3 mt-3"
                   >
                     <div></div>
                     <FormControlLabel
@@ -388,13 +391,12 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                       className="flex gap-2 border-2 rounded items-center mr-6 "
                       style={{
                         backgroundColor: "#F5F5F5",
-                        height: "50px",
+                        // height: "50px",
                         width: "150px",
                       }}
                     />
                     <FormControlLabel
                       value="payOnDelivery"
-                      className="p-10 bg-[#e5e5e5] min-w-[200]"
                       control={
                         <Radio
                           icon={<CheckBoxOutlineBlankIcon />}
@@ -405,8 +407,8 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                       className="flex gap-2 border-2 rounded items-center ml-6 "
                       style={{
                         backgroundColor: "#F5F5F5",
-                        height: "50px",
-                        width: "150px",
+                        // height: "50px",
+                        width: "250px",
                       }}
                     />
                   </RadioGroup>
@@ -414,9 +416,10 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
               </Layout>
               <Layout option="Set Delivery Time" center={true}>
                 <div
+                  className=""
                   style={{
                     display: "flex",
-                    gap: "0.5rem",
+                    gap: "3rem",
                     alignItems: "center",
                   }}
                 >
@@ -447,9 +450,10 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                 </div>
               </Layout>
               {deliveryTime === DeliveryTimeEnum.SET_DATE && (
-                <div className="w-90">
+                <div className="">
                   {" "}
                   <Input
+                    size="sm"
                     type="date"
                     name="deliveryDate"
                     className=""

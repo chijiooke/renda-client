@@ -8,6 +8,8 @@ import { capitalizeText } from "@/utils/capitalizeText";
 import { OrdermgtRoutes } from "@/utils/routes";
 import { RadioGroup } from "@headlessui/react";
 import { useRouter } from "next/router";
+import { Dialog, DialogActions, DialogTitle, IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 
 type Props = {
   show: boolean;
@@ -53,90 +55,70 @@ function CreateOrderModal({
     }
   };
 
-  return show ? (
-    <div className="modal">
-      <div className="rounded bg-white p-10">
-        <div className="relative flex">
-          <div
-            className="relative w-full h-full p-4"
-            style={{ width: "600px" }}
-          >
-            <p
-              onClick={close}
-              className="absolute right-0 top-0 scale-125 cursor-pointer"
-            >
-              X
-            </p>
-
-            <div>
-              <p className="text-center text-primary font-extrabold text-[18px]">
-                Create Order
-              </p>
-            </div>
-            <div className="grid justify-center">
-              <div className="grid max-w-md w-full my-6 gap-6">
-                <RadioGroup value={createOrderBy} onChange={setCreateOrderBy}>
-                  {Object.keys(CreateOrderByEnum).map((item) => {
-                    if (
-                      modalType === OrderManagementTabsEnum.EXTERNAL_ORDERS &&
-                      item === CreateOrderByEnum.FROM_INVENTORY
-                    ) {
-                      return;
-                    } else if (
-                      modalType === OrderManagementTabsEnum.INVENTORY_ORDERS &&
-                      item === CreateOrderByEnum.SINGLE_ORDER
-                    ) {
-                      return;
-                    } else {
-                      return (
-                        <RadioGroup.Option
-                          key={item}
-                          value={item}
-                          className={({ active, checked }) =>
-                            `${
-                              active
-                                ? "border-2 rounded w-full radio-order"
-                                : "radio-order"
-                            }
-                          ${
-                            checked
-                              ? "border-solid rounded border-2 radio-checked"
-                              : "border-2 rounded"
-                          }
-                            w-full  items-center justify-between text-sky-400`
-                          }
-                        >
-                          {({ active, checked }) => (
-                            <RadioGroup.Label
-                              as="p"
-                              className={`font-lg flex items-center uppercase radio-text mt-5 ${
-                                checked ? "text-[#1B547F]" : "text-gray-900"
-                              }`}
-                            >
-                              {capitalizeText(item.replace("_", " "))}
-                            </RadioGroup.Label>
-                          )}
-                        </RadioGroup.Option>
-                      );
-                    }
-                  })}
-                </RadioGroup>
-              </div>
-            </div>
-
-            <div className=" w-full flex justify-center">
-              <Button
-                title="Create order"
-                variant="primary"
-                handleClick={handleSubmit}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  ) : null;
+  return (
+    <Dialog open={show}>
+      <DialogTitle>
+        {" "}
+        <IconButton>
+          <Close />
+        </IconButton>
+      </DialogTitle>{" "}
+      <RadioGroup value={createOrderBy} onChange={setCreateOrderBy}>
+        {Object.keys(CreateOrderByEnum).map((item) => {
+          if (
+            modalType === OrderManagementTabsEnum.EXTERNAL_ORDERS &&
+            item === CreateOrderByEnum.FROM_INVENTORY
+          ) {
+            return;
+          } else if (
+            modalType === OrderManagementTabsEnum.INVENTORY_ORDERS &&
+            item === CreateOrderByEnum.SINGLE_ORDER
+          ) {
+            return;
+          } else {
+            return (
+              <RadioGroup.Option
+                key={item}
+                value={item}
+                className={({ active, checked }) =>
+                  `${
+                    active
+                      ? "border-2 rounded w-full radio-order"
+                      : "radio-order"
+                  }
+                        ${
+                          checked
+                            ? "border-solid rounded border-2 radio-checked"
+                            : "border-2 rounded"
+                        }
+                          w-full  items-center justify-between text-sky-400`
+                }
+              >
+                {({ active, checked }) => (
+                  <RadioGroup.Label
+                    as="p"
+                    className={`font-lg flex items-center uppercase radio-text mt-5 ${
+                      checked ? "text-[#1B547F]" : "text-gray-900"
+                    }`}
+                  >
+                    {capitalizeText(item.replace("_", " "))}
+                  </RadioGroup.Label>
+                )}
+              </RadioGroup.Option>
+            );
+          }
+        })}
+      </RadioGroup>
+      <DialogActions>
+        {" "}
+        <Button
+          title="Create order"
+          variant="primary"
+          handleClick={handleSubmit}
+        />
+      </DialogActions>
+    </Dialog>
+  );
 }
-
 
 export { CreateOrderModal };
