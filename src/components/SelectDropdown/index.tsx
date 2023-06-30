@@ -32,7 +32,7 @@ const Select: FC<Props> = ({
       <div className="relative">
         <select
           className={cn(
-            "cursor-pointer p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  appearance-none text-gray-100",
+            "cursor-pointer p-3 text-black border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  appearance-none ",
             {
               input: !value?.trim(),
               "py-2": size === "sm",

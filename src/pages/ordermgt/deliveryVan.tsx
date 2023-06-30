@@ -1,10 +1,9 @@
+import { DeliveryDetails } from "@/_tabs/ordermgt/DeliveryDetails";
 import { Button } from "@/components";
 import { DropDown } from "@/icons";
 import { Notes } from "@/icons/notes";
 import { DashBoardLayout } from "@/layout";
 import { DeliveryDetailsModal } from "@/modals/deliveryDetailsModal";
-import { DeliveryDetails } from "@/_tabs/ordermgt/deliveryDetails";
-import { Menu } from "@headlessui/react";
 import { useState } from "react";
 
 export default function DeliveryVan() {

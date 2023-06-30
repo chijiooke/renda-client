@@ -1,5 +1,6 @@
 import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
 import { OnboardingAction } from "@/types";
+import { UserType } from "./types/user-types";
 
 export type InventoryType = {
   id?: string;
@@ -26,7 +27,7 @@ export interface StoreState {
     businessAddress?: string;
   };
   userId: string;
-  user: any | null;
+  user: UserType | null;
   companyRegistrationNumber: string;
   Kyc: FormData;
   fileList: {

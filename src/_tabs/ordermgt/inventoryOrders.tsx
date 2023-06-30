@@ -43,7 +43,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
     "Name of Items",
     "Facility Name",
     "Facility ID",
-    "Order ID",
+
     "Date Created",
     "Reciepients Name",
     "Delivery Location",
@@ -110,7 +110,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
                       {item?.storageFacilityId}
                     </TableCell>
                     <TableCell variant="body">{item?.pickUpAddress}</TableCell>
-                    <TableCell variant="body">{item?.orderId}</TableCell>
+
                     <TableCell variant="body">
                       {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
                     </TableCell>

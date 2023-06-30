@@ -1,11 +1,4 @@
 import { Button, Input, PhoneNumberInput, Select } from "@/components";
-import cn from "classnames";
-import { ReactNode, useEffect, useState } from "react";
-
-import {
-  IExternalOrderItemType,
-  IExternalOrderType
-} from "@/_tabs/ordermgt/types/external-order-types";
 import { Minus, Plus } from "@/icons";
 import { baseURL, formikCaption, formikError } from "@/utils";
 import { capitalizeText } from "@/utils/capitalizeText";
@@ -18,12 +11,20 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import cn from "classnames";
 import { useFormik } from "formik";
+import { ReactNode, useEffect, useState } from "react";
 import * as Yup from "yup";
 
+import {
+  CreateExternalOrderItemType,
+  CreateExternalOrderType,
+} from "@/_tabs/ordermgt/types/external-order-types";
 import { hasInValidItems } from "@/_tabs/ordermgt/utils/has-invalid-items";
+import { StoreState } from "@/store/reducer";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 type Props = {
   show: boolean;
@@ -36,16 +37,16 @@ enum DeliveryTimeEnum {
 }
 const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
 
-function ExternalOrderDetailsModal({ show, close }: Props) {
+export const CreateExternalOrderModal = ({ show, close }: Props) => {
   const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>();
-  const itemsPlaceholder: IExternalOrderItemType = {
+  const itemsPlaceholder: CreateExternalOrderItemType = {
     itemName: "",
     dimension: "",
     quantity: 0,
     unitPrice: 0,
   };
 
-  const [items, setitems] = useState<IExternalOrderItemType[]>([
+  const [items, setitems] = useState<CreateExternalOrderItemType[]>([
     itemsPlaceholder,
   ]);
 
@@ -55,8 +56,8 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
   ) => {
     let data = [...items];
 
-     // @ts-ignore
-    data[index][eventData.key as keyof IExternalOrderItemType] =
+    // @ts-ignore
+    data[index][eventData.key as keyof ExternalOrderItemType] =
       eventData.value as string | number;
     setitems(data);
   };
@@ -72,6 +73,8 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
   const [isSubmitting, setisSubmitting] = useState(false);
   const [error, setError] = useState<string>("");
 
+  const { user } = useSelector((state: StoreState) => state);
+
   const formik = useFormik({
     initialValues: {
       recipientName: "",
@@ -81,9 +84,10 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
       paymentMode: "",
       contactName: "",
       contactPhoneNumber: "",
+      deliveryState: null,
       deliveryLGA: null,
       deliveryAddress: "",
-      deliveryDate: new Date().toISOString(),
+      dispatchTime: new Date().toISOString(),
     },
     validationSchema: Yup.object({
       recipientName: Yup.string().required("Kindly fill in your name"),
@@ -94,51 +98,52 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
       pickUpAddress: Yup.string().required("this is a required field"),
       contactName: Yup.string().required("this is a required field"),
       contactPhoneNumber: Yup.string().required("this is a required field"),
+      deliveryState: Yup.string().required(),
       deliveryLGA: Yup.string().required(),
       deliveryAddress: Yup.string().required(),
-      deliveryDate: Yup.date().required(),
+      dispatchTime: Yup.date().required(),
       paymentMode: Yup.string().required(),
     }),
     onSubmit: ({
       recipientName,
       recipientPhoneNo,
-      pickUpLGA,
       pickUpAddress,
-      contactName,
+      pickUpLGA,
       contactPhoneNumber,
       deliveryLGA,
-      deliveryDate,
+      dispatchTime,
       paymentMode,
+      deliveryState,
       deliveryAddress,
     }) => {
-      const data: IExternalOrderType = {
+      const data: CreateExternalOrderType = {
         recipientName,
+        reciepientName: recipientName,
         paymentMode,
         numberOfItems: items.length,
-        recipientPhoneNo,
+        reciepientPhoneNo: recipientPhoneNo,
         pickUpAddress,
-        pickUpLGA: pickUpLGA || "",
+        deliveryState: deliveryState || "",
         deliveryAddress,
         deliveryLGA: deliveryLGA || "",
-        deliveryDate,
+        dispatchTime,
         orderItems: items,
-        contactName,
-        contactPhoneNumber,
-        // customerId
-        // pickUpTime,
-        // dispatchTime
+        // contactPhoneNumber,
+        customerId: user?.customerId || "",
+        storageFacilityId: "1234444",
+        pickUpTime: dispatchTime,
       };
 
       bookOrder(data);
     },
   });
 
-  const bookOrder = async (data: IExternalOrderType) => {
+  const bookOrder = async (data: CreateExternalOrderType) => {
     setisSubmitting(true);
     setError("");
 
     try {
-      const { data: response } = await axios.post(baseURL + "api/orders", data);
+      const { data: response } = await axios.post(baseURL + "api/ExternalOrders", data);
       formik.resetForm();
       close();
     } catch (error) {
@@ -240,6 +245,17 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                   value={formik.values.contactPhoneNumber}
                   caption={formikCaption("contactPhoneNumber", formik)}
                   error={formikError("contactPhoneNumber", formik)}
+                />
+              </Layout>
+              <Layout option="Delivery state" center={true}>
+                <Select
+                  name=""
+                  placeholder="Select Delivery State"
+                  options={location}
+                  handleChange={formik.handleChange("deliveryState")}
+                  value={formik.values.deliveryState || ""}
+                  caption={formikCaption("deliveryLocation", formik)}
+                  error={formikError("deliveryLocation", formik)}
                 />
               </Layout>
               <Layout option="Delivery LGA" center={true}>
@@ -439,7 +455,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
                     className=""
                     handleChange={formik.handleChange}
                     value={
-                      formik.values.deliveryDate || new Date().toISOString()
+                      formik.values.dispatchTime || new Date().toISOString()
                     }
                     caption={formikCaption("deliveryDate", formik)}
                     error={formikError("deliveryDate", formik)}
@@ -450,6 +466,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
           </div>
           <div className=" w-full px-10 py-5">
             <Button
+            
               title="Book Now"
               className="w-full"
               handleClick={() => {
@@ -467,7 +484,7 @@ function ExternalOrderDetailsModal({ show, close }: Props) {
       </form>
     </div>
   ) : null;
-}
+};
 
 const Layout = ({
   children,
@@ -480,7 +497,7 @@ const Layout = ({
 }) => {
   return (
     <div
-      className={cn("grid grid-cols-3 w-full ", {
+      className={cn("grid grid-cols-3 w-full mb-4", {
         "items-center": center,
       })}
     >
@@ -489,5 +506,3 @@ const Layout = ({
     </div>
   );
 };
-
-export { ExternalOrderDetailsModal };

@@ -19,7 +19,14 @@ import { OnboardingAction } from "@/types";
 import axios from "axios";
 import { NavigationDrawer } from "./components/NavigationDrawer";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import { Avatar, Badge, Button, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { ContextMenu } from "@/components/context-menu/ContextMenu";
 
 type Props = {
@@ -132,8 +139,8 @@ const DashBoardLayout: FC<Props> = ({
   }, []);
 
   const signOut = () => {
-    sessionStorage.removeItem('userId');
-    router.push("auth/login")
+    sessionStorage.removeItem("userId");
+    router.push("auth/login");
   };
 
   const isActive = (route: string) => {
@@ -148,15 +155,12 @@ const DashBoardLayout: FC<Props> = ({
         >
           <NavigationDrawer />
 
-          <div
-            className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow"
-            
-          >
+          <div className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow">
             <div className="d-flex flex-center flex-column flex-column-fluid bg-[#f4fbff]">
               <div className="w-full h-full ">
                 <div className="bg-white rounded w-full h-full  p-10 ">
                   <div
-                    className={cn("flex  w-full my-3  sticky  top-2/4" , {
+                    className={cn("flex  w-full my-3  sticky  top-2/4", {
                       "flex-row-reverse": !backAction,
                       "justify-between": backAction,
                     })}
@@ -223,13 +227,14 @@ const DashBoardLayout: FC<Props> = ({
                         open={open}
                         anchorEl={anchorEl}
                       >
-                        <Button onClick={() => signOut()}>Sign Out</Button>
+                        {/* <Box></Box> */}
+                        <Button onClick={() => signOut()} className="">
+                          Sign Out
+                        </Button>
                       </ContextMenu>
                     </div>
                   </div>
-                  <div >
-                    {!loading ? <> {children}</> : <>Loading</>}
-                  </div>
+                  <div>{!loading ? <> {children}</> : <>Loading</>}</div>
                 </div>
               </div>
             </div>
