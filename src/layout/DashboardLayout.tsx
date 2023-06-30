@@ -140,7 +140,7 @@ const DashBoardLayout: FC<Props> = ({
 
   const signOut = () => {
     sessionStorage.removeItem("userId");
-    router.push("auth/login");
+    router.push("/auth/login");
   };
 
   const isActive = (route: string) => {
@@ -217,7 +217,7 @@ const DashBoardLayout: FC<Props> = ({
                       <IconButton>
                         <Avatar
                           sx={{ width: 30, height: 30 }}
-                          alt={user?.name}
+                          alt={user?.contactName}
                           src="/static/images/avatar/1.jpg"
                           onClick={handleClick}
                         />
