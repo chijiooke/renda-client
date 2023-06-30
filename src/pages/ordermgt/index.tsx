@@ -1,12 +1,13 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { ExternalOrders } from "@/_tabs/ordermgt/externalOrders";
-import { InventoryOrders } from "@/_tabs/ordermgt/inventoryOrders";
+
 import { Tab } from "@headlessui/react";
 import { CreateOrderModal } from "@/modals/createordermodal";
 import { useState } from "react";
 import { capitalizeText } from "@/utils/capitalizeText";
-import { ExternalOrderDetailsModal } from "@/modals/externalDetailsModal";
+import { CreateExternalOrderModal } from "@/modals/CreateExternalOrderModal";
+import { InventoryOrders } from "@/_tabs/ordermgt/InventoryOrders";
+import { ExternalOrders } from "@/_tabs/ordermgt/ExternalOrders";
 
 export enum OrderManagementTabsEnum {
   INVENTORY_ORDERS = "INVENTORY_ORDERS",
@@ -15,7 +16,7 @@ export enum OrderManagementTabsEnum {
 
 export default function Ordermgt() {
   let [isOpen, setIsOpen] = useState(false);
-  let [openCreateModal, setopenCreateModal] = useState(false);
+  let [isSingleOrderModalOpen, setIsSingleOrderModalOpen] = useState(false);
   let [modalType, setModalType] = useState<OrderManagementTabsEnum>(
     OrderManagementTabsEnum.INVENTORY_ORDERS
   );
@@ -39,7 +40,7 @@ export default function Ordermgt() {
             <Button
               title="Create Order"
               size="sm"
-              handleClick={() => setopenCreateModal(true)}
+              handleClick={() => setIsOpen(true)}
             />
           </div>
         </div>
@@ -60,7 +61,7 @@ export default function Ordermgt() {
                   key={idx}
                   className={({ selected }) =>
                     classNames(
-                      "py-3 px-7 outline-none rounded-tl-lg clip-path-polygon ",
+                      "py-3 px-7 outline-none rounded-tl-lg clip-path-polygon  ",
                       selected ? "bg-primary text-white  " : "bg-[#f4f4f4]"
                     )
                   }
@@ -72,7 +73,6 @@ export default function Ordermgt() {
             <Tab.Panel>
               <InventoryOrders
                 openModal={() => {
-                  console.log(500);
                   setIsOpen(true);
                 }}
               />
@@ -86,19 +86,19 @@ export default function Ordermgt() {
       <CreateOrderModal
         openCreateModal={() => {
           setIsOpen(false);
-          setopenCreateModal(true);
+          setIsSingleOrderModalOpen(true);
         }}
         show={isOpen}
         close={() => setIsOpen(false)}
         modalType={modalType}
       />
-      <ExternalOrderDetailsModal
-        show={openCreateModal}
+      <CreateExternalOrderModal
+        show={isSingleOrderModalOpen}
         close={(data) => {
           if (!data) {
-            setopenCreateModal(false);
+            setIsSingleOrderModalOpen(false);
           }
-          setopenCreateModal(false);
+          setIsSingleOrderModalOpen(false);
           createExternalOrder();
         }}
       />

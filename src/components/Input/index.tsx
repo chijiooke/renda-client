@@ -64,7 +64,7 @@ const Input: FC<Props> = ({
     iType === "text" ? setIType("password") : setIType("text");
   };
   return (
-    <div className={cn("flex flex-col", className)}>
+    <div className={cn("flex flex-col mb-3", className)}>
       {label && (
         <label htmlFor={name} className="text-lg mb-3 font-bold">
           {label}
@@ -80,7 +80,7 @@ const Input: FC<Props> = ({
           disabled={disabled}
           id={id}
           className={cn(
-            "p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300 ",
+            "p-3 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300 ",
             {
               "border-red outline-[border-red]": error,
               "py-2 rounded-lg": size == "sm",

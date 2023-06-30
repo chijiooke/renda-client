@@ -1,15 +1,27 @@
 import { Button } from "@/components";
 import { DashBoardRoutes } from "@/utils";
-import cn from "classnames";
-import { Dispatch, ReactNode, useState } from "react";
+import { useState } from "react";
 
 import { OrderManagementTabsEnum } from "@/pages/ordermgt";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { OrdermgtRoutes } from "@/utils/routes";
-import { RadioGroup } from "@headlessui/react";
-import { useRouter } from "next/router";
-import { Dialog, DialogActions, DialogTitle, IconButton } from "@mui/material";
+
+// import { FormControl } from "@mui/base";
 import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  FormControl,
+  // DialogTitle,
+  FormControlLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
+import { useRouter } from "next/router";
 
 type Props = {
   show: boolean;
@@ -37,9 +49,12 @@ function CreateOrderModal({
 
   const [createOrderBy, setCreateOrderBy] = useState<CreateOrderByEnum>();
 
-  // const handleChange = (value: CreateOrderByEnum) => {
-  //   setCreateOrderBy(value);
-  // };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateOrderBy(
+      (event.target as HTMLInputElement).value as CreateOrderByEnum
+    );
+    // console.log(value);
+  };
 
   const handleSubmit = () => {
     // Perform any necessary actions before routing
@@ -56,62 +71,84 @@ function CreateOrderModal({
   };
 
   return (
-    <Dialog open={show}>
-      <DialogTitle>
-        {" "}
-        <IconButton>
+    <Dialog open={show} onClose={() => close()} maxWidth="md">
+      <DialogTitle
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box>Create Order By</Box>
+        <IconButton onClick={() => close()}>
           <Close />
         </IconButton>
-      </DialogTitle>{" "}
-      <RadioGroup value={createOrderBy} onChange={setCreateOrderBy}>
-        {Object.keys(CreateOrderByEnum).map((item) => {
-          if (
-            modalType === OrderManagementTabsEnum.EXTERNAL_ORDERS &&
-            item === CreateOrderByEnum.FROM_INVENTORY
-          ) {
-            return;
-          } else if (
-            modalType === OrderManagementTabsEnum.INVENTORY_ORDERS &&
-            item === CreateOrderByEnum.SINGLE_ORDER
-          ) {
-            return;
-          } else {
-            return (
-              <RadioGroup.Option
-                key={item}
-                value={item}
-                className={({ active, checked }) =>
-                  `${
-                    active
-                      ? "border-2 rounded w-full radio-order"
-                      : "radio-order"
+      </DialogTitle>
+      <FormControl
+        sx={{
+          // minWidth: "100%",
+          padding: "2rem",
+
+          width: "500px",
+        }}
+      >
+        <RadioGroup
+          onChange={(e) => handleChange(e)}
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          value={createOrderBy}
+        >
+          {Object.keys(CreateOrderByEnum).map((item) => {
+            if (
+              modalType === OrderManagementTabsEnum.EXTERNAL_ORDERS &&
+              item === CreateOrderByEnum.FROM_INVENTORY
+            ) {
+              return;
+            } else if (
+              modalType === OrderManagementTabsEnum.INVENTORY_ORDERS &&
+              item === CreateOrderByEnum.SINGLE_ORDER
+            ) {
+              return;
+            } else {
+              return (
+                <FormControlLabel
+                  sx={{
+                    left: 0,
+                    // maxWidth: "80%",
+                    padding: "1rem 0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    boxSizing: "border-box",
+                    border:
+                      createOrderBy === item
+                        ? "1px solid #1b547f"
+                        : "1px solid #ccc",
+                    borderRadius: ".2rem",
+                    mb: "1rem",
+                    mr: 0,
+                    ml: 0,
+                  }}
+                  value={item}
+                  control={
+                    <Radio
+                      sx={{ visibility: "hidden" }}
+                      icon={<></>}
+                      checkedIcon={<></>}
+                    />
                   }
-                        ${
-                          checked
-                            ? "border-solid rounded border-2 radio-checked"
-                            : "border-2 rounded"
-                        }
-                          w-full  items-center justify-between text-sky-400`
-                }
-              >
-                {({ active, checked }) => (
-                  <RadioGroup.Label
-                    as="p"
-                    className={`font-lg flex items-center uppercase radio-text mt-5 ${
-                      checked ? "text-[#1B547F]" : "text-gray-900"
-                    }`}
-                  >
-                    {capitalizeText(item.replace("_", " "))}
-                  </RadioGroup.Label>
-                )}
-              </RadioGroup.Option>
-            );
-          }
-        })}
-      </RadioGroup>
+                  label={capitalizeText(item).replace("_", " ")}
+                />
+              );
+            }
+          })}
+        </RadioGroup>
+      </FormControl>
       <DialogActions>
         {" "}
         <Button
+          size="sm"
           title="Create order"
           variant="primary"
           handleClick={handleSubmit}

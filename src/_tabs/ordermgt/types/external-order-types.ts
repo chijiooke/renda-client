@@ -5,51 +5,47 @@ export type DataType = {
   unitPrice: string;
 };
 
-export interface IOrderType {
+export type ExternalOrderType = {
+  externalOrdersId: string;
+  recipientName: string;
+  storageFacilityId: string;
+  paymentMode: string;
+  numberOfItems: string;
+  dateCreated: Date;
+  lastUpdated: Date;
+  reciepientName: string;
+  reciepientPhoneNo: string;
+  pickUpAddress: string;
+  deliveryState: string;
+  deliveryLGA: string;
+  deliveryAddress: string;
+  pickUpTime: string;
+  dispatchTime: string;
+  status: string;
+  customerId: string;
+  customers: null;
+};
+
+export type CreateExternalOrderType = {
   recipientName: string;
   storageFacilityId: string;
   paymentMode: string;
   numberOfItems: number;
-  reciepientName: string;
   reciepientPhoneNo: string;
+  reciepientName: string;
   pickUpAddress: string;
-  deliveryLocation: string;
+  deliveryState: string;
+  deliveryLGA: string;
   deliveryAddress: string;
   pickUpTime: string;
   dispatchTime: string;
   customerId: string;
-  orderItems: IOrderItemType[];
-}
+  orderItems: CreateExternalOrderItemType[];
+};
 
-export interface IOrderItemType {
+export type CreateExternalOrderItemType = {
   dimension: string;
   quantity: number;
-  skuId: string;
-  unitPrice: number;
-}
-
-export interface IExternalOrderType {
-  recipientName: string;
-  paymentMode: string;
-  numberOfItems: number;
-  recipientPhoneNo: string;
-  pickUpAddress: string;
-  pickUpLGA: string;
-  deliveryLGA: string;
-  deliveryAddress: string;
-  deliveryDate:string;
-  orderItems: IExternalOrderItemType[];
-  contactName: string;
-  contactPhoneNumber: string;
-  // customerId: string;
-  // deliveryLocation: string;
-   // pickUpTime: string;
-  // dispatchTime: string;
-}
-
-export interface IExternalOrderItemType {
-  dimension: string;
   itemName: string;
-  quantity: number;
   unitPrice: number;
-}
+};

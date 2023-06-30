@@ -97,7 +97,7 @@ const TableDetails = () => {
       try {
         const { data } = await axios.get(
           baseURL +
-            `api/customers/${user.customerId}/InboundInventory/inventories`
+            `api/customers/${user?.customerId}/InboundInventory/inventories`
         );
         setInventories(data);
       } catch (error) {

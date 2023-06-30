@@ -34,8 +34,8 @@ const PhoneNumberInput: FC<Props> = ({
         country={"ng"}
         inputStyle={{
           width: "100%",
-          paddingTop: "1.25rem",
-          paddingBottom: "1.25rem",
+          paddingTop: "1rem",
+          paddingBottom: "1rem",
           height: "100%",
         }}
         value={value}

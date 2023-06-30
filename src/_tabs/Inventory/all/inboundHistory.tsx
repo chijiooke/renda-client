@@ -74,7 +74,7 @@ const InboundHistory = () => {
       try {
         const { data } = await axios.get(
           baseURL +
-            `api/customers/${user.customerId}/InboundInventory/inbound-requests`
+            `api/customers/${user?.customerId}/InboundInventory/inbound-requests`
         );
         setInboundRequests(data);
       } catch (error) {
