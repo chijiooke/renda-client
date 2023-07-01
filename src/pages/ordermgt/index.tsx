@@ -6,8 +6,8 @@ import { CreateOrderModal } from "@/modals/createordermodal";
 import { useState } from "react";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { CreateExternalOrderModal } from "@/modals/CreateExternalOrderModal";
-import { InventoryOrders } from "@/_tabs/ordermgt/InventoryOrders";
-import { ExternalOrders } from "@/_tabs/ordermgt/ExternalOrders";
+import { InventoryOrders } from "@/_tabs/ordermgt/inventoryOrders";
+import { ExternalOrders } from "@/_tabs/ordermgt/externalOrders";
 
 export enum OrderManagementTabsEnum {
   INVENTORY_ORDERS = "INVENTORY_ORDERS",

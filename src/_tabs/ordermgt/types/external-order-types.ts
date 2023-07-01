@@ -36,8 +36,10 @@ export type CreateExternalOrderType = {
   pickUpAddress: string;
   deliveryState: string;
   deliveryLGA: string;
+  pickUpLGA: string;
   deliveryAddress: string;
   pickUpTime: string;
+  contactPhoneNo: string;
   dispatchTime: string;
   customerId: string;
   orderItems: CreateExternalOrderItemType[];

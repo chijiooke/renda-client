@@ -25,6 +25,9 @@ import { StoreState } from "@/store/reducer";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 type Props = {
   show: boolean;
@@ -83,7 +86,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
       pickUpAddress: "",
       paymentMode: "",
       contactName: "",
-      contactPhoneNumber: "",
+      contactPhoneNo: "",
       deliveryState: null,
       deliveryLGA: null,
       deliveryAddress: "",
@@ -97,7 +100,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
       pickUpLGA: Yup.string(),
       pickUpAddress: Yup.string().required("this is a required field"),
       contactName: Yup.string().required("this is a required field"),
-      contactPhoneNumber: Yup.string().required("this is a required field"),
+      contactPhoneNo: Yup.string().required("this is a required field"),
       deliveryState: Yup.string().required(),
       deliveryLGA: Yup.string().required(),
       deliveryAddress: Yup.string().required(),
@@ -109,7 +112,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
       recipientPhoneNo,
       pickUpAddress,
       pickUpLGA,
-      contactPhoneNumber,
+      contactPhoneNo,
       deliveryLGA,
       dispatchTime,
       paymentMode,
@@ -126,9 +129,10 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
         deliveryState: deliveryState || "",
         deliveryAddress,
         deliveryLGA: deliveryLGA || "",
+        pickUpLGA: pickUpLGA || "",
         dispatchTime,
         orderItems: items,
-        // contactPhoneNumber,
+        contactPhoneNo,
         customerId: user?.customerId || "",
         storageFacilityId: "1234444",
         pickUpTime: dispatchTime,
@@ -202,7 +206,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
               <Layout option="Recipient's phone number" center={true}>
                 <PhoneNumberInput
                   handleChange={formik.handleChange("recipientPhoneNo")}
-                  value={formik.values.contactPhoneNumber}
+                  value={formik.values.recipientPhoneNo}
                   caption={formikCaption("recipientPhoneNo", formik)}
                   error={formikError("recipientPhoneNo", formik)}
                 />
@@ -245,10 +249,10 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
               </Layout>
               <Layout option="Contact Phone no." center={true}>
                 <PhoneNumberInput
-                  handleChange={formik.handleChange("contactPhoneNumber")}
-                  value={formik.values.contactPhoneNumber}
-                  caption={formikCaption("contactPhoneNumber", formik)}
-                  error={formikError("contactPhoneNumber", formik)}
+                  handleChange={formik.handleChange("contactPhoneNo")}
+                  value={formik.values.contactPhoneNo}
+                  caption={formikCaption("contactPhoneNo", formik)}
+                  error={formikError("contactPhoneNo", formik)}
                 />
               </Layout>
               <Layout option="Delivery state" center={true}>
@@ -296,6 +300,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                     <div className="flex gap-2 mb-9">
                       {" "}
                       <Input
+                        label="Name of Item"
                         size="sm"
                         name=""
                         placeholder="Name of Item"
@@ -309,6 +314,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                         }
                       />
                       <Input
+                        label="Dimension"
                         size="sm"
                         name=""
                         placeholder="Dimension"
@@ -322,6 +328,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                         }
                       />
                       <Input
+                        label="Qty"
                         size="sm"
                         name=""
                         placeholder="Unit Price"
@@ -335,6 +342,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                         }
                       />
                       <Input
+                        label="Unit price"
                         size="sm"
                         name=""
                         placeholder="Quantity"
@@ -474,8 +482,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                   <Input
                     size="sm"
                     type="date"
-                    name="deliveryDate"
-                    className=""
+                    name="dispatchTime"
                     handleChange={formik.handleChange}
                     value={
                       formik.values.dispatchTime || new Date().toISOString()
@@ -483,6 +490,9 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                     caption={formikCaption("deliveryDate", formik)}
                     error={formikError("deliveryDate", formik)}
                   />
+                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker />
+                  </LocalizationProvider> */}
                 </div>
               )}
             </div>
