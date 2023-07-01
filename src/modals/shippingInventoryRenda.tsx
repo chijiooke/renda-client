@@ -61,11 +61,11 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
       if (skuId === "" && count === 0) {
         const { data: inboundData } = await axios.post(
           baseURL +
-            `api/customers/${user.customerId}/InboundInventory/inbound-request`,
+            `api/customers/${user?.customerId}/InboundInventory/inbound-request`,
           {
-            customerBusinessId: user.customerId,
+            customerBusinessId: user?.customerId,
             deliveryDetails: {
-              customerBusinessId: user.customerId,
+              customerBusinessId: user?.customerId,
               rendaPickUpDetails: dt,
               pickupLocation: dt.pickupAddress,
               deliveryBy: "renda",
@@ -77,13 +77,13 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
       } else {
         const { data: inboundData } = await axios.post(
           baseURL +
-            `api/customers/${user.customerId}/InboundInventory/topUp-inventory/${facilityId}`,
+            `api/customers/${user?.customerId}/InboundInventory/topUp-inventory/${facilityId}`,
           {
-            customerBusinessId: user.customerId,
+            customerBusinessId: user?.customerId,
             skuId,
             quantity: count,
             deliveryDetails: {
-              customerBusinessId: user.customerId,
+              customerBusinessId: user?.customerId,
               rendaPickUpDetails: dt,
               pickupLocation: dt.pickupAddress,
               deliveryBy: "renda",

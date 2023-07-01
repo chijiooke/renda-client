@@ -8,6 +8,7 @@ import { capitalizeText } from "@/utils/capitalizeText";
 import { CreateExternalOrderModal } from "@/modals/CreateExternalOrderModal";
 import { InventoryOrders } from "@/_tabs/ordermgt/inventoryOrders";
 import { ExternalOrders } from "@/_tabs/ordermgt/externalOrders";
+import { Alert } from "@mui/material";
 
 export enum OrderManagementTabsEnum {
   INVENTORY_ORDERS = "INVENTORY_ORDERS",
@@ -36,7 +37,10 @@ export default function Ordermgt() {
       <div className="rounded border-1 border-gray-300  pt-2">
         <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">
           <h1 className="text-2xl font-extrabold">Order Management</h1>
-          <div className="">
+          <div className="flex gap-3">
+            <Alert severity="success" color="success" className="border-2">
+              Your order has been sent for delivery
+            </Alert>
             <Button
               title="Create Order"
               size="sm"

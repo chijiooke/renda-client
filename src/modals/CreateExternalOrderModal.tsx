@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Refresh } from "@mui/icons-material";
 
 type Props = {
   show: boolean;
@@ -499,7 +500,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
           </div>
           <div className=" w-full px-10 py-5">
             <Button
-              title="Book Now"
+              title="Create Order"
               className="w-full"
               handleClick={() => {
                 console.log("hello");
