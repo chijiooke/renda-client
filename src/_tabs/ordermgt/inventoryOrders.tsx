@@ -16,10 +16,12 @@ import { InfinitySpin } from "react-loader-spinner";
 import dayjs from "dayjs";
 import { Info, InfoOutlined } from "@mui/icons-material";
 import { baseURL } from "@/utils";
+import { InventoryOrderDetailsModal } from "@/modals/inventoryOrderDetailModal";
 
 const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
   const [data, setdata] = useState<InternalOrdersType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  let [itemToShow, setItemToShow] = useState<InternalOrdersType | null>(null);
 
   const getInventoryOrders = async () => {
     setLoading(true);
@@ -100,7 +102,12 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
 
             {data.length && !loading
               ? data.map((item: InternalOrdersType) => (
-                  <TableRow>
+                  <TableRow
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setItemToShow(item);
+                    }}
+                  >
                     {/* <TableCell variant="body">
                       <Checkbox />
                     </TableCell> */}
@@ -126,6 +133,12 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
           </TableBody>
         </Table>
       </div>
+
+      <InventoryOrderDetailsModal
+        show={!!itemToShow}
+        close={() => setItemToShow(null)}
+        item={itemToShow}
+      />
     </>
   );
 };

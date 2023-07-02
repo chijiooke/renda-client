@@ -121,7 +121,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
       deliveryAddress,
     }) => {
       const data: CreateExternalOrderType = {
-        recipientName,
+        // recipientName,
         reciepientName: recipientName,
         paymentMode,
         numberOfItems: items.length,

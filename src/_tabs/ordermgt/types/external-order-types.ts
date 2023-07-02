@@ -27,7 +27,7 @@ export type ExternalOrderType = {
 };
 
 export type CreateExternalOrderType = {
-  recipientName: string;
+  // recipientName: string;
   storageFacilityId: string;
   paymentMode: string;
   numberOfItems: number;

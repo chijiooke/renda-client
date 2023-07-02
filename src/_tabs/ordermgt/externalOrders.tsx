@@ -48,12 +48,14 @@ import dayjs from "dayjs";
 import { Info, InfoOutlined } from "@mui/icons-material";
 import { baseURL } from "@/utils";
 import { ExternalOrderType } from "./types/external-order-types";
+import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
 
 export const ExternalOrders: FC<{ openModal: () => void }> = ({
   openModal,
 }) => {
   const [data, setdata] = useState<ExternalOrderType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  let [itemToShow, setItemToShow] = useState<ExternalOrderType | null>(null);
 
   const getExternalOrders = async () => {
     setLoading(true);
@@ -132,16 +134,21 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
 
             {data.length && !loading
               ? data.map((item: ExternalOrderType) => (
-                  <TableRow>
+                  <TableRow
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setItemToShow(item);
+                    }}
+                  >
                     <TableCell variant="body">
                       {item?.externalOrdersId}
                     </TableCell>
                     <TableCell variant="body">{item?.numberOfItems}</TableCell>
+
+                    <TableCell variant="body">{item?.pickUpAddress}</TableCell>
                     <TableCell variant="body">
                       {item?.storageFacilityId}
                     </TableCell>
-                    <TableCell variant="body">{item?.pickUpAddress}</TableCell>
-
                     <TableCell variant="body">
                       {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
                     </TableCell>
@@ -157,6 +164,12 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
           </TableBody>
         </Table>
       </div>
+
+      <ExternalOrderDetailsModal
+        show={!!itemToShow}
+        close={() => setItemToShow(null)}
+        item={itemToShow}
+      />
     </>
   );
 };
