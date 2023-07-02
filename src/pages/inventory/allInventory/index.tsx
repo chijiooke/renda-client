@@ -1,29 +1,16 @@
+import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
+import { AllInventoryTable } from "@/components/InventoryTable";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes } from "@/utils";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-// import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
-import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
-import { AllInventoryTable } from "@/components/InventoryTable";
-import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  IconButton,
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { SelectedInventoryModal } from "@/_tabs/Inventory/modals/SelectedInventoryModal";
+import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
 
 const headers = ["ALL Inventory", "Inbound History"];
 function classNames(...classes: any[]) {
@@ -32,47 +19,71 @@ function classNames(...classes: any[]) {
 export default function Inventory() {
   const router = useRouter();
   const [showUploadButton, setShowUploadButton] = useState(true);
+  const { selectedInventoryItemsToOrder } = useSelector(
+    (state: StoreState) => state
+  );
   const [open, setOpen] = useState(false);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
   };
+  const dispatch = useDispatch();
 
-  const inventoryData: inventoryDataType[] = [
-    {
-      title: "mac Book Pro",
-      SKUId: 12345,
-      facilityID: 12345,
-      position: "Upper Shelf",
-      facilityName: "Badagry, lagos",
-      quantity: 20,
-      unitPrice: 100,
-      dmgItems: 10,
-      description: "Lorem ipsum dolor emet",
-      color: "grey",
-      weight: "100 pounds",
-      img: "string",
-    },
-    {
-      title: "Samsung Z Book ",
-      SKUId: 12346,
-      facilityID: 12346,
-      position: "Upper Shelf",
-      facilityName: "Badagry, lagos",
-      quantity: 50,
-      unitPrice: 100,
-      dmgItems: 10,
-      description: "Lorem ipsum dolor emet",
-      color: "grey",
-      weight: "100 pounds",
-      img: "string",
-    },
-  ];
+  type generateNewOrderItemType = ({
+    storageFacilityId,
+    orderItems,
+  }: {
+    storageFacilityId: any;
+    orderItems: any;
+  }) => InternalOrdersPostRequestType;
+
+  const generateNewOrderItem: generateNewOrderItemType = ({
+    storageFacilityId,
+    orderItems,
+  }) => {
+    const order = new InternalOrdersPostRequestType();
+    order.storageFacilityId = storageFacilityId;
+    order.customerId = "";
+    order.deliveryAddress = "";
+    order.deliveryLGA = "";
+    order.deliveryState = "";
+    order.dispatchTime = "";
+    order.numberOfItems = 1;
+    order.paymentMode = "";
+    order.pickUpAddress = "";
+    order.pickUpTime = "";
+    order.reciepientName = "";
+    order.reciepientPhoneNo = "";
+    order.orderItems = orderItems;
+    return order;
+  };
+
+  const addAllItemsToVan = () => {
+    dispatch({
+      type: StateReducerActions.ADD_MULTIPLE_INVENTORY_ITEM_TO_VAN,
+      payload: selectedInventoryItemsToOrder.map((it) =>
+        generateNewOrderItem({
+          storageFacilityId: it.storageFacilityId,
+          orderItems: [
+            {
+              itemName: it?.itemName,
+              orderQuantity: it?.orderQuantity,
+              dimension: it.size.toString(),
+              unitPrice: it?.unitPrice,
+              quantity: it?.quantity,
+              skuId: it?.skuId,
+            },
+          ],
+        })
+      ),
+    });
+    router.push("/ordermgt/deliveryVan");
+  };
 
   return (
     <>
       {/* <ImagePreview /> */}
       <DashBoardLayout>
-        <div className="rounded flex-grow border-1 border-gray-300 h-[83vh] pt-2">
+        <div className="rounded  border-1 h-full  pt-2">
           {showUploadButton && (
             <>
               <div className="flex justify-between items-center">
@@ -112,8 +123,10 @@ export default function Inventory() {
 
           <div className="w-full px-10 py-5">
             <Tab.Group>
-              <Tab.List className="flex pl-10 pt-3 gap-1 justify-between rounded-sm border-2  text-center">
-                <div>
+              <div className="flex pl-10 pt-3 gap-1  rounded-sm border-2  justify-between text-center">
+                {" "}
+                <Tab.List className="flex">
+                  {/* <div> */}
                   {headers.map((header, idx) => (
                     <Tab
                       key={idx}
@@ -129,8 +142,8 @@ export default function Inventory() {
                       {header}
                     </Tab>
                   ))}
-                </div>
-
+                  {/* </div> */}
+                </Tab.List>
                 <div className="flex">
                   <div className="flex-inline justify-end ">
                     <div></div>
@@ -159,11 +172,11 @@ export default function Inventory() {
                     </div>
                   </div>
                 </div>
-              </Tab.List>
+              </div>
+
               <Tab.Panel>
                 <AllInventoryTable />
               </Tab.Panel>
-
               <Tab.Panel>
                 <InboundHistory />
               </Tab.Panel>
@@ -171,63 +184,7 @@ export default function Inventory() {
           </div>
         </div>
       </DashBoardLayout>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "end",
-            width: "100%",
-            minWidth: "100%",
-          }}
-        >
-          <IconButton onClick={() => setOpen(false)}>
-            <CloseRoundedIcon />
-          </IconButton>
-        </Box>
-        <DialogContent>
-          <Typography variant="h5" fontWeight={600} textAlign="center" color="primary">
-            Create Order
-          </Typography>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>SKU ID</TableCell>
-                <TableCell>Item Name</TableCell>
-                <TableCell>Unit Price</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-
-            {inventoryData.map((item) => (
-              <TableRow>
-                <TableCell>{item?.SKUId}</TableCell>
-                <TableCell>{item?.title}</TableCell>
-                <TableCell>{item?.unitPrice}</TableCell>
-                <TableCell>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <IconButton>
-                      <AddCircleIcon />
-                    </IconButton>
-
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      {" "}
-                      <Typography variant="body2" sx={{}}>
-                        {0}/{item?.quantity}
-                      </Typography>
-                    </Box>
-                    <IconButton>
-                      <RemoveCircleIcon />
-                    </IconButton>
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
-          </Table>
-          <Button variant="contained" fullWidth sx={{ mt: 2 }} >
-            Add to delivery van
-          </Button>
-        </DialogContent>
-      </Dialog>
+      <SelectedInventoryModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

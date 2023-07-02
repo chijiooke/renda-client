@@ -1,7 +1,4 @@
-import { Button } from "@/components";
 import { UploadArea } from "@/components/UploadArea";
-import { CheckIcon, UploadIcon } from "@/icons";
-import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
 
 const AddViaCsv = () => {
@@ -13,6 +10,7 @@ const AddViaCsv = () => {
           <p className="text-sm font-semibold">Upload your CSV file</p>
 
           <UploadArea />
+          {/* <CSVReader/> */}
           <p className="text-xs leading-snug" style={{ width: 684 }}>
             To import your inventory details from CSV file, it has to be
             formatted correctly. Each file should have an Item name, <br />{" "}

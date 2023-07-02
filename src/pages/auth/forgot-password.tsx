@@ -8,7 +8,7 @@ import { formikCaption, formikError } from "@/utils";
 import * as Yup from "yup";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 
 const ForgotPassword = () => {
   const router = useRouter();
@@ -25,7 +25,7 @@ const ForgotPassword = () => {
       });
       if (response.success) {
         dispatch({
-          type: OnboardingAction.SET_LOGIN_DETAILS,
+          type: StateReducerActions.SET_LOGIN_DETAILS,
           payload: { value: email, password: "", id: response.data.userid },
         });
         router.push(AuthRoutes.RESET_OTP);

@@ -15,7 +15,7 @@ export default function Storage() {
     <>
       {/* <ImagePreview /> */}
       <DashBoardLayout>
-        <div className="rounded flex-grow border-1 border-gray-300 h-[83vh] pt-2">
+        <div className="rounded flex-grow border-1 border-gray-300  pt-2">
           <div className="border-b-2 border-b-gray-300 p-7 flex flex-col ">
             <h1 className="text-3xl font-extrabold">Add New Stock</h1>
             <p>Add a new stock via your prffered upload cahnnel</p>

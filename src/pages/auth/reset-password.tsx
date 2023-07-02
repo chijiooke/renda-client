@@ -13,7 +13,7 @@ import {
 } from "@/utils";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 import { StoreState } from "@/store/reducer";
 const ResetPassword = () => {
   const [done, setDone] = useState<boolean>(false);

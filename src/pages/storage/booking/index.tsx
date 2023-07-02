@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 import { StoreState } from "@/store/reducer";
 
 dayjs.extend(relativeTime);
@@ -79,7 +79,7 @@ const TableData = ({ data }: { data: any }) => {
     const path = e.nativeEvent.composedPath();
     if ((path[0] as HTMLElement)?.innerText !== "Make Payment") {
       dispatch({
-        type: OnboardingAction.SET_BOOKING_DETAILS,
+        type: StateReducerActions.SET_BOOKING_DETAILS,
         payload: {
           amount: data?.amount,
           bookingId: data?.bookingId,
@@ -93,7 +93,7 @@ const TableData = ({ data }: { data: any }) => {
   };
   const goToPayments: MouseEventHandler<HTMLDivElement> = () => {
     dispatch({
-      type: OnboardingAction.SET_BOOKING_DETAILS,
+      type: StateReducerActions.SET_BOOKING_DETAILS,
       payload: {
         amount: data?.amount,
         bookingId: data?.bookingId,

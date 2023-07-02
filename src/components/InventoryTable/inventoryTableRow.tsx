@@ -1,38 +1,63 @@
-import { ComputerImage } from "@/icons";
+import { InventoryItemType } from "@/_tabs/Inventory/types/inventory-data-type";
+import { generateNewOrderItem } from "@/_tabs/Inventory/utils/generateNewOrderItems";
+import { StateReducerActions } from "@/types";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
+import { useDispatch } from "react-redux";
 
-export type inventoryDataType = {
-  SKUId: number;
-  title: string;
-  facilityID: number;
-  facilityName: string;
-  quantity: number;
-  unitPrice: number;
-  position: string;
-  dmgItems: number;
-  description: string;
-  color: string;
-  weight: string;
-  img: string;
-};
 const TableRow: FC<{
-  isAllItemsSelected:boolean;
+  isAllItemsSelected: boolean;
   isExpanded: boolean;
-  data: inventoryDataType;
+  data: InventoryItemType;
   collapseRow: () => void;
-  selectItem: (item: inventoryDataType) => void;
-  selectedItems: number[];
-}> = ({ isExpanded, data, collapseRow, selectedItems, selectItem ,isAllItemsSelected}) => {
+  selectItem: (item: InventoryItemType) => void;
+  selectedItems: string[];
+}> = ({
+  isExpanded,
+  data,
+  collapseRow,
+  selectedItems,
+  selectItem,
+  isAllItemsSelected,
+}) => {
   const router = useRouter();
 
-  const [orderCount, setOrderCount] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(0);
+
+  const [loading, setloading] = useState(false);
+  const dispatch = useDispatch();
+  const createInventoryOrder = async (data: InventoryItemType) => {
+    const order = generateNewOrderItem({
+      storageFacilityId: data?.storageFacilityId,
+      orderItems: [
+        {
+          orderQuantity: quantity,
+          dimension: data.size.toString(),
+          unitPrice: data?.unitPrice,
+          quantity: data?.quantity,
+          skuId: data?.skuId,
+          itemName: data?.itemName,
+        },
+      ],
+    });
+
+    dispatch({
+      type: StateReducerActions.ADD_SINGLE_INVENTORY_ITEM_TO_VAN,
+      payload: { ...order },
+    });
+
+    router.push("/ordermgt/deliveryVan");
+  };
+
   return (
     <div
-      className="bg-blue-50  p-4 m-0"
+      className=" p-4 m-0"
       style={{
-        backgroundColor: `rgba(238.63, 250.15, 255, 1)`,
+        backgroundColor:
+          isAllItemsSelected || selectedItems.includes(data?.skuId)
+            ? `rgba(238.63, 250.15, 255, 1)`
+            : "#fff",
         borderRadius: 3,
         borderStyle: "solid",
         borderWidth: 1,
@@ -43,29 +68,31 @@ const TableRow: FC<{
         <div className="">
           <div className="flex items-center">
             <input
-            disabled={isAllItemsSelected}
+              disabled={isAllItemsSelected}
               type="checkbox"
               className="form-checkbox h-5 w-5 text-blue-500"
-              checked={selectedItems.includes(data?.SKUId)}
-              onChange={() => selectItem(data)}
+              checked={selectedItems.includes(data?.skuId)}
+              onChange={() => {
+                selectItem(data);
+              }}
             />
           </div>
         </div>
-        <p className=" leading-7">{data?.SKUId}</p>
-        <p className=" leading-7">{data?.title}</p>
+        <p className=" leading-7">{data?.skuId}</p>
+        <p className=" leading-7">{data?.itemName}</p>
         <div className="inline-flex space-x-1 items-center   h-7">
-          <p className=" leading-7">{data?.facilityID}</p>
+          <p className=" leading-7">{data?.storageFacilityId}</p>
           <img
             className="w-2.5 h-2.5 rounded-full"
             src="https://via.placeholder.com/10x10"
           />
         </div>
-        <p className=" leading-7">{data?.facilityName}</p>
+        <p className=" leading-7">{""}</p>
         <p className="pl-10 leading-7">{data?.quantity}</p>
         <p className=" leading-7">{data?.unitPrice}</p>
         <div className="p-2">
           <div
-            className="inline-flex items-center px-2 py-0.5 bg-blue-100 rounded-sm cursor-pointer"
+            className="inline-flex items-center px-2 py-0.5  rounded-sm cursor-pointer"
             onClick={collapseRow}
           >
             <p className=" leading-none text-blue-900">{`Show ${
@@ -80,7 +107,19 @@ const TableRow: FC<{
           <div className="grid grid-rows-1 py-2 mt-5">
             <div className="grid grid-cols-7 m-0 p-0">
               <div className="grid col-span-2 ">
-                <ComputerImage />
+                {!!data?.picture ? (
+                  <img
+                    src={data?.picture}
+                    alt={data?.description}
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                ) : (
+                  <img
+                    src={"https://www.beelights.gr/assets/images"}
+                    alt={data?.description}
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                )}
               </div>
               <div className="grid col-span-4">
                 <table>
@@ -112,10 +151,12 @@ const TableRow: FC<{
                   </thead>
                   <tbody>
                     <td>
-                      <p className="text-xs">{data?.position}</p>
+                      <p className="text-xs">{data?.itemPosition}</p>
                     </td>
                     <td>
-                      <p className="text-xs leading-7">{data?.dmgItems}</p>
+                      <p className="text-xs leading-7">
+                        {data?.quantityDamaged}
+                      </p>
                     </td>
                     <td>
                       <p className="w-28 text-xs leading-none">
@@ -123,7 +164,7 @@ const TableRow: FC<{
                       </p>
                     </td>
                     <td>
-                      <p className="text-xs leading-none">{data?.color}</p>
+                      <p className="text-xs leading-none">{data?.colour}</p>
                     </td>
                     <td>
                       <p className="text-xs leading-none">{data?.weight}</p>
@@ -135,39 +176,45 @@ const TableRow: FC<{
           </div>
           <div className="flex justify-end gap-1">
             <button
-              style={{ color: `#1B547F` }}
-              className="bg-white hover:bg-gray-700 py-2 px-4 border rounded-md border-gray-500"
+              style={{
+                color: `#1B547F`,
+                opacity: !!selectedItems.length ? 0.4 : 1,
+              }}
+              className="bg-white hover:bg-gray-700 py-2 px-4 border rounded-md border-gray-500 "
+              onClick={() => createInventoryOrder(data)}
+              disabled={loading || !!selectedItems.length}
             >
-              Create Order
+              {!loading ? "Create Order" : "loading..."}
             </button>
             <div className="flex justify-center items-center">
               <span
-                className=" flex rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
+                className=" flex justify-center rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
                 onClick={() =>
-                  orderCount < data?.quantity
-                    ? setOrderCount((prev) => prev + 1)
-                    : null
+                  quantity > 0 ? setQuantity((prev) => --prev) : null
                 }
               >
-                +
+                -
               </span>
             </div>
             <div className="flex justify-center  items-center  border rounded-lg border-gray-900">
               <p className="flex justify-center  items-center m-2 font-medium  ">
-                {orderCount}/{" "}
+                {quantity}/{" "}
                 <span className=" flex rounded-full text-gray-800 h-4 p-1 items-center ">
                   {data?.quantity}
                 </span>
               </p>
             </div>
+
             <div className="flex justify-center items-center">
               <span
-                className=" flex justify-center rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
+                className=" flex rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
                 onClick={() =>
-                  orderCount > 0 ? setOrderCount((prev) => --prev) : null
+                  quantity < data?.quantity
+                    ? setQuantity((prev) => prev + 1)
+                    : null
                 }
               >
-                -
+                +
               </span>
             </div>
 

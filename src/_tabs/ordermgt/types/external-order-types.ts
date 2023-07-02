@@ -21,7 +21,7 @@ export type ExternalOrderType = {
   deliveryAddress: string;
   pickUpTime: string;
   dispatchTime: string;
-  status: string;
+  status: "PENDING" | "ACCEPTED" | "REJECTED";
   customerId: string;
   customers: null;
 };

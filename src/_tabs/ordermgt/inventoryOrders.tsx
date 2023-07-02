@@ -1,7 +1,6 @@
 import { Button } from "@/components";
 import {
   Box,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -11,11 +10,12 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
-import { InternalOrdersType } from "./types/internal-order-types";
-import { InfinitySpin } from "react-loader-spinner";
-import dayjs from "dayjs";
-import { Info, InfoOutlined } from "@mui/icons-material";
+
 import { baseURL } from "@/utils";
+import { InfoOutlined } from "@mui/icons-material";
+import dayjs from "dayjs";
+import { InfinitySpin } from "react-loader-spinner";
+import { InternalOrdersType } from "../Inventory/types/inventory-order-types";
 
 const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
   const [data, setdata] = useState<InternalOrdersType[]>([]);
@@ -54,13 +54,13 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
     <>
       <Typography
         variant="body2"
-        className=" bg-[#E7F4FF] p-2 font-medium text-[#7A7A7A]  rounded-md flex items-center gap-1 "
+        className=" bg-[#E7F4FF] p-3 font-medium text-[#7A7A7A]  rounded-md flex items-center gap-1 "
       >
-        <InfoOutlined /> Orders from your Renda storage
+        Orders from your Renda storage
       </Typography>
       <div className=" overflow-scroll">
         <Table>
-          <TableHead className=" bg-gray-100">
+          <TableHead className=" border-solid border-2 border-sky-500">
             <TableRow>
               {/* <TableCell variant="head">
                 <Checkbox />
@@ -101,9 +101,6 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
             {data.length && !loading
               ? data.map((item: InternalOrdersType) => (
                   <TableRow>
-                    {/* <TableCell variant="body">
-                      <Checkbox />
-                    </TableCell> */}
                     <TableCell variant="body">{item?.orderId}</TableCell>
                     <TableCell variant="body">{item?.numberOfItems}</TableCell>
                     <TableCell variant="body">
@@ -114,7 +111,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
                     <TableCell variant="body">
                       {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
                     </TableCell>
-                    <TableCell variant="body">{item?.recipientName}</TableCell>
+                    <TableCell variant="body">{item?.reciepientName}</TableCell>
                     <TableCell variant="body">
                       {`${item?.deliveryAddress}, ${item?.deliveryLGA}, ${item?.deliveryState}`}
                     </TableCell>

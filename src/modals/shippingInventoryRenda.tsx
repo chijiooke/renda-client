@@ -8,7 +8,7 @@ import axios from "axios";
 import { baseURL, DashBoardRoutes } from "@/utils";
 import { SuccessModal } from "./success";
 import { useRouter } from "next/router";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 type ModalProps = {
   show: boolean;
   close: () => void;
@@ -41,7 +41,7 @@ const ShippingInventoryRendaModal: FC<ModalProps> = ({
   const closeModal = () => {
     setShowModal(false);
     dispatch({
-      type: OnboardingAction.CLEAR_INVENTORY_ITEMS,
+      type: StateReducerActions.CLEAR_INVENTORY_ITEMS,
     });
     router.push(DashBoardRoutes.INVENTORY_ALL);
   };

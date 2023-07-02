@@ -4,7 +4,7 @@ import { Input, Button } from "@/components";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { formikCaption, passwordRegex, formikError } from "@/utils";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { OnboardRoutes, baseURL } from "@/utils";

@@ -1,7 +1,7 @@
 import { Button, FileInput, Input } from "@/components";
 import { OnboardLayout } from "@/layout";
 import { StoreState } from "@/store/reducer";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 import { OnboardRoutes, formikCaption, formikError } from "@/utils";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -34,15 +34,15 @@ const KycUpload = () => {
       fd.append("DirectorsIDs", directorsIds[i]);
     }
     dispatch({
-      type: OnboardingAction.SET_KYC,
+      type: StateReducerActions.SET_KYC,
       payload: fd,
     });
     dispatch({
-      type: OnboardingAction.SET_COMPANY_NUMBER,
+      type: StateReducerActions.SET_COMPANY_NUMBER,
       payload: formik.values.number,
     });
     dispatch({
-      type: OnboardingAction.UPDATE_FILE_LIST,
+      type: StateReducerActions.UPDATE_FILE_LIST,
       payload: { registrationCertificate, proofOfAddress, directorsIds },
     });
     router.push(OnboardRoutes.SET_PASSWORD);

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
 import axios, { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 import { StoreState } from "@/store/reducer";
 const LoginOtp = () => {
   const [otp, setOtp] = useState<string>("");
@@ -41,7 +41,7 @@ const LoginOtp = () => {
       if (response.success) {
         sessionStorage.setItem("userId", response.data.userId);
         dispatch({
-          type: OnboardingAction.SET_USER_ID,
+          type: StateReducerActions.SET_USER_ID,
           payload: response.data.userId,
         });
 

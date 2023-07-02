@@ -4,7 +4,7 @@ import { Input, Button, OTPInput } from "@/components";
 import { useRouter } from "next/router";
 import { AuthRoutes, baseURL } from "@/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 import { StoreState } from "@/store/reducer";
 import axios from "axios";
 import { EmailMask } from "@/container";
@@ -43,7 +43,7 @@ const ConfirmOTP = () => {
       });
       if (response.success) {
         dispatch({
-          type: OnboardingAction.SET_LOGIN_DETAILS,
+          type: StateReducerActions.SET_LOGIN_DETAILS,
           payload: { ...loginDetails, otp },
         });
         router.push(AuthRoutes.RESET_PASSWORD);

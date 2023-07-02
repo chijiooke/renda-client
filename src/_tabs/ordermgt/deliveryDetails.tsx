@@ -1,37 +1,56 @@
 import { Trash } from "@/icons";
-import { useState } from "react";
+import { FC, useState } from "react";
+import { InternalOrderItemType } from "../Inventory/types/inventory-order-types";
+import { StateReducerActions } from "@/types";
+import { useDispatch } from "react-redux";
+import { formatAmount } from "@/utils/format-currency";
 
-const DeliveryDetails = () => {
+export const DeliveryDetails: FC<{
+  data: InternalOrderItemType;
+  index: number;
+}> = ({ data, index }) => {
+  const dispatch = useDispatch();
 
-    const [count, setCount] = useState(0);
-
-    const handleIncrement = () => {
-      setCount(count + 1);
-    };
-  
-    const handleDecrement = () => {
-      if (count > 0) {
-        setCount(count - 1);
-      }
-    };
-
-    return (
-        <>
-          <div
-      className="grid grid-c-6 mx-5 justify-center p-5 items-center cursor-pointer"
-      >
-<p className="text-center">12345678</p>
-<p className="text-center">MacBook Pro</p>
-<p className="text-center">20 x 20KG</p>
-<p className="text-center">N456,000</p>
-<div className="flex items-center justify-center gap-3">
-      <button className="bg-black text-white text-lg font-bold flex items-center justify-center w-10 h-10 rounded-full" onClick={handleDecrement}>-</button>
-      <span className="mx-2 text-lg font-bold">{count}</span>
-      <button className="bg-black text-white text-lg font-bold flex items-center justify-center w-10 h-10 rounded-full" onClick={handleIncrement}>+</button>
-    </div>
-<p className="flex justify-center"><Trash/></p>
-    </div>
-        </>
-    )
-}
-export { DeliveryDetails };
+  return (
+    <>
+      <div className="grid grid-c-6 mx-5 justify-center py-5 items-center cursor-pointer">
+        <p className="text-center">{data?.skuId}</p>
+        <p className="text-center">{data?.itemName}</p>
+        <p className="text-center">{data?.dimension}</p>
+        <p className="text-center">
+          ₦{formatAmount(data?.unitPrice.toString())}
+        </p>
+        <div className="flex items-center justify-center gap-3">
+          <button
+            className="bg-black text-white text-lg font-bold flex items-center justify-center w-10 h-10 rounded-full"
+            onClick={() => {
+              dispatch({
+                type: StateReducerActions.DECREMENT_DELIVERY_VAN_ORDER_QUANTITY,
+                payload: { orderIndex: index, itemID: data?.skuId },
+              });
+            }}
+          >
+            -
+          </button>
+          <span className="mx-2 text-lg font-bold">
+            {data?.orderQuantity}/{data?.quantity}
+          </span>
+          <button
+            className="bg-black text-white text-lg font-bold flex items-center justify-center w-10 h-10 rounded-full"
+            onClick={() => {
+              dispatch({
+                type: StateReducerActions.INCREMENT_DELIVERY_VAN_ORDER_QUANTITY,
+                payload: { orderIndex: index, itemID: data?.skuId },
+              });
+            }}
+          >
+            +
+          </button>
+        </div>
+        <p className="flex justify-center">
+          <Trash />
+        </p>
+      </div>
+    </>
+  );
+};

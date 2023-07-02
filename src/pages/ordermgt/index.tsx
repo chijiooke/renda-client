@@ -45,7 +45,7 @@ export default function Ordermgt() {
           </div>
         </div>
 
-        <div className="w-full px-10 py-5">
+        <div className="w-full px-10 ">
           <Tab.Group
             onChange={(index) => {
               setModalType(
@@ -55,7 +55,7 @@ export default function Ordermgt() {
               );
             }}
           >
-            <Tab.List className="flex py-3 gap-1">
+            <Tab.List className="flex pt-3 gap-1">
               {Object.keys(OrderManagementTabsEnum).map((header, idx) => (
                 <Tab
                   key={idx}

@@ -69,6 +69,7 @@ const Button: FC<Props> = ({
       onClick={handleClick}
       disabled={disabled}
       type={type}
+      
       className={cn(
         " rounded-[0.75rem] text-white border-primary cursor-pointer border-2  whitespace-nowrap",
         {

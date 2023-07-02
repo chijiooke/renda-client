@@ -21,7 +21,8 @@ import {
   CreateExternalOrderType,
 } from "@/_tabs/ordermgt/types/external-order-types";
 import { hasInValidItems } from "@/_tabs/ordermgt/utils/has-invalid-items";
-import { StoreState } from "@/store/reducer";
+
+import { StoreState } from "@/store/types/store-state.types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -143,7 +144,10 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
     setError("");
 
     try {
-      const { data: response } = await axios.post(baseURL + "api/ExternalOrders", data);
+      const { data: response } = await axios.post(
+        baseURL + "api/ExternalOrders",
+        data
+      );
       formik.resetForm();
       close();
     } catch (error) {
@@ -466,7 +470,6 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
           </div>
           <div className=" w-full px-10 py-5">
             <Button
-            
               title="Book Now"
               className="w-full"
               handleClick={() => {

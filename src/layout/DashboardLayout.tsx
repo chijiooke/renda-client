@@ -1,23 +1,20 @@
-import { StoreState } from "@/store/reducer";
+
 import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ContextMenu } from "@/components/context-menu/ContextMenu";
 import {
   DashboardIcon,
   DeliveryTruckIcon,
   InventoryIcon,
   LeftArrowIcon,
-  NotificationIcon,
   OrderManagementIcon,
-  RedDot,
-  StorageIcon,
+  StorageIcon
 } from "@/icons";
-import { OnboardingAction } from "@/types";
-import axios from "axios";
-import { NavigationDrawer } from "./components/NavigationDrawer";
+import { StateReducerActions } from "@/types";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import {
   Avatar,
@@ -27,7 +24,9 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { ContextMenu } from "@/components/context-menu/ContextMenu";
+import axios from "axios";
+import { NavigationDrawer } from "./components/NavigationDrawer";
+import { StoreState } from "@/store/types/store-state.types";
 
 type Props = {
   children: ReactNode;
@@ -88,7 +87,7 @@ const DashBoardLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: StoreState) => state);
+  const { user, myDeliveryVanItems } = useSelector((state: StoreState) => state);
 
   const [loading, setLoading] = useState(false);
 
@@ -117,7 +116,7 @@ const DashBoardLayout: FC<Props> = ({
       );
       if (response.success) {
         dispatch({
-          type: OnboardingAction.SET_USER,
+          type: StateReducerActions.SET_USER,
           payload: response.data,
         });
       }
@@ -180,7 +179,7 @@ const DashBoardLayout: FC<Props> = ({
                         sx={{
                           color: "success.main",
                           padding: "0.5rem 1rem",
-                          backgroundColor: "#4caf5033",
+                          // backgroundColor: "#4caf5033",
                           borderRadius: "1rem",
                         }}
                       >
@@ -204,7 +203,7 @@ const DashBoardLayout: FC<Props> = ({
                         {" "}
                         <Badge
                           color="error"
-                          badgeContent={5}
+                          badgeContent={myDeliveryVanItems.length}
                           anchorOrigin={{
                             vertical: "top",
                             horizontal: "right",
@@ -214,14 +213,41 @@ const DashBoardLayout: FC<Props> = ({
                           <DeliveryTruckIcon />
                         </Badge>
                       </IconButton>
-                      <IconButton>
-                        <Avatar
-                          sx={{ width: 30, height: 30 }}
-                          alt={user?.contactName}
-                          src="/static/images/avatar/1.jpg"
-                          onClick={handleClick}
-                        />
-                      </IconButton>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <Badge
+                            color="success"
+                            variant="dot"
+                            anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "right",
+                            }}
+                            overlap="circular"
+                            invisible={false}
+                          >
+                            <Avatar
+                              sx={{ width: 40, height: 40 }}
+                              alt={user?.contactName}
+                              src="/static/images/avatar/1.jpg"
+                              onClick={handleClick}
+                            />{" "}
+                          </Badge>
+                        </IconButton>
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <Typography
+                            variant="body2"
+                            p={0}
+                            m={0}
+                            className="text-[#1b547f] font-semibold"
+                          >
+                            {user?.customerBusinessName}
+                          </Typography>
+                          <Typography variant="caption" p={0} m={0}>
+                            Client Id: {user?.customerId}
+                          </Typography>
+                        </Box>
+                      </Box>
+
                       <ContextMenu
                         handleClickAway={handleClickAway}
                         open={open}
