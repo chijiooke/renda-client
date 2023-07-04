@@ -31,7 +31,7 @@ type Props = {
   type?: HTMLInputTypeAttribute;
   className?: string;
   placeholder?: string;
-  value?: string|number;
+  value?: string | number;
   handleChange?: ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   name?: string;
@@ -41,6 +41,7 @@ type Props = {
   disabled?: boolean;
   inputClass?: string;
   id?: string;
+  defaultValue?: any;
 };
 const Input: FC<Props> = ({
   label = "",
@@ -57,6 +58,7 @@ const Input: FC<Props> = ({
   disabled = false,
   inputClass,
   id,
+  defaultValue,
 }) => {
   const [iType, setIType] = useState<HTMLInputTypeAttribute>(type);
   const togglePassword = () => {
@@ -72,6 +74,7 @@ const Input: FC<Props> = ({
       )}
       <div className="relative">
         <input
+          defaultValue={defaultValue}
           name={name}
           placeholder={placeholder}
           type={iType}

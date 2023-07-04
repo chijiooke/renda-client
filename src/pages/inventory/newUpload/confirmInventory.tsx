@@ -1,18 +1,17 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { DashBoardRoutes } from "@/utils";
-import { useRouter } from "next/router";
 import {
   ConfirmModal,
-  MyModal,
   ShippingInventoryCustomerModal,
   ShippingInventoryRendaModal,
   SomeComponent,
-  StorageSelectModal,
+  StorageSelectModal
 } from "@/modals";
+import { StoreState } from "@/store/types/store-state.types";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+
 
 export default function ConfirmInventory() {
   const router = useRouter();

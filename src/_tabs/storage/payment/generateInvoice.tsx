@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
 import { formatCurrency } from "@/utils";
+import { StoreState } from "@/store/types/store-state.types";
 
 const GenerateInvoice = () => {
   const { bookingDetails } = useSelector((state: StoreState) => state);

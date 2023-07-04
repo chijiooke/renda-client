@@ -2,8 +2,7 @@ import { Button } from "@/components";
 import { CheckIcon } from "@/icons";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+
 
 // Define the type for the inbound request
 type InboundRequest = {

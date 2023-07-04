@@ -1,13 +1,16 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-
+// import { ToastProvider } from './ToastContext';
 import { Tab } from "@headlessui/react";
 import { CreateOrderModal } from "@/modals/createordermodal";
 import { useState } from "react";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { CreateExternalOrderModal } from "@/modals/CreateExternalOrderModal";
-import { InventoryOrders } from "@/_tabs/ordermgt/InventoryOrders";
-import { ExternalOrders } from "@/_tabs/ordermgt/ExternalOrders";
+import { InventoryOrders } from "@/_tabs/ordermgt/inventoryOrders";
+import { ExternalOrders } from "@/_tabs/ordermgt/externalOrders";
+import { Alert } from "@mui/material";
+import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
+// import { ToastProvider } from "@/context/SnackbarContext";
 
 export enum OrderManagementTabsEnum {
   INVENTORY_ORDERS = "INVENTORY_ORDERS",
@@ -17,6 +20,7 @@ export enum OrderManagementTabsEnum {
 export default function Ordermgt() {
   let [isOpen, setIsOpen] = useState(false);
   let [isSingleOrderModalOpen, setIsSingleOrderModalOpen] = useState(false);
+
   let [modalType, setModalType] = useState<OrderManagementTabsEnum>(
     OrderManagementTabsEnum.INVENTORY_ORDERS
   );
@@ -36,7 +40,10 @@ export default function Ordermgt() {
       <div className="rounded border-1 border-gray-300  pt-2">
         <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">
           <h1 className="text-2xl font-extrabold">Order Management</h1>
-          <div className="">
+          <div className="flex gap-3">
+            <Alert severity="success" color="success" className="border-2">
+              Your order has been sent for delivery
+            </Alert>
             <Button
               title="Create Order"
               size="sm"
@@ -45,7 +52,7 @@ export default function Ordermgt() {
           </div>
         </div>
 
-        <div className="w-full px-10 py-5">
+        <div className="w-full px-10 ">
           <Tab.Group
             onChange={(index) => {
               setModalType(
@@ -55,7 +62,7 @@ export default function Ordermgt() {
               );
             }}
           >
-            <Tab.List className="flex py-3 gap-1">
+            <Tab.List className="flex pt-3 gap-1">
               {Object.keys(OrderManagementTabsEnum).map((header, idx) => (
                 <Tab
                   key={idx}

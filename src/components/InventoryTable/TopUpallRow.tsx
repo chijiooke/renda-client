@@ -365,14 +365,13 @@
 // };
 
 // export { TableRow };
-import { ComputerImage } from "@/icons";
-import { DashBoardRoutes, baseURL } from "@/utils";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { Input } from "../Input";
-import { StoreState } from "@/store/reducer";
+import { StoreState } from "@/store/types/store-state.types";
+import { baseURL } from "@/utils";
 import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Input } from "../Input";
 
 type Inventories = {
   id: number;
@@ -432,7 +431,7 @@ const TopUpTableRow = () => {
       try {
         const { data } = await axios.get(
           baseURL +
-            `api/customers/${user.customerId}/InboundInventory/inventories`
+            `api/customers/${user?.customerId}/InboundInventory/inventories`
         );
         setInventories(data);
       } catch (error) {

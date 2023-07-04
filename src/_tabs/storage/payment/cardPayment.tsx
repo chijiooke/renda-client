@@ -6,9 +6,10 @@ import { useEffect } from "react";
 import axios from "axios";
 import { DashBoardRoutes, baseURL, queryStringBuilder } from "@/utils";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+// import { StoreState } from "@/store/reducer";
 import { SuccessModal } from "@/modals";
 import { useRouter } from "next/router";
+import { StoreState } from "@/store/types/store-state.types";
 
 const CardPayment = () => {
   const router = useRouter();
@@ -21,9 +22,9 @@ const CardPayment = () => {
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd",
     customer: {
-      email: user?.customerBusinessEmailAddress,
-      phone_number: user?.customerBusinessPhoneNumber,
-      name: user?.customerBusinessName,
+      email: user?.customerBusinessEmailAddress || "",
+      phone_number: user?.customerBusinessPhoneNumber || "",
+      name: user?.customerBusinessName || "",
     },
     customizations: {
       title: "Pay for Renda360 Storage",

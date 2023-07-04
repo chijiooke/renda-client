@@ -1,6 +1,6 @@
-import { IExternalOrderItemType } from "../types/external-order-types";
+import { CreateExternalOrderItemType } from "../types/external-order-types";
 
-export  const hasInValidItems = (items:IExternalOrderItemType[]) => {
+export  const hasInValidItems = (items:CreateExternalOrderItemType[]) => {
     let isValid = true;
     items.forEach((item) => {
       if (

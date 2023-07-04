@@ -6,7 +6,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+import { StoreState } from "@/store/types/store-state.types";
+// import { StoreState } from "@/store/reducer";
 
 // Define the type for the inbound request
 type InboundRequest = {

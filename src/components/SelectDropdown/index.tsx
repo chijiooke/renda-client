@@ -11,6 +11,8 @@ type Props = {
   error?: boolean;
   caption?: string;
   size?: "sm" | "md" | "lg";
+  defaultValue?: string;
+  disabled?: boolean;
 };
 const Select: FC<Props> = ({
   label,
@@ -21,6 +23,8 @@ const Select: FC<Props> = ({
   error = false,
   caption,
   size = "md",
+  defaultValue,
+  disabled,
 }) => {
   return (
     <div className="flex flex-col w-full">
@@ -31,6 +35,8 @@ const Select: FC<Props> = ({
       )}
       <div className="relative">
         <select
+          disabled={disabled}
+          defaultValue={defaultValue}
           className={cn(
             "cursor-pointer p-3 text-black border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  appearance-none ",
             {

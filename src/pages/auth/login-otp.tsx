@@ -1,12 +1,12 @@
-import { LoginContainer } from "@/layout";
 import { Button, OTPInput } from "@/components";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
+import { LoginContainer } from "@/layout";
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
+import { DashBoardRoutes, baseURL } from "@/utils";
 import axios, { AxiosResponse } from "axios";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
-import { StoreState } from "@/store/reducer";
 const LoginOtp = () => {
   const [otp, setOtp] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const LoginOtp = () => {
       if (response.success) {
         sessionStorage.setItem("userId", response.data.userId);
         dispatch({
-          type: OnboardingAction.SET_USER_ID,
+          type: StateReducerActions.SET_USER_ID,
           payload: response.data.userId,
         });
 

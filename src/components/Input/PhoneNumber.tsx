@@ -31,6 +31,7 @@ const PhoneNumberInput: FC<Props> = ({
         </label>
       )}
       <PhoneInput
+      
         country={"ng"}
         inputStyle={{
           width: "100%",

@@ -1,11 +1,12 @@
+import { Button } from "@/components";
 import { OnboardLayout } from "@/layout";
-import { Input, Button } from "@/components";
-import { useRouter } from "next/router";
-import { AuthRoutes, OnboardRoutes, baseURL } from "@/utils";
+import { StoreState } from "@/store/types/store-state.types";
+import { OnboardRoutes, baseURL } from "@/utils";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+import { useSelector } from "react-redux";
+
 const ConfirmEmail = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);

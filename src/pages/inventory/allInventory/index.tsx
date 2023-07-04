@@ -1,83 +1,104 @@
+import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
+import { AllInventoryTable } from "@/components/InventoryTable";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes } from "@/utils";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-// import { InboundHistory } from "@/_pages/inventory/all/inboundHistory";
-import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
-import { AllInventoryTable } from "@/components/InventoryTable";
-import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  IconButton,
-  Table,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { SelectedInventoryModal } from "@/_tabs/Inventory/modals/SelectedInventoryModal";
+import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
 
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-
-const headers = ["ALL Inventory", "Inbound History"];
+enum tabsEnum {
+  ALL_INVENTORY = "ALL_INVENTORY",
+  INBOUND_HISTORY = "INBOUND_HISTORY",
+}
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 export default function Inventory() {
   const router = useRouter();
   const [showUploadButton, setShowUploadButton] = useState(true);
+  const { selectedInventoryItemsToOrder } = useSelector(
+    (state: StoreState) => state
+  );
+
+  const [activeTab, setActiveTab] = useState<tabsEnum>(tabsEnum.ALL_INVENTORY);
   const [open, setOpen] = useState(false);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
   };
+  const dispatch = useDispatch();
 
-  const inventoryData: inventoryDataType[] = [
-    {
-      title: "mac Book Pro",
-      SKUId: 12345,
-      facilityID: 12345,
-      position: "Upper Shelf",
-      facilityName: "Badagry, lagos",
-      quantity: 20,
-      unitPrice: 100,
-      dmgItems: 10,
-      description: "Lorem ipsum dolor emet",
-      color: "grey",
-      weight: "100 pounds",
-      img: "string",
-    },
-    {
-      title: "Samsung Z Book ",
-      SKUId: 12346,
-      facilityID: 12346,
-      position: "Upper Shelf",
-      facilityName: "Badagry, lagos",
-      quantity: 50,
-      unitPrice: 100,
-      dmgItems: 10,
-      description: "Lorem ipsum dolor emet",
-      color: "grey",
-      weight: "100 pounds",
-      img: "string",
-    },
-  ];
+  type generateNewOrderItemType = ({
+    storageFacilityId,
+    orderItems,
+  }: {
+    storageFacilityId: any;
+    orderItems: any;
+  }) => InternalOrdersPostRequestType;
+
+  const generateNewOrderItem: generateNewOrderItemType = ({
+    storageFacilityId,
+    orderItems,
+  }) => {
+    const order = new InternalOrdersPostRequestType();
+    order.storageFacilityId = storageFacilityId;
+    order.customerId = "";
+    order.deliveryAddress = "";
+    order.deliveryLGA = "";
+    order.deliveryState = "";
+    order.dispatchTime = "";
+    order.numberOfItems = 1;
+    order.paymentMode = "";
+    order.pickUpAddress = "";
+    order.pickUpTime = "";
+    order.reciepientName = "";
+    order.reciepientPhoneNo = "";
+    order.orderItems = orderItems;
+    return order;
+  };
+
+  const addAllItemsToVan = () => {
+    dispatch({
+      type: StateReducerActions.ADD_MULTIPLE_INVENTORY_ITEM_TO_VAN,
+      payload: selectedInventoryItemsToOrder.map((it) =>
+        generateNewOrderItem({
+          storageFacilityId: it.storageFacilityId,
+          orderItems: [
+            {
+              itemName: it?.itemName,
+              orderQuantity: it?.orderQuantity,
+              dimension: it.size.toString(),
+              unitPrice: it?.unitPrice,
+              quantity: it?.quantity,
+              skuId: it?.skuId,
+            },
+          ],
+        })
+      ),
+    });
+    router.push("/ordermgt/deliveryVan");
+  };
 
   return (
     <>
       {/* <ImagePreview /> */}
       <DashBoardLayout>
-        <div className="rounded flex-grow border-1 border-gray-300 h-[83vh] pt-2">
+        <div className="rounded  border-1 h-full  pt-2">
           {showUploadButton && (
             <>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center border-b-2">
                 <div className=" p-7 flex flex-col ">
-                  <h1 className="text-3xl font-extrabold">All Inventory</h1>
+                  <h1 className="text-3xl font-extrabold">
+                    {" "}
+                    {activeTab === tabsEnum.ALL_INVENTORY
+                      ? "All Inventory"
+                      : "Inbound History"}
+                  </h1>
                 </div>
                 <div className="flex justify-center gap-2 mr-7">
                   <button>
@@ -102,9 +123,9 @@ export default function Inventory() {
             </>
           )}
           {!showUploadButton && (
-            <div className="border-b-2 border-b-gray-300 p-7 flex items-center justify-between">
+            <div className="border-b-2 border-b-gray-300  flex items-center justify-between">
               <div className=" flex flex-col ">
-                <h1 className="text-3xl font-extrabold">Inbound History</h1>
+                <h1 className="text-3xl font-extrabold"></h1>
               </div>
               <div></div>
             </div>
@@ -112,12 +133,13 @@ export default function Inventory() {
 
           <div className="w-full px-10 py-5">
             <Tab.Group>
-              <Tab.List className="flex pl-10 pt-3 gap-1 justify-between rounded-sm border-2  text-center">
-                <div>
-                  {headers.map((header, idx) => (
+              <div className="flex pt-3 gap-1  rounded-sm  justify-between text-center">
+                {" "}
+                <Tab.List className="flex">
+                  {Object.values(tabsEnum).map((header, idx) => (
                     <Tab
                       key={idx}
-                      onClick={handleProcessItemsClick2}
+                      onClick={() => setActiveTab(header)}
                       className={({ selected }) =>
                         classNames(
                           "py-3 px-7 outline-none rounded-tl-lg rounded-tr-lg clip-path-polygon",
@@ -126,11 +148,10 @@ export default function Inventory() {
                         )
                       }
                     >
-                      {header}
+                      {header.replace("_", " ")}
                     </Tab>
                   ))}
-                </div>
-
+                </Tab.List>
                 <div className="flex">
                   <div className="flex-inline justify-end ">
                     <div></div>
@@ -159,75 +180,21 @@ export default function Inventory() {
                     </div>
                   </div>
                 </div>
-              </Tab.List>
-              <Tab.Panel>
-                <AllInventoryTable />
-              </Tab.Panel>
-
-              <Tab.Panel>
-                <InboundHistory />
-              </Tab.Panel>
+              </div>
+              <div>
+                {" "}
+                <Tab.Panel style={{ padding: 0 }}>
+                  <AllInventoryTable />
+                </Tab.Panel>
+                <Tab.Panel>
+                  <InboundHistory />
+                </Tab.Panel>
+              </div>
             </Tab.Group>
           </div>
         </div>
       </DashBoardLayout>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "end",
-            width: "100%",
-            minWidth: "100%",
-          }}
-        >
-          <IconButton onClick={() => setOpen(false)}>
-            <CloseRoundedIcon />
-          </IconButton>
-        </Box>
-        <DialogContent>
-          <Typography variant="h5" fontWeight={600} textAlign="center" color="primary">
-            Create Order
-          </Typography>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>SKU ID</TableCell>
-                <TableCell>Item Name</TableCell>
-                <TableCell>Unit Price</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            </TableHead>
-
-            {inventoryData.map((item) => (
-              <TableRow>
-                <TableCell>{item?.SKUId}</TableCell>
-                <TableCell>{item?.title}</TableCell>
-                <TableCell>{item?.unitPrice}</TableCell>
-                <TableCell>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <IconButton>
-                      <AddCircleIcon />
-                    </IconButton>
-
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      {" "}
-                      <Typography variant="body2" sx={{}}>
-                        {0}/{item?.quantity}
-                      </Typography>
-                    </Box>
-                    <IconButton>
-                      <RemoveCircleIcon />
-                    </IconButton>
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
-          </Table>
-          <Button variant="contained" fullWidth sx={{ mt: 2 }} >
-            Add to delivery van
-          </Button>
-        </DialogContent>
-      </Dialog>
+      <SelectedInventoryModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

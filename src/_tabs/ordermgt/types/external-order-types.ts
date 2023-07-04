@@ -21,13 +21,13 @@ export type ExternalOrderType = {
   deliveryAddress: string;
   pickUpTime: string;
   dispatchTime: string;
-  status: string;
+  status: "PENDING" | "ACCEPTED" | "REJECTED";
   customerId: string;
   customers: null;
 };
 
 export type CreateExternalOrderType = {
-  recipientName: string;
+  // recipientName: string;
   storageFacilityId: string;
   paymentMode: string;
   numberOfItems: number;
@@ -36,8 +36,10 @@ export type CreateExternalOrderType = {
   pickUpAddress: string;
   deliveryState: string;
   deliveryLGA: string;
+  pickUpLGA: string;
   deliveryAddress: string;
   pickUpTime: string;
+  contactPhoneNo: string;
   dispatchTime: string;
   customerId: string;
   orderItems: CreateExternalOrderItemType[];

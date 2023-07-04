@@ -1,1 +1,1 @@
-export { OnboardingAction } from "./onboarding";
+export { StateReducerActions } from "./store-actions.enum";

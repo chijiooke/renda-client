@@ -8,4 +8,6 @@ export type UserType = {
   phoneNumber: string;
   customerId: string;
   status: string;
+  customerBusinessEmailAddress?: string;
+  customerBusinessPhoneNumber?: string;
 };

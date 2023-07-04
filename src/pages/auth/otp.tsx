@@ -1,13 +1,14 @@
-import { useState } from "react";
-import { LoginContainer, OnboardLayout } from "@/layout";
-import { Input, Button, OTPInput } from "@/components";
-import { useRouter } from "next/router";
+import { Button, OTPInput } from "@/components";
+import { OnboardLayout } from "@/layout";
+import { StateReducerActions } from "@/types";
 import { AuthRoutes, baseURL } from "@/utils";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
-import { StoreState } from "@/store/reducer";
-import axios from "axios";
+
 import { EmailMask } from "@/container";
+import axios from "axios";
+import { StoreState } from "@/store/types/store-state.types";
 const ConfirmOTP = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const ConfirmOTP = () => {
       });
       if (response.success) {
         dispatch({
-          type: OnboardingAction.SET_LOGIN_DETAILS,
+          type: StateReducerActions.SET_LOGIN_DETAILS,
           payload: { ...loginDetails, otp },
         });
         router.push(AuthRoutes.RESET_PASSWORD);
