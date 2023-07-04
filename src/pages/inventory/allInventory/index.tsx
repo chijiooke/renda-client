@@ -12,7 +12,10 @@ import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
 
-const headers = ["ALL Inventory", "Inbound History"];
+enum tabsEnum {
+  ALL_INVENTORY = "ALL_INVENTORY",
+  INBOUND_HISTORY = "INBOUND_HISTORY",
+}
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -22,6 +25,8 @@ export default function Inventory() {
   const { selectedInventoryItemsToOrder } = useSelector(
     (state: StoreState) => state
   );
+
+  const [activeTab, setActiveTab] = useState<tabsEnum>(tabsEnum.ALL_INVENTORY);
   const [open, setOpen] = useState(false);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
@@ -86,9 +91,14 @@ export default function Inventory() {
         <div className="rounded  border-1 h-full  pt-2">
           {showUploadButton && (
             <>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center border-b-2">
                 <div className=" p-7 flex flex-col ">
-                  <h1 className="text-3xl font-extrabold">All Inventory</h1>
+                  <h1 className="text-3xl font-extrabold">
+                    {" "}
+                    {activeTab === tabsEnum.ALL_INVENTORY
+                      ? "All Inventory"
+                      : "Inbound History"}
+                  </h1>
                 </div>
                 <div className="flex justify-center gap-2 mr-7">
                   <button>
@@ -113,9 +123,9 @@ export default function Inventory() {
             </>
           )}
           {!showUploadButton && (
-            <div className="border-b-2 border-b-gray-300 p-7 flex items-center justify-between">
+            <div className="border-b-2 border-b-gray-300  flex items-center justify-between">
               <div className=" flex flex-col ">
-                <h1 className="text-3xl font-extrabold">Inbound History</h1>
+                <h1 className="text-3xl font-extrabold"></h1>
               </div>
               <div></div>
             </div>
@@ -123,14 +133,13 @@ export default function Inventory() {
 
           <div className="w-full px-10 py-5">
             <Tab.Group>
-              <div className="flex pl-10 pt-3 gap-1  rounded-sm border-2  justify-between text-center">
+              <div className="flex pt-3 gap-1  rounded-sm  justify-between text-center">
                 {" "}
                 <Tab.List className="flex">
-                  {/* <div> */}
-                  {headers.map((header, idx) => (
+                  {Object.values(tabsEnum).map((header, idx) => (
                     <Tab
                       key={idx}
-                      onClick={handleProcessItemsClick2}
+                      onClick={() => setActiveTab(header)}
                       className={({ selected }) =>
                         classNames(
                           "py-3 px-7 outline-none rounded-tl-lg rounded-tr-lg clip-path-polygon",
@@ -139,10 +148,9 @@ export default function Inventory() {
                         )
                       }
                     >
-                      {header}
+                      {header.replace("_", " ")}
                     </Tab>
                   ))}
-                  {/* </div> */}
                 </Tab.List>
                 <div className="flex">
                   <div className="flex-inline justify-end ">
@@ -173,13 +181,15 @@ export default function Inventory() {
                   </div>
                 </div>
               </div>
-
-              <Tab.Panel>
-                <AllInventoryTable />
-              </Tab.Panel>
-              <Tab.Panel>
-                <InboundHistory />
-              </Tab.Panel>
+              <div>
+                {" "}
+                <Tab.Panel style={{ padding: 0 }}>
+                  <AllInventoryTable />
+                </Tab.Panel>
+                <Tab.Panel>
+                  <InboundHistory />
+                </Tab.Panel>
+              </div>
             </Tab.Group>
           </div>
         </div>

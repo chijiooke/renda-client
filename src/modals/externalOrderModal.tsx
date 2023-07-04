@@ -40,7 +40,7 @@ function ExternalOrderModal({ show, data, close, onSubmit }: Props) {
           <div className="relative flex">
             <div
               className="relative w-full h-full p-4"
-              style={{ width: "600px" }}
+              style={{ width: "700px" }}
             >
               <p
                 onClick={close}

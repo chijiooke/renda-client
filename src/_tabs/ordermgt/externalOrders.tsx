@@ -15,12 +15,14 @@ import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
 import { ExternalOrderType } from "./types/external-order-types";
+import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
 
 export const ExternalOrders: FC<{ openModal: () => void }> = ({
   openModal,
 }) => {
   const [data, setdata] = useState<ExternalOrderType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  let [itemToShow, setItemToShow] = useState<ExternalOrderType | null>(null);
 
   const getExternalOrders = async () => {
     setLoading(true);
@@ -97,7 +99,12 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
 
             {data.length && !loading
               ? data.map((item: ExternalOrderType) => (
-                  <TableRow>
+                  <TableRow
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setItemToShow(item);
+                    }}
+                  >
                     <TableCell variant="body">
                       {item?.externalOrdersId}
                     </TableCell>
@@ -118,6 +125,12 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
           </TableBody>
         </Table>
       </div>
+
+      <ExternalOrderDetailsModal
+        show={!!itemToShow}
+        close={() => setItemToShow(null)}
+        item={itemToShow}
+      />
     </>
   );
 };

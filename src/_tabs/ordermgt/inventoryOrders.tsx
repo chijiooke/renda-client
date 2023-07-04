@@ -11,8 +11,8 @@ import {
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 
+import { InventoryOrderDetailsModal } from "@/modals/inventoryOrderDetailModal";
 import { baseURL } from "@/utils";
-import { InfoOutlined } from "@mui/icons-material";
 import dayjs from "dayjs";
 import { InfinitySpin } from "react-loader-spinner";
 import { InternalOrdersType } from "../Inventory/types/inventory-order-types";
@@ -20,6 +20,7 @@ import { InternalOrdersType } from "../Inventory/types/inventory-order-types";
 const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
   const [data, setdata] = useState<InternalOrdersType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  let [itemToShow, setItemToShow] = useState<InternalOrdersType | null>(null);
 
   const getInventoryOrders = async () => {
     setLoading(true);
@@ -100,7 +101,15 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
 
             {data.length && !loading
               ? data.map((item: InternalOrdersType) => (
-                  <TableRow>
+                  <TableRow
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setItemToShow(item);
+                    }}
+                  >
+                    {/* <TableCell variant="body">
+                      <Checkbox />
+                    </TableCell> */}
                     <TableCell variant="body">{item?.orderId}</TableCell>
                     <TableCell variant="body">{item?.numberOfItems}</TableCell>
                     <TableCell variant="body">
@@ -123,6 +132,12 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
           </TableBody>
         </Table>
       </div>
+
+      <InventoryOrderDetailsModal
+        show={!!itemToShow}
+        close={() => setItemToShow(null)}
+        item={itemToShow}
+      />
     </>
   );
 };
