@@ -1,0 +1,20 @@
+export type InternalOrdersType = {
+  orderId: string;
+  recipientName: string;
+  storageFacilityId: string;
+  paymentMode: string;
+  numberOfItems: number;
+  dateCreated: string;
+  lastUpdated: string;
+  reciepientName: string;
+  reciepientPhoneNo: string;
+  pickUpAddress: string;
+  deliveryState: string;
+  deliveryLGA: string;
+  deliveryAddress: string;
+  pickUpTime: string;
+  dispatchTime: string;
+  status: string;
+  customerId: string;
+  customers: null;
+};

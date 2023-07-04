@@ -31,7 +31,7 @@ type Props = {
   type?: HTMLInputTypeAttribute;
   className?: string;
   placeholder?: string;
-  value?: string;
+  value?: string|number;
   handleChange?: ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   name?: string;
@@ -39,7 +39,8 @@ type Props = {
   caption?: string;
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
-  id?:string
+  inputClass?: string;
+  id?: string;
 };
 const Input: FC<Props> = ({
   label = "",
@@ -54,7 +55,8 @@ const Input: FC<Props> = ({
   caption = "",
   size = "md",
   disabled = false,
-  id
+  inputClass,
+  id,
 }) => {
   const [iType, setIType] = useState<HTMLInputTypeAttribute>(type);
   const togglePassword = () => {
@@ -62,7 +64,7 @@ const Input: FC<Props> = ({
     iType === "text" ? setIType("password") : setIType("text");
   };
   return (
-    <div className={cn("flex flex-col")}>
+    <div className={cn("flex flex-col mb-3", className)}>
       {label && (
         <label htmlFor={name} className="text-lg mb-3 font-bold">
           {label}
@@ -78,12 +80,12 @@ const Input: FC<Props> = ({
           disabled={disabled}
           id={id}
           className={cn(
-            "p-5 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300 ",
+            "p-3 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300 ",
             {
-              "border-rose-600": error,
+              "border-red outline-[border-red]": error,
               "py-2 rounded-lg": size == "sm",
             },
-            className
+            inputClass
           )}
           required={required}
         />

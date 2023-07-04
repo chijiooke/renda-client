@@ -1,4 +1,6 @@
+import { inventoryDataType } from "@/components/InventoryTable/inventoryTableRow";
 import { OnboardingAction } from "@/types";
+import { UserType } from "./types/user-types";
 
 export type InventoryType = {
   id?: string;
@@ -6,6 +8,7 @@ export type InventoryType = {
   quantity: number;
   description: string;
   size: string;
+  weight: string;
   colour: string;
   picture?: string;
   unitPrice: number;
@@ -23,9 +26,8 @@ export interface StoreState {
     businessIndustry: string | undefined;
     businessAddress?: string;
   };
-  authenticated: boolean;
   userId: string;
-  user: any;
+  user: UserType | null;
   companyRegistrationNumber: string;
   Kyc: FormData;
   fileList: {
@@ -50,6 +52,7 @@ export interface StoreState {
     bookingId: string;
   };
   inventoryItems: InventoryType[];
+  itemsToOrder: inventoryDataType[];
 }
 export const initialValues: StoreState = {
   getStarted: {
@@ -63,9 +66,8 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
-  authenticated: false,
   userId: "",
-  user: {},
+  user: null,
   companyRegistrationNumber: "",
   Kyc: new FormData(),
   fileList: {
@@ -90,6 +92,7 @@ export const initialValues: StoreState = {
     bookingId: "",
   },
   inventoryItems: [] as InventoryType[],
+  itemsToOrder: [],
 };
 interface ActionType {
   type: OnboardingAction;
@@ -115,11 +118,6 @@ const reducer = (
       return {
         ...state,
         Kyc: action.payload,
-      };
-    case OnboardingAction.SET_AUTHENTICATED:
-      return {
-        ...state,
-        authenticated: action.payload,
       };
     case OnboardingAction.UPDATE_FILE_LIST:
       return {
@@ -149,12 +147,17 @@ const reducer = (
     case OnboardingAction.SET_INVENTORY_ITEMS:
       return {
         ...state,
-        inventoryItems: [...state.inventoryItems, ...action.payload],
+        inventoryItems: [...action.payload],
       };
     case OnboardingAction.CLEAR_INVENTORY_ITEMS:
       return {
         ...state,
         inventoryItems: [] as InventoryType[],
+      };
+    case OnboardingAction.ADD_SELECTED_INVENTORY_ITEM:
+      return {
+        ...state,
+        itemsToOrder: [...state.itemsToOrder, action.payload] ,
       };
     default:
       return state;

@@ -86,7 +86,7 @@ const ConfirmOTP = () => {
         <div className="flex gap-5 justify-center max-w-2xl">
           <Button
             title="Back to Login"
-            type="secondary"
+            variant="secondary"
             className="w-50"
             handleClick={() => router.push(AuthRoutes.LOGIN)}
           />

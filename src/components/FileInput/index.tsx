@@ -55,6 +55,7 @@ const FileInput: FC<Props> = ({
               className="absolute w-full h-full top-0 bottom-0 opacity-0 cursor-pointer"
               type="file"
               multiple={multiple}
+              accept=".jpg, .jpeg, .png, .pdf"
             />
           </div>
         </div>

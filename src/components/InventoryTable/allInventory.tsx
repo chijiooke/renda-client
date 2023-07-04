@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import { Button, Input } from "@/components";
-import { AddIcon, CheckIcon, DeleteIcon } from "@/icons";
-import classNames from "classnames";
-import Router, { useRouter } from "next/router";
-import { DashBoardRoutes } from "@/utils/routes";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { TableDetails } from "./table details";
 
 function AllInventoryTable() {
@@ -36,18 +32,18 @@ function AllInventoryTable() {
 
   return (
     <>
-      <div className="position-relative object-contain">
+      <div className="h-0">
         <div>
           <TableDetails />
         </div>
         <div
-          className="flex space-x-96 items-center justify-between bottom-0 m-4"
-          style={{ height: 28 }}
+          className="flex justify-between bottom-0 m-4"
+          style={{ }}
         >
           <p className="opacity-50 text-xs font-medium text-black text-opacity-50">
             Showing 1{" "}
           </p>
-          <div className="flex space-x-2.5 items-start justify-start">
+          <div className="flex space-x-2.5 items-start justify-start bottom-0">
             <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
               <p className="text-xs font-medium text-center text-gray-500">
                 Previous

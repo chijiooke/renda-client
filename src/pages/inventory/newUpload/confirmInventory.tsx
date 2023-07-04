@@ -11,9 +11,12 @@ import {
   StorageSelectModal,
 } from "@/modals";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { StoreState } from "@/store/reducer";
 
 export default function ConfirmInventory() {
   const router = useRouter();
+  const { inventoryItems } = useSelector((state: StoreState) => state);
   const [showSelectStorage, setShowSelectStorage] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showShippingRenda, setShowShippingRenda] = useState(false);
@@ -54,6 +57,8 @@ export default function ConfirmInventory() {
         show={showShippingRenda}
         close={() => setShowShippingRenda(false)}
         facilityId={facilityId}
+        skuId=""
+        count={0}
       />
       <ShippingInventoryCustomerModal
         show={showShippingCustomer}
@@ -74,7 +79,9 @@ export default function ConfirmInventory() {
             </div>
           </div>
           <div className="p-10">
-            <p className="my-5 text-primary font-semibold">15 Items</p>
+            <p className="my-5 text-primary font-semibold">
+              {inventoryItems.length} Items
+            </p>
             <div className="flex flex-col w-full">
               <div className="grid grid-cols-8 mt-2 justify-between   p-5 border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
                 <p>ITEM NAME</p>
@@ -92,7 +99,7 @@ export default function ConfirmInventory() {
             <div className="flex max-w-sm  py-5 gap-3 flex-end justify-end w-full">
               <Button
                 title="Back"
-                type="secondary"
+                variant="secondary"
                 handleClick={() => router.back()}
               />
               <Button
