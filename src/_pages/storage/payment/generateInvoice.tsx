@@ -18,9 +18,8 @@ const GenerateInvoice = () => {
           <div className="flex justify-between">
             <div className="flex flex-col">
               <p className="font-extrabold text-2xl my-2">Invoice number</p>
-              <p>#12345678-0980</p>
+              <p>#{bookingDetails.bookingId}</p>
               <p>Invoice Date: 24 Mar 2023, 10:30am</p>
-              <p>Due date (7days from invoice date)</p>
             </div>
             <div>
               <p className="text-end opacity-50 text-[11px]">Amount to pay</p>
@@ -49,13 +48,13 @@ const GenerateInvoice = () => {
             <p>Amount</p>
           </div>
           <div className="grid grid-cols-8 py-3">
-            <p className="col-span-2">Omo Oni ile Facility</p>
-            <p>Surulere </p>
-            <p>#12345678</p>
-            <p>Shared</p>
+            <p className="col-span-2">{bookingDetails.detail?.facility}</p>
+            <p>{bookingDetails.detail?.location}</p>
+            <p>#{bookingDetails.detail?.id}</p>
+            <p>{bookingDetails.detail?.type}</p>
             <p>6 Months</p>
-            <p>2</p>
-            <p>N650,000</p>
+            <p>1</p>
+            <p>N{formatCurrency(bookingDetails.amount)}</p>
           </div>
         </div>
 
@@ -70,27 +69,30 @@ const GenerateInvoice = () => {
           <div className="flex flex-col">
             <div className="grid grid-cols-2 items-center justify-end gap-4">
               <p className="text-end font-bold">Subtotal</p>
-              <p className="text-[20px] font-extrabold">N953000</p>
+              <p className="text-[20px] font-extrabold">
+                N{formatCurrency(bookingDetails.amount)}
+              </p>
             </div>
             <div className="grid grid-cols-2  items-center justify-end  gap-4">
               <p className="text-end font-bold"> Total</p>
-              <p className="text-[20px] font-extrabold">N953000</p>
+              <p className="text-[20px] font-extrabold">
+                N{formatCurrency(bookingDetails.amount)}
+              </p>
             </div>
           </div>
         </div>
         <div className="grid grid-cols-2 items-center my-3">
           <p>CEOs signature</p>
           <p>
-            <span className="font-bold"> Instruction:</span> You have 7days to
-            make payment before your booking expires. Please enter the Invoice
-            ID as the narration of the payment when making the bank transfer via
-            your bank mobile app.
+            <span className="font-bold"> Instruction:</span> You have 3 business
+            days to make payment before your booking expires. Please enter the
+            Invoice ID as the narration of the payment when making the bank
+            transfer via your bank mobile app.
           </p>
         </div>
       </div>
-      <div className="flex gap-5 my-5">
-        <Button title="Download" type="secondary" />
-        <Button title="Proceed to Book with invoice" />
+      <div className="flex gap-5 my-5 max-w-md justify-center m-auto">
+        <Button title="Download" type="primary" />
       </div>
     </div>
   );

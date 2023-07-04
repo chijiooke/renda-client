@@ -48,6 +48,13 @@ export interface StoreState {
   bookingDetails: {
     amount: number;
     bookingId: string;
+    detail?: {
+      facility: string;
+      location: string;
+      type: string;
+      duration: string;
+      id: string;
+    };
   };
   inventoryItems: InventoryType[];
 }
@@ -87,6 +94,13 @@ export const initialValues: StoreState = {
   bookingDetails: {
     amount: 0,
     bookingId: "",
+    detail: {
+      facility: "",
+      location: "",
+      type: "",
+      id: "",
+      duration: "",
+    },
   },
   inventoryItems: [] as InventoryType[],
 };

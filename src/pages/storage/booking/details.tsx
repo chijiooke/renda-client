@@ -61,7 +61,7 @@ const BookingDetails = () => {
                   key={idx}
                   className={({ selected }) =>
                     classNames(
-                      "py-3 px-7 outline-none rounded-tl-lg  ",
+                      "py-3 px-7 outline-none rounded-tl-lg clip-path-polygon ",
                       selected ? "bg-primary text-white  " : "bg-[#f4f4f4]"
                     )
                   }

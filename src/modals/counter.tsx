@@ -94,6 +94,8 @@ const Counter = ({ skuId }: ItemSkuIdRowProps) => {
         show={showShippingCustomer}
         close={() => setShowShippingCustomer(false)}
         facilityId={facilityId}
+        skuId={skuId}
+        count={count}
       />
       <div className="flex gap-1">
         <Button

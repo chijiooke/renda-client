@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { UploadArea } from "@/components/UploadArea";
 import { CheckIcon, ComputerIcon, DoubleArrow } from "@/icons";
-import { DashBoardRoutes, baseURL } from "@/utils";
+import { DashBoardRoutes, baseURL, formatDateAndTime } from "@/utils";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -40,10 +40,10 @@ type InboundRequest = {
             picture: string;
             unitPrice: number;
             weight: number;
-            quantityRecieved: number,
-            quantityDamaged: number,
-            quantityMissing: number,
-            acceptanceStatus: string
+            quantityRecieved: number;
+            quantityDamaged: number;
+            quantityMissing: number;
+            acceptanceStatus: string;
           }
         ];
         // ...
@@ -88,10 +88,10 @@ const InboundHistory = () => {
   return (
     <div className="p-10">
       <div className="flex flex-col w-full">
-        <div className="grid grid-cols-8 justify-between p-5 bg-[#f9f9f9] rounded border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
+        <div className="grid grid-cols-7 justify-between p-5 bg-[#f9f9f9] rounded border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
           <p className="font-semibold uppercase">Inbound ID</p>
-          <p className="font-semibold uppercase">Date created</p>
-          <p className="font-semibold uppercase">TIME created</p>
+          <p className="font-semibold uppercase">Date & Time created</p>
+          {/* <p className="font-semibold uppercase">TIME created</p> */}
           <p className="font-semibold uppercase">Pickup location</p>
           <p className="font-semibold uppercase">Facility name</p>
           <p className="font-semibold uppercase">Facility ID</p>
@@ -102,7 +102,7 @@ const InboundHistory = () => {
         {inboundRequests.map((request, idx) => (
           <div
             key={request.inboundId}
-            className="grid grid-cols-8 justify-evenly p-5 items-center cursor-pointer"
+            className="grid grid-cols-7 justify-evenly p-5 items-center cursor-pointer"
             onClick={() =>
               router.push({
                 pathname: DashBoardRoutes.INVENTORY_INBOUND_DETAILS,
@@ -117,14 +117,16 @@ const InboundHistory = () => {
             </div>
             <div className="inline-flex space-x-1 items-center justify-start">
               <p title="dateCreated" className="leading-7">
-                {request.dateCreated}
+                {formatDateAndTime(
+                  request.dateCreated.split("T")[0] + "T" + request.timeCreated
+                )}
               </p>
             </div>
-            <div className="inline-flex space-x-1 items-center justify-start">
+            {/* <div className="inline-flex space-x-1 items-center justify-start">
               <p title="timeCreated" className="leading-7">
                 {request.timeCreated}
               </p>
-            </div>
+            </div> */}
             <div className="inline-flex space-x-1 items-center justify-start">
               <p title="pickupLocation" className="leading-7">
                 {
@@ -135,7 +137,10 @@ const InboundHistory = () => {
             </div>
             <div className="inline-flex space-x-1 items-center justify-start">
               <p title="storageFacility" className="leading-none">
-                {request.shipment.inventoryItems[0].storageFacility.storageFacilityName}
+                {
+                  request.shipment.inventoryItems[0].storageFacility
+                    .storageFacilityName
+                }
               </p>
             </div>
             <div className="inline-flex space-x-1 items-center justify-start">

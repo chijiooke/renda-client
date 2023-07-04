@@ -96,16 +96,22 @@ export default function ConfirmInventory() {
               <SomeComponent />
             </div>
 
-            <div className="flex max-w-sm  py-5 gap-3 flex-end justify-end w-full">
-              <Button
-                title="Back"
-                type="secondary"
-                handleClick={() => router.back()}
-              />
-              <Button
-                title="Confirm Items"
-                handleClick={() => setShowSelectStorage(true)}
-              />
+            <div className="flex  py-5 justify-end w-full">
+              <div className="flex gap-2 max-full w-50">
+                <Button
+                  title="Back"
+                  type="secondary"
+                  size="sm"
+                  className="w-30"
+                  handleClick={() => router.back()}
+                />
+                <Button
+                  title="Confirm Items"
+                  size="sm"
+                  className="w-[150px]"
+                  handleClick={() => setShowSelectStorage(true)}
+                />
+              </div>
             </div>
           </div>
         </div>

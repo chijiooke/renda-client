@@ -5,11 +5,19 @@ import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import cn from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { OnboardingAction } from "@/types";
+import { StoreState } from "@/store/reducer";
+import { useCallback } from "react";
 
 dayjs.extend(relativeTime);
 const BookingDetail = ({ data }: { data: any }) => {
   const { bookingDetails, storageDetails } = data;
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { bookingDetails: bookingDetail } = useSelector(
+    (state: StoreState) => state
+  );
   const details = {
     Status: (
       <p
@@ -25,7 +33,7 @@ const BookingDetail = ({ data }: { data: any }) => {
       </p>
     ),
     "Booking ID": bookingDetails?.bookingID,
-    "Name of storage facility": storageDetails?.locationOfTheFacility,
+    "Name of storage facility": bookingDetails?.nameofStorageFacility,
     "Booking date and time": "",
     "Duration of usage": dayjs(bookingDetails?.startDate).to(
       dayjs(bookingDetails?.endDate),
@@ -38,6 +46,26 @@ const BookingDetail = ({ data }: { data: any }) => {
     "Renewal Status": bookingDetails?.renewalStatus || "null",
     "Payment Structure": bookingDetails?.paymentStructure,
   };
+  // const cv = useCallback(()=>{
+
+  const goToPayments = useCallback(() => {
+    dispatch({
+      type: OnboardingAction.SET_BOOKING_DETAILS,
+      payload: {
+        amount: bookingDetail.amount,
+        bookingId: bookingDetail.bookingId,
+        detail: {
+          location: storageDetails?.locationOfTheFacility,
+          facility: bookingDetails?.nameofStorageFacility,
+          type: bookingDetails?.storageType,
+          duration: "",
+          id: storageDetails?.storageFacilityID,
+        },
+      },
+    });
+
+    router.push(DashBoardRoutes.BOOKING_PAYMENT);
+  }, [data]);
   return (
     <div className=" grid grid-cols-3 justify-between my-5 gap-5">
       <div className="col-span-2">
@@ -54,8 +82,8 @@ const BookingDetail = ({ data }: { data: any }) => {
             title="Pay for Booking "
             size="sm"
             className="w-[40%]"
-            disabled={!(bookingDetails?.status === "Approved")}
-            handleClick={() => router.push(DashBoardRoutes.BOOKING_PAYMENT)}
+            // disabled={!(bookingDetails?.status === "Approved")}
+            handleClick={goToPayments}
           />
           <Button
             title="Renew Bookings"

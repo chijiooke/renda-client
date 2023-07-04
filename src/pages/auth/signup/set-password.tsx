@@ -15,7 +15,6 @@ const ConfirmPassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const router = useRouter();
-  console.log(router.pathname);
   const { getStarted, Kyc, companyRegistrationNumber } = useSelector(
     (state: StoreState) => state
   );
@@ -24,20 +23,19 @@ const ConfirmPassword = () => {
     setLoading(true);
     setError("");
     try {
-      const { data: result } = await axios.post(
-        baseURL + "CreateIdentity",
-        data
-      );
+      const { data: result } = await axios.post(baseURL + "CreateIdentity", {
+        ...data,
+        ...Kyc,
+      });
 
       if (result.success) {
-        const { data: response } = await axios.post(
-          baseURL +
-            `UploadKyc?CompanyRegistrationNumber=${companyRegistrationNumber}&userid=${result.data.userId}`,
-          Kyc
-        );
-        if (response.success) {
-          router.push(OnboardRoutes.CONFIRM_EMAIL);
-        }
+        // const { data: response } = await axios.post(
+        //   baseURL +
+        //     `UploadKyc?CompanyRegistrationNumber=${companyRegistrationNumber}&userid=${result.data.userId}`,
+        //   Kyc
+        // );
+
+        router.push(OnboardRoutes.CONFIRM_EMAIL);
       }
     } catch (error) {
       setError(

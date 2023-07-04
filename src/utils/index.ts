@@ -7,3 +7,4 @@ export {
   queryStringBuilder,
 } from "./routes";
 export { formatCurrency } from "./formatCurrency";
+export { formatDateAndTime } from "./formartDate";
