@@ -1,14 +1,13 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { DashBoardRoutes, baseURL } from "@/utils";
-import { useRouter } from "next/router";
-import { ConfirmModal, MyModal } from "@/modals";
-import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+import { StoreState } from "@/store/types/store-state.types";
+
+import { baseURL } from "@/utils";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { number } from "yup";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // Define the type for the inbound request
 type InboundRequest = {
@@ -83,7 +82,6 @@ export default function InboundDetail() {
             ).replace("#", "%23")}`
         );
         setInboundRequests(data);
-        console.log(id);
       } catch (error) {
         console.error("Failed to fetch data from the endpoint:", error);
       }

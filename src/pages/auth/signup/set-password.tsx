@@ -1,16 +1,14 @@
-import { useState } from "react";
+import { Button, Input } from "@/components";
 import { OnboardLayout } from "@/layout";
-import { Input, Button } from "@/components";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { formikCaption, passwordRegex, formikError } from "@/utils";
-import { OnboardingAction } from "@/types";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { OnboardRoutes, baseURL } from "@/utils";
-import { registerCustomer } from "@/request/onboarding";
-import { StoreState } from "@/store/reducer";
+import { StoreState } from "@/store/types/store-state.types";
+
+import { OnboardRoutes, baseURL, formikCaption, formikError, passwordRegex } from "@/utils";
 import axios from "axios";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
 const ConfirmPassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");

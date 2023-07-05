@@ -1,14 +1,14 @@
-import { useState, useEffect, useMemo } from "react";
+import { Button, FileInput, Input } from "@/components";
 import { OnboardLayout } from "@/layout";
-import { Button, Input, FileInput } from "@/components";
-import { useRouter } from "next/router";
-import { OnboardRoutes } from "@/utils";
+import { StoreState } from "@/store/types/store-state.types";
+
+import { StateReducerActions } from "@/types";
+import { OnboardRoutes, formikCaption, formikError } from "@/utils";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import { formikCaption, formikError } from "@/utils";
-import { StoreState } from "@/store/reducer";
+import { useRouter } from "next/router";
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
+import * as Yup from "yup";
 
 const KycUpload = () => {
   const { fileList, companyRegistrationNumber } = useSelector(
@@ -35,15 +35,15 @@ const KycUpload = () => {
       fd.append("DirectorsIDs", directorsIds[i]);
     }
     dispatch({
-      type: OnboardingAction.SET_KYC,
+      type: StateReducerActions.SET_KYC,
       payload: fd,
     });
     dispatch({
-      type: OnboardingAction.SET_COMPANY_NUMBER,
+      type: StateReducerActions.SET_COMPANY_NUMBER,
       payload: formik.values.number,
     });
     dispatch({
-      type: OnboardingAction.UPDATE_FILE_LIST,
+      type: StateReducerActions.UPDATE_FILE_LIST,
       payload: { registrationCertificate, proofOfAddress, directorsIds },
     });
     router.push(OnboardRoutes.SET_PASSWORD);

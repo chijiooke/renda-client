@@ -5,7 +5,8 @@ import {
   PieChartCard,
 } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { StoreState } from "@/store/reducer";
+import { StoreState } from "@/store/types/store-state.types";
+
 import { baseURL, queryStringBuilder } from "@/utils";
 import axios from "axios";
 import { Inter } from "next/font/google";
@@ -49,7 +50,6 @@ export default function Home() {
 
   const getDashboardData = async (userId: string) => {
     setLoadingDashboardData(true);
-    // const queryString = ;
     try {
       const { data } = await axios.get(
         baseURL +

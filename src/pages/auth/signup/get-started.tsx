@@ -5,10 +5,11 @@ import { useRouter } from "next/router";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { formikCaption, formikError, phoneRegExp } from "@/utils";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 import { useDispatch, useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+
 import { OnboardRoutes } from "@/utils";
+import { StoreState } from "@/store/types/store-state.types";
 
 const industries = [
   "Agriculture and farming",
@@ -61,7 +62,7 @@ const GetStarted = () => {
     businessAddress?: string | undefined;
   }) => {
     dispatch({
-      type: OnboardingAction.SET_GET_STARTED,
+      type: StateReducerActions.SET_GET_STARTED,
       payload: value,
     });
     router.push(OnboardRoutes.KYC_UPLOAD);
@@ -219,7 +220,7 @@ const GetStarted = () => {
           <div className="flex justify-between gap-6 mt-15">
             <Button
               title="Back"
-              type="secondary"
+              variant="secondary"
               handleClick={() => router.back()}
             />
             <Button

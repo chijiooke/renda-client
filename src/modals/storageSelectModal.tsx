@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { ConfirmModal, MyModal } from "@/modals";
-import axios from "axios";
 import { Button } from "@/components";
+import { StoreState } from "@/store/types/store-state.types";
 import { baseURL } from "@/utils";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
+
 interface MyModalProps {
   onClose: () => void;
   show: boolean;
@@ -31,7 +31,7 @@ const StorageSelectModal: React.FC<MyModalProps> = ({
     const fetchStorageFacilities = async () => {
       try {
         const { data } = await axios.get(
-          baseURL + `api/bookings/${user.customerId}/MyBookedStorage`
+          baseURL + `api/bookings/${user?.customerId}/MyBookedStorage`
         );
         setStorageFacilities(data.data);
       } catch (error) {

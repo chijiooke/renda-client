@@ -1,16 +1,16 @@
-import { useEffect, useState, MouseEventHandler } from "react";
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
 import { DashBoardRoutes, baseURL, formatCurrency } from "@/utils";
-import { useRouter } from "next/router";
-import { BookStorageModal } from "@/modals";
 import axios from "axios";
+import cn from "classnames";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import cn from "classnames";
+import { useRouter } from "next/router";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
-import { StoreState } from "@/store/reducer";
+// import { StoreState } from "@/store/reducer";
 
 dayjs.extend(relativeTime);
 export default function StorageBooking() {
@@ -21,7 +21,7 @@ export default function StorageBooking() {
   const getBookings = async () => {
     try {
       const { data } = await axios.get(
-        baseURL + `api/bookings/GetCustomerbyId/${user.customerId}`
+        baseURL + `api/bookings/GetCustomerbyId/${user?.customerId}`
       );
       setBookings(data.data);
     } catch (error) {}
@@ -79,7 +79,7 @@ const TableData = ({ data }: { data: any }) => {
     const path = e.nativeEvent.composedPath();
     if ((path[0] as HTMLElement)?.innerText !== "Make Payment") {
       dispatch({
-        type: OnboardingAction.SET_BOOKING_DETAILS,
+        type: StateReducerActions.SET_BOOKING_DETAILS,
         payload: {
           amount: data?.amount,
           bookingId: data?.bookingId,
@@ -93,7 +93,7 @@ const TableData = ({ data }: { data: any }) => {
   };
   const goToPayments: MouseEventHandler<HTMLDivElement> = () => {
     dispatch({
-      type: OnboardingAction.SET_BOOKING_DETAILS,
+      type: StateReducerActions.SET_BOOKING_DETAILS,
       payload: {
         amount: data?.amount,
         bookingId: data?.bookingId,

@@ -50,7 +50,7 @@ const ConfirmModal: FC<Props> = ({
                 <div className="grid grid-cols-2 mb-8 justify-between gap-7">
                   <Button
                     title={cancelText}
-                    type="secondary"
+                    variant="secondary"
                     size="sm"
                     className="px-8 w-full rounded-lg"
                     handleClick={cancelAction}

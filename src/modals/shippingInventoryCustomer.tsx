@@ -1,14 +1,15 @@
-import { ModalLayout } from "./layout";
+import { Button, Input } from "@/components";
 import cn from "classnames";
-import { Input, Button } from "@/components";
-import { FC, ReactNode, ChangeEventHandler, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { StoreState } from "@/store/reducer";
+import { ChangeEventHandler, FC, ReactNode, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ModalLayout } from "./layout";
+
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
 import { DashBoardRoutes, baseURL } from "@/utils";
 import axios from "axios";
-import { SuccessModal } from "./success";
 import { useRouter } from "next/router";
-import { OnboardingAction } from "@/types";
+import { SuccessModal } from "./success";
 type ModalProps = {
   show: boolean;
   close: () => void;
@@ -40,7 +41,7 @@ const ShippingInventoryCustomerModal: FC<ModalProps> = ({
   const closeModal = () => {
     setShowModal(false);
     dispatch({
-      type: OnboardingAction.CLEAR_INVENTORY_ITEMS,
+      type: StateReducerActions.CLEAR_INVENTORY_ITEMS,
     });
     router.push(DashBoardRoutes.INVENTORY_ALL);
   };
@@ -58,11 +59,11 @@ const ShippingInventoryCustomerModal: FC<ModalProps> = ({
       if (skuId === "" && count === 0) {
         const { data: inboundData } = await axios.post(
           baseURL +
-            `api/customers/${user.customerId}/InboundInventory/inbound-request`,
+            `api/customers/${user?.customerId}/InboundInventory/inbound-request`,
           {
-            customerBusinessId: user.customerId,
+            customerBusinessId: user?.customerId,
             deliveryDetails: {
-              customerBusinessId: user.customerId,
+              customerBusinessId: user?.customerId,
               customerDeliveryDetails: dt,
               pickupLocation: "lagos",
               deliveryBy: "customer",
@@ -74,13 +75,13 @@ const ShippingInventoryCustomerModal: FC<ModalProps> = ({
       } else {
         const { data: inboundData } = await axios.post(
           baseURL +
-            `api/customers/${user.customerId}/InboundInventory/topUp-inventory/${facilityId}`,
+            `api/customers/${user?.customerId}/InboundInventory/topUp-inventory/${facilityId}`,
           {
-            customerBusinessId: user.customerId,
+            customerBusinessId: user?.customerId,
             skuId,
             quantity: count,
             deliveryDetails: {
-              customerBusinessId: user.customerId,
+              customerBusinessId: user?.customerId,
               customerDeliveryDetails: dt,
               pickupLocation: "",
               deliveryBy: "customer",

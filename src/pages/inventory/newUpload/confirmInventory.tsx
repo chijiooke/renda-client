@@ -1,18 +1,16 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { DashBoardRoutes } from "@/utils";
-import { useRouter } from "next/router";
 import {
   ConfirmModal,
-  MyModal,
   ShippingInventoryCustomerModal,
   ShippingInventoryRendaModal,
   SomeComponent,
   StorageSelectModal,
 } from "@/modals";
+import { StoreState } from "@/store/types/store-state.types";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
 
 export default function ConfirmInventory() {
   const router = useRouter();
@@ -100,7 +98,7 @@ export default function ConfirmInventory() {
               <div className="flex gap-2 max-full w-50">
                 <Button
                   title="Back"
-                  type="secondary"
+                  variant="secondary"
                   size="sm"
                   className="w-30"
                   handleClick={() => router.back()}

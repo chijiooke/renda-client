@@ -1,19 +1,20 @@
-import React, {
-  useState,
-  ReactNode,
-  ChangeEventHandler,
-  useEffect,
-} from "react";
-import cn from "classnames";
-import { Input, Button, Select } from "@/components";
-import axios from "axios";
-import dayjs from "dayjs";
+import { Button, Input, Select } from "@/components";
+
 import { baseURL, formatCurrency } from "@/utils";
+import axios from "axios";
+import cn from "classnames";
+import dayjs from "dayjs";
+import {
+  ChangeEventHandler,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/reducer";
 
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { SuccessModal } from "./success";
+import { StoreState } from "@/store/types/store-state.types";
 
 dayjs.extend(customParseFormat);
 
@@ -43,7 +44,7 @@ function BookStorageModal({ show, data, close }: Props) {
       amount:
         +(target.name == "spaceRequired" && target.value) * +data?.rendaPrice!,
       storageFacilityId: data?.storageFacilityId,
-      customerId: user.customerId,
+      customerId: user?.customerId,
       endDate,
     };
     setDetails(dt);

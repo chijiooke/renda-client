@@ -7,10 +7,10 @@ import {
   RenewalDetails,
   StorageDetail,
   TransactionDetails,
-} from "@/_pages/storage/booking";
-import axios from "axios";
-import { baseURL } from "@/utils";
+} from "@/_tabs/storage/booking";
 import { useRouter } from "next/router";
+import { baseURL } from "@/utils";
+import axios from "axios";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }

@@ -1,154 +1,161 @@
-import React, {
-    useState,
-    ReactNode,
-    ChangeEventHandler,
-    useEffect,
-  } from "react";
-  import cn from "classnames";
-  import { Input, Button, Select } from "@/components";
-  import axios from "axios";
-  import dayjs from "dayjs";
-  import { baseURL, DashBoardRoutes } from "@/utils";
-  import { useSelector } from "react-redux";
-  import { StoreState } from "@/store/reducer";
-  
-  import customParseFormat from "dayjs/plugin/customParseFormat";
+import { Button } from "@/components";
+import { DashBoardRoutes } from "@/utils";
+import { useState } from "react";
+
+import { OrderManagementTabsEnum } from "@/pages/ordermgt";
+import { capitalizeText } from "@/utils/capitalizeText";
+import { OrdermgtRoutes } from "@/utils/routes";
+
+// import { FormControl } from "@mui/base";
+import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  FormControl,
+  // DialogTitle,
+  FormControlLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
 import { useRouter } from "next/router";
-  
-  type Props = {
-    show: boolean;
-    data?: any;
-    close: () => void;
-  };
 
- function CreateOrderModal({ show, data, close }: Props) {
+type Props = {
+  show: boolean;
+  data?: any;
+  close: () => void;
+  modalType: OrderManagementTabsEnum;
+  openCreateModal: () => void;
+};
 
-    const router = useRouter();
-    const [selectedButton, setSelectedButton] = useState('');
-  
-    const handleButtonClick = (buttonName: any) => {
-      setSelectedButton(buttonName);
-    };
+enum CreateOrderByEnum {
+  FROM_INVENTORY = "FROM_INVENTORY",
+  SINGLE_ORDER = "SINGLE_ORDER",
+  CSV = "CSV",
+  API = "API",
+}
 
-    const handleSubmit = () => {
-        // Perform any necessary actions before routing
-        // Based on the selected button, route to a specific page
-        if (selectedButton === 'Button 1') {
-          router.push(DashBoardRoutes.INVENTORY_ALL);
-        } else if (selectedButton === 'Button 2') {
-          router.push('/page2');
-        } else if (selectedButton === 'Button 3') {
-          router.push('/page3');
-        }
-      };
-  
-    return show? (
-        <div className="modal">
-            
-        <div className="rounded bg-white p-10">
-<div className="relative flex">
-<div className="relative w-full h-full p-4"
-style={{ width: "600px" }}>
-  <p
-              onClick={close}
-              className="absolute right-0 top-0 scale-125 cursor-pointer"
-            >
-              X
-            </p>
+function CreateOrderModal({
+  show,
+  data,
+  close,
+  modalType,
+  openCreateModal,
+}: Props) {
+  const router = useRouter();
 
-            <div>
-            <p className="text-center text-primary font-extrabold text-[18px]">
-                  Create Order
-                </p>
-            </div>
-            <div className="grid justify-center">
-            <div className="grid my-6 gap-6">
-      <button
-        className={selectedButton === 'Button 1' ? 'selected' : 'notSelected'}
-        onClick={() => handleButtonClick('Button 1')}
-      >
-        <p>
-        Direct from Inventory
-        </p>
-       
-      </button>
-      <button
-        className={selectedButton === 'Button 2' ? 'selected' : 'notSelected'}
-        onClick={() => handleButtonClick('Button 2')}
-      >
-       Via CSV
-      </button>
-      <button
-        className={selectedButton === 'Button 3' ? 'selected' : 'notSelected'}
-        onClick={() => handleButtonClick('Button 3')}
-      >
-        VIA API
-      </button>
-      {/* <button onClick={handleSubmit}>Submit</button> */}
+  const [createOrderBy, setCreateOrderBy] = useState<CreateOrderByEnum>();
 
-      <style jsx>{`
-        .selected {
-            width: 317px;
-            height: 48px;
-            left: 648px;
-            top: 363px;
-            
-            background: #FFFFFF;
-            border: 2px solid #1B547F;
-            border-radius: 4.93211px;
-            .p {
-                text-color: #1B547F;
-            }
-        }
-        .notSelected {
-            width: 317px;
-            height: 48px;
-            left: 648px;
-            top: 439px;
-
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-            border-radius: 4.93211px;
-        }
-      `}</style>
-    </div>
-
-        </div>
-
-        <div className=" w-full flex justify-center">
-                <Button
-                  title="Create order"
-                  type="primary"
-                  handleClick={handleSubmit}
-                />
-              </div>
-  </div>
-</div>
-        </div>
-
-        </div>
-    ) : null;
-  }
-
-  const Layout = ({
-    children,
-    option,
-    center = true,
-  }: {
-    children: ReactNode;
-    option: string;
-    center?: boolean;
-  }) => {
-    return (
-      <div
-        className={cn("grid grid-cols-3 w-full ", {
-          "items-center": center,
-        })}
-      >
-        <p className="text-[14px] font-semibold "> {option}</p>
-        <div className=" w-full col-span-2">{children}</div>
-      </div>
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreateOrderBy(
+      (event.target as HTMLInputElement).value as CreateOrderByEnum
     );
+    // console.log(value);
   };
 
-  export { CreateOrderModal };
+  const handleSubmit = () => {
+    // Perform any necessary actions before routing
+    // Based on the selected button, route to a specific page
+    if (createOrderBy === CreateOrderByEnum.FROM_INVENTORY) {
+      router.push(DashBoardRoutes.INVENTORY_ALL);
+    } else if (createOrderBy === CreateOrderByEnum.CSV) {
+      router.push(OrdermgtRoutes.CREATEORDER_CSV);
+    } else if (createOrderBy === CreateOrderByEnum.API) {
+      router.push("/page3");
+    } else {
+      openCreateModal();
+    }
+  };
+
+  return (
+    <Dialog open={show} onClose={() => close()} maxWidth="md">
+      <DialogTitle
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box>Create Order By</Box>
+        <IconButton onClick={() => close()}>
+          <Close />
+        </IconButton>
+      </DialogTitle>
+      <FormControl
+        sx={{
+          // minWidth: "100%",
+          padding: "2rem",
+
+          width: "500px",
+        }}
+      >
+        <RadioGroup
+          onChange={(e) => handleChange(e)}
+          aria-labelledby="demo-row-radio-buttons-group-label"
+          name="row-radio-buttons-group"
+          value={createOrderBy}
+        >
+          {Object.keys(CreateOrderByEnum).map((item) => {
+            if (
+              modalType === OrderManagementTabsEnum.EXTERNAL_ORDERS &&
+              item === CreateOrderByEnum.FROM_INVENTORY
+            ) {
+              return;
+            } else if (
+              modalType === OrderManagementTabsEnum.INVENTORY_ORDERS &&
+              item === CreateOrderByEnum.SINGLE_ORDER
+            ) {
+              return;
+            } else {
+              return (
+                <FormControlLabel
+                  sx={{
+                    left: 0,
+                    // maxWidth: "80%",
+                    padding: "1rem 0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    boxSizing: "border-box",
+                    border:
+                      createOrderBy === item
+                        ? "1px solid #1b547f"
+                        : "1px solid #ccc",
+                    borderRadius: ".2rem",
+                    mb: "1rem",
+                    mr: 0,
+                    ml: 0,
+                  }}
+                  value={item}
+                  control={
+                    <Radio
+                      sx={{ visibility: "hidden" }}
+                      icon={<></>}
+                      checkedIcon={<></>}
+                    />
+                  }
+                  label={capitalizeText(item).replace("_", " ")}
+                />
+              );
+            }
+          })}
+        </RadioGroup>
+      </FormControl>
+      <DialogActions>
+        {" "}
+        <Button
+          size="sm"
+          title="Create order"
+          variant="primary"
+          handleClick={handleSubmit}
+        />
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+export { CreateOrderModal };

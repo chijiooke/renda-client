@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { LoginContainer, OnboardLayout } from "@/layout";
-import { Input, Button, OTPInput } from "@/components";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { Button, Input } from "@/components";
+import { OnboardLayout } from "@/layout";
+import { StoreState } from "@/store/types/store-state.types";
+
 import {
-  formikCaption,
-  passwordRegex,
-  formikError,
   AuthRoutes,
   baseURL,
+  formikCaption,
+  formikError,
+  passwordRegex,
 } from "@/utils";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
-import { StoreState } from "@/store/reducer";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import * as Yup from "yup";
 const ResetPassword = () => {
   const [done, setDone] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);

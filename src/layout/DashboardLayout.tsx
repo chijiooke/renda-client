@@ -1,25 +1,32 @@
-import { FC, ReactNode, useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
-import { StoreState } from "@/store/reducer";
+
 import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
 import cn from "classnames";
+import { useRouter } from "next/router";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { ContextMenu } from "@/components/context-menu/ContextMenu";
 import {
   DashboardIcon,
-  StorageIcon,
-  InventoryIcon,
-  OrderManagementIcon,
-  NotificationIcon,
-  RedDot,
-  LeftArrowIcon,
-  RightArrowIcon,
-  DeliveryIcon,
   DeliveryTruckIcon,
+  InventoryIcon,
+  LeftArrowIcon,
+  OrderManagementIcon,
+  StorageIcon
 } from "@/icons";
+import { StateReducerActions } from "@/types";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
-import { OnboardingAction } from "@/types";
+import { NavigationDrawer } from "./components/NavigationDrawer";
+import { StoreState } from "@/store/types/store-state.types";
 
 type Props = {
   children: ReactNode;
@@ -80,7 +87,7 @@ const DashBoardLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: StoreState) => state);
+  const { user, myDeliveryVanItems } = useSelector((state: StoreState) => state);
 
   const [loading, setLoading] = useState(false);
 
@@ -89,6 +96,16 @@ const DashBoardLayout: FC<Props> = ({
 
   const handleTruckClick = () => {
     router.push({ pathname: DashBoardRoutes.DELIVERY_VAN });
+  };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClickAway = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setAnchorEl(anchorEl ? null : event.currentTarget);
   };
 
   const getUser = async (id: string) => {
@@ -99,7 +116,7 @@ const DashBoardLayout: FC<Props> = ({
       );
       if (response.success) {
         dispatch({
-          type: OnboardingAction.SET_USER,
+          type: StateReducerActions.SET_USER,
           payload: response.data,
         });
       }
@@ -120,6 +137,11 @@ const DashBoardLayout: FC<Props> = ({
     }
   }, []);
 
+  const signOut = () => {
+    sessionStorage.removeItem("userId");
+    router.push("/auth/login");
+  };
+
   const isActive = (route: string) => {
     return route.split("/")[1] === router.pathname.split("/")[1];
   };
@@ -130,80 +152,14 @@ const DashBoardLayout: FC<Props> = ({
           className="d-flex flex-column flex-lg-row flex-column-fluid stepper stepper-pills stepper-column stepper-multistep"
           id="kt_create_account_stepper"
         >
-          <div className="d-flex flex-column flex-lg-row-auto w-lg-200px w-xl-300px">
-            <div className="d-flex flex-column h-full top-0 bottom-0 w-lg-200px w-xl-300px scroll-y text-black bg-white shadow pt-15">
-              <img
-                alt="Logo"
-                src="/assets/images/Renda-logo-with-tagline.svg"
-                className="h-70px"
-              />
-              <nav className="flex flex-col mt-5  justify-center">
-                <ul>
-                  {" "}
-                  {routes.map(
-                    (
-                      { title, icon: Icon, route, children: innerRoutes },
-                      i
-                    ) => (
-                      <>
-                        <Link
-                          href={route}
-                          key={i + route}
-                          className={cn(
-                            "my-4 bg-[#000000] flex hover:bg-[#1b547f] cursor-pointer items-center gap-5  px-10 py-4 text-[18px]  font-semibold   group-hover:text-[#ffffff] nav",
-                            { activeNav: router.pathname === route }
-                          )}
-                        >
-                          <div className="w-[40px] flex justify-center">
-                            <Icon />
-                          </div>
+          <NavigationDrawer />
 
-                          <span className="text-start font-extrabold">
-                            {title}
-                          </span>
-                          {innerRoutes && (
-                            <span>
-                              {" "}
-                              <RightArrowIcon />
-                            </span>
-                          )}
-                        </Link>
-                        {innerRoutes &&
-                          isActive(route) &&
-                          innerRoutes.map(({ title, route }, idx) => (
-                            <Link
-                              href={route}
-                              key={idx}
-                              className={cn(
-                                "text-center hover:bg-primary nav",
-                                {
-                                  activeNav: router.pathname === route,
-                                }
-                              )}
-                            >
-                              <span className="px-20 text-[16px] font-semibold p-3">
-                                {" "}
-                                {title}
-                              </span>
-                            </Link>
-                          ))}
-                      </>
-                    )
-                  )}
-                </ul>
-              </nav>
-            </div>
-          </div>
-
-          <div
-            className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow"
-            style={{ height: "95vh" }}
-          >
+          <div className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow">
             <div className="d-flex flex-center flex-column flex-column-fluid bg-[#f4fbff]">
               <div className="w-full h-full ">
                 <div className="bg-white rounded w-full h-full  p-10 ">
                   <div
-                    className={cn("flex  w-full my-3", {
+                    className={cn("flex  w-full my-3  sticky  top-2/4", {
                       "flex-row-reverse": !backAction,
                       "justify-between": backAction,
                     })}
@@ -218,33 +174,93 @@ const DashBoardLayout: FC<Props> = ({
                       </div>
                     )}
 
-                    <div className="flex gap-5 items-center">
-                      <button
-                        onClick={handleTruckClick}
-                        className={cn(" rounded-sm p-3", {
-                          "text-primary": !showDeliveryTruckIcon,
-                          "text-white bg-primary": showDeliveryTruckIcon,
-                        })}
+                    <div className="flex gap-3 items-center">
+                      <Typography
+                        sx={{
+                          color: "success.main",
+                          padding: "0.5rem 1rem",
+                          // backgroundColor: "#4caf5033",
+                          borderRadius: "1rem",
+                        }}
                       >
-                        <DeliveryTruckIcon />
-                      </button>
+                        Active
+                      </Typography>
+                      <IconButton>
+                        {" "}
+                        <Badge
+                          color="error"
+                          badgeContent={5}
+                          overlap="circular"
+                          invisible={false}
+                        >
+                          <NotificationsNoneOutlinedIcon fontSize="medium" />
+                        </Badge>
+                      </IconButton>
+                      <IconButton
+                        onClick={handleTruckClick}
+                        sx={{ backgroundColor: "primary.main" }}
+                      >
+                        {" "}
+                        <Badge
+                          color="error"
+                          badgeContent={myDeliveryVanItems.length}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          invisible={false}
+                        >
+                          <DeliveryTruckIcon />
+                        </Badge>
+                      </IconButton>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <IconButton>
+                          <Badge
+                            color="success"
+                            variant="dot"
+                            anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "right",
+                            }}
+                            overlap="circular"
+                            invisible={false}
+                          >
+                            <Avatar
+                              sx={{ width: 40, height: 40 }}
+                              alt={user?.contactName}
+                              src="/static/images/avatar/1.jpg"
+                              onClick={handleClick}
+                            />{" "}
+                          </Badge>
+                        </IconButton>
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <Typography
+                            variant="body2"
+                            p={0}
+                            m={0}
+                            className="text-[#1b547f] font-semibold"
+                          >
+                            {user?.customerBusinessName}
+                          </Typography>
+                          <Typography variant="caption" p={0} m={0}>
+                            Client Id: {user?.customerId}
+                          </Typography>
+                        </Box>
+                      </Box>
 
-                      <p className="text-[green] font-extrabold">Active</p>
-                      <div className="relative">
-                        <NotificationIcon />
-                        <span className="absolute bottom-[-30px] start-0 -left-[30px]">
-                          <RedDot />
-                        </span>
-                      </div>
-                      <img
-                        src="/assets/images/profile.jpeg"
-                        className="h-[30px] scale-150"
-                      />
+                      <ContextMenu
+                        handleClickAway={handleClickAway}
+                        open={open}
+                        anchorEl={anchorEl}
+                      >
+                        {/* <Box></Box> */}
+                        <Button onClick={() => signOut()} className="">
+                          Sign Out
+                        </Button>
+                      </ContextMenu>
                     </div>
                   </div>
-                  <div className="my-10">
-                    {!loading ? <> {children}</> : <>Loading</>}
-                  </div>
+                  <div>{!loading ? <> {children}</> : <>Loading</>}</div>
                 </div>
               </div>
             </div>

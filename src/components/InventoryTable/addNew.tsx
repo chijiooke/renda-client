@@ -7,9 +7,10 @@ import { DashBoardRoutes } from "@/utils/routes";
 import { UploadImageButton } from "../Button/uploadImageButton";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
-import { InventoryType, StoreState } from "@/store/reducer";
+import { StateReducerActions } from "@/types";
+import { StoreState } from "@/store/types/store-state.types";
 import { baseURL, imageURL } from "@/utils";
+import { InventoryType } from "@/store/reducer";
 
 function AddForm() {
   const [forms, setForms] = useState([{ id: 1 }]);
@@ -29,10 +30,10 @@ function AddForm() {
   // Implementation
   const handleProcessItemsClick = async () => {
     dispatch({
-      type: OnboardingAction.SET_INVENTORY_ITEMS,
+      type: StateReducerActions.SET_INVENTORY_ITEMS,
       payload: items,
     });
-    console.log(items);
+
     router.push(DashBoardRoutes.INVENTORY_CONFIRM_INVENTORY);
   };
 
@@ -71,7 +72,7 @@ function AddForm() {
                 title="Delete all"
                 size="sm"
                 className="w-fit bg-red-600 px-5 rounded-md"
-                type="danger"
+                variant="danger"
               />
             </span>
 
@@ -177,7 +178,7 @@ const TableData = ({
         ?.value || "0"
     );
     // Update with the actual customerBusinessId value
-    const customerBusinessId = user.customerId;
+    const customerBusinessId = user?.customerId;
 
     const payload = {
       itemName,
@@ -188,9 +189,9 @@ const TableData = ({
       colour,
       picture: imageURL + imgUrl,
       unitPrice,
-      customerBusinessId,
+      customerBusinessId: customerBusinessId || "",
     };
-    console.log(payload);
+
     updateItems(payload);
     handleAdd();
   };

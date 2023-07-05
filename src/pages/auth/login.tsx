@@ -9,7 +9,7 @@ import { OnboardRoutes, AuthRoutes, baseURL } from "@/utils";
 import { useRouter } from "next/router";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import { OnboardingAction } from "@/types";
+import { StateReducerActions } from "@/types";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -27,20 +27,17 @@ const LoginPage = () => {
       );
       if (response.success) {
         dispatch({
-          type: OnboardingAction.SET_LOGIN_DETAILS,
-          payload: { ...data, id: response.data.userid },
+          type: StateReducerActions.SET_LOGIN_DETAILS,
+          payload: { ...data, id: response?.data.userid },
         });
         router.push(AuthRoutes.LOGIN_OTP);
       } else {
-        setError(
-          (error as any).response.data.errorMessage ||
-            (error as any).response.data.data
-        );
+        setError("invalid credentials");
       }
     } catch (error) {
       setError(
-        (error as any).response.data.errorMessage ||
-          (error as any).response.data.data
+        (error as any).response?.data?.errorMessage ||
+          (error as any).response?.data.data
       );
     } finally {
       setLoading(false);
