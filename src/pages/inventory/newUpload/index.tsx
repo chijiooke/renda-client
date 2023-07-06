@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { Tab } from "@headlessui/react";
 import { useState } from "react";
-import { AddNewInventory, AddViaApi, AddViaCsv } from "@/_tabs/Inventory";
+import { AddNewInventory, AddViaApi, AddViaCsv } from "@/_tabs/inventory";
 
 const headers = ["Add a Single Inventory", "Add via CSV", "Import via API"];
 function classNames(...classes: any[]) {

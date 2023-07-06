@@ -15,7 +15,7 @@ import { InventoryOrderDetailsModal } from "@/modals/inventoryOrderDetailModal";
 import { baseURL } from "@/utils";
 import dayjs from "dayjs";
 import { InfinitySpin } from "react-loader-spinner";
-import { InternalOrdersType } from "../Inventory/types/inventory-order-types";
+import { InternalOrdersType } from "../inventory/types/inventory-order-types";
 
 const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
   const [data, setdata] = useState<InternalOrdersType[]>([]);

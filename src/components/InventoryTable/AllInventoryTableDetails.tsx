@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   InventoryDataType,
   InventoryItemType,
-} from "@/_tabs/Inventory/types/inventory-data-type";
+} from "@/_tabs/inventory/types/inventory-data-type";
 import { useRouter } from "next/router";
 import { TableRow } from "./inventoryTableRow";
 import { StoreState } from "@/store/types/store-state.types";

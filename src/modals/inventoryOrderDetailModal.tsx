@@ -2,7 +2,7 @@ import { Button } from "@/components";
 import { IconButton } from "@mui/material";
 import cn from "classnames";
 
-import { InternalOrdersType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { InternalOrdersType } from "@/_tabs/inventory/types/inventory-order-types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import dayjs from "dayjs";
 

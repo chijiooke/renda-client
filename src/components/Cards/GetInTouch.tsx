@@ -10,7 +10,7 @@ const GetInTouch = () => {
         close={() => setShowContactModal(false)}
       />
 
-      <div className="p-10 bg-black flex flex-col gap-10 rounded text-white justify-center">
+      <div className="p-4 bg-black flex flex-col gap-10 rounded text-white justify-center">
         <p className="font-extrabold text-[18px]">
           Didn’t find what you were looking for?
         </p>
@@ -23,7 +23,7 @@ const GetInTouch = () => {
           onClick={() => setShowContactModal(true)}
           className="cursor-pointer"
         >
-          <span className="px-6 py-3 rounded-[14px] bg-[#F99B20]  text-black underline font-bold">
+          <span className="px-6 py-2 text-[12px] rounded-[14px] bg-[#F99B20]  text-black underline font-bold">
             Get in touch
           </span>
         </div>

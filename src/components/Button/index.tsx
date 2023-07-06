@@ -69,12 +69,11 @@ const Button: FC<Props> = ({
       onClick={handleClick}
       disabled={disabled}
       type={type}
-      
       className={cn(
-        " rounded-[0.75rem] text-white border-primary cursor-pointer border-2  whitespace-nowrap",
+        " rounded-md w-full  border-primary cursor-pointer border-2  whitespace-nowrap",
         {
-          "p-4": size == "md",
-          "p-2": size === "sm",
+          "p-[13px]": size == "md",
+          "p-[10px]": size === "sm",
           "bg-primary text-white": variant == "primary",
           "w-100": fullWidth,
           "bg-[#8DA9BF]": disabled,
@@ -82,6 +81,7 @@ const Button: FC<Props> = ({
           "cursor-pointer": !disabled,
           "cursor-not-allowed opacity-40": disabled,
           "bg-red-600 border-red-600": variant == "danger",
+          "text-primary": variant === "secondary",
         },
         className
       )}

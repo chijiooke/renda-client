@@ -1,4 +1,4 @@
-import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
+import { InboundHistory } from "@/_tabs/inventory/all/inboundHistory";
 import { AllInventoryTable } from "@/components/InventoryTable";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes } from "@/utils";
@@ -6,8 +6,8 @@ import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { SelectedInventoryModal } from "@/_tabs/Inventory/modals/SelectedInventoryModal";
-import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { SelectedInventoryModal } from "@/_tabs/inventory/modals/SelectedInventoryModal";
+import { InternalOrdersPostRequestType } from "@/_tabs/inventory/types/inventory-order-types";
 import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
 import { useDispatch, useSelector } from "react-redux";

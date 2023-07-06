@@ -43,8 +43,8 @@ const BookingDetails = () => {
   return (
     <DashBoardLayout backAction>
       <div className="rounded border-1 border-gray-300 h-[83vh] pt-2">
-        <div className="border-b-2 border-b-gray-300 p-7 flex items-center justify-between">
-          <h1 className="text-2xl font-extrabold">Booking</h1>
+        <div className="border-b-2 border-b-gray-300 p-3 flex items-center justify-between">
+          <h1 className="text-[18px] font-extrabold">Booking</h1>
           <div>
             <Button
               title="Add inventory to storage facility"
@@ -61,7 +61,7 @@ const BookingDetails = () => {
                   key={idx}
                   className={({ selected }) =>
                     classNames(
-                      "py-3 px-7 outline-none rounded-tl-lg clip-path-polygon ",
+                      "py-3 px-7 text-[12px] outline-none rounded-tl-lg clip-path-polygon ",
                       selected ? "bg-primary text-white  " : "bg-[#f4f4f4]"
                     )
                   }

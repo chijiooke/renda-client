@@ -1,25 +1,28 @@
-import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { InternalOrdersPostRequestType } from "@/_tabs/inventory/types/inventory-order-types";
 import { InventoryType } from "../reducer";
 import { UserType } from "./user-types";
-import { InventoryItemType } from "@/_tabs/Inventory/types/inventory-data-type";
+import { InventoryItemType } from "@/_tabs/inventory/types/inventory-data-type";
+
+export interface UserData {
+  businessName: string;
+  contactPerson: string;
+  businessEmailAddress: string;
+  emailAddress: string;
+  officeAddress: string;
+  phoneNumber: string;
+  businessPhoneNumber: string;
+  businessIndustry: string | undefined;
+  businessAddress?: string;
+  password?: string;
+}
 
 export interface StoreState {
-  getStarted: {
-    businessName: string;
-    contactPerson: string;
-    businessEmailAddress: string;
-    emailAddress: string;
-    officeAddress: string;
-    phoneNumber: string;
-    businessPhoneNumber: string;
-    businessIndustry: string | undefined;
-    businessAddress?: string;
-  };
+  getStarted: UserData;
   userId: string;
   user: UserType | null;
   companyRegistrationNumber: string;
   Kyc: FormData;
-  fileList: {
+  KycFileList: {
     registrationCertificate: File[];
     proofOfAddress: File[];
     directorsIds: File[];

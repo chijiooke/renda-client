@@ -6,9 +6,10 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { OnboardingAction } from "@/types";
-import { StoreState } from "@/store/reducer";
+import { StateReducerActions } from "@/types";
+
 import { useCallback } from "react";
+import { StoreState } from "@/store/types/store-state.types";
 
 dayjs.extend(relativeTime);
 const BookingDetail = ({ data }: { data: any }) => {
@@ -50,7 +51,7 @@ const BookingDetail = ({ data }: { data: any }) => {
 
   const goToPayments = useCallback(() => {
     dispatch({
-      type: OnboardingAction.SET_BOOKING_DETAILS,
+      type: StateReducerActions.SET_BOOKING_DETAILS,
       payload: {
         amount: bookingDetail.amount,
         bookingId: bookingDetail.bookingId,
@@ -70,18 +71,18 @@ const BookingDetail = ({ data }: { data: any }) => {
     <div className=" grid grid-cols-3 justify-between my-5 gap-5">
       <div className="col-span-2">
         {Object.entries(details).map((b: string[], i: any) => (
-          <div className="grid grid-cols-2 py-4">
+          <div className="grid grid-cols-2 py-2.5 text-[14px]">
             <p>{b[0]}</p>
             <p>{b[1]}</p>
           </div>
         ))}
       </div>
       <div>
-        <div className="max-w-sm items-center flex flex-col gap-3 justify-end">
+        <div className="max-w-[10rem] items-center flex  flex-col gap-3 justify-end">
           <Button
             title="Pay for Booking "
             size="sm"
-            className="w-[40%]"
+            // className="w-[40%]"
             // disabled={!(bookingDetails?.status === "Approved")}
             handleClick={goToPayments}
           />

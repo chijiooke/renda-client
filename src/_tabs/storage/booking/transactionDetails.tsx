@@ -16,7 +16,7 @@ const TransactionDetails = ({ data }: { data: any }) => {
   }: { transactionDetails: TransactionDetailsType[] } = data || {};
   return (
     <div className="flex flex-col w-full my-5">
-      <div className="grid grid-cols-7 justify-between p-5   uppercase  font-bold ">
+      <div className="grid grid-cols-7 justify-between p-3 text-[14px]   uppercase  font-bold ">
         <p>Status</p>
         <p>Date and time PAID</p>
 
@@ -28,7 +28,7 @@ const TransactionDetails = ({ data }: { data: any }) => {
         {transactionDetails?.map((t: TransactionDetailsType, idx: number) => (
           <div
             key={idx}
-            className="grid grid-cols-7 justify-evenly p-5 items-center"
+            className="grid grid-cols-7 justify-evenly p-3 text-[13px] items-center"
           >
             <p>{t.status}</p>
             <p>{t.datePaid}</p>

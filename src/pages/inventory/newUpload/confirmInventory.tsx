@@ -62,6 +62,8 @@ export default function ConfirmInventory() {
         show={showShippingCustomer}
         close={() => setShowShippingCustomer(false)}
         facilityId={facilityId}
+        skuId=""
+        count={0}
       />
 
       <DashBoardLayout backAction>

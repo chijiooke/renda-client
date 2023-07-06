@@ -1,7 +1,7 @@
 const RenewalDetails = () => {
   return (
     <div className="flex flex-col w-full my-5">
-      <div className="grid grid-cols-8 justify-between p-5   uppercase  font-bold ">
+      <div className="grid grid-cols-8 justify-between p-3 text-[13px]   uppercase  font-bold ">
         <p>Status</p>
         <p>Date CREATED</p>
         <p>Duration</p>

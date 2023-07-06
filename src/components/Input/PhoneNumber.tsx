@@ -26,12 +26,11 @@ const PhoneNumberInput: FC<Props> = ({
   return (
     <div className="flex flex-col w-full">
       {label && (
-        <label htmlFor="" className="text-lg mb-3 font-bold">
+        <label htmlFor="" className="text-sm mb-2 ">
           {label}
         </label>
       )}
       <PhoneInput
-      
         country={"ng"}
         inputStyle={{
           width: "100%",

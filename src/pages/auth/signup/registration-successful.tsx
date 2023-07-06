@@ -16,12 +16,12 @@ const RegistrationSuccessful = () => {
           alt="successful icon"
           className="w-[100px] mb-2"
         />
-        <div className="flex flex-col gap-7">
-          <h2 className="text-primary font-bold text-5xl text-center">
+        <div className="flex flex-col gap-7 max-w-md">
+          <h2 className="text-primary font-bold text-4xl text-center">
             Welcome
           </h2>
 
-          <p className="text-2xl text-center">
+          <p className="text-[18px] text-center">
             Your account is now under review and will be activated within
             24hours. Kindly check your email for a link to login.
           </p>

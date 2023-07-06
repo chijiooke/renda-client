@@ -16,7 +16,7 @@ const CardPayment = () => {
   const { bookingDetails, user } = useSelector((state: StoreState) => state);
   const [show, setShow] = useState(false);
   const config = {
-    public_key: "FLWPUBK_TEST-bf4efecf672fbdab00ada453243661e8-X",
+    public_key: process.env.NEXT_PUBLIC_FLW_KEY!,
     tx_ref: dayjs(Date.now()).format("YYYY/MM/DD"),
     amount: bookingDetails?.amount,
     currency: "NGN",
@@ -52,6 +52,7 @@ const CardPayment = () => {
           flw_ref: response.flw_ref,
         });
         closePaymentModal(); // this will close the modal programmatically
+        router.push(DashBoardRoutes.STORAGE_BOOKING);
         setShow(true);
       },
       onClose: () => {},
@@ -63,7 +64,6 @@ const CardPayment = () => {
         show={show}
         close={() => {
           setShow(false);
-          router.push(DashBoardRoutes.STORAGE_BOOKING);
         }}
         details="You have successfully booked this storage"
         title="Booking Successful"

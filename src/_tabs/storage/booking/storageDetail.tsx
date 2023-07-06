@@ -28,7 +28,7 @@ const StorageDetail = ({ data }: { data: any }) => {
     <div className=" grid grid-cols-3 justify-between my-5 gap-5">
       <div className="col-span-2">
         {Object.entries(details).map((b: string[], i: any) => (
-          <div className="grid grid-cols-2 py-4">
+          <div className="grid grid-cols-2 py-3 text-[14px]">
             <p>{b[0]}</p>
             <span>{b[1]}</span>
           </div>

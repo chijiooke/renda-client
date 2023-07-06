@@ -1,6 +1,6 @@
 import { Trash } from "@/icons";
 import { FC, useState } from "react";
-import { InternalOrderItemType } from "../Inventory/types/inventory-order-types";
+import { InternalOrderItemType } from "../inventory/types/inventory-order-types";
 import { StateReducerActions } from "@/types";
 import { useDispatch } from "react-redux";
 import { formatAmount } from "@/utils/format-currency";

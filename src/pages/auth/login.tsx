@@ -93,7 +93,7 @@ const LoginPage = () => {
           />
           <Link
             href={AuthRoutes.FORGOT_PASSWORD}
-            className="flex flex-row-reverse text-gray-100 text-[16px]"
+            className="flex flex-row-reverse text-primary text-[16px]"
           >
             Forgot Password?
           </Link>

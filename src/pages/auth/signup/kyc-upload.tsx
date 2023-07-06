@@ -11,22 +11,28 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
 const KycUpload = () => {
-  const { fileList, companyRegistrationNumber } = useSelector(
+  const { KycFileList, companyRegistrationNumber } = useSelector(
     (state: StoreState) => state
   );
   const [registrationCertificate, setRegistrationCertificate] = useState<
     File[]
-  >(fileList.registrationCertificate);
+  >(KycFileList.registrationCertificate);
   const [proofOfAddress, setProofOfAddress] = useState<File[]>(
-    fileList.proofOfAddress
+    KycFileList.proofOfAddress
   );
   const [directorsIds, setDirectorsIds] = useState<File[]>(
-    fileList.directorsIds
+    KycFileList.directorsIds
   );
 
   const router = useRouter();
   const dispatch = useDispatch();
   const next = () => {
+    const KycData = {
+      registrationCertificate: registrationCertificate,
+      proofOfAddress: proofOfAddress,
+      directorsIds: directorsIds,
+      companyRegistrationNumber,
+    };
     const fd = new FormData();
 
     fd.append("CompanyRegistrationCertificate", registrationCertificate[0]);
@@ -76,12 +82,12 @@ const KycUpload = () => {
           <h1 className="text-[35px] text-primary font-bold mb-1">
             KYC Upload
           </h1>
-          <p className="text-[13px] md:text-[16px] text-gray-200">
+          <p className="text-[13px] md:text-[16px] text-[#828282]">
             {" "}
             To activate your profile? Tell us more about your Business.
           </p>
         </div>
-        <div className="max-w-4xl">
+        <div className="max-w-3xl">
           <Input
             label="Company Registration Number"
             className="max-w-md mt-8"
@@ -111,7 +117,7 @@ const KycUpload = () => {
             value={directorsIds}
           />
         </div>
-        <div className=" gap-10 mt-10 max-w-md">
+        <div className=" gap-10 mt-10 max-w-3xl ">
           <Button
             title="Next"
             handleClick={formik.handleSubmit}

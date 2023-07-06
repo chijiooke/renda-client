@@ -63,7 +63,7 @@ const StorageCard: FC<Props> = ({ data }) => {
       />
       {/* <ImagePreview show={show} close={closeModal} /> */}
       <div
-        className="p-5 border-gray-300 border-2 rounded cursor-pointer"
+        className="p-3 border-gray-300 border-2 rounded cursor-pointer "
         onClick={goToDetails}
       >
         <div className="relative ">
@@ -74,8 +74,8 @@ const StorageCard: FC<Props> = ({ data }) => {
         </div>
         <div className="flex flex-col gap-3 mt-3 ">
           <div>
-            <div className=" flex justify-between items-center">
-              <p className="font-extrabold">{data?.storageFacilityName}</p>
+            <div className=" flex  justify-between items-center">
+              <p className="font-extrabold ">{data?.storageFacilityName}</p>
               <ImagePreviewClickable
                 handleClick={viewImages}
                 show={show}

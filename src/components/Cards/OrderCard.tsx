@@ -27,7 +27,7 @@ const OrderCard: FC<Props> = ({
       {type == "primary" && (
         <div
           className={cn(
-            "grid w-full grid-cols-2 gap-1 rounded border-2 border-gray-300 p-5"
+            "grid w-full grid-cols-2 gap-1 items-center rounded border-2 border-gray-300 p-[13px]"
           )}
         >
           <p className=" font-extrabold text-3xl">{val}</p>

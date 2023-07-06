@@ -15,7 +15,7 @@ import { useFormik } from "formik";
 import { ReactNode, useEffect, useState } from "react";
 import * as Yup from "yup";
 
-import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { InternalOrdersPostRequestType } from "@/_tabs/inventory/types/inventory-order-types";
 
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useDispatch, useSelector } from "react-redux";
