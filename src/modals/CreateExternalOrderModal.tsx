@@ -129,7 +129,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
         deliveryLGA: deliveryLGA || "",
         pickUpLGA: pickUpLGA || "",
         dispatchTime,
-        orderItems: items,
+        ExternalOrderItems: items,
         contactPhoneNo,
         customerId: user?.customerId || "",
         storageFacilityId: "1234444",

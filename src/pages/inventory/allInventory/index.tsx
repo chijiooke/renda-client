@@ -1,15 +1,22 @@
 import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
-import { AllInventoryTable } from "@/components/InventoryTable";
+// import { AllInventoryTable } from "@/components/InventoryTable";
 import { DashBoardLayout } from "@/layout";
-import { DashBoardRoutes } from "@/utils";
+import { DashBoardRoutes, baseURL } from "@/utils";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { SelectedInventoryModal } from "@/_tabs/Inventory/modals/SelectedInventoryModal";
+import {
+  InventoryDataType,
+  StorageFacilityType,
+} from "@/_tabs/Inventory/types/inventory-data-type";
 import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { generateNewOrderItem } from "@/_tabs/Inventory/utils/generateNewOrderItems";
+import { AllInventoryTableDetails } from "@/components/InventoryTable/AllInventoryTable";
 import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 enum tabsEnum {
@@ -22,15 +29,69 @@ function classNames(...classes: any[]) {
 export default function Inventory() {
   const router = useRouter();
   const [showUploadButton, setShowUploadButton] = useState(true);
-  const { selectedInventoryItemsToOrder } = useSelector(
-    (state: StoreState) => state
-  );
+  const { selectedInventoryItemsToOrder, user, storageFacilityFilterList } =
+    useSelector((state: StoreState) => state);
 
   const [activeTab, setActiveTab] = useState<tabsEnum>(tabsEnum.ALL_INVENTORY);
+  const [storageFacilityFiltersList, setStorageFacilityFiltersList] =
+    useState<StorageFacilityType[]>();
+  const [inventories, setInventories] = useState<InventoryDataType>();
+  const [storageFacilityFilter, setStorageFacilityFilter] = useState<string>(
+    inventories?.storageFacilityId
+  );
+
   const [open, setOpen] = useState(false);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
   };
+
+  // const refinedData = inventories
+  //   .map((inventory) =>
+  //     inventory?.inventoryItems.map((inventoryItem) => {
+  //       return {
+  //         ...inventoryItem,
+  //         storageFacility: inventory.storageFacility,
+  //         storageFacilityId: inventory.storageFacilityId,
+  //       };
+  //     })
+  //   )
+  //   .flatMap((inv) =>
+  //     inv.filter(
+  //       (inv) => !!inv.skuId && storageFacilityFilter === inv.storageFacilityId
+  //     )
+  //   );
+  const refinedData:InventoryDataType[] = !inventories
+    ? [new InventoryDataType()]
+    : inventories?.inventoryItems.map((inventoryItem) => {
+        return {
+          ...inventoryItem,
+          storageFacility: inventories?.storageFacility,
+          storageFacilityId: inventories?.storageFacilityId,
+        };
+      });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user?.customerId) return;
+      try {
+        const { data } = await axios.get(
+          baseURL +
+            `api/customers/${user?.customerId}/InboundInventory/inventories`
+        );
+        setInventories(data);
+
+        setStorageFacilityFiltersList(inventories?.storageFacilityId);
+        // setStorageFacilityFiltersList(
+        //   (data as InventoryDataType[]).map((it) => it.storageFacility)
+        // );
+      } catch (error) {
+        console.error("Failed to fetch data from the endpoint:", error);
+      }
+    };
+
+    fetchData();
+  }, [user?.customerId]);
+
   const dispatch = useDispatch();
 
   type generateNewOrderItemType = ({
@@ -40,27 +101,6 @@ export default function Inventory() {
     storageFacilityId: any;
     orderItems: any;
   }) => InternalOrdersPostRequestType;
-
-  const generateNewOrderItem: generateNewOrderItemType = ({
-    storageFacilityId,
-    orderItems,
-  }) => {
-    const order = new InternalOrdersPostRequestType();
-    order.storageFacilityId = storageFacilityId;
-    order.customerId = "";
-    order.deliveryAddress = "";
-    order.deliveryLGA = "";
-    order.deliveryState = "";
-    order.dispatchTime = "";
-    order.numberOfItems = 1;
-    order.paymentMode = "";
-    order.pickUpAddress = "";
-    order.pickUpTime = "";
-    order.reciepientName = "";
-    order.reciepientPhoneNo = "";
-    order.orderItems = orderItems;
-    return order;
-  };
 
   const addAllItemsToVan = () => {
     dispatch({
@@ -162,11 +202,19 @@ export default function Inventory() {
                         className="border border-gray-300 p-2 rounded"
                       />
 
-                      <select className="border border-gray-300 p-2 rounded">
+                      <select
+                        className="border border-gray-300 p-2 rounded"
+                        value={storageFacilityFilter}
+                        onChange={(e) =>
+                          setStorageFacilityFilter(e.target.value)
+                        }
+                      >
                         <option value="">Filter by Storage Facility</option>
-                        <option value="facility1">Facility 1</option>
-                        <option value="facility2">Facility 2</option>
-                        <option value="facility3">Facility 3</option>
+                        {storageFacilityFiltersList?.map((item) => (
+                          <option value={item?.storageFacilityId}>
+                            {item?.storageFacilityName}
+                          </option>
+                        ))}
                       </select>
 
                       <input
@@ -184,7 +232,7 @@ export default function Inventory() {
               <div>
                 {" "}
                 <Tab.Panel style={{ padding: 0 }}>
-                  <AllInventoryTable />
+                  <AllInventoryTableDetails data={refinedData} />
                 </Tab.Panel>
                 <Tab.Panel>
                   <InboundHistory />

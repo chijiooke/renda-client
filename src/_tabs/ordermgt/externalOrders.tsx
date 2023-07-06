@@ -1,6 +1,6 @@
 import { Button } from "@/components";
+import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
 import { baseURL } from "@/utils";
-import { InfoOutlined, Pending } from "@mui/icons-material";
 import {
   Box,
   Table,
@@ -15,7 +15,6 @@ import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
 import { ExternalOrderType } from "./types/external-order-types";
-import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
 
 export const ExternalOrders: FC<{ openModal: () => void }> = ({
   openModal,
@@ -89,7 +88,7 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
                     </p>
                     <Button
                       size="sm"
-                      title="Create order from inventory"
+                      title="Create single order"
                       handleClick={openModal}
                     />
                   </Box>

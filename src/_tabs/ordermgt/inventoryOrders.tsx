@@ -42,7 +42,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
   const tableHeaders = [
     "Order ID",
     "Name of Items",
-    "Facility Name",
+    // "Facility Name",
     "Facility ID",
 
     "Date Created",
@@ -110,8 +110,11 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
                     {/* <TableCell variant="body">
                       <Checkbox />
                     </TableCell> */}
-                    <TableCell variant="body">{item?.orderId}</TableCell>
+                    <TableCell variant="body">{item?.internalOrderId}</TableCell>
                     <TableCell variant="body">{item?.numberOfItems}</TableCell>
+                    {/* <TableCell variant="body">
+                      {item?.st}
+                    </TableCell> */}
                     <TableCell variant="body">
                       {item?.storageFacilityId}
                     </TableCell>

@@ -42,7 +42,7 @@ export type CreateExternalOrderType = {
   contactPhoneNo: string;
   dispatchTime: string;
   customerId: string;
-  orderItems: CreateExternalOrderItemType[];
+  ExternalOrderItems: CreateExternalOrderItemType[];
 };
 
 export type CreateExternalOrderItemType = {

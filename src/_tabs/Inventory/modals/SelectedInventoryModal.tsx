@@ -31,24 +31,39 @@ export const SelectedInventoryModal: FC<{
   const { selectedInventoryItemsToOrder } = useSelector(
     (state: StoreState) => state
   );
+
+  //   selectedInventoryItemsToOrder.map((it) =>
+  //   generateNewOrderItem({
+  //     storageFacilityId: it.storageFacilityId,
+  //     orderItems: [
+  //       {
+  //         itemName: it?.itemName,
+  //         orderQuantity: it?.orderQuantity || 0,
+  //         dimension: it.size.toString(),
+  //         unitPrice: it?.unitPrice,
+  //         quantity: it?.quantity,
+  //         skuId: it?.skuId,
+  //       },
+  //     ],
+  //   })
+  // ),
+
   const addAllSelectedItemsToVan = () => {
     dispatch({
-      type: StateReducerActions.ADD_MULTIPLE_INVENTORY_ITEM_TO_VAN,
-      payload: selectedInventoryItemsToOrder.map((it) =>
-        generateNewOrderItem({
-          storageFacilityId: it.storageFacilityId,
-          orderItems: [
-            {
-              itemName: it?.itemName,
-              orderQuantity: it?.orderQuantity || 0,
-              dimension: it.size.toString(),
-              unitPrice: it?.unitPrice,
-              quantity: it?.quantity,
-              skuId: it?.skuId,
-            },
-          ],
-        })
-      ),
+      type: StateReducerActions.ADD_SINGLE_INVENTORY_ITEM_TO_VAN,
+      payload: {
+        storageFacilityId: selectedInventoryItemsToOrder[0].storageFacilityId,
+        orderItems: selectedInventoryItemsToOrder.map((item) => {
+          return {
+            itemName: item?.itemName,
+            orderQuantity: item?.orderQuantity || 0,
+            dimension: item.size.toString(),
+            unitPrice: item?.unitPrice,
+            quantity: item?.quantity,
+            skuId: item?.skuId,
+          };
+        }),
+      },
     });
     router.push("/ordermgt/deliveryVan");
     onClose();

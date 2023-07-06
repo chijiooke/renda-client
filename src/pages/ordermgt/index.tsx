@@ -85,7 +85,7 @@ export default function Ordermgt() {
               />
             </Tab.Panel>
             <Tab.Panel>
-              <ExternalOrders openModal={() => setIsOpen(true)} />
+              <ExternalOrders openModal={() => setIsSingleOrderModalOpen(true)} />
             </Tab.Panel>
           </Tab.Group>
         </div>

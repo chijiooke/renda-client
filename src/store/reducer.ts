@@ -30,6 +30,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
+  storageFacilityFilterList: [],
   userId: "",
   user: null,
   companyRegistrationNumber: "",

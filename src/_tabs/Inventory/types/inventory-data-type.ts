@@ -1,13 +1,13 @@
-export type InventoryDataType = {
-  id: 1;
-  dateAdded: Date;
-  dateUpdated: Date;
-  customerBusinessId: string;
-  deliveryDetails: DeliveryDetailsType;
-  inventoryItems: InventoryItemType[];
-  storageFacilityId: string;
-  storageFacility: StorageFacilityType;
-};
+export class InventoryDataType {
+  id?: number;
+  dateAdded?: Date;
+  dateUpdated?: Date;
+  customerBusinessId?: string;
+  deliveryDetails?: DeliveryDetailsType;
+  inventoryItems?: InventoryItemType[];
+  storageFacilityId?: string;
+  storageFacility?: StorageFacilityType;
+}
 
 export type DeliveryDetailsType = {
   id: number;

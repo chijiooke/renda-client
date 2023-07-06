@@ -25,7 +25,7 @@ export type InternalOrderItemType = {
 };
 
 export type InternalOrdersType = {
-  orderId: string;
+  internalOrderId: string;
   storageFacilityId: string;
   paymentMode: "PAID" | "PAY_ON_DELIVERY";
   numberOfItems: number;
