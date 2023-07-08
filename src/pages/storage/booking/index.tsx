@@ -63,17 +63,18 @@ export default function StorageBooking() {
                 <TableData data={booking} key={idx} />
               ))}
             </div>
-
-            {/* <div className="max-w-sm w-full mx-auto h-full my-10  flex flex-col gap-3">
-              <p className="text-center">
-                You currently have no storage bookings{" "}
-              </p>
-              <Button
-                title="Book New Storage"
-                size="sm"
-                handleClick={() => router.push(DashBoardRoutes.STORAGE)}
-              />
-            </div> */}
+            {!(bookings.length > 0) && (
+              <div className="max-w-[20rem] w-full mx-auto h-full my-10  flex flex-col gap-3">
+                <p className="text-center">
+                  You currently have no storage bookings{" "}
+                </p>
+                <Button
+                  title="Book New Storage"
+                  size="sm"
+                  handleClick={() => router.push(DashBoardRoutes.STORAGE)}
+                />
+              </div>
+            )}
           </div>
         </div>
       </DashBoardLayout>

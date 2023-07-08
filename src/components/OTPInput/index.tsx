@@ -19,11 +19,11 @@ const OTPInput: FC<Props> = ({ handleChange }) => {
       renderSeparator={""}
       renderInput={(props) => <input {...props} />}
       inputStyle={{
-        width: "6rem",
-        height: "6rem",
+        width: "5rem",
+        height: "5rem",
         margin: "20px 0rem",
         marginRight: "1.2rem",
-        fontSize: "2rem",
+        fontSize: "1.5rem",
         borderRadius: 4,
         border: "2px solid #1b547f",
       }}

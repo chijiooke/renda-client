@@ -23,7 +23,7 @@ function SomeComponent() {
       {inventoryItems.map((item, idx) => (
         <div
           key={idx}
-          className="grid grid-cols-8 mt-2 justify-evenly p-5 bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer"
+          className="grid grid-cols-8 mt-2 justify-evenly p-3 text-[14px] bg-[#f9f9f9] border-1 border-[#bbbbbb] items-center cursor-pointer"
         >
           <div
             title="itemName"

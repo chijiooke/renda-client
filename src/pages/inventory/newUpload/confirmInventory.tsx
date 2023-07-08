@@ -79,11 +79,11 @@ export default function ConfirmInventory() {
             </div>
           </div>
           <div className="p-10">
-            <p className="my-5 text-primary font-semibold">
+            <p className="my-3 text-primary font-semibold">
               {inventoryItems.length} Items
             </p>
             <div className="flex flex-col w-full">
-              <div className="grid grid-cols-8 mt-2 justify-between   p-5 border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
+              <div className="grid grid-cols-8 mt-2 justify-between   p-3 border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
                 <p>ITEM NAME</p>
                 <p>QTY</p>
                 <p>DIMENSION</p>
@@ -96,8 +96,8 @@ export default function ConfirmInventory() {
               <SomeComponent />
             </div>
 
-            <div className="flex  py-5 justify-end w-full">
-              <div className="flex gap-2 max-full w-50">
+            <div className="flex  py-3 justify-end w-full">
+              <div className="flex gap-2 max-w-sm w-50">
                 <Button
                   title="Back"
                   variant="secondary"

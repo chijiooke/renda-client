@@ -72,7 +72,7 @@ const LoginOtp = () => {
         )}
         <div className="pb-10">
           <h1 className="text-black font-bold text-[40px]">Enter OTP</h1>
-          <p className="text-gray-200  text-[18px]">
+          <p className="text-[#828282]  text-[18px]">
             {" "}
             Please enter the 5-digit code sent to your email
           </p>
@@ -80,7 +80,7 @@ const LoginOtp = () => {
         <div className="my-15">
           <OTPInput handleChange={setOtp} />
           <div>
-            <p className="text-gray-200 mt-10 text-[16px]">
+            <p className="text-[#828282] mt-10 text-[16px]">
               Didn't recieve code?
               <span className="font-bold text-primary">
                 <a role="button" onClick={resentOtp}>

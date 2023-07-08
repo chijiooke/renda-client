@@ -67,8 +67,8 @@ const StorageCard: FC<Props> = ({ data }) => {
         onClick={goToDetails}
       >
         <div className="relative ">
-          <img src={src} className="w-full object-cover rounded h-[170px]" />
-          <p className="absolute top-[20px] font-bold p-2 text-white bg-orange-400 rounded-r">
+          <img src={src} className="w-full  object-cover rounded h-[170px]" />
+          <p className="absolute top-[25px] text-xs font-bold p-2 text-white bg-orange-400 rounded-r">
             {data?.storageType}
           </p>
         </div>

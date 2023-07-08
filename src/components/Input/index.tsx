@@ -85,7 +85,7 @@ const Input: FC<Props> = ({
           disabled={disabled}
           id={id}
           className={cn(
-            "p-[13px] border border-gray-300 rounded-md  w-full  outline-gray-300 ",
+            "p-[13px] border text-[14px] border-gray-300 rounded-md  w-full  outline-gray-300 ",
             {
               "border-red outline-[border-red]": error,
               "py-2 rounded-lg": size == "sm",
