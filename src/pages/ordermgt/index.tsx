@@ -5,8 +5,8 @@ import { CreateOrderModal } from "@/modals/createordermodal";
 import { useState } from "react";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { CreateExternalOrderModal } from "@/modals/CreateExternalOrderModal";
-import { InventoryOrders } from "@/modules/ordermgt/inventoryOrders";
-import { ExternalOrders } from "@/modules/ordermgt/externalOrders";
+import { InventoryOrders } from "@/modules/order-management/inventoryOrders";
+import { ExternalOrders } from "@/modules/order-management/externalOrders";
 import { Alert } from "@mui/material";
 
 export enum OrderManagementTabsEnum {
@@ -35,17 +35,17 @@ export default function Ordermgt() {
   return (
     <DashBoardLayout backAction backText="back">
       <div className="rounded border-1 border-gray-300  pt-2">
-        <div className="border-b-2 border-b-gray-300 p-7 flex justify-between">
+        <div className="border-b-2 border-b-gray-300 p-7 flex justify-between items-center">
           <h1 className="text-2xl font-extrabold">Order Management</h1>
           <div className="flex gap-3">
-            <Alert severity="success" color="success" className="border-2">
-              Your order has been sent for delivery
-            </Alert>
-            <Button
-              title="Create Order"
-              size="sm"
-              handleClick={() => setIsOpen(true)}
-            />
+          <Alert severity="success" color="success" className="border-2 whitespace-nowrap" >
+            Your order has been sent for delivery
+          </Alert>
+          <Button
+            title="Create Order"
+            size="sm"
+            handleClick={() => setIsOpen(true)}
+          />
           </div>
         </div>
 
@@ -82,7 +82,9 @@ export default function Ordermgt() {
               />
             </Tab.Panel>
             <Tab.Panel>
-              <ExternalOrders openModal={() => setIsSingleOrderModalOpen(true)} />
+              <ExternalOrders
+                openModal={() => setIsSingleOrderModalOpen(true)}
+              />
             </Tab.Panel>
           </Tab.Group>
         </div>

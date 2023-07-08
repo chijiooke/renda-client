@@ -23,7 +23,7 @@ const AllInventoryTableDetails: FC<{ data: InventoryItemType[] }> = ({
   );
 
   return (
-    <div className="container  mx-auto pt-4">
+    <div className=" mx-auto pt-4">
       <div
         className="bg-white pl-10 h-20 grid grid-cols-8 border rounded-sm border-black border-opacity-25"
         style={{}}

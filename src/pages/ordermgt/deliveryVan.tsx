@@ -1,5 +1,5 @@
 
-import { DeliveryDetails } from "@/modules/ordermgt/deliveryDetails";
+import { DeliveryDetails } from "@/modules/order-management/deliveryDetails";
 import { Button } from "@/components";
 import { DropDown } from "@/icons";
 import { DashBoardLayout } from "@/layout";

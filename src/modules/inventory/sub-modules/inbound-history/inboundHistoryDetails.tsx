@@ -3,37 +3,6 @@ import { CheckIcon } from "@/icons";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
 
-
-// Define the type for the inbound request
-type InboundRequest = {
-  inboundId: string;
-  dateCreated: string;
-  timeCreated: string;
-  shipment: {
-    // ...
-    inventoryItems: [
-      {
-        // ...
-        deliveryDetails: {
-          // ...
-          pickupLocation: string;
-          deliveryBy: string;
-          // ...
-        };
-        // ...
-        storageFacilityId: string;
-        storageFacility: null;
-      }
-    ];
-    // ...
-  };
-
-  storageFacility: string;
-  storageFacilityId: string;
-  deliveryBy: string;
-  status: string;
-};
-
 const InboundDetail = () => {
   const router = useRouter();
   

@@ -6,8 +6,6 @@ import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-// import { SelectedInventoryModal } from "@/_tabs/inventory/modals/SelectedInventoryModal";
-import { InboundHistory } from "@/modules/inventory/all/inboundHistory";
 import { SelectedInventoryModal } from "@/modules/inventory/modals/SelectedInventoryModal";
 import {
   InventoryDataType,
@@ -16,11 +14,12 @@ import {
 } from "@/modules/inventory/types/inventory-data-type";
 import { InternalOrdersPostRequestType } from "@/modules/inventory/types/inventory-order-types";
 import { generateNewOrderItem } from "@/modules/inventory/utils/generateNewOrderItems";
-import { AllInventoryTableDetails } from "@/components/InventoryTable/AllInventoryTable";
 import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { AllInventoryTableDetails } from "@/components/InventoryTable/AllInventoryTable";
+import { InboundHistory } from "@/modules/inventory/sub-modules/inbound-history/inboundHistory";
 
 enum tabsEnum {
   ALL_INVENTORY = "ALL_INVENTORY",
@@ -78,7 +77,9 @@ export default function Inventory() {
           setStorageFacilityFiltersList(
             (data as InventoryDataType[]).map((it) => it?.storageFacility)
           );
-          setStorageFacilityFilter((data as InventoryDataType[]).map((it) => it?.storageFacilityId)[0])
+          setStorageFacilityFilter(
+            (data as InventoryDataType[]).map((it) => it?.storageFacilityId)[0]
+          );
         }
       } catch (error) {
         console.error("Failed to fetch data from the endpoint:", error);
@@ -169,7 +170,7 @@ export default function Inventory() {
 
           <div className="w-full px-10 py-5">
             <Tab.Group>
-              <div className="flex pt-3 gap-1  rounded-sm  justify-between text-center">
+              <div className="flex pt-3 gap-1  rounded-sm  justify-between text-center max-w-full">
                 {" "}
                 <Tab.List className="flex">
                   {Object.values(tabsEnum).map((header, idx) => (
@@ -179,7 +180,6 @@ export default function Inventory() {
                       className={({ selected }) =>
                         classNames(
                           "py-3 px-7 outline-none rounded-tl-lg rounded-tr-lg clip-path-polygon",
-
                           selected ? "bg-primary text-white  " : "bg-[#f4f4f4]"
                         )
                       }
@@ -188,46 +188,22 @@ export default function Inventory() {
                     </Tab>
                   ))}
                 </Tab.List>
-                <div className="flex">
-                  <div className="flex-inline justify-end ">
-                    <div></div>
-                    <div className="flex gap-2 mr-2">
-                      <input
-                        type="text"
-                        placeholder="Search"
-                        className="border border-gray-300 p-2 rounded"
-                      />
-
-                      <select
-                        className="border border-gray-300 p-2 rounded"
-                        value={storageFacilityFilter}
-                        onChange={(e) =>
-                          setStorageFacilityFilter(e.target.value)
-                        }
-                      >
-                        <option value="">Filter by Storage Facility</option>
-                        {storageFacilityFiltersList?.map((item) => (
-                          <option value={item?.storageFacilityId}>
-                            {item?.storageFacilityName}
-                          </option>
-                        ))}
-                      </select>
-
-                      <input
-                        type="date"
-                        placeholder="Filter by Date"
-                        className="border border-gray-300 p-2 rounded"
-                      />
-                      <div className="inline-flex items-center justify-center px-2.5 py-1.5 bg-black bg-opacity-50 border rounded-sm border-black border-opacity-50">
-                        <p className="text-xs text-center text-white">Export</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <select
+                  className="border border-gray-300 p-2 rounded"
+                  value={storageFacilityFilter}
+                  onChange={(e) => setStorageFacilityFilter(e.target.value)}
+                >
+                  <option value="">Filter by Storage Facility</option>
+                  {storageFacilityFiltersList?.map((item) => (
+                    <option value={item?.storageFacilityId}>
+                      {item?.storageFacilityName}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 {" "}
-                <Tab.Panel style={{ padding: 0 }}>
+                <Tab.Panel style={{ padding: 0, margin: 0 }}>
                   <AllInventoryTableDetails
                     data={
                       !!refinedData ? refinedData : ([] as InventoryItemType[])

@@ -1,11 +1,13 @@
-import { generateNewOrderItem } from "@/modules/inventory/utils/generateNewOrderItems";
 import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
-// import { generateNewOrderItem } from "@/_tabs/inventory/utils/generateNewOrderItems";
+import { generateNewOrderItem } from "@/modules/inventory/utils/generateNewOrderItems";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { StateReducerActions } from "@/types";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import { formatAmount } from "@/utils/format-currency";
 
 const TableRow: FC<{
   isAllItemsSelected: boolean;
@@ -65,7 +67,7 @@ const TableRow: FC<{
         borderColor: "rgba(0, 0, 0, 0.25)",
       }}
     >
-      <div className="grid grid-rows-1 grid-cols-8 pl-6">
+      <div className="grid grid-rows-1 grid-cols-8 pl-6 items-start">
         <div className="">
           <div className="flex items-center">
             <input
@@ -81,20 +83,15 @@ const TableRow: FC<{
         </div>
         <p className=" leading-7">{data?.skuId}</p>
         <p className=" leading-7">{data?.itemName}</p>
-        <div className="inline-flex space-x-1 items-center   h-7">
+        <div className="flex items-center gap-2">
           <p className=" leading-7">{data?.storageFacilityId}</p>
-          <div style={{ width: "50px", height: "50px", overflow: "hidden" }}>
-            <img
-              className=" rounded-full"
-              src="https://via.placeholder.com/10x10"
-            />
-          </div>
+          <RemoveRedEyeOutlinedIcon />
         </div>
         <p className=" leading-7">
           {data?.storageFacility?.storageFacilityName}
         </p>
         <p className="pl-10 leading-7">{data?.quantity}</p>
-        <p className=" leading-7">{data?.unitPrice}</p>
+        <p className=" leading-7">₦ {formatAmount(data?.unitPrice.toString()) }</p>
         <div className="p-2">
           <div
             className="inline-flex items-center px-2 py-0.5  rounded-sm cursor-pointer"

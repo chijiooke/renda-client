@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { ApiCreateOrderDetail } from "@/modules/ordermgt/api-createorderdetail";
-import { CsvCreateOrderDetail } from "@/modules/ordermgt/csv-createorder";
+import { ApiCreateOrderDetail } from "@/modules/order-management/api-createorderdetail";
+import { CsvCreateOrderDetail } from "@/modules/order-management/csv-createorder";
 import { Tab } from "@headlessui/react";
 
 export default function CsvCreateorder() {

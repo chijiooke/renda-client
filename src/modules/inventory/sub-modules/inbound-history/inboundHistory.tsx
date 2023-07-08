@@ -1,12 +1,9 @@
-import { Button } from "@/components";
-import { UploadArea } from "@/components/UploadArea";
-import { CheckIcon, ComputerIcon, DoubleArrow } from "@/icons";
+import { StoreState } from "@/store/types/store-state.types";
 import { DashBoardRoutes, baseURL, formatDateAndTime } from "@/utils";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
-import { StoreState } from "@/store/types/store-state.types";
 // import { StoreState } from "@/store/reducer";
 
 // Define the type for the inbound request
@@ -123,11 +120,6 @@ const InboundHistory = () => {
                 )}
               </p>
             </div>
-            {/* <div className="inline-flex space-x-1 items-center justify-start">
-              <p title="timeCreated" className="leading-7">
-                {request.timeCreated}
-              </p>
-            </div> */}
             <div className="inline-flex space-x-1 items-center justify-start">
               <p title="pickupLocation" className="leading-7">
                 {

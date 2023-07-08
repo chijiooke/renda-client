@@ -1,4 +1,3 @@
-
 import { AuthRoutes, DashBoardRoutes, baseURL } from "@/utils";
 import cn from "classnames";
 import { useRouter } from "next/router";
@@ -12,7 +11,7 @@ import {
   InventoryIcon,
   LeftArrowIcon,
   OrderManagementIcon,
-  StorageIcon
+  StorageIcon,
 } from "@/icons";
 import { StateReducerActions } from "@/types";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
@@ -87,7 +86,9 @@ const DashBoardLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user, myDeliveryVanItems } = useSelector((state: StoreState) => state);
+  const { user, myDeliveryVanItems } = useSelector(
+    (state: StoreState) => state
+  );
 
   const [loading, setLoading] = useState(false);
 
@@ -155,113 +156,114 @@ const DashBoardLayout: FC<Props> = ({
           <NavigationDrawer />
 
           <div className="d-flex flex-column  rounded w-full h-full m-10 overflow-scroll shadow">
-            <div className="d-flex flex-center flex-column flex-column-fluid bg-[#f4fbff]">
-              <div className="w-full h-full ">
-                <div className="bg-white rounded w-full h-full  p-10 ">
-                  <div
-                    className={cn("flex  w-full my-3  sticky  top-2/4", {
-                      "flex-row-reverse": !backAction,
-                      "justify-between": backAction,
-                    })}
-                  >
-                    {backAction && (
-                      <div
-                        className="flex items-center gap-3 opacity-60 cursor-pointer hover:opacity-100"
-                        onClick={() => router.back()}
-                      >
-                        <LeftArrowIcon />
-                        {backText}
-                      </div>
-                    )}
+            <div
+              className="w-full h-full p-5 bg-[#e7f4ff]"
+              style={{ backgroundColor: "#F3FBFF", minHeight: "100vh" }}
+            >
+              <div className="bg-white rounded w-full h-full p-10 min-h-[1000px]" style={{minHeight:'1000px'}}>
+                <div
+                  className={cn("flex  w-full my-3  sticky  top-2/4", {
+                    "flex-row-reverse": !backAction,
+                    "justify-between": backAction,
+                  })}
+                >
+                  {backAction && (
+                    <div
+                      className="flex items-center gap-3 opacity-60 cursor-pointer hover:opacity-100"
+                      onClick={() => router.back()}
+                    >
+                      <LeftArrowIcon />
+                      {backText}
+                    </div>
+                  )}
 
-                    <div className="flex gap-3 items-center">
-                      <Typography
-                        sx={{
-                          color: "success.main",
-                          padding: "0.5rem 1rem",
-                          // backgroundColor: "#4caf5033",
-                          borderRadius: "1rem",
-                        }}
+                  <div className="flex gap-3 items-center">
+                    <Typography
+                      sx={{
+                        color: "success.main",
+                        padding: "0.5rem 1rem",
+                        // backgroundColor: "#4caf5033",
+                        borderRadius: "1rem",
+                      }}
+                    >
+                      Active
+                    </Typography>
+                    <IconButton>
+                      {" "}
+                      <Badge
+                        color="error"
+                        badgeContent={5}
+                        overlap="circular"
+                        invisible={false}
                       >
-                        Active
-                      </Typography>
+                        <NotificationsNoneOutlinedIcon fontSize="medium" />
+                      </Badge>
+                    </IconButton>
+                    <IconButton
+                      onClick={handleTruckClick}
+                      sx={{ backgroundColor: "primary.main" }}
+                    >
+                      {" "}
+                      <Badge
+                        color="error"
+                        badgeContent={myDeliveryVanItems.length}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        invisible={false}
+                      >
+                        <DeliveryTruckIcon />
+                      </Badge>
+                    </IconButton>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
                       <IconButton>
-                        {" "}
                         <Badge
-                          color="error"
-                          badgeContent={5}
+                          color="success"
+                          variant="dot"
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "right",
+                          }}
                           overlap="circular"
                           invisible={false}
                         >
-                          <NotificationsNoneOutlinedIcon fontSize="medium" />
+                          <Avatar
+                            sx={{ width: 40, height: 40 }}
+                            alt={user?.customerBusinessName}
+                            src="/static/images/avatar/1.jpg"
+                            onClick={handleClick}
+                          />{" "}
                         </Badge>
                       </IconButton>
-                      <IconButton
-                        onClick={handleTruckClick}
-                        sx={{ backgroundColor: "primary.main" }}
-                      >
-                        {" "}
-                        <Badge
-                          color="error"
-                          badgeContent={myDeliveryVanItems.length}
-                          anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "right",
-                          }}
-                          invisible={false}
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <Typography
+                          variant="body2"
+                          p={0}
+                          m={0}
+                          className="text-[#1b547f] font-semibold"
                         >
-                          <DeliveryTruckIcon />
-                        </Badge>
-                      </IconButton>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <IconButton>
-                          <Badge
-                            color="success"
-                            variant="dot"
-                            anchorOrigin={{
-                              vertical: "bottom",
-                              horizontal: "right",
-                            }}
-                            overlap="circular"
-                            invisible={false}
-                          >
-                            <Avatar
-                              sx={{ width: 40, height: 40 }}
-                              alt={user?.customerBusinessName}
-                              src="/static/images/avatar/1.jpg"
-                              onClick={handleClick}
-                            />{" "}
-                          </Badge>
-                        </IconButton>
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <Typography
-                            variant="body2"
-                            p={0}
-                            m={0}
-                            className="text-[#1b547f] font-semibold"
-                          >
-                            {user?.customerBusinessName}
-                          </Typography>
-                          <Typography variant="caption" p={0} m={0}>
-                            Client Id: {user?.customerId}
-                          </Typography>
-                        </Box>
+                          {user?.customerBusinessName}
+                        </Typography>
+                        <Typography variant="caption" p={0} m={0}>
+                          Client Id: {user?.customerId}
+                        </Typography>
                       </Box>
+                    </Box>
 
-                      <ContextMenu
-                        handleClickAway={handleClickAway}
-                        open={open}
-                        anchorEl={anchorEl}
-                      >
-                        {/* <Box></Box> */}
-                        <Button onClick={() => signOut()} className="">
-                          Sign Out
-                        </Button>
-                      </ContextMenu>
-                    </div>
+                    <ContextMenu
+                      handleClickAway={handleClickAway}
+                      open={open}
+                      anchorEl={anchorEl}
+                    >
+                      {/* <Box></Box> */}
+                      <Button onClick={() => signOut()} className="">
+                        Sign Out
+                      </Button>
+                    </ContextMenu>
                   </div>
-                  <div>{!loading ? <> {children}</> : <>Loading</>}</div>
                 </div>
+                <div>{!loading ? <> {children}</> : <>Loading</>}</div>
               </div>
             </div>
           </div>
