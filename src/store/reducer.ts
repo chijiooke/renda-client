@@ -1,8 +1,8 @@
 import { StateReducerActions } from "@/types";
 import { StoreState } from "./types/store-state.types";
-import { InventoryItemType } from "@/_tabs/inventory/types/inventory-data-type";
+import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
 import { number } from "yup";
-import { InternalOrdersPostRequestType } from "@/_tabs/inventory/types/inventory-order-types";
+import { InternalOrdersPostRequestType } from "@/modules/inventory/types/inventory-order-types";
 
 export type InventoryType = {
   id?: string;
@@ -29,6 +29,7 @@ export const initialValues: StoreState = {
     businessIndustry: "",
     officeAddress: "",
   },
+  storageFacilityFilterList: [],
   userId: "",
   user: null,
   companyRegistrationNumber: "",

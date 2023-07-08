@@ -4,6 +4,7 @@ import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
 import HomeWorkTwoToneIcon from "@mui/icons-material/HomeWorkTwoTone";
 import InventoryTwoToneIcon from "@mui/icons-material/InventoryTwoTone";
 import { NavigationItemType } from "../types/navigation-item.type";
+import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 
 export const navigationItems: NavigationItemType[] = [
   {
@@ -45,5 +46,10 @@ export const navigationItems: NavigationItemType[] = [
     Icon: AccessTimeTwoToneIcon,
     title: "Order Management",
     route: DashBoardRoutes.ORDERMGT,
+  },
+  {
+    Icon: SettingsTwoToneIcon,
+    title: "Settings",
+    route: DashBoardRoutes.SETTINGS,
   },
 ];

@@ -1,16 +1,13 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-// import { ToastProvider } from './ToastContext';
 import { Tab } from "@headlessui/react";
 import { CreateOrderModal } from "@/modals/createordermodal";
 import { useState } from "react";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { CreateExternalOrderModal } from "@/modals/CreateExternalOrderModal";
-import { InventoryOrders } from "@/_tabs/ordermgt/inventoryOrders";
-import { ExternalOrders } from "@/_tabs/ordermgt/externalOrders";
+import { InventoryOrders } from "@/modules/ordermgt/inventoryOrders";
+import { ExternalOrders } from "@/modules/ordermgt/externalOrders";
 import { Alert } from "@mui/material";
-import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
-// import { ToastProvider } from "@/context/SnackbarContext";
 
 export enum OrderManagementTabsEnum {
   INVENTORY_ORDERS = "INVENTORY_ORDERS",
@@ -85,7 +82,7 @@ export default function Ordermgt() {
               />
             </Tab.Panel>
             <Tab.Panel>
-              <ExternalOrders openModal={() => setIsOpen(true)} />
+              <ExternalOrders openModal={() => setIsSingleOrderModalOpen(true)} />
             </Tab.Panel>
           </Tab.Group>
         </div>

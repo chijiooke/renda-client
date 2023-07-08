@@ -2,7 +2,7 @@ import {
   BankTransfer,
   CardPayment,
   GenerateInvoice,
-} from "@/_tabs/storage/payment";
+} from "@/modules/storage/payment";
 import { BankIcon, RightArrowWithBg, DebitCardIcon } from "@/icons";
 import { DashBoardLayout } from "@/layout";
 import { Tab } from "@headlessui/react";

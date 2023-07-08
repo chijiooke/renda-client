@@ -1,5 +1,6 @@
-import { InventoryItemType } from "@/_tabs/inventory/types/inventory-data-type";
-import { generateNewOrderItem } from "@/_tabs/inventory/utils/generateNewOrderItems";
+import { generateNewOrderItem } from "@/modules/inventory/utils/generateNewOrderItems";
+import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
+// import { generateNewOrderItem } from "@/_tabs/inventory/utils/generateNewOrderItems";
 import { StateReducerActions } from "@/types";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";
@@ -82,12 +83,16 @@ const TableRow: FC<{
         <p className=" leading-7">{data?.itemName}</p>
         <div className="inline-flex space-x-1 items-center   h-7">
           <p className=" leading-7">{data?.storageFacilityId}</p>
-          <img
-            className="w-2.5 h-2.5 rounded-full"
-            src="https://via.placeholder.com/10x10"
-          />
+          <div style={{ width: "50px", height: "50px", overflow: "hidden" }}>
+            <img
+              className=" rounded-full"
+              src="https://via.placeholder.com/10x10"
+            />
+          </div>
         </div>
-        <p className=" leading-7">{""}</p>
+        <p className=" leading-7">
+          {data?.storageFacility?.storageFacilityName}
+        </p>
         <p className="pl-10 leading-7">{data?.quantity}</p>
         <p className=" leading-7">{data?.unitPrice}</p>
         <div className="p-2">
@@ -106,15 +111,16 @@ const TableRow: FC<{
           {" "}
           <div className="grid grid-rows-1 py-2 mt-5">
             <div className="grid grid-cols-7 m-0 p-0">
-              <div className="grid col-span-2 ">
+              <div className=" col-span-2 flex items-center  justify-center">
                 {!!data?.picture ? (
                   <img
                     src={data?.picture}
                     alt={data?.description}
-                    style={{ width: "100%", height: "auto" }}
+                    style={{ width: "100px", height: "auto" }}
                   />
                 ) : (
                   <img
+                    loading="eager"
                     src={"https://www.beelights.gr/assets/images"}
                     alt={data?.description}
                     style={{ width: "100%", height: "auto" }}

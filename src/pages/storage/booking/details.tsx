@@ -7,7 +7,7 @@ import {
   RenewalDetails,
   StorageDetail,
   TransactionDetails,
-} from "@/_tabs/storage/booking";
+} from "@/modules/storage/booking";
 import { useRouter } from "next/router";
 import { baseURL } from "@/utils";
 import axios from "axios";

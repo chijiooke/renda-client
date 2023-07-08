@@ -1,7 +1,8 @@
-import { InternalOrdersPostRequestType } from "@/_tabs/inventory/types/inventory-order-types";
+
+import { InventoryItemType, StorageFacilityType } from "@/modules/inventory/types/inventory-data-type";
+import { InternalOrdersPostRequestType } from "@/modules/inventory/types/inventory-order-types";
 import { InventoryType } from "../reducer";
 import { UserType } from "./user-types";
-import { InventoryItemType } from "@/_tabs/inventory/types/inventory-data-type";
 
 export interface UserData {
   businessName: string;
@@ -27,6 +28,7 @@ export interface StoreState {
     proofOfAddress: File[];
     directorsIds: File[];
   };
+  storageFacilityFilterList?: StorageFacilityType[];
   loginDetails: {
     value: string;
     password: string;

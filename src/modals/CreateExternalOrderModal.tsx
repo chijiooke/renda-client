@@ -19,8 +19,8 @@ import * as Yup from "yup";
 import {
   CreateExternalOrderItemType,
   CreateExternalOrderType,
-} from "@/_tabs/ordermgt/types/external-order-types";
-import { hasInValidItems } from "@/_tabs/ordermgt/utils/has-invalid-items";
+} from "@/modules/ordermgt/types/external-order-types";
+import { hasInValidItems } from "@/modules/ordermgt/utils/has-invalid-items";
 
 import { StoreState } from "@/store/types/store-state.types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -129,7 +129,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
         deliveryLGA: deliveryLGA || "",
         pickUpLGA: pickUpLGA || "",
         dispatchTime,
-        orderItems: items,
+        ExternalOrderItems: items,
         contactPhoneNo,
         customerId: user?.customerId || "",
         storageFacilityId: "1234444",

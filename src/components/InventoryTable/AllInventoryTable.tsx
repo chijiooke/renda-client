@@ -1,40 +1,104 @@
-import { AllInventoryTableDetails } from "./AllInventoryTableDetails";
 
-export const AllInventoryTable = () => {
+
+import { FC, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
+import { useRouter } from "next/router";
+import { TableRow } from "./inventoryTableRow";
+
+const AllInventoryTableDetails: FC<{ data: InventoryItemType[] }> = ({
+  data,
+}) => {
+  const router = useRouter();
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [selectedItems, setselectedItems] = useState<InventoryItemType[]>([]);
+  const isAllItemsSelected = useRef(false);
+
+  const { user } = useSelector((state: StoreState) => state);
+  const dispatch = useDispatch();
+  const { selectedInventoryItemsToOrder } = useSelector(
+    (state: StoreState) => state
+  );
+
   return (
-    <div>
-      <div>
-        <AllInventoryTableDetails />
-      </div>
-      <div className="flex justify-between bottom-0 m-4" style={{}}>
-        <p className="opacity-50 text-xs font-medium text-black text-opacity-50">
-          Showing 1{" "}
-        </p>
-        <div className="flex space-x-2.5 items-start justify-start bottom-0">
-          <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-            <p className="text-xs font-medium text-center text-gray-500">
-              Previous
-            </p>
-          </div>
-          <div
-            style={{ backgroundColor: `#1B547F` }}
-            className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5  rounded-sm"
-          >
-            <p className="text-xs font-medium text-center text-white">1</p>
-          </div>
-          <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-            <p className="text-xs font-medium text-center text-gray-500">2</p>
-          </div>
-          <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-            <p className="text-xs font-medium text-center text-gray-500">3</p>
-          </div>
-          <div className="inline-flex flex-col items-center justify-center h-full px-2.5 py-1.5 border rounded-sm border-black border-opacity-25">
-            <p className="text-xs font-medium text-center text-gray-500">
-              Next
-            </p>
-          </div>
+    <div className="container  mx-auto pt-4">
+      <div
+        className="bg-white pl-10 h-20 grid grid-cols-8 border rounded-sm border-black border-opacity-25"
+        style={{}}
+      >
+        <div className="flex items-center p-2">
+          <input
+            type="checkbox"
+            className="form-checkbox h-5 w-5 text-blue-500"
+            checked={isAllItemsSelected.current}
+            onClick={() => {
+              isAllItemsSelected.current = !isAllItemsSelected.current;
+              setselectedItems(isAllItemsSelected.current ? [] : []);
+            }}
+          />
+        </div>
+        <div className="pl-0 flex items-center">
+          <p className=" leading-none font-semibold uppercase">SKU ID</p>
+        </div>
+        <div className="pl-0 flex items-center">
+          <p className="font-semibold uppercase">Item name</p>
+        </div>
+        <div className=" flex items-center">
+          <p className=" font-semibold uppercase">FACILITY ID</p>
+        </div>
+        <div className=" flex items-center">
+          <p className=" font-semibold uppercase">Facility NAME</p>
+        </div>
+        <div className=" flex items-center">
+          <p className=" font-semibold uppercase">QTY IN STOCK</p>
+        </div>
+        <div className=" flex items-center">
+          <p className=" font-semibold uppercase">Unit price</p>
+        </div>
+        <div className="p-2 flex items-center">
+          <p className=" font-semibold uppercase">ACTION</p>
         </div>
       </div>
+
+      {data.map((inventory) => (
+        <TableRow
+          isAllItemsSelected={isAllItemsSelected.current}
+          data={inventory}
+          isExpanded={expandedItem === inventory.skuId}
+          collapseRow={() =>
+            !!expandedItem
+              ? setExpandedItem(null)
+              : setExpandedItem(inventory.skuId)
+          }
+          selectedItems={selectedItems.map((items) => items.skuId)}
+          selectItem={(item: InventoryItemType) => {
+            if (
+              selectedItems.map((items) => items.skuId).includes(item.skuId)
+            ) {
+              setselectedItems([
+                ...selectedItems.filter((it) => it.id !== item.id),
+              ]);
+
+              dispatch({
+                type: StateReducerActions.UNSELECT_INVENTORY_ITEMS_TO_ORDER,
+                payload: item,
+              });
+            } else {
+              setselectedItems([...selectedItems, item]);
+              dispatch({
+                type: StateReducerActions.SELECT_INVENTORY_ITEMS_TO_ORDER,
+                payload: item,
+              });
+            }
+          }}
+        />
+      ))}
     </div>
   );
 };
+
+export { AllInventoryTableDetails };
+
+
