@@ -72,8 +72,8 @@ const Facility = () => {
                 </p>
               </div> */}
             </div>
-            <div className="flex gap-10 p-10">
-              <div className="grid grid-cols-2 gap-5">
+            <div className="flex gap-3 p-10">
+              <div className="grid grid-cols-2 gap-2">
                 {images.slice(0, 3).map((m: string, i: number) => (
                   <img
                     key={i}
@@ -87,7 +87,7 @@ const Facility = () => {
                   />
                 ))}
               </div>
-              <div>
+              <div className="w-full px-3">
                 <div className="mb-10 max-w-4xl">
                   <h1 className="text-[25px] font-bold my-3 capitalize">
                     {facility?.storageFacilityName}
@@ -98,7 +98,7 @@ const Facility = () => {
                       .split(",")
                       .map((f: string, i: number) => (
                         <li
-                          className="text-[16px] pr-8 flex items-center gap-3"
+                          className="text-[16px] pr-5 flex items-center gap-2"
                           key={i}
                         >
                           {" "}
@@ -109,13 +109,13 @@ const Facility = () => {
                   </ul>
                 </div>
                 <div>
-                  <h1 className="text-[18px] font-bold my-10">
+                  <h1 className="text-[18px] font-bold my-10 ">
                     Facility Details
                   </h1>
                   <div>
                     {Object.entries(details).map((detail, idx) => (
                       <div
-                        className="grid gap-1 grid-cols-2 max-w-2xl my-5"
+                        className="grid gap-1 grid-cols-2 max-w-2xl my-3"
                         key={idx}
                       >
                         <p className="text-[14px]">{detail[0]}</p>
@@ -124,10 +124,9 @@ const Facility = () => {
                     ))}
                   </div>
                 </div>
-                <div className="w[50%] my-6">
+                <div className="place-self-start max-w-[10rem] my-6">
                   <Button
                     title="Book Storage"
-                    className="w-[90%]"
                     size="sm"
                     handleClick={() => setShow(true)}
                   />

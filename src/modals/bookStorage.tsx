@@ -162,7 +162,7 @@ function BookStorageModal({ show, data, close }: Props) {
                       </div>
                     </Layout>
 
-                    <Layout option="Size of Space Required">
+                    <Layout option="Size of Space Required (sqm)">
                       <Input
                         placeholder="Minimum of 100sqm"
                         name="spaceRequired"

@@ -33,7 +33,7 @@ const ConfirmEmail = () => {
 
   return (
     <OnboardLayout>
-      <div className="max-w-4xl">
+      <div className="max-w-2xl">
         <div>
           {error && (
             <p className="text-white bg-red-500 p-4 rounded-md  text-1xl">
@@ -41,16 +41,16 @@ const ConfirmEmail = () => {
               {error}
             </p>
           )}
-          <div className="pt-10">
-            <h1 className="text-[35px] text-primary font-extrabold my-5">
+          <div className="mb-10">
+            <h1 className="text-[35px] text-primary font-extrabold mb-10">
               Verify Your Account
             </h1>
-            <p className="text-gray-200 text-[13px] md:text-[18px] leading-10">
+            <p className="text-[13px] md:text-[18px] leading-10 text-[#828282] ">
               Click the ‘Verify email’ button below to get a verification link
               sent to your registered email address.
             </p>
           </div>
-          <div className="flex gap-4 pt-15 max-w-2xl mb-15">
+          <div className="flex gap-4 pt-15 max-w-md mt-10">
             <Button
               title="Resend email"
               className=""

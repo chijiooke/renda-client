@@ -5,13 +5,12 @@ import {
   ShippingInventoryCustomerModal,
   ShippingInventoryRendaModal,
   SomeComponent,
-  StorageSelectModal
+  StorageSelectModal,
 } from "@/modals";
 import { StoreState } from "@/store/types/store-state.types";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
 
 export default function ConfirmInventory() {
   const router = useRouter();
@@ -63,6 +62,8 @@ export default function ConfirmInventory() {
         show={showShippingCustomer}
         close={() => setShowShippingCustomer(false)}
         facilityId={facilityId}
+        skuId=""
+        count={0}
       />
 
       <DashBoardLayout backAction>
@@ -95,16 +96,22 @@ export default function ConfirmInventory() {
               <SomeComponent />
             </div>
 
-            <div className="flex max-w-sm  py-5 gap-3 flex-end justify-end w-full">
-              <Button
-                title="Back"
-                variant="secondary"
-                handleClick={() => router.back()}
-              />
-              <Button
-                title="Confirm Items"
-                handleClick={() => setShowSelectStorage(true)}
-              />
+            <div className="flex  py-5 justify-end w-full">
+              <div className="flex gap-2 max-full w-50">
+                <Button
+                  title="Back"
+                  variant="secondary"
+                  size="sm"
+                  className="w-30"
+                  handleClick={() => router.back()}
+                />
+                <Button
+                  title="Confirm Items"
+                  size="sm"
+                  className="w-[150px]"
+                  handleClick={() => setShowSelectStorage(true)}
+                />
+              </div>
             </div>
           </div>
         </div>

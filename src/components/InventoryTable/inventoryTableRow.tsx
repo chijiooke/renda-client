@@ -1,5 +1,6 @@
-import { InventoryItemType } from "@/_tabs/Inventory/types/inventory-data-type";
-import { generateNewOrderItem } from "@/_tabs/Inventory/utils/generateNewOrderItems";
+import { generateNewOrderItem } from "@/modules/inventory/utils/generateNewOrderItems";
+import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
+// import { generateNewOrderItem } from "@/_tabs/inventory/utils/generateNewOrderItems";
 import { StateReducerActions } from "@/types";
 import { DashBoardRoutes } from "@/utils";
 import { useRouter } from "next/router";

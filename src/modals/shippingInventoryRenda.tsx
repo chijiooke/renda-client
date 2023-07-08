@@ -13,7 +13,7 @@ type ModalProps = {
   show: boolean;
   close: () => void;
   facilityId?: string;
-  skuId: string;
+  skuId?: string;
   count: number;
 };
 const ShippingInventoryRendaModal: FC<ModalProps> = ({

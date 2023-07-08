@@ -1,4 +1,4 @@
-import { InboundHistory } from "@/_tabs/Inventory/all/inboundHistory";
+// import { InboundHistory } from "@/_tabs/inventory/all/inboundHistory";
 // import { AllInventoryTable } from "@/components/InventoryTable";
 import { DashBoardLayout } from "@/layout";
 import { DashBoardRoutes, baseURL } from "@/utils";
@@ -6,13 +6,16 @@ import { Tab } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { SelectedInventoryModal } from "@/_tabs/Inventory/modals/SelectedInventoryModal";
+// import { SelectedInventoryModal } from "@/_tabs/inventory/modals/SelectedInventoryModal";
+import { InboundHistory } from "@/modules/inventory/all/inboundHistory";
+import { SelectedInventoryModal } from "@/modules/inventory/modals/SelectedInventoryModal";
 import {
   InventoryDataType,
+  InventoryItemType,
   StorageFacilityType,
-} from "@/_tabs/Inventory/types/inventory-data-type";
-import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
-import { generateNewOrderItem } from "@/_tabs/Inventory/utils/generateNewOrderItems";
+} from "@/modules/inventory/types/inventory-data-type";
+import { InternalOrdersPostRequestType } from "@/modules/inventory/types/inventory-order-types";
+import { generateNewOrderItem } from "@/modules/inventory/utils/generateNewOrderItems";
 import { AllInventoryTableDetails } from "@/components/InventoryTable/AllInventoryTable";
 import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
@@ -33,42 +36,33 @@ export default function Inventory() {
     useSelector((state: StoreState) => state);
 
   const [activeTab, setActiveTab] = useState<tabsEnum>(tabsEnum.ALL_INVENTORY);
-  const [storageFacilityFiltersList, setStorageFacilityFiltersList] =
-    useState<StorageFacilityType[]>();
-  const [inventories, setInventories] = useState<InventoryDataType>();
-  const [storageFacilityFilter, setStorageFacilityFilter] = useState<string>(
-    inventories?.storageFacilityId
-  );
+  const [storageFacilityFiltersList, setStorageFacilityFiltersList] = useState<
+    StorageFacilityType[] | null
+  >(null);
+  const [inventories, setInventories] = useState<InventoryDataType[]>([]);
+  const [storageFacilityFilter, setStorageFacilityFilter] =
+    useState<string>("");
 
   const [open, setOpen] = useState(false);
   const handleProcessItemsClick2: any = () => {
     setShowUploadButton(false);
   };
 
-  // const refinedData = inventories
-  //   .map((inventory) =>
-  //     inventory?.inventoryItems.map((inventoryItem) => {
-  //       return {
-  //         ...inventoryItem,
-  //         storageFacility: inventory.storageFacility,
-  //         storageFacilityId: inventory.storageFacilityId,
-  //       };
-  //     })
-  //   )
-  //   .flatMap((inv) =>
-  //     inv.filter(
-  //       (inv) => !!inv.skuId && storageFacilityFilter === inv.storageFacilityId
-  //     )
-  //   );
-  const refinedData:InventoryDataType[] = !inventories
-    ? [new InventoryDataType()]
-    : inventories?.inventoryItems.map((inventoryItem) => {
+  const refinedData: InventoryItemType[] = inventories
+    ?.map((inventory) =>
+      inventory?.inventoryItems?.map((inventoryItem) => {
         return {
           ...inventoryItem,
-          storageFacility: inventories?.storageFacility,
-          storageFacilityId: inventories?.storageFacilityId,
+          storageFacility: inventory.storageFacility,
+          storageFacilityId: inventory.storageFacilityId,
         };
-      });
+      })
+    )
+    .flatMap((inv) =>
+      inv?.filter(
+        (inv) => !!inv.skuId && storageFacilityFilter === inv.storageFacilityId
+      )
+    );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,10 +74,12 @@ export default function Inventory() {
         );
         setInventories(data);
 
-        setStorageFacilityFiltersList(inventories?.storageFacilityId);
-        // setStorageFacilityFiltersList(
-        //   (data as InventoryDataType[]).map((it) => it.storageFacility)
-        // );
+        if (!!data) {
+          setStorageFacilityFiltersList(
+            (data as InventoryDataType[]).map((it) => it?.storageFacility)
+          );
+          setStorageFacilityFilter((data as InventoryDataType[]).map((it) => it?.storageFacilityId)[0])
+        }
       } catch (error) {
         console.error("Failed to fetch data from the endpoint:", error);
       }
@@ -232,7 +228,11 @@ export default function Inventory() {
               <div>
                 {" "}
                 <Tab.Panel style={{ padding: 0 }}>
-                  <AllInventoryTableDetails data={refinedData} />
+                  <AllInventoryTableDetails
+                    data={
+                      !!refinedData ? refinedData : ([] as InventoryItemType[])
+                    }
+                  />
                 </Tab.Panel>
                 <Tab.Panel>
                   <InboundHistory />

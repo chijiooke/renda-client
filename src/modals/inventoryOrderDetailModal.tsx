@@ -2,7 +2,7 @@ import { Button } from "@/components";
 import { IconButton } from "@mui/material";
 import cn from "classnames";
 
-import { InternalOrdersType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { InternalOrdersType } from "@/modules/inventory/types/inventory-order-types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import dayjs from "dayjs";
 
@@ -39,7 +39,7 @@ export const InventoryOrderDetailsModal = ({ show, close, item }: Props) => {
             <div>
               <div className="grid grid-cols-2 p-1">
                 <p className="font-semibold">Order ID</p>
-                <p>{item?.orderId}</p>
+                <p>{item?.internalOrderId}</p>
               </div>
               <div className="grid grid-cols-2 p-1">
                 <p className="font-semibold">Date & time created</p>

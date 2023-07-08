@@ -1,8 +1,15 @@
 import { Button, Input } from "@/components";
 import { OnboardLayout } from "@/layout";
-import { StoreState } from "@/store/types/store-state.types";
+import { StoreState, UserData } from "@/store/types/store-state.types";
 
-import { OnboardRoutes, baseURL, formikCaption, formikError, passwordRegex } from "@/utils";
+import {
+  OnboardRoutes,
+  baseURL,
+  formikCaption,
+  formikError,
+  passwordRegex,
+} from "@/utils";
+import { capitalizeText } from "@/utils/capitalizeText";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -13,29 +20,34 @@ const ConfirmPassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const router = useRouter();
-  console.log(router.pathname);
-  const { getStarted, Kyc, companyRegistrationNumber } = useSelector(
+  const { getStarted, KycFileList, companyRegistrationNumber } = useSelector(
     (state: StoreState) => state
   );
   const dispatch = useDispatch();
-  const register = async (data: any) => {
+  const register = async (data: UserData) => {
     setLoading(true);
     setError("");
+    const fd = new FormData();
+    fd.append(
+      "CompanyRegistrationCertificate",
+      KycFileList.registrationCertificate[0]
+    );
+    fd.append("ProofOfAddress", KycFileList.proofOfAddress[0]);
+    for (let i = 0; i < KycFileList.directorsIds.length; i++) {
+      fd.append("DirectorsIDs", KycFileList.directorsIds[i]);
+    }
+
+    Object.entries(data).forEach((v) => fd.append(capitalizeText(v[0]), v[1]));
+
     try {
       const { data: result } = await axios.post(
-        baseURL + "CreateIdentity",
-        data
+        baseURL +
+          `CreateIdentity?CompanyRegistrationNumber=${companyRegistrationNumber}`,
+        fd
       );
 
       if (result.success) {
-        const { data: response } = await axios.post(
-          baseURL +
-            `UploadKyc?CompanyRegistrationNumber=${companyRegistrationNumber}&userid=${result.data.userId}`,
-          Kyc
-        );
-        if (response.success) {
-          router.push(OnboardRoutes.CONFIRM_EMAIL);
-        }
+        router.push(OnboardRoutes.CONFIRM_EMAIL);
       }
     } catch (error) {
       setError(
@@ -70,12 +82,12 @@ const ConfirmPassword = () => {
   });
   return (
     <OnboardLayout>
-      <div className="max-w-5xl">
+      <div className="max-w-3xl  h-full">
         <div>
           <h1 className="text-[35px] text-primary font-extrabold">
             Create A Password
           </h1>
-          <p className=" text-[13px] md:text-[16px] text-gray-200">
+          <p className=" text-[13px] md:text-[16px] text-[#828282]">
             {" "}
             Password should be at least 8 characters. To create a password, use
             at least one upper case (e.g. ABC), one number (e.g. 123) and one
@@ -88,7 +100,7 @@ const ConfirmPassword = () => {
             {error}
           </p>
         )}
-        <form className="max-w-2xl">
+        <form className="max-w-md">
           <div className="my-10 flex flex-col gap-10">
             <Input
               label="Create Password"

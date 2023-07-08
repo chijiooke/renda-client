@@ -227,7 +227,7 @@ const DashBoardLayout: FC<Props> = ({
                           >
                             <Avatar
                               sx={{ width: 40, height: 40 }}
-                              alt={user?.contactName}
+                              alt={user?.customerBusinessName}
                               src="/static/images/avatar/1.jpg"
                               onClick={handleClick}
                             />{" "}

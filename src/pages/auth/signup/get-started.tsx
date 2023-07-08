@@ -120,8 +120,10 @@ const GetStarted = () => {
     <OnboardLayout>
       <div className="flex flex-col">
         <div>
-          <h1 className="text-[35px] text-primary font-bold">Get Started</h1>
-          <p className="text-[13px] md:text-[16px] text-gray-200">
+          <h1 className="text-[35px] text-primary font-bold mb-2">
+            Get Started
+          </h1>
+          <p className="text-[13px] md:text-[16px] text-[#828282]">
             {" "}
             Ready to create your profile? Tell us more about your Business.
           </p>
@@ -208,7 +210,7 @@ const GetStarted = () => {
           <div className="grid w-full  my-8">
             <Input
               label="Office Address (If different from the business address)"
-              className="w-50 mr-5 "
+              className="w-50 pr-5 "
               type="tel"
               value={formik.values.officeAddress}
               handleChange={formik.handleChange}

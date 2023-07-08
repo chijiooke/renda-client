@@ -41,6 +41,9 @@ p{
 .col-sp-3 {
   grid-column: span 3 / span 3 !important;
 }
+.col-sp-5 {
+  grid-column: span 5 / span 5 !important;
+}
 .grid-c-5 {
   grid-template-columns: repeat(5, 1fr) !important;
 }
@@ -63,20 +66,19 @@ p{
   grid-template-columns: repeat(11, 1fr) !important;
 }
 
-.radio-order{
+.radio-order {
   width: 400px !important;
   height: 60px;
   margin-top: 5px;
   margin-bottom: 5px;
- 
 }
 
-.radio-checked{
+.radio-checked {
   width: 400px !important;
   height: 60px;
   margin-top: 5px;
   margin-bottom: 5px;
-  border-color: #1B547F;
+  border-color: #1b547f;
 }
 
 .radio-text {

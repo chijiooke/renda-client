@@ -29,7 +29,7 @@ const Select: FC<Props> = ({
   return (
     <div className="flex flex-col w-full">
       {label && (
-        <label htmlFor="" className="text-lg mb-3 font-bold">
+        <label htmlFor="" className="text-sm mb-2 ">
           {label}
         </label>
       )}
@@ -38,7 +38,7 @@ const Select: FC<Props> = ({
           disabled={disabled}
           defaultValue={defaultValue}
           className={cn(
-            "cursor-pointer p-3 text-black border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300  appearance-none ",
+            "cursor-pointer p-[13px] text-black border border-gray-300 rounded-md  w-full  outline-gray-300  appearance-none ",
             {
               input: !value?.trim(),
               "py-2": size === "sm",

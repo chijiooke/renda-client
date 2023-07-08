@@ -2,8 +2,7 @@
 
 import { FC, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { InventoryItemType } from "@/_tabs/Inventory/types/inventory-data-type";
+import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
 import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
 import { useRouter } from "next/router";

@@ -94,23 +94,15 @@ function AddForm() {
               updateItems={updateItems}
             />
           ))}
-        </div>
-        <div className="w-full">
-          <div className="flex flex-end w-40">
-            <Button
-              title="Process Item"
-              handleClick={handleProcessItemsClick}
-              size="sm"
-              className="w-[150px] rounded-[6px]"
-            />
-            {/* <button
-                className="flex items-center justify-center w-36 h-10 px-3 py-1.5 bg-black bg-opacity-50 rounded-md"
-                onClick={handleProcessItemsClick}
-              >
-                <p className="text-xs font-semibold leading-none text-white">
-                  Process Items
-                </p>
-              </button> */}
+          <div className="flex  w-full  justify-end">
+            <div>
+              <Button
+                title="Process Item"
+                handleClick={handleProcessItemsClick}
+                size="sm"
+                className="w-50 rounded-[6px]"
+              />
+            </div>
           </div>
         </div>
       </div>

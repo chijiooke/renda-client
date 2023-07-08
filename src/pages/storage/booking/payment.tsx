@@ -2,21 +2,21 @@ import {
   BankTransfer,
   CardPayment,
   GenerateInvoice,
-} from "@/_tabs/storage/payment";
+} from "@/modules/storage/payment";
 import { BankIcon, RightArrowWithBg, DebitCardIcon } from "@/icons";
 import { DashBoardLayout } from "@/layout";
 import { Tab } from "@headlessui/react";
 
 const tabs = [
-  // {
-  //   icon: DebitCardIcon,
-  //   title: "Generate Invoice",
-  //   text: "Pay with your Debit card",
-  // },
+  {
+    icon: DebitCardIcon,
+    title: "Generate Invoice",
+    text: "Generate and Download Invoice",
+  },
   {
     icon: DebitCardIcon,
     title: "Pay  Instantly",
-    text: "Pay with your Debit card",
+    text: "Pay with Bank Transfer & Cards",
   },
 ];
 function classNames(...classes: any[]) {
@@ -63,9 +63,9 @@ export default function StoragePayment() {
                 </Tab.List>
               </div>
               <Tab.Panels>
-                {/* <Tab.Panel>
+                <Tab.Panel>
                   <GenerateInvoice />
-                </Tab.Panel> */}
+                </Tab.Panel>
                 <Tab.Panel>
                   <CardPayment />
                 </Tab.Panel>

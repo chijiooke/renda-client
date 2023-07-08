@@ -40,11 +40,11 @@ const FileInput: FC<Props> = ({
     <>
       {files && files.length === 0 && (
         <div className={cn("flex flex-col my-4 ", className)}>
-          <label className="text-[16px] pb-2">{title}</label>
+          <label className="text-sm pb-2">{title}</label>
           <div className="relative">
-            <div className="bg-white  flex justify-center flex-col text-center cursor-pointer border-dotted border-2 border-[text-primary] outline-none p-8">
+            <div className="bg-white  flex justify-center flex-col text-center cursor-pointer border-dotted border-2 border-[text-primary] outline-none p-4">
               <img src="/assets/images/upload.svg" className="h-[20px]" />
-              <p className="text-black lg:text-red-300">
+              <p className="text-black text-[15px] my-2">
                 {" "}
                 <span className="font-bold">Click to upload </span>or drag to
                 upload{" "}
@@ -62,8 +62,8 @@ const FileInput: FC<Props> = ({
       )}
       {files && files.length > 0 && (
         <div className="my-5 flex flex-col ">
-          <label className="text-[16px] pb-1 fon-bold">{title}</label>
-          <div className="bg-white rounded w-100 flex border-primary  border-3 p-8">
+          <label className="text-sm pb-2 ">{title}</label>
+          <div className="bg-white rounded w-100 flex border-primary  border-3 p-4">
             <img src="/assets/images/file.svg" className="h-[30px] mr-3" />
             <div className="w-100">
               {files.map((file, index) => (

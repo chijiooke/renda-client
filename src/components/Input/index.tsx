@@ -1,5 +1,7 @@
 import { ChangeEvent, ChangeEventHandler, FC, useState } from "react";
 import cn from "classnames";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 type HTMLInputTypeAttribute =
   | "button"
@@ -68,7 +70,7 @@ const Input: FC<Props> = ({
   return (
     <div className={cn("flex flex-col mb-3", className)}>
       {label && (
-        <label htmlFor={name} className="text-lg mb-3 font-bold">
+        <label htmlFor={name} className="text-sm mb-2">
           {label}
         </label>
       )}
@@ -83,7 +85,7 @@ const Input: FC<Props> = ({
           disabled={disabled}
           id={id}
           className={cn(
-            "p-3 border border-gray-300 rounded-[0.75rem]  w-full  outline-gray-300 ",
+            "p-[13px] border border-gray-300 rounded-md  w-full  outline-gray-300 ",
             {
               "border-red outline-[border-red]": error,
               "py-2 rounded-lg": size == "sm",
@@ -93,11 +95,12 @@ const Input: FC<Props> = ({
           required={required}
         />
         {type === "password" && (
-          <img
-            src="/assets/images/eye.svg"
-            className="h-[20px] absolute right-5 top-5 cursor-pointer"
+          <div
+            className="absolute right-5 top-3 cursor-pointer h-[20px]"
             onClick={togglePassword}
-          />
+          >
+            {iType === "password" ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          </div>
         )}
         {error && (
           <p

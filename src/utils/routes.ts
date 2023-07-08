@@ -31,6 +31,7 @@ export const DashBoardRoutes = {
   INVENTORY_TOPUP: "/inventory/allInventory/topUpInbound",
   ORDERMGT: "/ordermgt",
   DELIVERY_VAN: "/ordermgt/deliveryVan",
+  SETTINGS: "/settings",
 };
 
 export const OrdermgtRoutes = {

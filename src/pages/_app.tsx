@@ -2,7 +2,6 @@
 
 import store from "@/store/store";
 import "@/styles/globals.css";
-import "@/styles/style.bundle.css";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

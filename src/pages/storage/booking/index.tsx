@@ -45,9 +45,9 @@ export default function StorageBooking() {
             </div>
           </div>
           <div className="p-10">
-            <p className="my-5 text-primary font-semibold">Bookings</p>
+            <p className="my-3 text-primary font-semibold">Bookings</p>
             <div className="flex flex-col w-full">
-              <div className="grid grid-cols-8 justify-between   p-5 bg-[#f9f9f9] rounded border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
+              <div className="grid grid-cols-8 justify-between p-3 text-[14px] bg-[#f9f9f9] rounded border-1 border-[#bbbbbb] uppercase text-[#959595] font-bold">
                 <p>Status</p>
                 <p>Booking Id</p>
                 <p>Facility name</p>
@@ -58,11 +58,22 @@ export default function StorageBooking() {
                 <p>Action</p>
               </div>
             </div>
-            <div>
+            <div className="my-3">
               {bookings.map((booking, idx) => (
                 <TableData data={booking} key={idx} />
               ))}
             </div>
+
+            {/* <div className="max-w-sm w-full mx-auto h-full my-10  flex flex-col gap-3">
+              <p className="text-center">
+                You currently have no storage bookings{" "}
+              </p>
+              <Button
+                title="Book New Storage"
+                size="sm"
+                handleClick={() => router.push(DashBoardRoutes.STORAGE)}
+              />
+            </div> */}
           </div>
         </div>
       </DashBoardLayout>
@@ -103,7 +114,7 @@ const TableData = ({ data }: { data: any }) => {
   };
   return (
     <div
-      className="grid grid-cols-8 justify-evenly p-5 items-center cursor-pointer"
+      className="grid grid-cols-8 justify-evenly p-3 text-[13px] items-center cursor-pointer"
       onClick={goToDetails}
     >
       <p

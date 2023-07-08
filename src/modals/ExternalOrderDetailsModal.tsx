@@ -6,7 +6,7 @@ import cn from "classnames";
 
 import {
   ExternalOrderType
-} from "@/_tabs/ordermgt/types/external-order-types";
+} from "@/modules/ordermgt/types/external-order-types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 type Props = {

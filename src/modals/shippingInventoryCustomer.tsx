@@ -14,11 +14,15 @@ type ModalProps = {
   show: boolean;
   close: () => void;
   facilityId: string;
+  skuId?: string;
+  count?: number;
 };
 const ShippingInventoryCustomerModal: FC<ModalProps> = ({
   show,
   close,
   facilityId,
+  skuId,
+  count,
 }) => {
   const { inventoryItems, user } = useSelector((state: StoreState) => state);
   const router = useRouter();
@@ -52,21 +56,40 @@ const ShippingInventoryCustomerModal: FC<ModalProps> = ({
       driverPhoneNumber: details.driverPhoneNumber,
     };
     try {
-      const { data: inboundData } = await axios.post(
-        baseURL +
-          `api/customers/${user?.customerId}/InboundInventory/inbound-request`,
-        {
-          customerBusinessId: user?.customerId,
-          deliveryDetails: {
+      if (skuId === "" && count === 0) {
+        const { data: inboundData } = await axios.post(
+          baseURL +
+            `api/customers/${user?.customerId}/InboundInventory/inbound-request`,
+          {
             customerBusinessId: user?.customerId,
-            customerDeliveryDetails: dt,
-            pickupLocation: "lagos",
-            deliveryBy: "customer",
-          },
-          storageFacilityId: facilityId,
-          inventoryItems,
-        }
-      );
+            deliveryDetails: {
+              customerBusinessId: user?.customerId,
+              customerDeliveryDetails: dt,
+              pickupLocation: "lagos",
+              deliveryBy: "customer",
+            },
+            storageFacilityId: facilityId,
+            inventoryItems,
+          }
+        );
+      } else {
+        const { data: inboundData } = await axios.post(
+          baseURL +
+            `api/customers/${user?.customerId}/InboundInventory/topUp-inventory/${facilityId}`,
+          {
+            customerBusinessId: user?.customerId,
+            skuId,
+            quantity: count,
+            deliveryDetails: {
+              customerBusinessId: user?.customerId,
+              customerDeliveryDetails: dt,
+              pickupLocation: "",
+              deliveryBy: "customer",
+            },
+          }
+        );
+      }
+
       close();
       setShowModal(true);
     } catch (error) {

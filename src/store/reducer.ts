@@ -1,8 +1,8 @@
 import { StateReducerActions } from "@/types";
 import { StoreState } from "./types/store-state.types";
-import { InventoryItemType } from "@/_tabs/Inventory/types/inventory-data-type";
+import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
 import { number } from "yup";
-import { InternalOrdersPostRequestType } from "@/_tabs/Inventory/types/inventory-order-types";
+import { InternalOrdersPostRequestType } from "@/modules/inventory/types/inventory-order-types";
 
 export type InventoryType = {
   id?: string;
@@ -17,7 +17,6 @@ export type InventoryType = {
   customerBusinessId: string;
 };
 
-// const mydeliverVanItems = window.sessionStorage.getItem("deliveryVanItems");
 export const initialValues: StoreState = {
   getStarted: {
     businessName: "",
@@ -35,7 +34,7 @@ export const initialValues: StoreState = {
   user: null,
   companyRegistrationNumber: "",
   Kyc: new FormData(),
-  fileList: {
+  KycFileList: {
     registrationCertificate: [],
     proofOfAddress: [],
     directorsIds: [],
@@ -55,6 +54,13 @@ export const initialValues: StoreState = {
   bookingDetails: {
     amount: 0,
     bookingId: "",
+    detail: {
+      facility: "",
+      location: "",
+      type: "",
+      id: "",
+      duration: "",
+    },
   },
   inventoryItems: [] as InventoryType[],
   myDeliveryVanItems: [],
@@ -88,7 +94,7 @@ const reducer = (
     case StateReducerActions.UPDATE_FILE_LIST:
       return {
         ...state,
-        fileList: action.payload,
+        KycFileList: action.payload,
       };
     case StateReducerActions.SET_LOGIN_DETAILS:
       return {
