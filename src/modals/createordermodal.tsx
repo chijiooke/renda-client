@@ -2,7 +2,7 @@ import { Button } from "@/components";
 import { DashBoardRoutes } from "@/utils";
 import { useState } from "react";
 
-import { OrderManagementTabsEnum } from "@/pages/ordermgt";
+import { OrderManagementTabsEnum } from "@/pages/order-manangement";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { OrdermgtRoutes } from "@/utils/routes";
 
@@ -145,9 +145,10 @@ function CreateOrderModal({
           })}
         </RadioGroup>
       </FormControl>
+
       <DialogActions>
-        {" "}
         <Button
+          className="p-3"
           size="sm"
           title="Create order"
           variant="primary"

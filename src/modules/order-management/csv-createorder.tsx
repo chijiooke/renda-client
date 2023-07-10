@@ -19,6 +19,15 @@ const CsvCreateOrderDetail = () => {
   const router = useRouter();
   const { user } = useSelector((store: StoreState) => store);
   const [data, setdata] = useState<string[][]>();
+
+  const generateCSVData = () => {
+    const order = {};
+    data?.map((dt, indx) => {
+      return (order[dt[0][indx]] = "mmm");
+    });
+  };
+
+  // dummy test for single csv entry
   const csvData: any = {
     storageFacilityId: data ? data[1][3] : "",
     numberOfItems: data ? data?.length - 1 : 0,

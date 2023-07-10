@@ -29,8 +29,8 @@ export const DashBoardRoutes = {
   INVENTORY_CONFIRM_INVENTORY: "/inventory/new-upload/confirm-inventory",
   INVENTORY_INBOUND_DETAILS: "/inventory/all-inventory/inbound-details",
   INVENTORY_TOPUP: "/inventory/all-inventory/top-up-inbound",
-  ORDERMGT: "/ordermgt",
-  DELIVERY_VAN: "/ordermgt/delivery-van",
+  ORDERMGT: "/order-manangementt",
+  DELIVERY_VAN: "/order-manangement/delivery-van",
   SETTINGS: "/settings",
 };
 
