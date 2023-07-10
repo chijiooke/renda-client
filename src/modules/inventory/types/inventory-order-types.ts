@@ -24,7 +24,7 @@ export type InternalOrderItemType = {
   unitPrice: number;
 };
 
-export type InternalOrdersType = {
+export type InternalOrdersTypeResponseType = {
   internalOrderId: string;
   storageFacilityId: string;
   paymentMode: "PAID" | "PAY_ON_DELIVERY";
@@ -42,4 +42,5 @@ export type InternalOrdersType = {
   status: string;
   customerId: string;
   customers: null;
+  internalOrderitem:InternalOrderItemType[];
 };

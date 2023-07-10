@@ -122,8 +122,8 @@ const PersonalInformation: FC<{
             <DataItem title="Email Address" value={data?.emailAddress} />
             <DataItem title="Phone Number" value={data?.phoneNumber} />
             <DataItem title="Country" value={data?.country} />
-            <DataItem title="City" value={data?.city || ""} />
-            <DataItem title="Zip Code" value={data?.zipCode || ""} />
+            <DataItem title="City" value={data?.city || "N/A"} />
+            <DataItem title="Zip Code" value={data?.zipCode || "N/A"} />
           </div>
           <div>
             <div className="#F0F0F0 bg-[#F0F0F0] p-4">

@@ -15,12 +15,13 @@ import { InventoryOrderDetailsModal } from "@/modals/inventoryOrderDetailModal";
 import { baseURL } from "@/utils";
 import dayjs from "dayjs";
 import { InfinitySpin } from "react-loader-spinner";
-import { InternalOrdersType } from "../inventory/types/inventory-order-types";
+import { InternalOrdersTypeResponseType } from "../inventory/types/inventory-order-types";
 
 const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
-  const [data, setdata] = useState<InternalOrdersType[]>([]);
+  const [data, setdata] = useState<InternalOrdersTypeResponseType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  let [itemToShow, setItemToShow] = useState<InternalOrdersType | null>(null);
+  let [itemToShow, setItemToShow] =
+    useState<InternalOrdersTypeResponseType | null>(null);
 
   const getInventoryOrders = async () => {
     setLoading(true);
@@ -41,7 +42,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
 
   const tableHeaders = [
     "Order ID",
-    "Name of Items",
+    "No. of Items",
     // "Facility Name",
     "Facility ID",
 
@@ -100,7 +101,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
             )}
 
             {data.length && !loading
-              ? data.map((item: InternalOrdersType) => (
+              ? data.map((item: InternalOrdersTypeResponseType) => (
                   <TableRow
                     className="cursor-pointer"
                     onClick={() => {
@@ -110,25 +111,28 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
                     {/* <TableCell variant="body">
                       <Checkbox />
                     </TableCell> */}
-                    <TableCell variant="body">{item?.internalOrderId}</TableCell>
-                    <TableCell variant="body">{item?.numberOfItems}</TableCell>
+                    <TableCell variant="body">
+                      {item?.internalOrderId}
+                    </TableCell>
+                    <TableCell variant="body">
+                      {item?.internalOrderitem.length}
+                    </TableCell>
                     {/* <TableCell variant="body">
                       {item?.st}
                     </TableCell> */}
                     <TableCell variant="body">
                       {item?.storageFacilityId}
                     </TableCell>
-                    <TableCell variant="body">{item?.pickUpAddress}</TableCell>
-
                     <TableCell variant="body">
                       {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
-                    </TableCell>
+                    </TableCell>{" "}
                     <TableCell variant="body">{item?.reciepientName}</TableCell>
+                    {/* <TableCell variant="body">{item?.pickUpAddress}</TableCell> */}
                     <TableCell variant="body">
                       {`${item?.deliveryAddress}, ${item?.deliveryLGA}, ${item?.deliveryState}`}
                     </TableCell>
                     <TableCell variant="body">{item?.paymentMode}</TableCell>
-                    <TableCell variant="body">{item?.status}</TableCell>
+                    <TableCell variant="body">{item?.status||'N/A'}</TableCell>
                   </TableRow>
                 ))
               : null}

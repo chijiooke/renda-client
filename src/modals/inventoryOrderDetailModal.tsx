@@ -2,14 +2,14 @@ import { Button } from "@/components";
 import { IconButton } from "@mui/material";
 import cn from "classnames";
 
-import { InternalOrdersType } from "@/modules/inventory/types/inventory-order-types";
+import { InternalOrdersTypeResponseType } from "@/modules/inventory/types/inventory-order-types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import dayjs from "dayjs";
 
 type Props = {
   show: boolean;
   close: (data?: any) => void;
-  item: InternalOrdersType | null;
+  item: InternalOrdersTypeResponseType | null;
 };
 
 export const InventoryOrderDetailsModal = ({ show, close, item }: Props) => {
