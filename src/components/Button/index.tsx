@@ -67,7 +67,7 @@ const Button: FC<Props> = ({
     // </button>
     <MUIbutton
       onClick={handleClick}
-      disabled={disabled}
+      disabled={disabled || loading}
       type={type}
       className={cn(
         " rounded-md w-full  border-primary cursor-pointer border-2  whitespace-nowrap",
@@ -86,7 +86,7 @@ const Button: FC<Props> = ({
         className
       )}
     >
-      {title}
+      {loading ? "loading..." : title}
     </MUIbutton>
   );
 };

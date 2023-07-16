@@ -53,6 +53,6 @@ export interface StoreState {
     };
   };
   inventoryItems: InventoryType[];
-  myDeliveryVanItems: InternalOrdersPostRequestType[];
+  myDeliveryVanOrders: InternalOrdersPostRequestType[];
   selectedInventoryItemsToOrder: InventoryItemType[];
 }

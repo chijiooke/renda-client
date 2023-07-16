@@ -1,18 +1,16 @@
 import { Button } from "@/components";
-import {
-  IconButton
-} from "@mui/material";
+import { IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import cn from "classnames";
 
-import {
-  ExternalOrderType
-} from "@/modules/order-management/types/external-order-types";
+import { ExternalOrderResponseType } from "@/modules/order-management/types/external-order-types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { formatAmount } from "@/utils/format-currency";
+import dayjs from "dayjs";
 
 type Props = {
   show: boolean;
   close: (data?: any) => void;
-  item: ExternalOrderType | null;
+  item: ExternalOrderResponseType | null;
 };
 
 export const ExternalOrderDetailsModal = ({ show, close, item }: Props) => {
@@ -39,14 +37,14 @@ export const ExternalOrderDetailsModal = ({ show, close, item }: Props) => {
               boxSizing: "border-box",
             }}
           >
-            <div>
+            <div className="flex flex-col gap-1">
               <div className="grid grid-cols-2 p-1">
                 <p className="font-semibold">Order ID</p>
-                <p>{item?.externalOrdersId}</p>
+                <p>{item?.externalOrderId}</p>
               </div>
               <div className="grid grid-cols-2 p-1">
                 <p className="font-semibold">Date & time created</p>
-                {/* <p>{item?.dateCreated}</p> */}
+                {dayjs(item?.dateCreated).format("DD MMM, YYYY (h:mm A)")}
               </div>
               <div className="grid grid-cols-2  p-1">
                 <p className="font-semibold">Status</p>
@@ -91,40 +89,53 @@ export const ExternalOrderDetailsModal = ({ show, close, item }: Props) => {
               </div>
               <div className="grid grid-cols-2  p-1">
                 <p className="font-semibold">Total value of items</p>
-                <p>{item?.numberOfItems}</p>
+                <p>
+                  {" "}
+                  ₦
+                  {formatAmount(
+                    item?.externalOrderItemsRes
+                      .map((it) => it.unitPrice)
+                      .reduce((sum, cur) => sum + cur, 0)
+                      .toString() || ""
+                  )}
+                </p>
               </div>
-              <div className="grid grid-cols-2  p-1">
-                <p className="font-semibold">Facility Name</p>
-                <p>{item?.storageFacilityId}</p>
-              </div>
-              <div className="grid grid-cols-2  p-1">
-                <p className="font-semibold">Facility ID</p>
-                <p>{item?.storageFacilityId}</p>
-              </div>
+
               <div className="grid grid-cols-2  p-1">
                 <p className="font-semibold">Mode of Payment</p>
                 <p>{item?.paymentMode}</p>
               </div>
             </div>
           </div>
-          <div>
-            <p className="text-center text-primary font-extrabold text-[18px]">
+          <div className="px-4 mt-3">
+            <p className="font-semibold text-blue-600 text-center  text-lg">
               Order Items
             </p>
-            <div className="flex flex-col overscroll-x-auto my-6 w-full rounded ">
-              <div className="grid grid-c-5 uppercase p-4  justify-between">
-                <p className="text-center font-semibold">Item Name</p>
-                <p className="text-center font-semibold">SKU ID</p>
-                <p className="text-center font-semibold">QTY</p>
-                <p className="text-center font-semibold">SIZE</p>
-                <p className="text-center font-semibold">UNIT PRICE</p>
-              </div>
-              <div className="px-5">
-                <ModalTableData />
-              </div>
-            </div>
+            <Table>
+              <TableHead className=" uppercase font-bold">
+                <TableRow>
+                  <TableCell>ITEM NAME</TableCell>
+                  <TableCell>QTY</TableCell>
+                  <TableCell>DIMENSION</TableCell>
+                  <TableCell>UNIT PRICE</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {item?.externalOrderItemsRes.map((orderItem) => (
+                  <TableRow>
+                    <TableCell>{orderItem?.itemName}</TableCell>
+                    <TableCell>{orderItem?.quantity}</TableCell>
+                    <TableCell>{orderItem?.dimension}</TableCell>
+                    <TableCell>
+                      {" "}
+                      ₦{formatAmount(orderItem?.unitPrice.toString())}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             <Button
               title="Print"
               size="sm"

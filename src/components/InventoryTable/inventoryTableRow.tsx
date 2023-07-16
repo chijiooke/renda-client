@@ -1,13 +1,12 @@
 import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
 import { generateNewOrderItem } from "@/modules/inventory/utils/generateNewOrderItems";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { StateReducerActions } from "@/types";
 import { DashBoardRoutes } from "@/utils";
+import { formatAmount } from "@/utils/format-currency";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
-import { formatAmount } from "@/utils/format-currency";
 
 const TableRow: FC<{
   isAllItemsSelected: boolean;
@@ -26,7 +25,7 @@ const TableRow: FC<{
 }) => {
   const router = useRouter();
 
-  const [quantity, setQuantity] = useState<number>(0);
+  const [orderQuantity, setOrderQuantity] = useState<number>(0);
 
   const [loading, setloading] = useState(false);
   const dispatch = useDispatch();
@@ -35,7 +34,7 @@ const TableRow: FC<{
       storageFacilityId: data?.storageFacilityId,
       orderItems: [
         {
-          orderQuantity: quantity,
+          orderQuantity: orderQuantity,
           dimension: data.size.toString(),
           unitPrice: data?.unitPrice,
           quantity: data?.quantity,
@@ -50,7 +49,7 @@ const TableRow: FC<{
       payload: { ...order },
     });
 
-    router.push("/ordermgt/deliveryVan");
+    router.push("/order-management/delivery-van");
   };
 
   return (
@@ -76,7 +75,7 @@ const TableRow: FC<{
               className="form-checkbox h-5 w-5 text-blue-500"
               checked={selectedItems.includes(data?.skuId)}
               onChange={() => {
-                selectItem(data);
+                selectItem({ ...data, orderQuantity });
               }}
             />
           </div>
@@ -85,13 +84,15 @@ const TableRow: FC<{
         <p className=" leading-7">{data?.itemName}</p>
         <div className="flex items-center gap-2">
           <p className=" leading-7">{data?.storageFacilityId}</p>
-          <RemoveRedEyeOutlinedIcon />
+          <InfoOutlinedIcon fontSize="small" className="opacity-30" />
         </div>
         <p className=" leading-7">
           {data?.storageFacility?.storageFacilityName}
         </p>
         <p className="pl-10 leading-7">{data?.quantity}</p>
-        <p className=" leading-7">₦ {formatAmount(data?.unitPrice.toString()) }</p>
+        <p className=" leading-7">
+          ₦ {formatAmount(data?.unitPrice.toString())}
+        </p>
         <div className="p-2">
           <div
             className="inline-flex items-center px-2 py-0.5  rounded-sm cursor-pointer"
@@ -189,41 +190,62 @@ const TableRow: FC<{
             >
               {!loading ? "Create Order" : "loading..."}
             </button>
-            <div className="flex justify-center items-center">
+            <div
+              className="flex justify-center items-center"
+              style={{
+                color: `#1B547F`,
+                opacity: !!selectedItems.length ? 0.4 : 1,
+              }}
+            >
               <span
                 className=" flex justify-center rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
-                onClick={() =>
-                  quantity > 0 ? setQuantity((prev) => --prev) : null
-                }
+                onClick={() => {
+                  if (!!selectedItems.length) {
+                    return;
+                  }
+                  orderQuantity > 0 ? setOrderQuantity((prev) => --prev) : null;
+                }}
               >
                 -
               </span>
             </div>
             <div className="flex justify-center  items-center  border rounded-lg border-gray-900">
               <p className="flex justify-center  items-center m-2 font-medium  ">
-                {quantity}/{" "}
+                {orderQuantity}/{" "}
                 <span className=" flex rounded-full text-gray-800 h-4 p-1 items-center ">
                   {data?.quantity}
                 </span>
               </p>
             </div>
 
-            <div className="flex justify-center items-center">
+            <div
+              className={`flex justify-center items-center ${
+                !!selectedItems.length ? "opacity-40" : " opacity-100"
+              }`}
+            >
               <span
-                className=" flex rounded-full bg-black h-4 text-white p-1 items-center cursor-pointer"
-                onClick={() =>
-                  quantity < data?.quantity
-                    ? setQuantity((prev) => prev + 1)
-                    : null
-                }
+                className={`flex rounded-full bg-black h-4 text-white p-1 items-center ${
+                  !!selectedItems.length ?  "cursor-default": "cursor-pointer"
+                }`}
+                onClick={() => {
+                  if (!!selectedItems.length) {
+                    return;
+                  }
+                  orderQuantity < data?.quantity
+                    ? setOrderQuantity((prev) => prev + 1)
+                    : null;
+                }}
               >
                 +
               </span>
             </div>
 
             <button
+              disabled={loading || !!selectedItems.length}
               style={{ backgroundColor: `#1B547F` }}
-              className=" hover:bg-blue-700 text-white py-2 px-4 border rounded-md border-gray-500"
+              className={` hover:bg-blue-700 text-white py-2 px-4 border rounded-md border-gray-500  ${
+                !!selectedItems.length ? "opacity-40" : " opacity-100"
+              }`}
               onClick={() => router.push(DashBoardRoutes.INVENTORY_TOPUP)}
             >
               Top up Stock

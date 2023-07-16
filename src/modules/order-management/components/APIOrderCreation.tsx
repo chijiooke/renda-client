@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@/icons/arrow-left";
 import ArrowRightIcon from "@/icons/arrow-right";
 import { LaptopIcon } from "@/icons/laptop";
 
-const ApiCreateOrderDetail = () => {
+const APIOrderCreation = () => {
   return (
     <>
       <div className="grid gap-3 justify-center items-center bg-gray-200">
@@ -37,4 +37,4 @@ const ApiCreateOrderDetail = () => {
   );
 };
 
-export { ApiCreateOrderDetail };
+export { APIOrderCreation  };

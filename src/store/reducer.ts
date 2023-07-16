@@ -63,7 +63,7 @@ export const initialValues: StoreState = {
     },
   },
   inventoryItems: [] as InventoryType[],
-  myDeliveryVanItems: [],
+  myDeliveryVanOrders: [],
   selectedInventoryItemsToOrder: [],
 };
 interface ActionType {
@@ -129,28 +129,54 @@ const reducer = (
     case StateReducerActions.ADD_SINGLE_INVENTORY_ITEM_TO_VAN:
       return {
         ...state,
-        myDeliveryVanItems: [...state.myDeliveryVanItems, action.payload],
+        myDeliveryVanOrders: [...state.myDeliveryVanOrders, action.payload],
       };
     case StateReducerActions.ADD_MULTIPLE_INVENTORY_ITEM_TO_VAN:
       return {
         ...state,
-        myDeliveryVanItems: [...state.myDeliveryVanItems, ...action.payload],
+        myDeliveryVanOrders: [...state.myDeliveryVanOrders, ...action.payload],
       };
     case StateReducerActions.UPDATE_SELECTED_INVENTORY_ITEM_IN_VAN:
       return {
         ...state,
-        myDeliveryVanItems: state.myDeliveryVanItems.map((item, ind) =>
+        myDeliveryVanOrders: state.myDeliveryVanOrders.map((item, ind) =>
           ind != action.payload.index
             ? item
             : { ...action.payload.data, orderItems: item.orderItems }
         ),
       };
-    case StateReducerActions.REMOVE_SELECTED_INVENTORY_ITEMS_FROM_VAN:
+    case StateReducerActions.REMOVE_SELECTED_ORDER_FROM_VAN:
       return {
         ...state,
-        myDeliveryVanItems: state.myDeliveryVanItems.filter(
+        myDeliveryVanOrders: state.myDeliveryVanOrders.filter(
           (item, ind) => action.payload !== ind
         ),
+      };
+    case StateReducerActions.REMOVE_ITEM_FROM_DELIVERY_VAN_ORDER:
+      const orders: InternalOrdersPostRequestType[] = [];
+      state.myDeliveryVanOrders.forEach((order, ind) => {
+        action.payload.orderIndex !== ind
+          ? orders.push(order)
+          : orders.push({
+              ...order,
+              orderItems: order.orderItems?.filter(
+                (orderItem) => orderItem?.skuId !== action.payload.itemID
+              ),
+            });
+      });
+      return {
+        ...state,
+        myDeliveryVanOrders: orders,
+      };
+    case StateReducerActions.SELECT_MULTIPLE_INVENTORY_ITEMS_TO_ORDER:
+      return {
+        ...state,
+        selectedInventoryItemsToOrder: [...action.payload],
+      };
+    case StateReducerActions.CLEAR_INVENTORY_ITEMS_TO_ORDER:
+      return {
+        ...state,
+        selectedInventoryItemsToOrder: [],
       };
     case StateReducerActions.SELECT_INVENTORY_ITEMS_TO_ORDER:
       return {
@@ -216,7 +242,7 @@ const reducer = (
       };
     case StateReducerActions.DECREMENT_DELIVERY_VAN_ORDER_QUANTITY:
       const vanitemsToIncrease: InternalOrdersPostRequestType[] = [];
-      state.myDeliveryVanItems.forEach((vanitem, ind) => {
+      state.myDeliveryVanOrders.forEach((vanitem, ind) => {
         if (ind === action.payload.orderIndex) {
           let selectedOrder = {
             ...vanitem,
@@ -244,11 +270,11 @@ const reducer = (
       });
       return {
         ...state,
-        myDeliveryVanItems: [...vanitemsToIncrease],
+        myDeliveryVanOrders: [...vanitemsToIncrease],
       };
     case StateReducerActions.INCREMENT_DELIVERY_VAN_ORDER_QUANTITY:
       const vanitemsToDeduct: InternalOrdersPostRequestType[] = [];
-      state.myDeliveryVanItems.forEach((vanitem, ind) => {
+      state.myDeliveryVanOrders.forEach((vanitem, ind) => {
         if (ind === action.payload.orderIndex) {
           let selectedOrder = {
             ...vanitem,
@@ -276,7 +302,7 @@ const reducer = (
       });
       return {
         ...state,
-        myDeliveryVanItems: [...vanitemsToDeduct],
+        myDeliveryVanOrders: [...vanitemsToDeduct],
       };
     default:
       return state;

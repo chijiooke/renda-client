@@ -5,8 +5,8 @@ export type DataType = {
   unitPrice: string;
 };
 
-export type ExternalOrderType = {
-  externalOrdersId: string;
+export type ExternalOrderResponseType = {
+  externalOrderId: string;
   recipientName: string;
   storageFacilityId: string;
   paymentMode: string;
@@ -24,9 +24,10 @@ export type ExternalOrderType = {
   status: "PENDING" | "ACCEPTED" | "REJECTED";
   customerId: string;
   customers: null;
+  externalOrderItemsRes: ExternalOrderItemType[];
 };
 
-export type CreateExternalOrderType = {
+export type ExternalOrderRequestType = {
   // recipientName: string;
   storageFacilityId: string;
   paymentMode: string;
@@ -42,10 +43,10 @@ export type CreateExternalOrderType = {
   contactPhoneNo: string;
   dispatchTime: string;
   customerId: string;
-  ExternalOrderItems: CreateExternalOrderItemType[];
+  ExternalOrderItems: ExternalOrderItemType[];
 };
 
-export type CreateExternalOrderItemType = {
+export type ExternalOrderItemType = {
   dimension: string;
   quantity: number;
   itemName: string;

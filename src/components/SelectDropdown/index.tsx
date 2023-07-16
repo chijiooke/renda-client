@@ -48,7 +48,7 @@ const Select: FC<Props> = ({
           onChange={handleChange}
           value={value}
         >
-          <option selected disabled>
+          <option selected >
             {placeholder}
           </option>
           {options.map((option, i) => (

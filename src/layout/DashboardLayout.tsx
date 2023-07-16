@@ -86,7 +86,7 @@ const DashBoardLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user, myDeliveryVanItems } = useSelector(
+  const { user, myDeliveryVanOrders: myDeliveryVanItems } = useSelector(
     (state: StoreState) => state
   );
 

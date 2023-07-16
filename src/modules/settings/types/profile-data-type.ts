@@ -1,5 +1,5 @@
-export type ProfileDataType = {
-  businessId: null;
+export type ProfileDataResponseType = {
+  businessId: string;
   businessName: string;
   businessEmail: string;
   businessaddress: string;

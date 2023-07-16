@@ -1,3 +1,9 @@
+import { Button } from "@/components";
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import {
   Box,
   Dialog,
@@ -9,15 +15,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { StoreState } from "@/store/types/store-state.types";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { StateReducerActions } from "@/types";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { useRouter } from "next/router";
-import { Button } from "@/components";
+import { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { generateNewOrderItem } from "../utils/generateNewOrderItems";
 
 export const SelectedInventoryModal: FC<{
   open: boolean;
@@ -30,26 +31,10 @@ export const SelectedInventoryModal: FC<{
     (state: StoreState) => state
   );
 
-  //   selectedInventoryItemsToOrder.map((it) =>
-  //   generateNewOrderItem({
-  //     storageFacilityId: it.storageFacilityId,
-  //     orderItems: [
-  //       {
-  //         itemName: it?.itemName,
-  //         orderQuantity: it?.orderQuantity || 0,
-  //         dimension: it.size.toString(),
-  //         unitPrice: it?.unitPrice,
-  //         quantity: it?.quantity,
-  //         skuId: it?.skuId,
-  //       },
-  //     ],
-  //   })
-  // ),
-
   const addAllSelectedItemsToVan = () => {
     dispatch({
       type: StateReducerActions.ADD_SINGLE_INVENTORY_ITEM_TO_VAN,
-      payload: {
+      payload: generateNewOrderItem({
         storageFacilityId: selectedInventoryItemsToOrder[0].storageFacilityId,
         orderItems: selectedInventoryItemsToOrder.map((item) => {
           return {
@@ -61,9 +46,9 @@ export const SelectedInventoryModal: FC<{
             skuId: item?.skuId,
           };
         }),
-      },
+      }),
     });
-    router.push("/ordermgt/deliveryVan");
+    router.push("/order-management/delivery-van");
     onClose();
     dispatch({
       type: StateReducerActions.CLEAR_SELECTED_INVENTORY_LIST,
@@ -151,11 +136,13 @@ export const SelectedInventoryModal: FC<{
             ))
           )}
         </Table>
+        
         <Button
           variant="primary"
           title="Add to delivery van"
           fullWidth
           size="sm"
+          className="p-2 rounded-lg "
           disabled={!selectedInventoryItemsToOrder.length}
           handleClick={() => addAllSelectedItemsToVan()}
         />

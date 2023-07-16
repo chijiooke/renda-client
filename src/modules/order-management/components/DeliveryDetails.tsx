@@ -1,14 +1,16 @@
 import { Trash } from "@/icons";
-import { FC, useState } from "react";
-import { InternalOrderItemType } from "../inventory/types/inventory-order-types";
+import { InternalOrderItemType } from "@/modules/inventory/types/inventory-order-types";
 import { StateReducerActions } from "@/types";
-import { useDispatch } from "react-redux";
 import { formatAmount } from "@/utils/format-currency";
+import { FC } from "react";
+import { useDispatch } from "react-redux";
+
 
 export const DeliveryDetails: FC<{
   data: InternalOrderItemType;
   index: number;
-}> = ({ data, index }) => {
+  removeItem: (index: number, orderItem: string) => void;
+}> = ({ data, index, removeItem }) => {
   const dispatch = useDispatch();
 
   return (
@@ -47,7 +49,10 @@ export const DeliveryDetails: FC<{
             +
           </button>
         </div>
-        <p className="flex justify-center">
+        <p
+          className="flex justify-center"
+          onClick={() => removeItem(index, data?.skuId)}
+        >
           <Trash />
         </p>
       </div>

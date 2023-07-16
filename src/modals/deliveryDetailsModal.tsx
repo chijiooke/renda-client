@@ -17,13 +17,12 @@ import * as Yup from "yup";
 
 import { InternalOrdersPostRequestType } from "@/modules/inventory/types/inventory-order-types";
 
+import { StoreState } from "@/store/types/store-state.types";
+import { StateReducerActions } from "@/types";
+import { StatesOfNigeriaConstant } from "@/types/constants/states-of-nigeria";
+import { getLga } from "@/utils/getLGA";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useDispatch, useSelector } from "react-redux";
-import { StateReducerActions } from "@/types";
-import { StoreState } from "@/store/types/store-state.types";
-import { StatesOfNigeriaConstant } from "@/types/constants/states-of-nigeria";
-import { LGAsOfNigeria } from "@/types/constants/lgas-of-nigeria";
-import { getLga } from "@/utils/getLGA";
 
 type Props = {
   show: boolean;
@@ -230,18 +229,6 @@ export function DeliveryDetailsModal({ show, data, close, index }: Props) {
                   error={formikError("deliveryLGA", formik)}
                 />
               </Layout>
-              {/* <Layout option="Delivery L.G.A" center={true}>
-                <Input
-                  className="h-10"
-                  name="deliveryLGA"
-                  placeholder="Delivery L.G.A"
-                  type="text"
-                  handleChange={formik.handleChange}
-                  value={formik.values.deliveryLGA}
-                  caption={formikCaption("deliveryLGA", formik)}
-                  error={formikError("deliveryLGA", formik)}
-                />
-              </Layout>{" "} */}
               <Layout option="Delivery address" center={true}>
                 <Input
                   className="h-10"

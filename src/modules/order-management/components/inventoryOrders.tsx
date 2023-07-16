@@ -1,6 +1,4 @@
 import { Button } from "@/components";
-import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
-import { baseURL } from "@/utils";
 import {
   Box,
   Table,
@@ -11,22 +9,25 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
+
+import { InventoryOrderDetailsModal } from "@/modals/inventoryOrderDetailModal";
+import { baseURL } from "@/utils";
+import dayjs from "dayjs";
 import { InfinitySpin } from "react-loader-spinner";
-import { ExternalOrderType } from "./types/external-order-types";
+import { InternalOrdersTypeResponseType } from "@/modules/inventory/types/inventory-order-types";
+// import { InternalOrdersTypeResponseType } from "../inventory/types/inventory-order-types";
 
-export const ExternalOrders: FC<{ openModal: () => void }> = ({
-  openModal,
-}) => {
-  const [data, setdata] = useState<ExternalOrderType[]>([]);
+const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
+  const [data, setdata] = useState<InternalOrdersTypeResponseType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  let [itemToShow, setItemToShow] = useState<ExternalOrderType | null>(null);
+  let [itemToShow, setItemToShow] =
+    useState<InternalOrdersTypeResponseType | null>(null);
 
-  const getExternalOrders = async () => {
+  const getInventoryOrders = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${baseURL}api/ExternalOrders`);
+      const res = await axios.get(`${baseURL}api/InternalOrders`);
       console.log(res?.data);
       setdata(res?.data);
     } catch (err) {
@@ -37,34 +38,36 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
   };
 
   useEffect(() => {
-    getExternalOrders();
+    getInventoryOrders();
   }, []);
 
   const tableHeaders = [
     "Order ID",
-    "No of Items",
-    "Pickup Location",
-    "Delivery Location",
-    "Reciepients Name",
+    "No. of Items",
+    "Facility ID",
     "Date Created",
+    "Reciepients Name",
+    "Delivery Location",
     "Mode Of Payment",
     "Status",
   ];
-
   return (
     <>
       <Typography
         variant="body2"
         className=" bg-[#E7F4FF] p-3 font-medium text-[#7A7A7A]  rounded-md flex items-center gap-1 "
       >
-        Orders from external Pickup Locations
+        Orders from your Renda storage
       </Typography>
       <div className=" overflow-scroll">
-        <Table className="p-1">
+        <Table>
           <TableHead className=" border-solid border-2 border-sky-500">
             <TableRow>
+              {/* <TableCell variant="head">
+                <Checkbox />
+              </TableCell> */}
               {tableHeaders.map((tableHead) => (
-                <TableHeaderCell text={tableHead.toLocaleUpperCase()} />
+                <TableHeaderCell text={tableHead} />
               ))}
             </TableRow>
           </TableHead>
@@ -88,7 +91,7 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
                     </p>
                     <Button
                       size="sm"
-                      title="Create single order"
+                      title="Create order from inventory"
                       handleClick={openModal}
                     />
                   </Box>
@@ -97,7 +100,7 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
             )}
 
             {data.length && !loading
-              ? data.map((item: ExternalOrderType) => (
+              ? data.map((item: InternalOrdersTypeResponseType) => (
                   <TableRow
                     className="cursor-pointer"
                     onClick={() => {
@@ -105,19 +108,23 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
                     }}
                   >
                     <TableCell variant="body">
-                      {item?.externalOrdersId}
+                      {item?.internalOrderId}
                     </TableCell>
-                    <TableCell variant="body">{item?.numberOfItems}</TableCell>
-                    <TableCell variant="body">{item?.pickUpAddress}</TableCell>
+                    <TableCell variant="body">
+                      {item?.internalOrderitem.length}
+                    </TableCell>
+                    <TableCell variant="body">
+                      {item?.storageFacilityId}
+                    </TableCell>
+                    <TableCell variant="body">
+                      {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
+                    </TableCell>{" "}
+                    <TableCell variant="body">{item?.reciepientName}</TableCell>
                     <TableCell variant="body">
                       {`${item?.deliveryAddress}, ${item?.deliveryLGA}, ${item?.deliveryState}`}
                     </TableCell>
-                    <TableCell variant="body">{item?.reciepientName}</TableCell>
-                    <TableCell variant="body">
-                      {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
-                    </TableCell>
                     <TableCell variant="body">{item?.paymentMode}</TableCell>
-                    <TableCell variant="body" sx={{color: item?.status?.toUpperCase()}}>{item?.status}</TableCell>
+                    <TableCell variant="body">{item?.status||'N/A'}</TableCell>
                   </TableRow>
                 ))
               : null}
@@ -125,7 +132,7 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
         </Table>
       </div>
 
-      <ExternalOrderDetailsModal
+      <InventoryOrderDetailsModal
         show={!!itemToShow}
         close={() => setItemToShow(null)}
         item={itemToShow}
@@ -134,8 +141,10 @@ export const ExternalOrders: FC<{ openModal: () => void }> = ({
   );
 };
 
+export { InventoryOrders };
+
 const TableHeaderCell: FC<{ text: string }> = ({ text }) => (
-  <TableCell variant="head" className=" font-bold rounded-md">
+  <TableCell variant="head" className=" font-bold rounded-md whitespace-nowrap">
     {text}
   </TableCell>
 );

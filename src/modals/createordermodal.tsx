@@ -2,7 +2,7 @@ import { Button } from "@/components";
 import { DashBoardRoutes } from "@/utils";
 import { useState } from "react";
 
-import { OrderManagementTabsEnum } from "@/pages/order-manangement";
+import { OrderManagementTabsEnum } from "@/pages/order-management";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { OrdermgtRoutes } from "@/utils/routes";
 

@@ -1,9 +1,8 @@
-
-import { DeliveryDetails } from "@/modules/order-management/deliveryDetails";
 import { Button } from "@/components";
 import { DropDown } from "@/icons";
 import { DashBoardLayout } from "@/layout";
 import { DeliveryDetailsModal } from "@/modals/deliveryDetailsModal";
+import { DeliveryDetails } from "@/modules/order-management/components/DeliveryDetails";
 import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
 import { baseURL } from "@/utils";
@@ -20,7 +19,9 @@ export default function DeliveryVan() {
   const [isVisible, setIsVisible] = useState<number | null>();
   const [selectedOrder, setSelectedOrder] = useState<number | null>(null);
 
-  const { myDeliveryVanItems } = useSelector((state: StoreState) => state);
+  const { myDeliveryVanOrders } = useSelector(
+    (state: StoreState) => state
+  );
   const dispatch = useDispatch();
   const router = useRouter();
   const [isProcessing, setisProcessing] = useState<boolean>(false);
@@ -31,31 +32,48 @@ export default function DeliveryVan() {
       setisProcessing(false);
       return;
     }
-    const selcetedOrderFOrDelivery = myDeliveryVanItems[selectedOrder - 1];
+    const selectedOrderForDelivery = myDeliveryVanOrders[selectedOrder - 1];
     axios
-      .post(`${baseURL}api/InternalOrders`, selcetedOrderFOrDelivery)
+      .post(`${baseURL}api/InternalOrders`, selectedOrderForDelivery)
       .then((res) => {
         dispatch({
-          type: StateReducerActions.REMOVE_SELECTED_INVENTORY_ITEMS_FROM_VAN,
+          type: StateReducerActions.REMOVE_SELECTED_ORDER_FROM_VAN,
           payload: selectedOrder - 1,
         });
-        router.push("/ordermgt");
+        router.push("/order-management");
       })
       .catch((err) => console.error(err))
       .finally(() => setisProcessing(false));
   };
 
+  const removeItem = (index: number, orderItemSkuID: string) => {
+    const selected = myDeliveryVanOrders[index];
+    if (selected.orderItems?.length === 1) {
+      dispatch({
+        type: StateReducerActions.REMOVE_SELECTED_ORDER_FROM_VAN,
+        payload: index,
+      });
+    } else {
+      dispatch({
+        type: StateReducerActions.REMOVE_ITEM_FROM_DELIVERY_VAN_ORDER,
+        payload: { orderIndex: index, itemID: orderItemSkuID },
+      });
+    }
+  };
+
   const validateSelectedOrder = () => {
     if (!selectedOrder) return [];
-    const selcetedOrderFOrDelivery = myDeliveryVanItems[selectedOrder - 1];
+    const selectedOrderFOrDelivery = myDeliveryVanOrders[selectedOrder - 1];
     const errors: string[] = [];
-    if (!selcetedOrderFOrDelivery) return [];
-    Object.entries(selcetedOrderFOrDelivery).forEach((item) => {
+    if (!selectedOrderFOrDelivery) return [];
+    Object.entries(selectedOrderFOrDelivery).forEach((item) => {
       if (item[1] === "" || item[1] === null || item[1] === undefined) {
         if (item[0].toLowerCase() === "weight") return;
         errors.push(item[0]);
       }
     });
+
+    console.log("selectedOrderFOrDelivery", selectedOrderFOrDelivery);
     return errors;
   };
   return (
@@ -65,7 +83,7 @@ export default function DeliveryVan() {
         close={() => setShow(null)}
         show={show !== null}
         data={
-          show !== null && show !== undefined ? myDeliveryVanItems[show] : {}
+          show !== null && show !== undefined ? myDeliveryVanOrders[show] : {}
         }
       />
 
@@ -95,9 +113,9 @@ export default function DeliveryVan() {
               </div>
               <div className="px-5"></div>
             </div>
-            {!myDeliveryVanItems
+            {!myDeliveryVanOrders
               ? "No Items in your van"
-              : myDeliveryVanItems.map((item, index) => (
+              : myDeliveryVanOrders.map((item, index) => (
                   <div className=" my-6 border-2 border-gray-300 ">
                     <div className="flex mx-24 uppercase p-4  justify-between ">
                       <div className="flex gap-6">
@@ -122,7 +140,6 @@ export default function DeliveryVan() {
                             />
                           </div>
                         </div>
-                        {/* <Notes /> */}
                         <h1
                           className="font-bold text-xl"
                           style={{ color: "#00000080" }}
@@ -167,68 +184,13 @@ export default function DeliveryVan() {
                         </div>
                       )}
 
-                    {/* <Grid container className="bg-gray-200 p-4">
-                      <Grid item xs={3}>
-                        {" "}
-                        <Typography
-                          variant="body2"
-                          // color={!item?.reciepientName ? "error" : "inherit"}
-                          className="flex"
-                        >
-                          <span className="flex items-center font-semibold gap-1">
-                            Recipient Name
-                          </span>
-                          :
-                          {item?.reciepientName || (
-                            <span className="flex items-center gap-1 text-red-400">
-                              N/A <InfoOutlined fontSize="small" />
-                            </span>
-                          )}
-                        </Typography>
-                      </Grid>{" "}
-                      <Grid item xs={3}>
-                        {" "}
-                        <Typography variant="body2" className="flex">
-                          <b>Recipient Phone No.</b>:
-                          {item?.reciepientPhoneNo || (
-                            <span className="flex items-center gap-1 text-red-400">
-                              N/A <InfoOutlined fontSize="small" />
-                            </span>
-                          )}
-                        </Typography>
-                      </Grid>{" "}
-                      <Grid item xs={3}>
-                        {" "}
-                        <Typography variant="body2" className="flex">
-                          <b>Delivery Location</b>:
-                          {item?.deliveryAddress ? (
-                            `${item?.deliveryAddress},${item?.deliveryLGA}, ,${item?.deliveryState}`
-                          ) : (
-                            <span className="flex items-center gap-1 text-red-400">
-                              N/A{" "}
-                              <InfoOutlined
-                                fontSize="small"
-                                sx={{ m: 0, p: 0 }}
-                              />
-                            </span>
-                          )}
-                        </Typography>
-                      </Grid>{" "}
-                      <Grid item xs={3}>
-                        {" "}
-                        <Typography variant="body2" className="flex">
-                          <b>Recipient Name</b>:
-                          {item?.reciepientName || (
-                            <span className="flex items-center gap-1 text-red-400">
-                              N/A <InfoOutlined fontSize="small" />
-                            </span>
-                          )}
-                        </Typography>
-                      </Grid>{" "}
-                    </Grid> */}
                     {isVisible === index &&
                       item.orderItems?.map((orderItem) => (
-                        <DeliveryDetails data={orderItem} index={index} />
+                        <DeliveryDetails
+                          data={orderItem}
+                          index={index}
+                          removeItem={removeItem}
+                        />
                       ))}
                   </div>
                 ))}

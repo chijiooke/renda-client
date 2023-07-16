@@ -1,4 +1,5 @@
 import { Button } from "@/components";
+import { ExternalOrderDetailsModal } from "@/modals/ExternalOrderDetailsModal";
 import {
   Box,
   Table,
@@ -8,67 +9,46 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import { FC, useEffect, useState } from "react";
-
-import { InventoryOrderDetailsModal } from "@/modals/inventoryOrderDetailModal";
-import { baseURL } from "@/utils";
 import dayjs from "dayjs";
+import { FC, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
-import { InternalOrdersTypeResponseType } from "../inventory/types/inventory-order-types";
+import { ExternalOrderResponseType } from "../types/external-order-types";
 
-const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
-  const [data, setdata] = useState<InternalOrdersTypeResponseType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  let [itemToShow, setItemToShow] =
-    useState<InternalOrdersTypeResponseType | null>(null);
 
-  const getInventoryOrders = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get(`${baseURL}api/InternalOrders`);
-      console.log(res?.data);
-      setdata(res?.data);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getInventoryOrders();
-  }, []);
+export const ExternalOrders: FC<{
+  openModal: () => void;
+  externalOrders: ExternalOrderResponseType[];
+  loading: boolean;
+}> = ({ openModal, externalOrders, loading }) => {
+  let [itemToShow, setItemToShow] = useState<ExternalOrderResponseType | null>(
+    null
+  );
 
   const tableHeaders = [
     "Order ID",
-    "No. of Items",
-    // "Facility Name",
-    "Facility ID",
-
-    "Date Created",
-    "Reciepients Name",
+    "No of Items",
+    "Pickup Location",
     "Delivery Location",
+    "Reciepients Name",
+    "Date Created",
     "Mode Of Payment",
     "Status",
   ];
+
   return (
     <>
       <Typography
         variant="body2"
         className=" bg-[#E7F4FF] p-3 font-medium text-[#7A7A7A]  rounded-md flex items-center gap-1 "
       >
-        Orders from your Renda storage
+        Orders from external Pickup Locations
       </Typography>
       <div className=" overflow-scroll">
-        <Table>
+        <Table className="p-1">
           <TableHead className=" border-solid border-2 border-sky-500">
             <TableRow>
-              {/* <TableCell variant="head">
-                <Checkbox />
-              </TableCell> */}
               {tableHeaders.map((tableHead) => (
-                <TableHeaderCell text={tableHead} />
+                <TableHeaderCell text={tableHead.toLocaleUpperCase()} />
               ))}
             </TableRow>
           </TableHead>
@@ -83,7 +63,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
                 </TableCell>
               </TableRow>
             )}
-            {!data.length && !loading && (
+            {!externalOrders.length && !loading && (
               <TableRow>
                 <TableCell colSpan={10}>
                   <Box className="flex  items-center justify-center min-w-full flex-col gap-2">
@@ -92,7 +72,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
                     </p>
                     <Button
                       size="sm"
-                      title="Create order from inventory"
+                      title="Create single order"
                       handleClick={openModal}
                     />
                   </Box>
@@ -100,39 +80,33 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
               </TableRow>
             )}
 
-            {data.length && !loading
-              ? data.map((item: InternalOrdersTypeResponseType) => (
+            {externalOrders.length && !loading
+              ? externalOrders.map((item: ExternalOrderResponseType) => (
                   <TableRow
                     className="cursor-pointer"
                     onClick={() => {
                       setItemToShow(item);
                     }}
                   >
-                    {/* <TableCell variant="body">
-                      <Checkbox />
-                    </TableCell> */}
                     <TableCell variant="body">
-                      {item?.internalOrderId}
+                      {item?.externalOrderId}
                     </TableCell>
-                    <TableCell variant="body">
-                      {item?.internalOrderitem.length}
-                    </TableCell>
-                    {/* <TableCell variant="body">
-                      {item?.st}
-                    </TableCell> */}
-                    <TableCell variant="body">
-                      {item?.storageFacilityId}
-                    </TableCell>
-                    <TableCell variant="body">
-                      {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
-                    </TableCell>{" "}
-                    <TableCell variant="body">{item?.reciepientName}</TableCell>
-                    {/* <TableCell variant="body">{item?.pickUpAddress}</TableCell> */}
+                    <TableCell variant="body">{item?.numberOfItems}</TableCell>
+                    <TableCell variant="body">{item?.pickUpAddress}</TableCell>
                     <TableCell variant="body">
                       {`${item?.deliveryAddress}, ${item?.deliveryLGA}, ${item?.deliveryState}`}
                     </TableCell>
+                    <TableCell variant="body">{item?.reciepientName}</TableCell>
+                    <TableCell variant="body">
+                      {dayjs(item?.dateCreated).format("DD, MMM, YYYY")}
+                    </TableCell>
                     <TableCell variant="body">{item?.paymentMode}</TableCell>
-                    <TableCell variant="body">{item?.status||'N/A'}</TableCell>
+                    <TableCell
+                      variant="body"
+                      sx={{ color: item?.status?.toUpperCase() }}
+                    >
+                      {item?.status}
+                    </TableCell>
                   </TableRow>
                 ))
               : null}
@@ -140,7 +114,7 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
         </Table>
       </div>
 
-      <InventoryOrderDetailsModal
+      <ExternalOrderDetailsModal
         show={!!itemToShow}
         close={() => setItemToShow(null)}
         item={itemToShow}
@@ -149,10 +123,8 @@ const InventoryOrders: FC<{ openModal: () => void }> = ({ openModal }) => {
   );
 };
 
-export { InventoryOrders };
-
 const TableHeaderCell: FC<{ text: string }> = ({ text }) => (
-  <TableCell variant="head" className=" font-bold rounded-md whitespace-nowrap">
+  <TableCell variant="head" className=" font-bold rounded-md">
     {text}
   </TableCell>
 );

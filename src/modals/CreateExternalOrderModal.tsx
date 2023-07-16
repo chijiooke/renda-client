@@ -17,8 +17,8 @@ import { ReactNode, useEffect, useState } from "react";
 import * as Yup from "yup";
 
 import {
-  CreateExternalOrderItemType,
-  CreateExternalOrderType,
+  ExternalOrderItemType,
+  ExternalOrderRequestType,
 } from "@/modules/order-management/types/external-order-types";
 import { hasInValidItems } from "@/modules/order-management/utils/has-invalid-items";
 
@@ -26,28 +26,30 @@ import { StoreState } from "@/store/types/store-state.types";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { StatesOfNigeriaConstant } from "@/types/constants/states-of-nigeria";
+import { getLga } from "@/utils/getLGA";
 
 type Props = {
   show: boolean;
   close: (data?: any) => void;
+  getExternalOrders: () => void;
 };
 
 enum DeliveryTimeEnum {
   IMMEDIATELY = "IMMEDIATELY",
   SET_DATE = "SET_DATE",
 }
-const location = ["Lagos", "Ibadan", "Abuja", "Rivers"];
 
-export const CreateExternalOrderModal = ({ show, close }: Props) => {
+export const CreateExternalOrderModal = ({ show, close ,getExternalOrders}: Props) => {
   const [deliveryTime, setDliveryTime] = useState<DeliveryTimeEnum>();
-  const itemsPlaceholder: CreateExternalOrderItemType = {
+  const itemsPlaceholder: ExternalOrderItemType = {
     itemName: "",
     dimension: "",
     quantity: 0,
     unitPrice: 0,
   };
 
-  const [items, setitems] = useState<CreateExternalOrderItemType[]>([
+  const [items, setitems] = useState<ExternalOrderItemType[]>([
     itemsPlaceholder,
   ]);
 
@@ -75,18 +77,21 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
   const [error, setError] = useState<string>("");
 
   const { user } = useSelector((state: StoreState) => state);
+  const [deliveryLGAs, setdeliveryLGAs] = useState<string[]>([]);
+  const [pickUpLGAs, setpickUpLGAs] = useState<string[]>([]);
 
   const formik = useFormik({
     initialValues: {
       recipientName: "",
       recipientPhoneNo: "",
-      pickUpLGA: null,
+      pickupState: "",
+      pickUpLGA: "",
       pickUpAddress: "",
       paymentMode: "",
       contactName: "",
       contactPhoneNo: "",
-      deliveryState: null,
-      deliveryLGA: null,
+      deliveryState: "",
+      deliveryLGA: "",
       deliveryAddress: "",
       dispatchTime: new Date().toISOString(),
     },
@@ -99,6 +104,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
       pickUpAddress: Yup.string().required("this is a required field"),
       contactName: Yup.string().required("this is a required field"),
       contactPhoneNo: Yup.string().required("this is a required field"),
+      pickupState: Yup.string().required(),
       deliveryState: Yup.string().required(),
       deliveryLGA: Yup.string().required(),
       deliveryAddress: Yup.string().required(),
@@ -117,7 +123,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
       deliveryState,
       deliveryAddress,
     }) => {
-      const data: CreateExternalOrderType = {
+      const data: ExternalOrderRequestType = {
         // recipientName,
         reciepientName: recipientName,
         paymentMode,
@@ -140,7 +146,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
     },
   });
 
-  const bookOrder = async (data: CreateExternalOrderType) => {
+  const bookOrder = async (data: ExternalOrderRequestType) => {
     setisSubmitting(true);
     setError("");
 
@@ -150,6 +156,7 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
         data
       );
       formik.resetForm();
+      getExternalOrders();
       close();
     } catch (error) {
       setError(
@@ -209,19 +216,40 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                   error={formikError("recipientPhoneNo", formik)}
                 />
               </Layout>
-              <Layout option="Pick up LGA" center={true}>
+              <Layout option="Pick-Up State" center={true}>
                 <Select
-                  name="pickUpLGA"
-                  placeholder="Select Pick up LGA"
-                  options={location}
-                  handleChange={formik.handleChange("pickUpLGA")}
-                  value={formik.values.pickUpLGA || ""}
-                  caption={formikCaption("pickUpLGA", formik)}
-                  error={formikError("pickUpLGA", formik)}
-                  size="sm"
+                  name="pickupState"
+                  placeholder="Select Pick-Up State"
+                  options={StatesOfNigeriaConstant}
+                  handleChange={(e) => {
+                    formik.setValues({
+                      ...formik.values,
+                      pickupState: e.target.value,
+                    });
+                    setpickUpLGAs(getLga(e.target.value).lgas);
+                  }}
+                  value={formik.values.pickupState}
+                  caption={formikCaption("pickupState", formik)}
+                  error={formikError("pickupState", formik)}
                 />
               </Layout>
-              <Layout option="Pick up address" center={true}>
+              <Layout option="Pick-up LGA" center={true}>
+                <Select
+                  disabled={!formik.values.pickupState}
+                  name="pickUpLGA"
+                  placeholder="Select Pick-Up LGA"
+                  options={pickUpLGAs}
+                  handleChange={formik.handleChange("pickUpLGA")}
+                  value={
+                    formik.values.pickUpLGA !== ""
+                      ? formik.values.pickUpLGA
+                      : "Not Selected"
+                  }
+                  caption={formikCaption("pickUpLGA", formik)}
+                  error={formikError("pickUpLGA", formik)}
+                />
+              </Layout>
+              <Layout option="Pick up Address" center={true}>
                 <Input
                   name="pickUpAddress"
                   placeholder="Pick up address"
@@ -233,10 +261,10 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
                   size="sm"
                 />
               </Layout>
-              <Layout option="Pick up contact" center={true}>
+              <Layout option="Pick-up Contact Name" center={true}>
                 <Input
                   name="contactName"
-                  placeholder="Enter Pick up contact"
+                  placeholder="Enter Pick Up Contact Name"
                   type="text"
                   handleChange={formik.handleChange}
                   value={formik.values.contactName}
@@ -255,25 +283,31 @@ export const CreateExternalOrderModal = ({ show, close }: Props) => {
               </Layout>
               <Layout option="Delivery state" center={true}>
                 <Select
-                  name=""
+                  name="deliveryState"
                   placeholder="Select Delivery State"
-                  options={location}
-                  handleChange={formik.handleChange("deliveryState")}
+                  options={StatesOfNigeriaConstant}
+                  handleChange={(e) => {
+                    formik.setValues({
+                      ...formik.values,
+                      deliveryState: e.target.value,
+                    });
+                    setdeliveryLGAs(getLga(e.target.value).lgas);
+                  }}
                   value={formik.values.deliveryState || ""}
-                  caption={formikCaption("deliveryLocation", formik)}
-                  error={formikError("deliveryLocation", formik)}
+                  caption={formikCaption("deliveryState", formik)}
+                  error={formikError("deliveryState", formik)}
                 />
               </Layout>
               <Layout option="Delivery LGA" center={true}>
                 <Select
-                  name=""
+                  disabled={!formik.values.deliveryState}
+                  name="deliveryLGA"
                   placeholder="Select Delivery LGA"
-                  options={location}
+                  options={deliveryLGAs}
                   handleChange={formik.handleChange("deliveryLGA")}
                   value={formik.values.deliveryLGA || ""}
-                  caption={formikCaption("deliveryLocation", formik)}
-                  error={formikError("deliveryLocation", formik)}
-                  size="sm"
+                  caption={formikCaption("deliveryLGA", formik)}
+                  error={formikError("deliveryLGA", formik)}
                 />
               </Layout>
               <Layout option="Delivery address" center={true}>

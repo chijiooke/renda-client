@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { DashBoardLayout } from "@/layout";
-import { ApiCreateOrderDetail } from "@/modules/order-management/api-createorderdetail";
-import { CsvCreateOrderDetail } from "@/modules/order-management/csv-createorder";
+import { APIOrderCreation } from "@/modules/order-management/components/APIOrderCreation";
+import { CSVInternalOrderCreation } from "@/modules/order-management/components/CSVInternalOrderCreation";
 import { Tab } from "@headlessui/react";
 
 export default function CsvCreateorder() {
@@ -9,14 +9,10 @@ export default function CsvCreateorder() {
   function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
   }
-  const clipStyle = {
-    clipPath:
-      "polygon(, 74% 074% 1%, 0% 1%, 0% 1%, 0% 99%, 0% 99%, 99% 100%, 74% 0);",
-  };
 
   return (
     <DashBoardLayout backAction backText="back">
-      <div className="rounded border-1 border-gray-300  h-[83vh] pt-2 ">
+      <div className="rounded border-1 border-gray-300   pt-2 ">
         <div className="border-b-2 border-b-gray-300 p-7 flex justify-between ">
           <div>
             <h1 className="text-2xl font-extrabold">Create Order</h1>
@@ -44,10 +40,10 @@ export default function CsvCreateorder() {
               ))}
             </Tab.List>
             <Tab.Panel>
-              <CsvCreateOrderDetail />
+              <CSVInternalOrderCreation />
             </Tab.Panel>
             <Tab.Panel>
-              <ApiCreateOrderDetail />
+              <APIOrderCreation />
             </Tab.Panel>
           </Tab.Group>
         </div>

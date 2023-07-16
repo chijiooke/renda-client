@@ -1,10 +1,9 @@
 import { UploadIcon } from "@/icons";
-import React, { useState, CSSProperties, Dispatch, FC } from "react";
+import { CSSProperties, Dispatch, FC, useState } from "react";
 
 import {
-  useCSVReader,
   lightenDarkenColor,
-  formatFileSize,
+  useCSVReader
 } from "react-papaparse";
 
 const GREY = "#CCC";
@@ -19,7 +18,6 @@ const GREY_DIM = "#686868";
 const styles = {
   zone: {
     alignItems: "center",
-
     borderRadius: ".5rem",
     display: "flex",
     flexDirection: "column",
@@ -135,37 +133,7 @@ export const CSVReader: FC<{ setData: Dispatch<any> }> = ({ setData }) => {
                 Only CSV files are allowed
               </p>
             </>
-            {/* {acceptedFile ? (
-              <>
-                <div style={styles.file}>
-                  <div style={styles.info}>
-                    <span style={styles.size}>
-                      {formatFileSize(acceptedFile.size)}
-                    </span>
-                    <span style={styles.name}>{acceptedFile.name}</span>
-                  </div>
-                  <div style={styles.progressBar}>
-                    <ProgressBar />
-                  </div>
-                  <div
-                    {...getRemoveFileProps()}
-                    style={styles.remove}
-                    onMouseOver={(event: Event) => {
-                      event.preventDefault();
-                      setRemoveHoverColor(REMOVE_HOVER_COLOR_LIGHT);
-                    }}
-                    onMouseOut={(event: Event) => {
-                      event.preventDefault();
-                      setRemoveHoverColor(DEFAULT_REMOVE_HOVER_COLOR);
-                    }}
-                  >
-                    <Remove color={removeHoverColor} />
-                  </div>
-                </div>
-              </>
-            ) : (
-              
-            )} */}
+          
           </div>
         </>
       )}

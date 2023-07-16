@@ -1,5 +1,3 @@
-
-
 import { FC, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { InventoryItemType } from "@/modules/inventory/types/inventory-data-type";
@@ -7,10 +5,12 @@ import { StoreState } from "@/store/types/store-state.types";
 import { StateReducerActions } from "@/types";
 import { useRouter } from "next/router";
 import { TableRow } from "./inventoryTableRow";
+import { LoadingComponent } from "../LoadingComponent";
 
-const AllInventoryTableDetails: FC<{ data: InventoryItemType[] }> = ({
-  data,
-}) => {
+const AllInventoryTableDetails: FC<{
+  data: InventoryItemType[];
+  loading: boolean;
+}> = ({ data, loading }) => {
   const router = useRouter();
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const [selectedItems, setselectedItems] = useState<InventoryItemType[]>([]);
@@ -34,7 +34,18 @@ const AllInventoryTableDetails: FC<{ data: InventoryItemType[] }> = ({
             className="form-checkbox h-5 w-5 text-blue-500"
             checked={isAllItemsSelected.current}
             onClick={() => {
-              isAllItemsSelected.current = !isAllItemsSelected.current;
+              if (!!isAllItemsSelected.current) {
+                isAllItemsSelected.current = false;
+                dispatch({
+                  type: StateReducerActions.CLEAR_INVENTORY_ITEMS_TO_ORDER,
+                });
+              } else {
+                isAllItemsSelected.current = true;
+                dispatch({
+                  type: StateReducerActions.SELECT_MULTIPLE_INVENTORY_ITEMS_TO_ORDER,
+                  payload: data,
+                });
+              }
               setselectedItems(isAllItemsSelected.current ? [] : []);
             }}
           />
@@ -61,44 +72,52 @@ const AllInventoryTableDetails: FC<{ data: InventoryItemType[] }> = ({
           <p className=" font-semibold uppercase">ACTION</p>
         </div>
       </div>
+      {!!loading && <LoadingComponent />}
 
-      {data.map((inventory) => (
-        <TableRow
-          isAllItemsSelected={isAllItemsSelected.current}
-          data={inventory}
-          isExpanded={expandedItem === inventory.skuId}
-          collapseRow={() =>
-            !!expandedItem
-              ? setExpandedItem(null)
-              : setExpandedItem(inventory.skuId)
-          }
-          selectedItems={selectedItems.map((items) => items.skuId)}
-          selectItem={(item: InventoryItemType) => {
-            if (
-              selectedItems.map((items) => items.skuId).includes(item.skuId)
-            ) {
-              setselectedItems([
-                ...selectedItems.filter((it) => it.id !== item.id),
-              ]);
-
-              dispatch({
-                type: StateReducerActions.UNSELECT_INVENTORY_ITEMS_TO_ORDER,
-                payload: item,
-              });
-            } else {
-              setselectedItems([...selectedItems, item]);
-              dispatch({
-                type: StateReducerActions.SELECT_INVENTORY_ITEMS_TO_ORDER,
-                payload: item,
-              });
+      {!loading && !data.length ? (
+        <div className="w-full text-center p-4">
+          {" "}
+          <p>No Items in inventory/Storage Facility</p>
+        </div>
+      ) : (
+        data.map((inventory) => (
+          <TableRow
+            isAllItemsSelected={isAllItemsSelected.current}
+            data={inventory}
+            isExpanded={expandedItem === inventory.skuId}
+            collapseRow={() =>
+              !!expandedItem && expandedItem === inventory.skuId
+                ? setExpandedItem(null)
+                : setExpandedItem(inventory.skuId)
             }
-          }}
-        />
-      ))}
+            selectedItems={selectedInventoryItemsToOrder.map(
+              (items) => items.skuId
+            )}
+            selectItem={(item: InventoryItemType) => {
+              if (
+                selectedItems.map((items) => items.skuId).includes(item.skuId)
+              ) {
+                setselectedItems([
+                  ...selectedItems.filter((it) => it.id !== item.id),
+                ]);
+
+                dispatch({
+                  type: StateReducerActions.UNSELECT_INVENTORY_ITEMS_TO_ORDER,
+                  payload: item,
+                });
+              } else {
+                setselectedItems([...selectedItems, item]);
+                dispatch({
+                  type: StateReducerActions.SELECT_INVENTORY_ITEMS_TO_ORDER,
+                  payload: item,
+                });
+              }
+            }}
+          />
+        ))
+      )}
     </div>
   );
 };
 
 export { AllInventoryTableDetails };
-
-
